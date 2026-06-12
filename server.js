@@ -20,7 +20,35 @@ const MIME_TYPES = {
 
 const { exec } = require('child_process');
 
+const ADMIN_USER = process.env.ADMIN_USERNAME || 'admin';
+const ADMIN_PASS = process.env.ADMIN_PASSWORD; // if not set in environment, bypass basic authentication
+
+function checkAuth(req) {
+    if (!ADMIN_PASS) return true; // Bypass authentication locally if no password is configured
+    
+    const authHeader = req.headers.authorization;
+    if (!authHeader) return false;
+    
+    const parts = authHeader.split(' ');
+    if (parts.length !== 2 || parts[0].toLowerCase() !== 'basic') return false;
+    
+    const decoded = Buffer.from(parts[1], 'base64').toString('utf8');
+    const [user, pass] = decoded.split(':');
+    
+    return user === ADMIN_USER && pass === ADMIN_PASS;
+}
+
 const server = http.createServer((req, res) => {
+    // Enforce basic auth if configured
+    if (!checkAuth(req)) {
+        res.writeHead(401, {
+            'WWW-Authenticate': 'Basic realm="Sketchic Admin Area"',
+            'Content-Type': 'text/plain; charset=utf-8'
+        });
+        res.end('Access Denied: Invalid Credentials. يرجى إدخال اسم المستخدم وكلمة المرور الصحيحة للوصول للوحة التحكم.');
+        return;
+    }
+
     console.log(`${req.method} ${req.url}`);
     
     // API to export public assets and auto-push to GitHub
