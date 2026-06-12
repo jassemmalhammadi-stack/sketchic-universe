@@ -1,0 +1,598 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>وثيقة كون سكتشيك السينمائي التأسيسية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Outfit:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #ffffff;
+            color: #1e1e24;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            font-size: 11pt;
+            -webkit-print-color-adjust: exact;
+        }
+
+        /* Cover Page Styling */
+        .cover-page {
+            background: linear-gradient(135deg, #070716 0%, #0d0d29 50%, #03030b 100%);
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 3.5cm 2cm;
+            page-break-after: always;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .cover-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(111, 66, 193, 0.1) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .cover-header {
+            z-index: 2;
+        }
+
+        .cover-logo-area {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5cm;
+        }
+
+        .cover-logo-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #8a2be2, #00f0ff);
+            margin-left: 15px;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        .cover-logo-icon::after {
+            content: 'S';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 24px;
+            color: #ffffff;
+        }
+
+        .cover-brand {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 26px;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #ffffff, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cover-title-group {
+            z-index: 2;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .cover-title {
+            font-size: 40pt;
+            font-weight: 900;
+            line-height: 1.2;
+            margin: 0 0 0.5cm 0;
+            background: linear-gradient(135deg, #ffffff 0%, #00f0ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .cover-subtitle {
+            font-size: 18pt;
+            font-weight: 400;
+            color: #a0a0c5;
+            margin: 0;
+            border-right: 4px solid #8a2be2;
+            padding-right: 15px;
+        }
+
+        .cover-footer {
+            z-index: 2;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1cm;
+            display: flex;
+            justify-content: space-between;
+            font-size: 9.5pt;
+            color: #8c8cab;
+        }
+
+        .meta-item strong {
+            color: #ffffff;
+        }
+
+        /* Content Pages Styling */
+        .content-container {
+            padding: 2.5cm 2.5cm;
+            max-width: 21cm;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 22pt;
+            font-weight: 800;
+            color: #070716;
+            margin-top: 2cm;
+            margin-bottom: 0.8cm;
+            border-bottom: 2px solid #eaebed;
+            padding-bottom: 0.3cm;
+            page-break-before: always;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 3cm;
+            height: 2px;
+            background: linear-gradient(90deg, #8a2be2, #00f0ff);
+        }
+
+        .section-h2 {
+            font-size: 16pt;
+            font-weight: 700;
+            color: #0d0d29;
+            margin-top: 1.2cm;
+            margin-bottom: 0.6cm;
+            padding-right: 12px;
+            border-right: 4px solid #00f0ff;
+        }
+
+        .section-h3 {
+            font-size: 13pt;
+            font-weight: 700;
+            color: #4a148c;
+            margin-top: 0.8cm;
+            margin-bottom: 0.4cm;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 0.5cm;
+            text-align: justify;
+            color: #2b2b35;
+        }
+
+        strong {
+            color: #000000;
+            font-weight: 700;
+        }
+
+        em {
+            font-style: normal;
+            color: #6f42c1;
+            font-weight: 600;
+        }
+
+        .quote-text {
+            font-family: 'Cairo', serif;
+            font-weight: 600;
+            color: #4b1b9c;
+        }
+
+        /* Lists */
+        .custom-list {
+            margin-top: 0;
+            margin-bottom: 0.6cm;
+            padding-right: 0.8cm;
+        }
+
+        .custom-list li {
+            margin-bottom: 0.3cm;
+            position: relative;
+        }
+
+        /* Pre and ASCII Art */
+        pre.ascii-art {
+            background-color: #0d0d1e;
+            color: #00f0ff;
+            padding: 0.6cm;
+            border-radius: 8px;
+            font-family: 'Outfit', 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            margin: 0.8cm 0;
+            line-height: 1.4;
+        }
+
+        code {
+            font-family: 'Outfit', 'Consolas', monospace;
+            background-color: #f1f2f6;
+            color: #d63384;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9.5pt;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Divider */
+        hr.page-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #eaebed, transparent);
+            margin: 1.5cm 0;
+        }
+
+        /* Blockquotes */
+        blockquote {
+            margin: 0.8cm 0;
+            padding: 0.5cm 0.8cm;
+            background-color: #f8f9fa;
+            border-right: 5px solid #6f42c1;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+            color: #495057;
+        }
+
+        /* Custom Flowchart CSS Diagram */
+        .hierarchy-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 1cm 0;
+            padding: 1cm;
+            background: #fafafa;
+            border: 1px solid #e1e4e8;
+            border-radius: 12px;
+        }
+
+        .diagram-node {
+            width: 100%;
+            max-width: 14cm;
+            background: #ffffff;
+            border: 1px solid #d1d5da;
+            border-radius: 8px;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .node-tag {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: #6f42c1;
+            color: #ffffff;
+            font-size: 8pt;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 10px;
+        }
+
+        .node-time {
+            border-top: 4px solid #1a1a3a;
+        }
+        .node-creators {
+            border-top: 4px solid #1a3a1a;
+        }
+        .node-worlds {
+            border-top: 4px solid #3a1a1a;
+        }
+
+        .diagram-node h4 {
+            margin: 0 0 5px 0;
+            font-size: 12pt;
+            font-weight: 700;
+            color: #0d0d29;
+        }
+
+        .diagram-node p {
+            margin: 0;
+            font-size: 9.5pt;
+            color: #586069;
+            text-align: center;
+        }
+
+        .diagram-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px 0;
+            color: #6a737d;
+        }
+
+        .arrow-symbol {
+            font-size: 14pt;
+            color: #8a2be2;
+        }
+
+        .arrow-text {
+            font-size: 8.5pt;
+            font-weight: 600;
+            margin-top: 3px;
+            color: #586069;
+        }
+
+        /* Tables */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 0.8cm 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10pt;
+            text-align: right;
+        }
+
+        th {
+            background-color: #0d0d29;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 12px 15px;
+            border: 1px solid #1e1e3f;
+        }
+
+        td {
+            padding: 12px 15px;
+            border: 1px solid #eaebed;
+            color: #333333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* Alert boxes (Callouts) */
+        .alert {
+            display: flex;
+            margin: 0.8cm 0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            align-items: flex-start;
+        }
+
+        .alert-icon {
+            font-size: 16pt;
+            margin-left: 15px;
+            line-height: 1;
+        }
+
+        .alert-body {
+            font-size: 10pt;
+            flex: 1;
+            color: #24292e;
+        }
+
+        .alert-important {
+            background-color: #fff8f8;
+            border-right: 5px solid #d93f3f;
+        }
+        
+        .alert-note {
+            background-color: #f0f8ff;
+            border-right: 5px solid #0056b3;
+        }
+
+        /* Print Specific CSS */
+        @media print {
+            body {
+                background-color: #ffffff;
+                font-size: 11pt;
+            }
+            .cover-page {
+                height: 100vh;
+                page-break-after: always;
+            }
+            .content-container {
+                padding: 0;
+            }
+            .section-title {
+                page-break-before: always;
+            }
+            thead {
+                display: table-header-group;
+            }
+            tr {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cover Page -->
+    <div class="cover-page">
+        <div class="cover-header">
+            <div class="cover-logo-area">
+                <div class="cover-logo-icon"></div>
+                <div class="cover-brand">SKETCHIC WORLD</div>
+            </div>
+        </div>
+        
+        <div class="cover-title-group">
+            <h1 class="cover-title">ميثاق كون "سكتشيك" السينمائي</h1>
+            <p class="cover-subtitle">الوثيقة التأسيسية لبناء العالم الممتد وتأصيل فلسفة الصدام المرئي</p>
+        </div>
+        
+        <div class="cover-footer">
+            <div class="meta-item">إعداد: <strong>خبير بناء العوالم السردية</strong></div>
+            <div class="meta-item">تاريخ الإصدار: <strong>يونيو 2026</strong></div>
+            <div class="meta-item">الإصدار: <strong>1.0 (تأسيسي)</strong></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-container">
+        <hr class="page-divider">
+<h2 class="section-h2">1. فلسفة الخلق: الرسم كأداة للخلق المطلق (Drawing as the Source of Reality)</h2>
+<p>في كون <strong>"سكتشيك" (Sketchic)</strong>، لا يُعدّ الرسم مجرد وسيلة تعبيرية أو محاكاة بصرية للواقع؛ بل هو <strong>الفيزياء الأساسية والجوهر الوجودي لكل ما هو كائن</strong>. الخطوط هي أوتار الوجود، والألوان هي طاقته وحيويته، والمساحات الفارغة (الفراغ الأبيض) هي العدم المستعد للاستقبال.</p>
+<blockquote><em><span class="quote-text">«في البدء لم تكن هناك كلمة، بل كانت هناك ضربة فرشاة أولى.»</span></em>
+— من ألواح الزمن الأول لكون سكتشيك</blockquote>
+<pre class="ascii-art"><code>                                 ┌────────────────────────┐
+                                 │    الفراغ اللانهائي     │
+                                 │   (The Blank Canvas)   │
+                                 └───────────┬────────────┘
+                                             │
+                                     ضربة الفرشاة الأولى
+                                             │
+                                             ▼
+                                 ┌────────────────────────┐
+                                 │    الخطوط والأشكال      │
+                                 │   (Line and Contour)   │
+                                 └───────────┬────────────┘
+                                             │
+                                   الملء والتلوين والتظليل
+                                             │
+                                             ▼
+                                 ┌────────────────────────┐
+                                 │  المادة السائلة للواقع   │
+                                 │    (Liquid Reality)    │
+                                 └────────────────────────┘</code></pre>
+<h3 class="section-h3">القوانين الميتافيزيقية للرسم كخلق:</h3>
+<ol class="custom-list">
+<li><strong>قانون الخط الوجودي (Law of the Line):</strong> كل كائن أو جماد أو كوكب يبدأ كخط خارجي (Outline). هذا الخط يحدد كتلته وجاذبيته وحدوده المادية. إذا تآكل الخط أو تكسر، ضعفت البنية الفيزيائية للشيء في العالم.</li>
+<li><strong>قانون الحبر والمادة (The Medium is the Matter):</strong> تختلف فيزياء الأشياء بالاف المادة التي رُسمت بها:</li>
+<li><strong>الرصاص والغرافيت:</strong> مواد مرنة، قابلة للتعديل والتحول السريع، لكنها سريعة العطب ومستهدفة دائماً بالمحو.</li>
+<li><strong>الحبر الأسود (Ink):</strong> مادة صلبة، حاسمة، غير قابلة للتراجع، تمثل القوانين غير القابلة للكسر والحقائق الوجودية المطلقة.</li>
+<li><strong>الألوان الزيتية والكلاسيكية:</strong> تمنح المادة كثافة وجاذبية عالية، وتجعل الزمن يتدفق فيها ببطء ووقار.</li>
+<li><strong>الرقمي (Digital Pixels):</strong> يمنح القدرة على الانتقال الآني، والنسخ والتكرار، لكنه يعاني من هشاشة الاستقرار عند انقطاع الطاقة الكونية.</li>
+<li><strong>قانون المحو (The Absolute Void):</strong> المحو ليس غياباً للمادة فحسب، بل هو "مضاد المادة" (Antimatter). الممحاة (The Eraser) هي السلاح الكوني الأكثر رعباً، حيث لا تقتل الشخصية بل تنزع أصل وجودها من اللوحة التاريخية.</li>
+</ol>
+<hr class="page-divider">
+<h2 class="section-h2">2. الهيكل الهرمي الثلاثي للكون الكوني (The Tripartite Cosmic Hierarchy)</h2>
+<p>يتكون كون "سكتشيك" من هيكل هرمي ثلاثي الطبقات، حيث تؤثر كل طبقة في التي تليها، وتخضع القوانين الفيزيائية تدريجياً لسيطرة الفن.</p>
+
+                    <div class="hierarchy-diagram">
+                        <div class="diagram-node node-time">
+                            <div class="node-tag">الطبقة الأولى</div>
+                            <h4>طبقات الأزمان (Time Layers)</h4>
+                            <p>الإطار العام والقوانين الفيزيائية الكونية وتدفق إطارات الزمن</p>
+                        </div>
+                        <div class="diagram-arrow">
+                            <span class="arrow-symbol">▼</span>
+                            <span class="arrow-text">تفرض القواعد الكبرى والتدفق الزمني</span>
+                        </div>
+                        <div class="diagram-node node-creators">
+                            <div class="node-tag">الطبقة الثانية</div>
+                            <h4>الرسامون (The Creators/Drawers)</h4>
+                            <p>المهندسون الكونيون وأصحاب الأساليب الفنية والجمالية الفريدة</p>
+                        </div>
+                        <div class="diagram-arrow">
+                            <span class="arrow-symbol">▼</span>
+                            <span class="arrow-text">يصيغون ويرسمون الواقع والمادة الكونية</span>
+                        </div>
+                        <div class="diagram-node node-worlds">
+                            <div class="node-tag">الطبقة الثالثة</div>
+                            <h4>العوالم والشخصيات (Canvases & Characters)</h4>
+                            <p>اللوحات الحية والواقع المادي الفعلي والقصص المشتعلة</p>
+                        </div>
+                    </div>
+                    
+<h3 class="section-h3">الطبقة الأولى: طبقات الأزمان (Time Layers)</h3>
+<p>هي السقف العلوي للمتعدد الكوني، وتُمثّل <strong>"كرتون الورق" الكوني</strong> أو الشرائح الممتدة التي تُحفظ عليها العوالم.</p>
+<ul class="custom-list">
+<li><strong>فيزياء الإطارات (Framerate Physics):</strong> لا يتدفق الوقت في سكتشيك بشكل مستمر، بل يتدفق عبر "إطارات في الثانية" (Frames per Second). بعض الأزمان تدور بسرعة 60 إطاراً في الثانية (أزمان ذات وتيرة بالغة التعقيد والنعومة البصرية)، بينما تدور أزمان أخرى بـ 12 إطاراً فقط (أزمان بطيئة، ذات طابع ميكانيكي أو كلاسيكي).</li>
+<li><strong>الطبقات الزمنية المتوازية:</strong> تنقسم الأزمان إلى طبقات شفافة فوق بعضها البعض (مثل طبقات برامج الرسم - Layers). يمكن لحدث في الطبقة العليا (Layer 1) أن يلقي بظلاله على الطبقة السفلى (Layer 2) دون أن يتداخل معها مادياً، ما لم يحدث خرق في الحدود الفاصلة.</li>
+</ul>
+<h3 class="section-h3">الطبقة الثانية: الرسامون (The Creators / The Drawers)</h3>
+<p>هم الآلهة والمهندسون الكونيون الذين يقفون خلف اللوحات. كل رسام يمتلك أسلوباً فنياً فريداً يمثل "توقيعه الجيني".</p>
+<ul class="custom-list">
+<li><strong>الأسلوب كقانون طبيعي:</strong> أسلوب الرسام الفني هو بمثابة الجاذبية والثرموديناميكا لعالمه. الرسام الذي يرسم بأسلوب الانطباعية (Impressionism) يخلق عالماً تتلاشى فيه التفاصيل الدقيقة وتعتمد الفيزياء فيه على الضوء واللون الجريء. بينما الرسام الذي يتبنى الواقعية المفرطة (Hyperrealism) يفرض قوانين فيزيائية معقدة ودقيقة للغاية.</li>
+<li><strong>صراع المبدعين:</strong> الرسامون ليسوا دائماً على وفاق. صراعاتهم الفلسفية والفنية حول "كيف يجب أن يبدو الوجود" تنعكس مباشرة كحروب كونية وزلازل جمالية في العوالم السفلى.</li>
+</ul>
+<h3 class="section-h3">الطبقة الثالثة: العوالم والشخصيات (The Canvases & Characters)</h3>
+<p>هي اللوحات الحية والواقع المادي الفعلي الذي تعيش فيه الشخصيات وتتفاعل ضمن إطاراتها السردية.</p>
+<ul class="custom-list">
+<li><strong>الشخصيات المستيقظة (The Awakened Characters):</strong> هي شخصيات استطاعت عبر صدمة سردية أو وعي ذاتي متقدم إدراك حقيقة كونها "مرسومة". تكتسب هذه الشخصيات القدرة على التلاعب بالخطوط المحيطة بها، أو سرقة حبر من بيئتها لإعادة رسم واقعها، أو حتى محاولة التواصل مع "الرسام" مباشرة.</li>
+<li><strong>اللوحات الحية (Living Canvases):</strong> البيئات التي تتحرك وتتنفس. الجبال في عالم الحبر الصيني التقليدي تتصرف كغيوم سائلة، بينما المباني في عالم المستقبل الرقمي تتكون من خطوط متجهة (Vectors) يمكن إعادة تحجيمها دون فقدان جودتها.</li>
+</ul>
+<hr class="page-divider">
+<h2 class="section-h2">3. ظاهرة الصدام المرئي (Visual Clash): فلسفة التنافر الجمالي</h2>
+<p>تُعتبر <strong>ظاهرة الصدام المرئي (Visual Clash)</strong> هي الميزة السردية والجمالية الجوهرية لكون "سكتشيك". تحدث هذه الظاهرة عندما تتقاطع شخصيات أو عناصر من عوالم ذات أساليب فنية متناقضة تماماً في مساحة جغرافية أو سردية واحدة.</p>
+<pre class="ascii-art"><code>       ┌───────────────────────────┐         ┌───────────────────────────┐
+       │   شخصية بأسلوب المانجا    │         │  شخصية بأسلوب الزيت الكلاسيكي│
+       │       (Manga Style)       │         │    (Classical Oil Painting)│
+       │  • خطوط حبر سوداء حادة     │         │  • ألوان غنية وضبابية      │
+       │  • تظليل نقطي (Screentone) │         │  • إضاءة تشياروسكورو عميقة │
+       │  • حركة ديناميكية قوية     │         │  • ملمس قماش حسي           │
+       └─────────────┬─────────────┘         └─────────────┬─────────────┘
+                     │                                     │
+                     └──────────────────┬──────────────────┘
+                                        │
+                                        ▼
+                       ┌─────────────────────────────────┐
+                       │   حدود الصدام المرئي المشترك    │
+                       │     (Visual Clash Boundary)     │
+                       │                                 │
+                       │ * لا يندمجان جمالياً            │
+                       │ * تحتفظ كل شخصية بفيزيائها الفنية│
+                       │ * احتكاك بصري عند خط التماس     │
+                       └─────────────────────────────────┘</code></pre>
+<h3 class="section-h3">جوهر الظاهرة: التفاعل دون اندماج (Juxtaposition without Fusion)</h3>
+<p>عندما تلتقي شخصية مرسومة بـ <strong>أسلوب الكوميكس الأمريكي القديم (Pop-Art)</strong> بشخصية من <strong>عصر النهضة الإيطالية (Renaissance Oil)</strong> في نفس الكادر السينمائي:</p>
+<ul class="custom-list">
+<li><strong>الحفاظ على الهوية البصرية:</strong> لا تتحول الشخصية الكلاسيكية الزيتية إلى أسلوب الكوميكس، ولا تكتسب شخصية الكوميكس ظلالاً زيتية ناعمة. بدلاً من ذلك، تظهر الشخصيتان جنباً إلى جنب محتفظتين بخواصهما الفنية الأصلية بنسبة 100%.</li>
+<li><strong>التناقض الحركي والإطاري:</strong> تتحرك شخصية الكوميكس مثلاً بقفزات حركية خشنة (Keyframes متباعدة) بينما تتحرك الشخصية الزيتية بنعومة تامة، مما يصنع تبايناً مدهشاً في الحركة داخل نفس المشهد الموحد.</li>
+</ul>
+<h3 class="section-h3">الفلسفة العميقة للصدام المرئي:</h3>
+<p>الصدام المرئي هو تمثيل بصري مادي لـ <strong>"صراع الحضارات والهويات والأفكار"</strong>. عندما يرفض النمطان الفنيان الذوبان في بعضهما البعض، فإنهما يعلنان أن الوجود لا يمكن صهره في قالب واحد. الجمال يكمن في الاختلاف الصارخ، والتفاعل بين المتناقضات هو ما يولد الطاقة الدرامية.</p>
+<h3 class="section-h3">القوانين الفيزيائية لمنطقة التماس (Interface Physics):</h3>
+<ol class="custom-list">
+<li><strong>القص اللوني والتنافر الضوئي (Chromatic Shear):</strong> الضوء الساقط على الشخصيتين يتصرف بشكل مختلف. الضوء الواقع على شخصية الواقعية المفرطة ينتج ظلالاً ناعمة متدرجة، بينما نفس مصدر الضوء عندما يسقط على شخصية الـ Cel-Shaded (الرسوم ثنائية الأبعاد) ينعكس ككتلة لونية صلبة واحدة (Flat Color). هذا يخلق حافة وهمية متوهجة بينهما تُعرف بـ <strong>"غشاء التماس البصري"</strong>.</li>
+<li><strong>عدم توافق الجاذبية الجمالية:</strong> الجاذبية قد تعمل بشكل مختلف لكل طرف. الشخصية المرسومة بخطوط الفحم الخفيفة قد تزن غرامات قليلة وتتأثر بالرياح بسهولة، بينما الشخصية المنحوتة بالرسم المائي المشبع بالسوائل تكون ثقيلة وبطيئة الحركة.</li>
+<li><strong>لغة الجسد والصوت المتنافرة:</strong> عندما تتحدث شخصية صامتة من القصص المصورة، قد تظهر كلماتها كـ <strong>"فقاعات كلامية" (Speech Bubbles)</strong> مادية تطفو في الهواء، ويمكن للشخصية الكلاسيكية الزيتية أن تلمس هذه الفقاعات أو حتى تكسرها كأجسام صلبة!</li>
+</ol>
+<hr class="page-divider">
+<h2 class="section-h2">4. أدوار القوى الفاعلة في الكون المتعدد (Faction Dynamics)</h2>
+<div class="table-container"><table><thead><tr><th>الكيان / الفئة</th><th>المظهر الفني السائد</th><th>الهدف الأساسي والوظيفة السردية</th><th>السلاح / القدرة المميزة</th></tr></thead><tbody><tr><td><strong>حراس الأزمان (Time Keepers)</strong></td><td>أسلوب المخططات الهندسية الزرقاء (Blueprints) والخطوط الفنية الدقيقة</td><td>حماية هيكل الطبقات ومنع التداخل العشوائي أو الصدامات المرئية غير المنظمة التي قد تؤدي إلى انهيار اللوحات الكونية.</td><td><strong>قلم القياس الكوني (The Stylus of Order):</strong> القدرة على إعادة رسم الحدود الفاصلة وإغلاق بوابات التماس.</td></tr><tr><td><strong>قوى المحو (The Erasers)</strong></td><td>الفراغ المطلق، غياب الملامح، بقع بيضاء وسوداء سائلة تشبه الحبر المنسكب والمذيبات كالتينر.</td><td>تجريد العوالم من ألوانها وتفاصيلها الفنية وتحويلها إلى "لوحة بيضاء فارغة" (Blank Canvas) لإعادة البدء من الصفر.</td><td><strong>ممحاة الفوضى (The Oblivion Eraser):</strong> محو الخطوط الخارجية وتفتيت البنية الفيزيائية للشخصيات والبيئات.</td></tr><tr><td><strong>الشخصيات المستيقظة (The Awakened)</strong></td><td>هجين ومتغير (تتداخل الأساليب الفنية على أجسادهم نتيجة التنقل بين العوالم).</td><td>اكتشاف حقيقة كونهم "مجرد رسمة"، والتحرر من إملاءات الرسامين، والبحث عن "المرسم الكوني الأول" لتقرير مصيرهم بأنفسهم.</td><td><strong>الرسم الذاتي (Self-Redrawing):</strong> القدرة على إعادة رسم أطرافهم أو أدواتهم لتغيير فيزيائهم وتجاوز إطار المشهد.</td></tr></tbody></table></div>
+<hr class="page-divider">
+<h2 class="section-h2">5. دليل التصميم البصري والإخراجي للأكوان السينمائية (Director's Visual Guide)</h2>
+<p>لكي ينجح تجسيد كون "سكتشيك" في أي وسيط بصرى (سينما، ألعاب فيديو، رسوم متحركة)، يجب على المخرجين وصناع العمل الالتزام بالقواعد البصرية الصارمة التالية:</p>
+<ul class="custom-list">
+<li><strong>ممنوع الدمج الفني (No Blending):</strong> يُمنع تماماً محاولة جعل الأساليب المتناقضة تبدو وكأنها تنتمي لنفس العالم بصرير واحد. إذا تفاعل تنين مرسوم بالأسلوب الياباني التقليدي (Ukiyo-e) مع فارس واقعي مفرط (Hyperrealistic CGI)، يجب أن يحتفظ التنين بملمس الورق وضربات الحبر الخشنة وحركته الثنائية الأبعاد، بينما يحتفظ الفارس ببريق معدن درعه وانعكاساته الضوئية الواقعية.</li>
+<li><strong>التباين المادي في العمق (Contrast in Depth):</strong> استخدام تقنية وضع طبقات ثنائية الأبعاد (2D Cards) في بيئة ثلاثية الأبعاد (3D Depth) لإبراز عدم الانتماء المادي لبعض العناصر.</li>
+<li><strong>أهمية الصوت المتنافر (Sonic Dissonance):</strong> الصوت يجب أن يعكس التنافر الفني؛ فالشخصية المرسومة بأسلوب الأفلام الصامتة القديمة تُحدث صوتاً يشبه طقطقة شريط السيلوليد عند حركتها، بينما الشخصية الرقمية يرافق حركتها صوت ذبذبات إلكترونية خفيفة (Chiptune glitches).</li>
+</ul>
+<hr class="page-divider">
+<div class="alert alert-important"><div class="alert-icon">⚠️</div><div class="alert-body"><strong>الهدف الفلسفي الأعلى لكون سكتشيك:</strong>
+إن سكتشيك ليس مجرد مغامرة بصرية، بل هو احتفاء بالعملية الإبداعية ذاتها وبكل الأنماط الفنية التي أبدعتها البشرية عبر العصور. إنه كون يُثبت أن التناغم البصري لا يعني التشابه، وأن أعظم المعارك والقصص تولد عند خطوط الصدام والالتقاء بين طريقتين مختلفتين تماماً لرؤية العالم.</div></div>
+    </div>
+
+</body>
+</html>
