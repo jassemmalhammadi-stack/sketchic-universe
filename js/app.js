@@ -306,6 +306,7 @@ class SketchicApp {
         // Smart production recommendation based on counts
         const creators = this.assets.filter(a => a.type === 'creator' && a.status === 'finished');
         const scenarios = this.assets.filter(a => a.type === 'scenario' && a.status === 'finished');
+        const environments = this.assets.filter(a => a.type === 'environment' && a.status === 'finished');
         const characters = this.assets.filter(a => a.type === 'character' && a.status === 'finished');
         const comics = this.assets.filter(a => a.type === 'comic' && a.status === 'finished');
         const videos = this.assets.filter(a => a.type === 'video' && a.status === 'finished');
@@ -316,6 +317,8 @@ class SketchicApp {
             recText = "✍️ ابدأ بصياغة أول رسام كوني! الرسامون هم الكيانات التي تصيغ الأساليب وتحدد فيزياء الوجود والمادة للشخصيات.";
         } else if (scenarios.length === 0) {
             recText = "📝 ابدأ بكتابة أول سيناريو لكون سكتشيك! لا يمكنك إنتاج بقية الأصول دون وجود سيناريو مكتوب لتقسيم القصة.";
+        } else if (environments.length === 0) {
+            recText = "🌌 الخطوة التالية هي صياغة أول بيئة أو عالم رسم (Environment) تجري فيه أحداث السيناريو وتتداخل فيه الخطوط.";
         } else if (characters.length < 2) {
             recText = "🎨 تحتاج الآن إلى تصميم شخصيتين على الأقل وربطهما برسّام صانع لتفعيل ظاهرة 'الصدام المرئي'.";
         } else if (comics.length === 0) {
@@ -333,6 +336,7 @@ class SketchicApp {
     renderPipelineCounts() {
         const counts = {
             scenario: 0,
+            environment: 0,
             character: 0,
             comic: 0,
             video: 0,
@@ -543,6 +547,29 @@ class SketchicApp {
                 if (editData.relatedCreator) this.relatedCreatorSelect.value = editData.relatedCreator;
             }
 
+        } else if (type === 'environment') {
+            this.groupRelatedScenario.style.display = "block";
+            this.groupRelatedCreator.style.display = "block";
+            this.groupRelatedCharacters.style.display = "none";
+
+            if (creators.length === 0) {
+                this.prereqBox.className = "prereq-guide-box alert-important";
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-danger)">⚠️ تنبيه هام: لا يوجد رسامون</div>
+                    <p>أنت بحاجة لتحديد رسام كوني واحد على الأقل ليقوم برسم وتأصيل هذه البيئة وضبط تباينها الجمالي.</p>
+                `;
+            } else {
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-cyan)">🌌 إرشاد تصميم العوالم والبيئات</div>
+                    <p>اربط البيئة أو العالم بالسيناريو وبالرسام الصانع ليرث خواصه الجمالية وقوانين الفرشاة والخطوط تلقائياً.</p>
+                `;
+            }
+
+            if (editData) {
+                if (editData.relatedScenario) this.relatedScenarioSelect.value = editData.relatedScenario;
+                if (editData.relatedCreator) this.relatedCreatorSelect.value = editData.relatedCreator;
+            }
+
         } else if (type === 'comic') {
             this.groupRelatedScenario.style.display = "block";
             this.groupRelatedCreator.style.display = "block";
@@ -678,6 +705,26 @@ class SketchicApp {
                     </select>
                 </div>
             `;
+        } else if (type === 'environment') {
+            optionsHtml = `
+                <div class="form-group">
+                     <label for="opt-envType">طبيعة البيئة الكونية *</label>
+                     <select id="opt-envType" required>
+                         <option value="داخل لوحة قماشية مائعة (Fluid Canvas Interior)">داخل لوحة قماشية مائعة (Fluid Canvas Interior)</option>
+                         <option value="جزيرة عائمة مبنية من قصاصات الصحف والورق">جزيرة عائمة مبنية من قصاصات الصحف والورق</option>
+                         <option value="غرفة ذات بعدين محاطة بجدران خشبية كلاسيكية 3D">غرفة ذات بعدين محاطة بجدران خشبية كلاسيكية 3D</option>
+                         <option value="مدينة سايبربانك مبنية بمتجهات هندسية حادة (Vector City)">مدينة سايبربانك مبنية بمتجهات هندسية حادة (Vector City)</option>
+                     </select>
+                </div>
+                <div class="form-group">
+                     <label for="opt-clashDensity">كثافة تداخل الأنماط في الموقع *</label>
+                     <select id="opt-clashDensity" required>
+                         <option value="منخفضة (حافة تماس رفيعة جداً)">منخفضة (حافة تماس رفيعة جداً)</option>
+                         <option value="متوسطة (تداخل الضوء والجاذبية)">متوسطة (تداخل الضوء والجاذبية)</option>
+                         <option value="عالية (تداخل الأبنية والأرضيات دون اندماج)">عالية (تداخل الأبنية والأرضيات دون اندماج)</option>
+                     </select>
+                </div>
+            `;
         } else if (type === 'character') {
             optionsHtml = `
                 <div class="form-group">
@@ -791,6 +838,23 @@ class SketchicApp {
             prompt = `بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لقصة من تصنيف [${genre}] وبأسلوب [${style}]. 
 يتموضع هذا السيناريو في [${layer}] ويخضع لمعدل إطارات كوني قدره [${fps}].
 يجب أن تركز القصة على صدام الأسلوب الفني في الكادر ووجود أبعاد مرسومة متداخلة دون اندماج، مع كتابة السيناريو بهيكل مشاهد سينمائية تفصيلية.`;
+        } else if (type === 'environment') {
+            const envType = document.getElementById('opt-envType').value;
+            const clashDensity = document.getElementById('opt-clashDensity').value;
+            
+            let creatorStyle = "أسلوب رسم فني متباين";
+            if (this.relatedCreatorSelect.value) {
+                const creator = this.assets.find(a => a.id === this.relatedCreatorSelect.value);
+                if (creator && creator.subOptions) {
+                    creatorStyle = creator.subOptions.artStyle || creatorStyle;
+                }
+            }
+
+            prompt = `A cinematic environment design sheet for a Sketchic World location.
+Environment Type: [${envType}].
+Style Rules inherited from Creator: Drawn strictly in [${creatorStyle}].
+Clash Density: [${clashDensity}].
+Details: The landscape must display the architectural and terrain features constructed with the textures of this art style. Highlight the boundary of visual clash with other dimensions. Wide angle view.`;
         } else if (type === 'character') {
             const charClass = document.getElementById('opt-charClass').value;
             
@@ -1067,6 +1131,7 @@ The primary gameplay mechanic is [${mechanic}]. Explain how the rendering shader
             const typeLabels = {
                 creator: 'رسام كوني',
                 scenario: 'سيناريو وقصة',
+                environment: 'عالم وبيئة',
                 character: 'تصميم شخصية',
                 comic: 'قصة مصورة',
                 video: 'فيديو متحرك',
@@ -1085,6 +1150,15 @@ The primary gameplay mechanic is [${mechanic}]. Explain how the rendering shader
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>🎨 <strong>الأسلوب:</strong> ${asset.subOptions.artStyle}</div>
                         <div style="margin-top:4px;">✍️ <strong>الأداة:</strong> ${asset.subOptions.tool}</div>
+                    </div>
+                `;
+            } else if (asset.type === 'environment' && asset.subOptions) {
+                const envType = asset.subOptions.envType || "بيئة رسم كوني";
+                const density = asset.subOptions.clashDensity || "متوسطة";
+                creatorDetailsHtml = `
+                    <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
+                        <div>🌌 <strong>البيئة:</strong> ${envType}</div>
+                        <div style="margin-top:4px;">💥 <strong>كثافة التداخل:</strong> ${density}</div>
                     </div>
                 `;
             } else if (asset.type === 'scenario' && asset.subOptions) {

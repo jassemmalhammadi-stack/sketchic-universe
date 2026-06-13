@@ -90,10 +90,17 @@
                         <span class="node-count" id="count-scenario">0 أصل</span>
                         <div class="node-connector"></div>
                     </div>
-                    <!-- Stage 2: Characters -->
+                    <!-- Stage 2: Environments -->
+                    <div class="pipeline-node" data-stage="environment">
+                        <div class="node-icon">🌌</div>
+                        <h4>2. العوالم والبيئات</h4>
+                        <span class="node-count" id="count-environment">0 أصل</span>
+                        <div class="node-connector"></div>
+                    </div>
+                    <!-- Stage 3: Characters -->
                     <div class="pipeline-node" data-stage="character">
                         <div class="node-icon">🎨</div>
-                        <h4>2. الشخصيات</h4>
+                        <h4>3. الشخصيات</h4>
                         <span class="node-count" id="count-character">0 أصل</span>
                         <div class="node-connector"></div>
                     </div>
@@ -190,6 +197,7 @@
                     <button class="filter-btn active" data-filter="all">الكل</button>
                     <button class="filter-btn" data-filter="creator">✍️ الرسامون</button>
                     <button class="filter-btn" data-filter="scenario">📝 سيناريوهات</button>
+                    <button class="filter-btn" data-filter="environment">🌌 عوالم وبيئات</button>
                     <button class="filter-btn" data-filter="character">🎨 شخصيات</button>
                     <button class="filter-btn" data-filter="comic">📚 قصص مصورة</button>
                     <button class="filter-btn" data-filter="video">🎬 فيديوهات</button>
@@ -534,6 +542,7 @@
                         <option value="" disabled selected>اختر النوع...</option>
                         <option value="creator">✍️ رسام كوني (The Creator)</option>
                         <option value="scenario">📝 سيناريو وقصة مكتوبة</option>
+                        <option value="environment">🌌 عالم وبيئة رسم (Environment)</option>
                         <option value="character">🎨 تصميم شخصية (Character Concept)</option>
                         <option value="comic">📚 قصة مصورة أو لوحة قصة (Comic/Storyboard)</option>
                         <option value="video">🎬 مقطع فيديو متحرك (Video Asset)</option>
