@@ -3,103 +3,21 @@
    ========================================== */
 
 // Default mock assets to seed the application initially
-const MOCK_ASSETS = [
-    {
-        id: "mock-creator-1",
-        type: "creator",
-        title: "عازف الألوان الزيتية (Master of Oil Paintings)",
-        desc: "الرسام الكوني الحاكم لبعد عصر النهضة الكلاسيكي. يعتمد في رسمه على الفرشاة الخشنة المشبعة بالسوائل، وتخضع رسوماته لقوانين الكثافة والجاذبية العالية والتدفق الزمني الوقور بـ 60 إطاراً في الثانية.",
-        driveUrl: "https://drive.google.com/drive/folders/1mock-creator-oil",
-        status: "finished",
-        subOptions: {
-            artStyle: "لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)",
-            tool: "فرشاة شعر السنجاب الغليظة (Renaissance Hog Brush)"
-        },
-        createdAt: new Date().toISOString()
-    },
-    {
-        id: "mock-creator-2",
-        type: "creator",
-        title: "سيد الحبر الأسود (Lord of Black Ink)",
-        desc: "الرسام الكوني الحاكم لبعد المانجا الحركي. يفرض واقعية حادة باللونين الأبيض والأسود فقط، وتتحرك رسوماته بقفزات خشنة ديناميكية (24 إطاراً) ولديه القدرة على رسم فقاعات كلام مادية تصطدم بالأجسام.",
-        driveUrl: "https://drive.google.com/drive/folders/1mock-creator-ink",
-        status: "finished",
-        subOptions: {
-            artStyle: "مانجا يابانية تقليدية بحبر أسود حاد",
-            tool: "ريشة الرسم الكرتونية المعدنية (G-Pen)"
-        },
-        createdAt: new Date().toISOString()
-    },
-    {
-        id: "mock-creator-3",
-        type: "creator",
-        title: "رسام الرصاص المتطاير (Sketcher of Flying Graphite)",
-        desc: "رسام متمرد يرفض التلوين أو التثبيت. عوالمه وشخصياته تتكون من خطوط رصاص متطايرة ومسودات سريعة زائلة، وتتميز بمرونة الحركة وسرعة التعديل لكنها تعاني من هشاشة شديدة أمام قوى المحو.",
-        driveUrl: "https://drive.google.com/drive/folders/1mock-creator-sketch",
-        status: "draft",
-        subOptions: {
-            artStyle: "رسم تخطيطي خفيف بقلم الرصاص (Graphite Sketch)",
-            tool: "قلم فحم ناعم وقابل للمحو (Graphite Pencil)"
-        },
-        createdAt: new Date().toISOString()
-    },
-    {
-        id: "mock-1",
-        type: "scenario",
-        title: "صدمة الألوان الأولى (The First Color Clash)",
-        desc: "السيناريو التأسيسي لكون سكتشيك. يوثق لحظة تمزق لوحة الزمن وحدوث أول صدام مرئي بين عالم المانجا وعالم عصر النهضة الزيتي الكلاسيكي.",
-        driveUrl: "https://docs.google.com/document/d/1mock-scenario-sketchic/edit",
-        status: "finished",
-        relatedScenario: "",
-        relatedCharacters: [],
-        usedPrompt: "بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لقصة تدور حول 'الصدام المرئي الأول' بين بعد المانجا أحادي اللون وآخر زيتي كلاسيكي.",
-        createdAt: new Date().toISOString()
-    },
-    {
-        id: "mock-2",
-        type: "character",
-        title: "الفارس كايو (Sir Kayo)",
-        desc: "فارس مرسوم بالأسلوب الكلاسيكي الزيتي (عصر النهضة). يتميز بظلال ناعمة وإضاءة تشياروسكورو عميقة. يعتمد في حركته على 60 إطاراً في الثانية.",
-        driveUrl: "https://drive.google.com/file/d/1mock-kayo-character/view",
-        status: "finished",
-        relatedScenario: "mock-1",
-        relatedCreator: "mock-creator-1",
-        relatedCharacters: [],
-        usedPrompt: "A high-concept visual character design sheet of Sir Kayo, a knight rendered in Renaissance hyperrealistic oil painting style, detailed metal armor with soft dramatic chiaroscuro lighting, neutral background.",
-        createdAt: new Date().toISOString()
-    },
-    {
-        id: "mock-3",
-        type: "character",
-        title: "المهاجم شين (Shin the Striker)",
-        desc: "بطل مانجا شاب مرسوم بخطوط حبر سوداء حادة وتظليل نقطي (Screentone). يتحرك بقفزات خشنة ديناميكية (24 إطاراً) ولديه القدرة على إخراج فقاعات كلامية مادية.",
-        driveUrl: "https://drive.google.com/file/d/1mock-shin-character/view",
-        status: "finished",
-        relatedScenario: "mock-1",
-        relatedCreator: "mock-creator-2",
-        relatedCharacters: [],
-        usedPrompt: "A character sheet of Shin, a young manga action hero, black and white ink style, screentone shading, dynamic lines, on a pure white background.",
-        createdAt: new Date().toISOString()
-    },
-    {
-        id: "mock-4",
-        type: "comic",
-        title: "معركة التماس: الفصل الأول",
-        desc: "قصة مصورة تمثل الصدام الأول بين شين وكايو عند بوابة القص اللوني. تظهر المؤثرات البصرية وتفاعل الفقاعات الكلامية مع درع كايو الزيتي.",
-        driveUrl: "https://drive.google.com/file/d/1mock-comic-ch1/view",
-        status: "draft",
-        relatedScenario: "mock-1",
-        relatedCreator: "mock-creator-2",
-        relatedCharacters: ["mock-2", "mock-3"],
-        usedPrompt: "قم بتوليد لوحات قصة مصورة (Comic Panel Guide) لصدام بين شين (أسلوب حبر مانجا) وكايو (أسلوب لوحة زيتية) عند بوابة القص اللوني وكيف تصطدم فقاعات كلام شين بدرع كايو.",
-        createdAt: new Date().toISOString()
-    }
-];
+const MOCK_ASSETS = [];
 
 // App State Manager
 class SketchicApp {
     constructor() {
+        // Force reset database once for a fresh startup as requested
+        const initializedClean = localStorage.getItem('sketchic_clean_v3');
+        if (!initializedClean) {
+            localStorage.setItem('sketchic_assets', JSON.stringify([]));
+            localStorage.setItem('sketchic_scenes', JSON.stringify([]));
+            localStorage.setItem('sketchic_clean_v3', 'true');
+        }
+
         this.assets = this.loadAssets();
+        this.scenes = this.loadScenes();
         this.currentTab = 'dashboard';
         this.currentFilter = 'all';
         this.editingAssetId = null;
@@ -209,8 +127,28 @@ class SketchicApp {
         this.guideBtns = document.querySelectorAll('.guide-stage-btn');
         this.guideContentBody = document.getElementById('guide-content-body');
 
+        // Manuals Elements
+        this.btnManuals = document.getElementById('btn-manuals');
+
         // Simulator element
         this.portalFrame = document.getElementById('portal-frame');
+
+        // Scene Builder Elements
+        this.sceneForm = document.getElementById('scene-form');
+        this.sceneIdInput = document.getElementById('scene-id');
+        this.sceneTitleInput = document.getElementById('scene-title');
+        this.sceneScenarioSelect = document.getElementById('scene-scenario');
+        this.sceneCharactersContainer = document.getElementById('scene-characters-container');
+        this.sceneComicSelect = document.getElementById('scene-comic');
+        this.sceneVideoSelect = document.getElementById('scene-video');
+        this.scenesTimelineList = document.getElementById('scenes-timeline-list');
+        this.sceneConsistencyPromptText = document.getElementById('scene-consistency-prompt-text');
+        this.btnCopyScenePrompt = document.getElementById('btn-copy-scene-prompt');
+        this.clashPreviewStage = document.getElementById('clash-preview-stage');
+        this.btnClearScene = document.getElementById('btn-clear-scene');
+        this.sceneDialogueInput = document.getElementById('scene-dialogue');
+        this.sceneAudioProfileSelect = document.getElementById('scene-audio-profile');
+        this.btnAutoStoryboard = document.getElementById('btn-auto-storyboard');
     }
 
     bindEvents() {
@@ -285,6 +223,38 @@ class SketchicApp {
                 });
             });
         });
+
+        // Scene form bindings
+        if (this.sceneForm) {
+            this.sceneForm.addEventListener('submit', (e) => this.handleSceneSubmit(e));
+        }
+        if (this.btnClearScene) {
+            this.btnClearScene.addEventListener('click', () => this.clearSceneForm());
+        }
+        if (this.btnCopyScenePrompt) {
+            this.btnCopyScenePrompt.addEventListener('click', () => {
+                navigator.clipboard.writeText(this.sceneConsistencyPromptText.textContent);
+                this.btnCopyScenePrompt.textContent = "تم النسخ!";
+                setTimeout(() => {
+                    this.btnCopyScenePrompt.textContent = "نسخ";
+                }, 2000);
+            });
+        }
+        if (this.sceneScenarioSelect) {
+            this.sceneScenarioSelect.addEventListener('change', () => this.updateSceneConsistencyPrompt());
+        }
+        if (this.sceneDialogueInput) {
+            this.sceneDialogueInput.addEventListener('input', () => this.updateClashPreview());
+        }
+        if (this.sceneAudioProfileSelect) {
+            this.sceneAudioProfileSelect.addEventListener('change', () => {
+                this.updateSceneConsistencyPrompt();
+                this.updateClashPreview();
+            });
+        }
+        if (this.btnAutoStoryboard) {
+            this.btnAutoStoryboard.addEventListener('click', () => this.autoGenerateStoryboard());
+        }
     }
 
     switchTab(tabId) {
@@ -311,11 +281,16 @@ class SketchicApp {
         // Tab Specific Activations
         if (tabId === 'assets') {
             this.renderAssetsList();
+        } else if (tabId === 'scenes') {
+            this.initSceneTabOptions();
+            this.renderScenesList();
         } else if (tabId === 'simulator') {
             this.renderSimulator();
         } else if (tabId === 'dashboard') {
             this.updateStats();
             this.renderPipelineCounts();
+        } else if (tabId === 'manuals') {
+            // Manuals tab activated
         }
     }
 
@@ -1681,6 +1656,407 @@ Show how style shaders swap dynamically.`
             this.btnPublishGithub.disabled = false;
             this.btnPublishGithub.innerHTML = originalText;
         });
+    }
+
+    loadScenes() {
+        const stored = localStorage.getItem('sketchic_scenes');
+        if (!stored) {
+            return [];
+        }
+        try {
+            return JSON.parse(stored);
+        } catch (e) {
+            console.error("Error loading scenes", e);
+            return [];
+        }
+    }
+
+    saveScenes() {
+        localStorage.setItem('sketchic_scenes', JSON.stringify(this.scenes));
+        this.renderScenesList();
+    }
+
+    initSceneTabOptions() {
+        if (!this.sceneScenarioSelect) return;
+        const scenarios = this.assets.filter(a => a.type === 'scenario');
+        const characters = this.assets.filter(a => a.type === 'character');
+        const comics = this.assets.filter(a => a.type === 'comic');
+        const videos = this.assets.filter(a => a.type === 'video');
+
+        // Populate Scenario selector
+        this.sceneScenarioSelect.innerHTML = '<option value="" disabled selected>اختر السيناريو...</option>';
+        scenarios.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = s.title;
+            this.sceneScenarioSelect.appendChild(opt);
+        });
+
+        // Populate Characters checkboxes
+        this.sceneCharactersContainer.innerHTML = '';
+        if (characters.length === 0) {
+            this.sceneCharactersContainer.innerHTML = '<span style="font-size:0.8rem;color:var(--text-tertiary);">لا توجد شخصيات مصممة بعد.</span>';
+        } else {
+            characters.forEach(c => {
+                const label = document.createElement('label');
+                label.className = 'checkbox-item';
+                label.style.display = 'flex';
+                label.style.alignItems = 'center';
+                label.style.gap = '6px';
+                label.style.cursor = 'pointer';
+
+                const cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.value = c.id;
+                cb.name = 'scene-chars';
+                cb.addEventListener('change', () => {
+                    this.updateSceneConsistencyPrompt();
+                    this.updateClashPreview();
+                });
+
+                label.appendChild(cb);
+                label.appendChild(document.createTextNode(`👤 ${c.title}`));
+                this.sceneCharactersContainer.appendChild(label);
+            });
+        }
+
+        // Populate Comic selector
+        this.sceneComicSelect.innerHTML = '<option value="">(اختياري)</option>';
+        comics.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.id;
+            opt.textContent = c.title;
+            this.sceneComicSelect.appendChild(opt);
+        });
+
+        // Populate Video selector
+        this.sceneVideoSelect.innerHTML = '<option value="">(اختياري)</option>';
+        videos.forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = v.id;
+            opt.textContent = v.title;
+            this.sceneVideoSelect.appendChild(opt);
+        });
+    }
+
+    clearSceneForm() {
+        this.sceneForm.reset();
+        this.sceneIdInput.value = "";
+        if (this.sceneDialogueInput) this.sceneDialogueInput.value = "";
+        if (this.sceneAudioProfileSelect) this.sceneAudioProfileSelect.value = "default";
+        const saveBtn = document.getElementById('btn-save-scene');
+        if (saveBtn) saveBtn.textContent = "حفظ المشهد";
+        this.updateSceneConsistencyPrompt();
+        this.updateClashPreview();
+    }
+
+    handleSceneSubmit(e) {
+        e.preventDefault();
+        const id = this.sceneIdInput.value || 'scene-' + Date.now();
+        const title = this.sceneTitleInput.value;
+        const scenarioId = this.sceneScenarioSelect.value;
+        
+        // Get selected characters
+        const charCbs = this.sceneCharactersContainer.querySelectorAll('input[name="scene-chars"]:checked');
+        const characterIds = Array.from(charCbs).map(cb => cb.value);
+
+        if (characterIds.length === 0) {
+            alert("يرجى اختيار شخصية واحدة على الأقل للمشهد!");
+            return;
+        }
+
+        const dialogue = this.sceneDialogueInput ? this.sceneDialogueInput.value : "";
+        const audioProfile = this.sceneAudioProfileSelect ? this.sceneAudioProfileSelect.value : "default";
+
+        const comicId = this.sceneComicSelect.value;
+        const videoId = this.sceneVideoSelect.value;
+
+        const sceneData = {
+            id,
+            title,
+            scenarioId,
+            characterIds,
+            dialogue,
+            audioProfile,
+            comicId,
+            videoId,
+            createdAt: new Date().toISOString()
+        };
+
+        const existingIdx = this.scenes.findIndex(s => s.id === id);
+        if (existingIdx > -1) {
+            this.scenes[existingIdx] = sceneData;
+        } else {
+            this.scenes.push(sceneData);
+        }
+
+        this.saveScenes();
+        this.clearSceneForm();
+    }
+
+    renderScenesList() {
+        if (!this.scenesTimelineList) return;
+        this.scenesTimelineList.innerHTML = "";
+        
+        if (this.scenes.length === 0) {
+            this.scenesTimelineList.innerHTML = `<div style="text-align:center;padding:1.5rem;color:var(--text-tertiary);font-size:0.85rem;border:1px dashed var(--border-color);border-radius:6px;">لا توجد مشاهد مضافة للخط الزمني بعد.</div>`;
+            return;
+        }
+
+        this.scenes.forEach((s, idx) => {
+            const scenario = this.assets.find(a => a.id === s.scenarioId);
+            const chars = s.characterIds.map(cid => this.assets.find(a => a.id === cid)).filter(Boolean);
+            const comic = this.assets.find(a => a.id === s.comicId);
+            const video = this.assets.find(a => a.id === s.videoId);
+            
+            const card = document.createElement('div');
+            card.className = "scene-timeline-card";
+            card.innerHTML = `
+                <div class="scene-card-header">
+                    <div class="scene-card-info">
+                        <h5>المشهد ${idx + 1}: ${s.title}</h5>
+                    </div>
+                    <div class="scene-card-actions">
+                        <button class="action-btn btn-edit" title="تعديل">✏️</button>
+                        <button class="action-btn btn-delete" title="حذف" style="color:var(--color-danger)">🗑️</button>
+                    </div>
+                </div>
+                <div class="scene-tracks-display">
+                    <div class="scene-track-row">
+                        <span class="scene-track-label">🖼️ البصريات:</span>
+                        <span class="scene-track-value">${video ? '🎬 ' + video.title : (comic ? '📚 ' + comic.title : 'لا يوجد أصل بصري مرتبط')}</span>
+                    </div>
+                    <div class="scene-track-row">
+                        <span class="scene-track-label">💬 الحوار:</span>
+                        <span class="scene-track-value">${s.dialogue || 'بدون حوار مكتوب'}</span>
+                    </div>
+                    <div class="scene-track-row">
+                        <span class="scene-track-label">🔊 الصوتيات:</span>
+                        <span class="scene-track-value">${this.getAudioProfileLabel(s.audioProfile)}</span>
+                    </div>
+                </div>
+            `;
+
+            card.querySelector('.btn-edit').addEventListener('click', () => this.editScene(s.id));
+            card.querySelector('.btn-delete').addEventListener('click', () => this.deleteScene(s.id));
+
+            this.scenesTimelineList.appendChild(card);
+        });
+    }
+
+    getAudioProfileLabel(profile) {
+        switch(profile) {
+            case 'retro-tape': return '🎬 خشخشة شريط سينمائي قديم';
+            case 'digital-glitch': return '⚡ تشويش ونبضات إلكترونية رقمية';
+            case 'orchestral-renaissance': return '🎻 كمان كلاسيكي ووقار أوركسترالي';
+            default: return '🎙️ صوت استوديو افتراضي';
+        }
+    }
+
+    editScene(id) {
+        const scene = this.scenes.find(s => s.id === id);
+        if (!scene) return;
+
+        this.sceneIdInput.value = scene.id;
+        this.sceneTitleInput.value = scene.title;
+        this.sceneScenarioSelect.value = scene.scenarioId;
+
+        // Reset and check character checkboxes
+        const cbs = this.sceneCharactersContainer.querySelectorAll('input[name="scene-chars"]');
+        cbs.forEach(cb => {
+            cb.checked = scene.characterIds.includes(cb.value);
+        });
+
+        if (this.sceneDialogueInput) this.sceneDialogueInput.value = scene.dialogue || "";
+        if (this.sceneAudioProfileSelect) this.sceneAudioProfileSelect.value = scene.audioProfile || "default";
+
+        this.sceneComicSelect.value = scene.comicId || "";
+        this.sceneVideoSelect.value = scene.videoId || "";
+
+        const saveBtn = document.getElementById('btn-save-scene');
+        if (saveBtn) saveBtn.textContent = "تحديث المشهد";
+        this.updateSceneConsistencyPrompt();
+        this.updateClashPreview();
+    }
+
+    deleteScene(id) {
+        if (confirm("هل أنت متأكد من رغبتك في حذف هذا المشهد من الخط الزمني الكوني؟")) {
+            this.scenes = this.scenes.filter(s => s.id !== id);
+            this.saveScenes();
+            this.clearSceneForm();
+        }
+    }
+
+    updateSceneConsistencyPrompt() {
+        if (!this.sceneConsistencyPromptText) return;
+
+        const charCbs = this.sceneCharactersContainer.querySelectorAll('input[name="scene-chars"]:checked');
+        const selectedCharIds = Array.from(charCbs).map(cb => cb.value);
+
+        if (selectedCharIds.length === 0) {
+            this.sceneConsistencyPromptText.textContent = "حدد شخصيتين على الأثل لتوليد برومبت اتساق المشهد...";
+            return;
+        }
+
+        const chars = selectedCharIds.map(cid => this.assets.find(a => a.id === cid)).filter(Boolean);
+        const scenario = this.assets.find(a => a.id === this.sceneScenarioSelect.value);
+        const audioProfile = this.sceneAudioProfileSelect ? this.sceneAudioProfileSelect.value : "default";
+
+        let promptText = `[Google Flow Scene Prompt - Dynamic Consistency]\n`;
+        promptText += `Create a high-fidelity cinematic scene based on the scenario: "${scenario ? scenario.title : 'Generic Sketchic Scene'}"\n\n`;
+        promptText += `CHARACTER CONSISTENCY GUIDELINES:\n`;
+        
+        chars.forEach(char => {
+            const creator = this.assets.find(a => a.id === char.relatedCreator);
+            const style = creator && creator.subOptions ? creator.subOptions.artStyle : 'Distinct Art Style';
+            promptText += `- Character Name: ${char.title}\n  Description: ${char.desc}\n  Visual Style: Rendered strictly in: ${style}. Do not blend this character's aesthetic with other styles.\n\n`;
+        });
+
+        promptText += `VISUAL CLASH & CONTRAST (No-Blending Principle):\n`;
+        promptText += `This scene features a direct interaction at the visual clash boundary. Each character must retain 100% of their unique medium, line quality, frame rate, and shading style. Do not blend the backgrounds or filters. Maintain chromatic shear at the point of contact.\n\n`;
+        
+        promptText += `AUDIO & SONIC DESIGN (Sonic Dissonance):\n`;
+        promptText += `The background ambiance and audio track should align with the chosen profile: "${this.getAudioProfileLabel(audioProfile)}". The sounds generated for character interactions must audibly reflect their artistic medium (e.g. paper scraping for manga/pencil vs rich acoustic strings for oil paintings).`;
+
+        this.sceneConsistencyPromptText.textContent = promptText;
+    }
+
+    updateClashPreview() {
+        if (!this.clashPreviewStage) return;
+
+        const charCbs = this.sceneCharactersContainer.querySelectorAll('input[name="scene-chars"]:checked');
+        const selectedCharIds = Array.from(charCbs).map(cb => cb.value);
+
+        if (selectedCharIds.length === 0) {
+            this.clashPreviewStage.innerHTML = `
+                <div class="clash-empty-state" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--text-tertiary); font-size: 0.9rem; text-align: center; padding: 1rem;">
+                    حدد شخصيات المشهد لبدء محاكاة التصادم البصري ثنائي الأبعاد/ثلاثي الأبعاد...
+                </div>
+            `;
+            return;
+        }
+
+        const chars = selectedCharIds.map(cid => this.assets.find(a => a.id === cid)).filter(Boolean);
+        const userDialogue = this.sceneDialogueInput ? this.sceneDialogueInput.value : "";
+        const audioProfile = this.sceneAudioProfileSelect ? this.sceneAudioProfileSelect.value : "default";
+        
+        let html = `<div class="clash-stage-grid"></div>`;
+        
+        // Render audio profile indicator badge on the preview stage
+        html += `
+            <div style="position: absolute; top: 10px; right: 10px; background: rgba(15, 23, 42, 0.85); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.65rem; z-index: 15; font-weight: bold; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 4px;">
+                ${this.getAudioProfileLabel(audioProfile)}
+            </div>
+        `;
+
+        html += `<div class="clash-characters-stage">`;
+
+        chars.forEach((char, idx) => {
+            const creator = this.assets.find(a => a.id === char.relatedCreator);
+            const styleName = (creator && creator.subOptions && creator.subOptions.artStyle) ? creator.subOptions.artStyle : '';
+            
+            let spriteStyleClass = "clash-sprite-sketch"; // Fallback
+            let dialogueText = userDialogue || "ما هذا البعد الغريب؟";
+            
+            // If user typed a custom dialogue, let's alternate who says it or show it in the first sprite, and show alternative style comments in the others
+            if (userDialogue) {
+                if (idx > 0) {
+                    if (styleName.includes("مانجا") || styleName.includes("Manga") || styleName.includes("حبر")) {
+                        dialogueText = "أسلوب المانجا الخاص بي لن يندمج! ⚡";
+                    } else if (styleName.includes("زيتية") || styleName.includes("Renaissance") || styleName.includes("زيت")) {
+                        dialogueText = "ألواني الكلاسيكية ثابتة ووقورة 🎨";
+                    } else {
+                        dialogueText = "خطوطي مهتزة وزائلة ✍️";
+                    }
+                }
+            } else {
+                if (styleName.includes("مانجا") || styleName.includes("Manga") || styleName.includes("حبر")) {
+                    spriteStyleClass = "clash-sprite-manga";
+                    dialogueText = "ضربة سكتشيك! ⚡";
+                } else if (styleName.includes("زيتية") || styleName.includes("Renaissance") || styleName.includes("زيت")) {
+                    spriteStyleClass = "clash-sprite-oil";
+                    dialogueText = "يا لك من كائن وقور ذو خطوط خشنة!";
+                } else if (styleName.includes("رصاص") || styleName.includes("Sketch") || styleName.includes("فحم")) {
+                    spriteStyleClass = "clash-sprite-sketch";
+                    dialogueText = "أخشى أن أمحى سريعاً...";
+                }
+            }
+
+            if (styleName.includes("مانجا") || styleName.includes("Manga") || styleName.includes("حبر")) {
+                spriteStyleClass = "clash-sprite-manga";
+            } else if (styleName.includes("زيتية") || styleName.includes("Renaissance") || styleName.includes("زيت")) {
+                spriteStyleClass = "clash-sprite-oil";
+            } else if (styleName.includes("رصاص") || styleName.includes("Sketch") || styleName.includes("فحم")) {
+                spriteStyleClass = "clash-sprite-sketch";
+            }
+
+            html += `
+                <div class="clash-sprite ${spriteStyleClass}" data-name="${char.title}" style="animation-delay: ${idx * 0.3}s;">
+                    <div class="clash-speech-bubble" style="animation-delay: ${idx * 0.5}s;">${dialogueText}</div>
+                    <img src="logo.jpg" alt="${char.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            `;
+        });
+
+        html += `</div>`;
+        this.clashPreviewStage.innerHTML = html;
+    }
+
+    autoGenerateStoryboard() {
+        const scenarioId = this.sceneScenarioSelect.value;
+        if (!scenarioId) {
+            alert("يرجى اختيار سيناريو أولاً لتوليد لوحة العمل منه!");
+            return;
+        }
+        const scenario = this.assets.find(a => a.id === scenarioId);
+        const characters = this.assets.filter(a => a.type === 'character');
+        
+        if (characters.length < 2) {
+            alert("يرجى تصميم شخصيتين على الأقل لتوليد لوحة عمل للصدام البصري!");
+            return;
+        }
+
+        const charIds = characters.map(c => c.id);
+
+        const generatedScenes = [
+            {
+                id: 'scene-gen-1-' + Date.now(),
+                title: 'مقدمة اللقاء (Introduction of Clash)',
+                scenarioId: scenarioId,
+                characterIds: [charIds[0], charIds[1]],
+                dialogue: "من أنت وكيف تملك هذه الحدود الحادة؟",
+                audioProfile: 'retro-tape',
+                comicId: "",
+                videoId: "",
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 'scene-gen-2-' + Date.now(),
+                title: 'ذروة التنافر الضوئي (Chromatic Contact)',
+                scenarioId: scenarioId,
+                characterIds: [charIds[0], charIds[1]],
+                dialogue: "الخطوط تتداخل والضوء ينقسم!",
+                audioProfile: 'digital-glitch',
+                comicId: "",
+                videoId: "",
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 'scene-gen-3-' + Date.now(),
+                title: 'توازن الأنماط النهائي (Aesthetic Truce)',
+                scenarioId: scenarioId,
+                characterIds: [charIds[0], charIds[1]],
+                dialogue: "لن نندمج، بل سنعيش معاً في هذا التناقض.",
+                audioProfile: 'orchestral-renaissance',
+                comicId: "",
+                videoId: "",
+                createdAt: new Date().toISOString()
+            }
+        ];
+
+        this.scenes = [...this.scenes, ...generatedScenes];
+        this.saveScenes();
+        alert("تم توليد لوحة عمل كاملة مكونة من 3 مشاهد بنجاح! 🎉");
     }
 }
 

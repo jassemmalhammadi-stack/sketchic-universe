@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل استخدام منصة Sketchic Production Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #e0e7ff;
+            --cyan: #06b6d4;
+            --dark: #0f172a;
+            --text-main: #334155;
+            --bg-light: #f8fafc;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        body {
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 3rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+        }
+
+        /* Print Instructions Alert */
+        .print-alert {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin: 0;
+            font-weight: 800;
+        }
+
+        header p {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin: 8px 0 0 0;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            border-right: 4px solid var(--primary);
+            padding-right: 12px;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            color: var(--dark);
+            margin-top: 1.8rem;
+        }
+
+        p, ul, ol {
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+        }
+
+        ul, ol {
+            padding-right: 20px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* Folder Structure visualization */
+        .folder-structure {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.2rem;
+            font-family: 'Outfit', monospace;
+            direction: ltr;
+            text-align: left;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin: 1rem 0;
+            color: var(--dark);
+        }
+
+        /* Table design */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            text-align: right;
+        }
+
+        th {
+            background-color: var(--bg-light);
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .btn-print-action {
+            display: inline-block;
+            background-color: var(--primary);
+            color: #fff;
+            padding: 0.8rem 1.6rem;
+            border-radius: 6px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            margin-bottom: 1.5rem;
+            font-family: 'Cairo', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .btn-print-action:hover {
+            background-color: #4f46e5;
+        }
+
+        /* Print Optimization styling */
+        @media print {
+            body {
+                background: #ffffff;
+                padding: 0;
+                color: #000;
+            }
+            .container {
+                border: none;
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .print-alert, .btn-print-action {
+                display: none !important;
+            }
+            h2 {
+                page-break-before: always;
+            }
+            h2:first-of-type {
+                page-break-before: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Print Banner Instructions -->
+        <div class="print-alert">
+            <span>💡</span>
+            <div>
+                <strong>كيفية حفظ هذا الدليل كملف PDF:</strong>
+                انقر على الزر بالأسفل (أو اضغط <code>Ctrl + P</code>) وحدد خيار <strong>"حفظ كملف PDF" (Save as PDF)</strong> من المتصفح لحفظه مباشرة على جهازك بتنسيق ممتاز.
+            </div>
+        </div>
+
+        <button onclick="window.print()" class="btn-print-action">🖨️ طباعة وحفظ كملف PDF</button>
+
+        <header>
+            <h1>Sketchic Production Hub</h1>
+            <p>دليل الاستخدام والتشغيل الشامل للمنصة الكونية</p>
+        </header>
+
+        <h2>1. مقدمة عن المنصة</h2>
+        <p>مرحباً بك في <strong>Sketchic Production Hub</strong>؛ المنصة الإنتاجية المتكاملة لإدارة وبناء كون <strong>"سكتشيك" (Sketchic)</strong> السينمائي الممتد. تعتمد المنصة على فلسفة إبداعية فريدة تعتبر "الرسم خطاً ومادة" أساساً لقوانين الطبيعة والوجود، وتُنظم عمليات "الصدام المرئي" (Visual Clash) والتباين الجمالي للأصول الإبداعية الفنية.</p>
+
+        <h2>2. هيكلة التخزين السحابي (Google Drive Integration)</h2>
+        <p>لتشغيل المنصة بالشكل الأمثل وإدارة ملفات الفيديو، القصص المصورة، والتصاميم عالية الجودة دون إثقال قاعدة البيانات، تندمج المنصة مع مساحة سحابية بسعة <strong>5 تيرابايت (Google AI Pro)</strong>. يرجى إنشاء الهيكل التنظيمي التالي في حساب Google Drive الخاص بك ووضع روابط المشاركة في أصول المنصة:</p>
+        
+        <div class="folder-structure">
+📁 Sketchic_Universe_Root/
+├── 📁 01_Scenarios/   <-- ملفات سيناريوهات النصوص (Google Docs)
+├── 📁 02_Characters/  <-- لوحات تصاميم الشخصيات والأنماط الفنية
+├── 📁 03_Comics/      <-- القصص المصورة ولوحات القصة (Storyboards)
+├── 📁 04_Videos/      <-- مقاطع الفيديو السينمائية وملفات الأنيميشن
+└── 📁 05_Games/       <-- ملفات الألعاب التفاعلية القابلة للتحميل
+        </div>
+
+        <h2>3. خطوات الإنتاج المتسلسل (Production Pipeline)</h2>
+        <p>تتبع المنصة تسلسلاً منطقياً لبناء الكون السينمائي، حيث تسلم كل مرحلة أصولها للمرحلة التي تليها:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 25%;">المرحلة</th>
+                    <th>الوصف والهدف السردي</th>
+                    <th>الأصول المطلوبة للربط</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. الرسامون الكونيون</strong></td>
+                    <td>تحديد الهوية الفنية والفيزياء الأساسية التي تصاغ بها الشخصيات.</td>
+                    <td>اختيار نوع الفرشاة والنمط الفني الحاكم.</td>
+                </tr>
+                <tr>
+                    <td><strong>2. السيناريوهات</strong></td>
+                    <td>حبكة القصة، الطبقة الزمنية المتوازية، ومعدلات الإطارات الكونية.</td>
+                    <td>نص السيناريو والروابط المرجعية.</td>
+                </tr>
+                <tr>
+                    <td><strong>3. الشخصيات</strong></td>
+                    <td>تجسيد هوية الأبطال والخصوم وربطهم بالرسام لوراثة نمطهم الفني.</td>
+                    <td>ربط بالسيناريو وبالرسام الصانع.</td>
+                </tr>
+                <tr>
+                    <td><strong>4. القصص المصورة</strong></td>
+                    <td>بناء الكوادر الثنائية الأبعاد وتطبيق ميكانيكيات التصادم والتنافر.</td>
+                    <td>ربط بشخصيتين على الأقل للصدام.</td>
+                </tr>
+                <tr>
+                    <td><strong>5. مقاطع الفيديو</strong></td>
+                    <td>تجسيد الحركة المتنافرة للأبعاد (مثل لقطة تدمج حركة 12fps مع 60fps).</td>
+                    <td>ربط بالقصص المصورة والسيناريو.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>4. باني المشاهد المتسقة (Scene & Sequence Builder)</h2>
+        <p>يعمل <strong>باني المشاهد</strong> (مستوحى من واجهتي Google Flow و Google Vids) كأداة تحرير رئيسية لتجميع لقطات الفيديو والقصص المصورة في خط زمني موحد:</p>
+        
+        <h3>أ. مُولد لوحة العمل التلقائي (AI Storyboard Generator)</h3>
+        <p>عند اختيار سيناريو معين، يمكنك نقر زر <strong>"✨ لوحة عمل ذكية"</strong> ليقوم الذكاء الاصطناعي تلقائياً بتقسيم القصة الطويلة إلى 3 لقطات متتالية (مقدمة، ذروة التصادم، توازن الأنماط) وتوزيع الشخصيات عليها وتوليد حواراتها المقترحة فوراً لتوفر عليك وقت التصميم.</p>
+
+        <h3>ب. مسارات التحرير المتعددة (Multi-track Slides)</h3>
+        <p>كل مشهد يتم حفظه يظهر كشريحة فيديو غنية بالمسارات:</p>
+        <ul>
+            <li><strong>مسار البصريات (Visuals):</strong> لمشاهدة رسومات الكوميكس أو روابط الفيديو.</li>
+            <li><strong>مسار الحوار (Subtitles):</strong> لتحديث وتعديل الكلمات الظاهرة في فقاعات المحاكاة الحية.</li>
+            <li><strong>مسار الصوتيات (Audio):</strong> لضبط ملف المؤثرات الصوتية المتنافرة المصاحب للقاء.</li>
+        </ul>
+
+        <h2>5. محاكي التصادم البصري الحي (Visual Clash Live Simulator)</h2>
+        <p>في الجزء الأيسر من باني المشاهد، يظهر <strong>المحاكي البصري التفاعلي</strong> الذي يستعرض فورياً تفاعل الشخصيات المختارة:</p>
+        <ul>
+            <li><strong>شخصيات المانجا:</strong> تتحرك بقفزات إطارية حادة وخشنة (12fps) مع حواف نقطية سوداء (Halftones).</li>
+            <li><strong>شخصيات اللوحات الزيتية:</strong> تدور بنعومة متناهية (60fps) داخل إطار كلاسيكي مذهب.</li>
+            <li><strong>شخصيات الرصاص والفحم:</strong> تهتز كالمسودات المؤقتة القابلة للمحو السريع.</li>
+            <li><strong>الفقاعات الكلامية العائمة:</strong> تتأثر وتتغير ديناميكياً مع النص الذي تكتبه في مسار الحوار بالوقت الحقيقي!</li>
+        </ul>
+
+        <h2>6. تصدير ونشر الأصول للموقع العام</h2>
+        <p>بمجرد الانتهاء من إعداد أصولك وجعل حالتها <strong>"منتهي" (Finished)</strong>، يمكنك نقر زر <strong>"تصدير للموقع العام"</strong> في الشريط العلوي لتشغيل الآتي تلقائياً:</p>
+        <ol>
+            <li>تحديث ملف قاعدة البيانات المحلية <code>public_assets.json</code>.</li>
+            <li>تنفيذ أوامر <code>git add</code> و <code>git commit</code> و <code>git push</code> أوتوماتيكياً لرفع وحفظ البيانات على مستودع GitHub الخاص بك.</li>
+            <li>تحديث صفحة الجمهور التفاعلية الخارجية لتعرض المشاهد للعامة مباشرة.</li>
+        </ol>
+
+    </div>
+
+</body>
+</html>

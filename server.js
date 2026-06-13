@@ -67,22 +67,51 @@ const server = http.createServer((req, res) => {
                         return;
                     }
                     
-                    // Attempt Git commit and push automatically
-                    const gitCmd = 'git add public_assets.json index.html portal.js style.css logo.jpg && git commit -m "Auto-update public assets" && git push';
-                    exec(gitCmd, { cwd: PUBLIC_DIR }, (gitErr, stdout, stderr) => {
-                        if (gitErr) {
-                            console.error('Git auto-push failed:', gitErr, stderr);
+                    const siblingDir = path.join(PUBLIC_DIR, '..', 'sketchic');
+                    const siblingJSON = path.join(siblingDir, 'public_assets.json');
+
+                    // Write to sibling public repo
+                    fs.writeFile(siblingJSON, JSON.stringify(data, null, 4), 'utf8', (sibErr) => {
+                        if (sibErr) {
+                            console.error('Failed to write to sibling public assets:', sibErr);
                             res.writeHead(200, { 'Content-Type': 'application/json' });
                             res.end(JSON.stringify({ 
                                 success: true, 
                                 pushed: false, 
-                                error: 'تعذر التحديث التلقائي في GitHub. تأكد من إعداد مستودع Git محلياً، وربطه بالـ Remote، وحفظ بيانات اعتماد GitHub الخاصة بك.' 
+                                error: 'تعذر الكتابة في مجلد البوابة العامة المجاور (sketchic). تأكد من أن المجلد موجود في بيئة العمل.' 
                             }));
                             return;
                         }
-                        console.log('Git auto-push succeeded:', stdout);
-                        res.writeHead(200, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ success: true, pushed: true }));
+
+                        // Copy latest index.html, portal.js, style.css, logo.jpg to sibling root
+                        try {
+                            fs.copyFileSync(path.join(PUBLIC_DIR, 'index.html'), path.join(siblingDir, 'index.html'));
+                            fs.copyFileSync(path.join(PUBLIC_DIR, 'js', 'portal.js'), path.join(siblingDir, 'portal.js'));
+                            fs.copyFileSync(path.join(PUBLIC_DIR, 'css', 'style.css'), path.join(siblingDir, 'style.css'));
+                            if (fs.existsSync(path.join(PUBLIC_DIR, 'assets', 'logo.jpg'))) {
+                                fs.copyFileSync(path.join(PUBLIC_DIR, 'assets', 'logo.jpg'), path.join(siblingDir, 'logo.jpg'));
+                            }
+                        } catch (copyErr) {
+                            console.error('Failed to sync sibling templates:', copyErr);
+                        }
+
+                        // Attempt Git commit and push inside sibling public repo folder
+                        const gitCmd = 'git add public_assets.json index.html portal.js style.css logo.jpg && git commit -m "Auto-update public assets from production hub" && git push';
+                        exec(gitCmd, { cwd: siblingDir }, (gitErr, stdout, stderr) => {
+                            if (gitErr) {
+                                console.error('Git auto-push failed for sibling repo:', gitErr, stderr);
+                                res.writeHead(200, { 'Content-Type': 'application/json' });
+                                res.end(JSON.stringify({ 
+                                    success: true, 
+                                    pushed: false, 
+                                    error: 'تعذر التحديث التلقائي في GitHub لمستودع البوابة العامة. تأكد من تهيأة مستودع Git في مجلد sketchic وربطه عن بعد (Remote).' 
+                                }));
+                                return;
+                            }
+                            console.log('Git auto-push succeeded for sibling repo:', stdout);
+                            res.writeHead(200, { 'Content-Type': 'application/json' });
+                            res.end(JSON.stringify({ success: true, pushed: true }));
+                        });
                     });
                 });
             } catch (e) {
