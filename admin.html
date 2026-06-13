@@ -398,61 +398,175 @@
                 </div>
             </div>
 
-            <div class="dashboard-grid" style="grid-template-columns: 1.2fr 0.8fr; gap: 2rem;">
-                <!-- Section 1: Detailed swappable tool explanation grid -->
-                <div class="card-box" style="border-top: 4px solid var(--color-accent);">
-                    <h3 class="card-title">تفاعل الرسام الكوني والأدوات الكونية</h3>
-                    <p class="card-subtitle">كيف تتغير فيزياء وقوانين الإنتاج عند تبديل الأدوات الكونية لكل رسام</p>
-                    
-                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                        <p style="font-size: 0.95rem; line-height: 1.6;">
-                            في كون سكتشيك، لا يرتبط الرسام بأداته الخاصة للأبد. عندما يقرر رسام كوني استخدام أداة تنتمي لبعد آخر، يحدث <strong>تعديل فيزيائي مباشر</strong> على طبيعة الأصول المنتجة في عوالمه. إليك الجدول التفاعلي لتأثير هذه التبديلات:
-                        </p>
+                        <!-- Nav tabs inside Manuals for different asset interactions -->
+                        <div class="filter-tabs" style="margin-top: 10px; margin-bottom: 15px; background: var(--bg-secondary); padding: 5px; border-radius: 8px; display: flex; gap: 8px;">
+                            <button class="filter-btn active" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-creators').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">✍️ الرسام والأداة</button>
+                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-scenarios').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">📝 السيناريو والطبقات</button>
+                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-environments').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">🌌 البيئة وتكامل الفيزياء</button>
+                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-characters').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">🎨 الشخصية والفصائل</button>
+                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-media').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">📚🎬🎮 الوسائط والألعاب</button>
+                        </div>
 
-                        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px;">
-                            <thead>
-                                <tr style="background-color: var(--bg-tertiary);">
-                                    <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">الرسام الكوني + أسلوبه</th>
-                                    <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">الأداة المستخدمة</th>
-                                    <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">التأثير المباشر على الإنتاج وحركة العالم</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td rowspan="2" style="font-weight: bold; border: 1px solid var(--border-color); vertical-align: middle;">
-                                        <strong>سيد الحبر الأسود</strong><br>
-                                        <span style="font-size: 0.75rem; color: var(--text-tertiary);">أسلوب المانجا الحركي (12-24fps)</span>
-                                    </td>
-                                    <td style="border: 1px solid var(--border-color); padding: 8px;">ريشة الرسم المعدنية (G-Pen)</td>
-                                    <td style="border: 1px solid var(--border-color); padding: 8px;">انتاج خطوط حبر سوداء حادة وتظليل نقطي متباين. حركة سريعة ديناميكية وفقاعات كلام مادية تصطدم بالدروع.</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(245, 158, 11, 0.05);">فرشاة شعر السنجاب (زيتية)</td>
-                                    <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(245, 158, 11, 0.05); color: var(--color-orange);"><strong>الصدام السائل:</strong> تذوب خطوط الحبر وتتحول إلى بقع لزجة ثقيلة. تتباطأ سرعة المشهد إلى 60fps ناعمة لكنها لزجة، وتفقد الحواف حدتها لتصبح كالمياه الآسنة أحادية اللون.</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td rowspan="2" style="font-weight: bold; border: 1px solid var(--border-color); vertical-align: middle;">
-                                        <strong>عازف الألوان الزيتية</strong><br>
-                                        <span style="font-size: 0.75rem; color: var(--text-tertiary);">الزيتي الكلاسيكي لعصر النهضة (60fps)</span>
-                                    </td>
-                                    <td style="border: 1px solid var(--border-color); padding: 8px;">فرشاة شعر السنجاب الغليظة</td>
-                                    <td style="border: 1px solid var(--border-color); padding: 8px;">إنتاج لوحات زيتية غنية ذات عمق وجاذبية عالية. تظليل تشياروسكورو ناعم، ومرور الزمن بوقار ونعومة تامة.</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(6, 182, 212, 0.05);">قلم فحم ناعم وقابل للمحو</td>
-                                    <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(6, 182, 212, 0.05); color: var(--color-cyan);"><strong>الوجود المترب:</strong> تتلاشى الألوان الزيتية الكثيفة وتتحول إلى مسحوق غرافيت خفيف. يفقد العالم جاذبيته العالية ويصبح عرضة للمحو السريع والتطاير مع الرياح الكونية.</td>
-                                </tr>
+                        <!-- Subtab 1: Creators -->
+                        <div id="subtab-creators" class="manuals-subtab" style="display: block;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="background-color: var(--bg-tertiary);">
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 30%;">الرسام والأسلوب</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">الأداة المستخدمة</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">الأثر على فيزياء الإنتاج والحركة</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="2" style="font-weight: bold; border: 1px solid var(--border-color); vertical-align: middle;">
+                                            <strong>سيد الحبر الأسود</strong><br>
+                                            <span style="font-size: 0.75rem; color: var(--text-tertiary);">أسلوب المانجا الحركي (12-24fps)</span>
+                                        </td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">ريشة الرسم المعدنية (G-Pen)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">انتاج خطوط حبر سوداء حادة وتظليل نقطي متباين. حركة سريعة ديناميكية وفقاعات كلام مادية تصطدم بالدروع.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(245, 158, 11, 0.05);">فرشاة شعر السنجاب (زيتية)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(245, 158, 11, 0.05); color: var(--color-orange);"><strong>الصدام السائل:</strong> تذوب خطوط الحبر وتتحول إلى بقع لزجة ثقيلة. تتباطأ سرعة المشهد إلى 60fps ناعمة لكنها لزجة، وتفقد الحواف حدتها لتصبح كالمياه الآسنة أحادية اللون.</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2" style="font-weight: bold; border: 1px solid var(--border-color); vertical-align: middle;">
+                                            <strong>عازف الألوان الزيتية</strong><br>
+                                            <span style="font-size: 0.75rem; color: var(--text-tertiary);">الزيتي الكلاسيكي لعصر النهضة (60fps)</span>
+                                        </td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">فرشاة شعر السنجاب الغليظة</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">إنتاج لوحات زيتية غنية ذات عمق وجاذبية عالية. تظليل تشياروسكورو ناعم، ومرور الزمن بوقار ونعومة تامة.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(6, 182, 212, 0.05);">قلم فحم ناعم وقابل للمحو</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(6, 182, 212, 0.05); color: var(--color-cyan);"><strong>الوجود المترب:</strong> تتلاشى الألوان الزيتية الكثيفة وتتحول إلى مسحوق غرافيت خفيف. يفقد العالم جاذبيته العالية ويصبح عرضة للمحو السريع والتطاير مع الرياح الكونية.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold; border: 1px solid var(--border-color); vertical-align: middle;">
+                                            <strong>أي رسام كوني</strong>
+                                        </td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(239, 110, 110, 0.05); font-weight: bold;">ممحاة الفوضى (Cosmic Eraser)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(239, 110, 110, 0.05); color: var(--color-danger);"><strong>المحو المطلق:</strong> يتفكك الكائن أو الشخصية بالكامل ويتحول إلى فراغ أبيض. المحو هنا لا يقتل، بل يزيل أصل الوجود والتأريخ الفني للكائن.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                                <tr>
-                                    <td style="font-weight: bold; border: 1px solid var(--border-color); vertical-align: middle;">
-                                        <strong>أي رسام كوني</strong>
-                                    </td>
-                                    <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(239, 110, 110, 0.05); font-weight: bold;">ممحاة الفوضى (Cosmic Eraser)</td>
-                                    <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(239, 110, 110, 0.05); color: var(--color-danger);"><strong>المحو المطلق:</strong> يتفكك الكائن أو الشخصية بالكامل ويتحول إلى فراغ أبيض. المحو هنا لا يقتل، بل يزيل أصل الوجود والتأريخ الفني للكائن.</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <!-- Subtab 2: Scenarios -->
+                        <div id="subtab-scenarios" class="manuals-subtab" style="display: none;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="background-color: var(--bg-tertiary);">
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 30%;">السيناريو والطبقة الزمنية</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">معدل الإطارات (Framerate)</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">التأثير على بيئة القصة والتفاعل السردي</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">الطبقة 1: الوجود المادي</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">24fps أو 60fps ناعم</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الأصول تظهر بكتلتها الكاملة وقوانين الفيزياء الافتراضية. الضوء ينعكس على الأجسام بشكل واقعي وتظهر ضربات الفرشاة بتفاصيلها الملموسة.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; background-color: rgba(6, 182, 212, 0.05);">الطبقة 2: الانعكاس والظلال</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(6, 182, 212, 0.05);">12fps خشن ومتقطع</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(6, 182, 212, 0.05); color: var(--color-cyan);">تتحول الظلال لأصول تفاعلية مستقلة. تبدأ الشخصيات بالانفصال عن ظلالها التي تتحرك بمعدل إطارات مغاير وتأثير القص اللوني.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; background-color: rgba(245, 158, 11, 0.05);">الطبقة 3: المخطط الهيكلي</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(245, 158, 11, 0.05);">ثابت أو ومضات ديناميكية</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(245, 158, 11, 0.05); color: var(--color-orange);">تتلاشى الأسطح والتلوين تماماً وتتحول الأصول إلى خطوط شبكية زرقاء (Wireframe). تنهار قوانين الجاذبية وتصبح الأجسام خفيفة وقابلة للاختراق.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Subtab 3: Environments -->
+                        <div id="subtab-environments" class="manuals-subtab" style="display: none;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="background-color: var(--bg-tertiary);">
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 30%;">نوع البيئة</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">كثافة تداخل الأنماط</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">الفيزياء المطبقة عند التماس البصري</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">لوحة قماشية مائعة (Fluid Canvas)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">عالية (تداخل الأبنية والأرضيات)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الأرضيات تتصرف كالسوائل. تتأخر استجابة القفز وتذوب الخطوط الحادة للشخصيات مما يجعل الحركة لزجة وبطيئة وتتأثر بالخلط اللوني عند السكون.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; background-color: rgba(16, 185, 129, 0.05);">جزيرة قصاصات الصحف (Paper Scrap)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(16, 185, 129, 0.05);">متوسطة (تداخل الضوء والجاذبية)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(16, 185, 129, 0.05); color: var(--color-green);">الرياح تحرك أجزاء من البيئة كقصاصات الورق. الشخصيات خفيفة الوزن تتأثر بقوة بالتيارات الهوائية وتتعرض للانطواء والتمزق البصري المؤقت.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Subtab 4: Characters -->
+                        <div id="subtab-characters" class="manuals-subtab" style="display: none;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="background-color: var(--bg-tertiary);">
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 30%;">فصيل الشخصية</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">السلاح الكوني النشط</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">القدرة التفاعلية الفورية في البيئة</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; color: var(--color-accent);">حراس الأزمان (Time Keepers)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">قلم القياس الكوني (Stylus)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">القدرة على إعادة رسم الحدود الفاصلة المغلقة وتثبيت معدل إطارات موحد 24fps لمنع التنافر البصري وإصلاح البيئات المشوهة.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; color: var(--color-danger);">قوى المحو (The Erasers)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">ممحاة الفوضى (Eraser)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; color: var(--color-danger);">تفتيت ومحو الهياكل الخارجية للأرضيات والأجسام، مما يترك فراغات بيضاء ممحوة (مضادة للمادة) تسقط من خلالها الشخصيات الأخرى.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; color: var(--color-green);">الشخصيات المستيقظة (The Awakened)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الرسم الذاتي (Self-Redrawing)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; color: var(--color-green);">القدرة على تغيير أسلوب الرسم ذاتياً (مثلاً التحول لخط رصاص خفيف) لعبور الشقوق الضيقة أو تفادي الضربات الثقيلة للأسلحة الزيتية.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Subtab 5: Media & Games -->
+                        <div id="subtab-media" class="manuals-subtab" style="display: none;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="background-color: var(--bg-tertiary);">
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 30%;">أصل الإنتاج النهائي</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">مبدأ المخرج الحاكم</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">كيفية انعكاس التنافر البصري في الناتج النهائي</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">القصص المصورة (Comics)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">التباين في العمق وجاذبية الحبر</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">تداخل الكادرات وتجاوز الشخصيات لإطارات اللوحات. تتصرف فقاعات الكلام ككتل صلبة تدفع الشخصيات الأخرى أو تحجب الرؤية في الكادر.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">الفيديوهات المتحركة (Videos)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الصوت المتنافر ومعدلات الإطارات</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">حركة متفاوتة السرعة للشخصيات في الكادر الواحد (12fps بجانب 60fps). المؤثرات الصوتية متباينة جداً (أصوات ورقية خشنة للمانجا بجانب صوت أوركسترالي دافئ للزيتي).</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">الألعاب التفاعلية (Games)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">تغيير الشيدرات البرمجية والكتلة</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">يتحكم اللاعب في تبديل هيئة الشخصية لحل الألغاز (مثل التحول لهيئة زيتية ثقيلة لكسر الأرضية الهشة، أو هيئة حبر خفيف للعبور مع الرياح).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
