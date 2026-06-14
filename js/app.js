@@ -513,6 +513,70 @@ class SketchicApp {
             btn.textContent = "اعتماد وإضافة";
             
             btn.addEventListener('click', () => {
+                // 1. Save the current scenario first so progress and relationships are preserved
+                const scenId = this.editingAssetId;
+                const scenType = this.assetTypeSelect.value;
+                const scenTitle = this.assetTitleInput.value.trim() || `سيناريو مستخلص من (${source.title})`;
+                const scenDesc = this.assetDescTextarea.value.trim();
+                const scenDriveUrl = this.assetDriveUrlInput.value.trim() || "https://drive.google.com/drive/folders/extracted-mock-folder";
+                const scenStatus = this.assetStatusSelect.value;
+                const scenRelatedSource = this.relatedSourceSelect.value;
+
+                const scenSubOptions = {};
+                const scenSelects = this.dynamicOptionsContainer.querySelectorAll('select');
+                scenSelects.forEach(sel => {
+                    const key = sel.id.replace('opt-', '');
+                    scenSubOptions[key] = sel.value;
+                });
+                const scenInputs = this.dynamicOptionsContainer.querySelectorAll('input');
+                scenInputs.forEach(inp => {
+                    const key = inp.id.replace('opt-', '');
+                    scenSubOptions[key] = inp.value;
+                });
+                const scenTextareas = this.dynamicOptionsContainer.querySelectorAll('textarea');
+                scenTextareas.forEach(ta => {
+                    const key = ta.id.replace('opt-', '');
+                    scenSubOptions[key] = ta.value;
+                });
+
+                const isScenEditing = this.assets.some(a => a.id === scenId);
+                if (isScenEditing) {
+                    this.assets = this.assets.map(a => {
+                        if (a.id === scenId) {
+                            return {
+                                ...a,
+                                title: scenTitle,
+                                desc: scenDesc,
+                                driveUrl: scenDriveUrl,
+                                status: scenStatus,
+                                relatedSource: scenRelatedSource,
+                                subOptions: scenSubOptions
+                            };
+                        }
+                        return a;
+                    });
+                } else {
+                    const newScen = {
+                        id: scenId,
+                        type: scenType,
+                        title: scenTitle,
+                        desc: scenDesc,
+                        driveUrl: scenDriveUrl,
+                        status: scenStatus,
+                        relatedSource: scenRelatedSource,
+                        relatedCreator: "",
+                        relatedFaction: "",
+                        relatedCharacters: [],
+                        interfacePhysics: "",
+                        directorChecklist: { noBlending: false, depthContrast: false, sonicDissonance: false },
+                        usedPrompt: "",
+                        subOptions: scenSubOptions,
+                        createdAt: new Date().toISOString()
+                    };
+                    this.assets.push(newScen);
+                }
+
+                // 2. Create and add the new extracted asset
                 const newAssetId = 'asset-extracted-' + Date.now() + '-' + idx;
                 const newAsset = {
                     id: newAssetId,
@@ -521,7 +585,7 @@ class SketchicApp {
                     desc: p.desc,
                     driveUrl: "https://drive.google.com/drive/folders/extracted-mock-folder",
                     status: 'draft',
-                    relatedScenario: this.editingAssetId,
+                    relatedScenario: scenId,
                     relatedCreator: this.relatedCreatorSelect.value || "",
                     relatedSource: sourceId,
                     relatedFaction: p.relatedFaction || "",
@@ -539,6 +603,13 @@ class SketchicApp {
                 btn.disabled = true;
                 btn.style.backgroundColor = "var(--text-tertiary)";
                 btn.textContent = "✅ تم الاعتماد";
+
+                // 3. Prompt user and immediately open the newly created asset for editing/completion
+                setTimeout(() => {
+                    alert(`تم حفظ السيناريو بنجاح واعتماد أصل (${p.title}). سيفتح النموذج الآن لتتمكن من استكمال بقية التفاصيل حسب الترتيب الصحيح.`);
+                    this.closeModal();
+                    this.openEditModal(newAsset);
+                }, 300);
             });
 
             item.appendChild(info);
