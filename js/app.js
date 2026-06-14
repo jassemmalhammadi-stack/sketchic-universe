@@ -180,9 +180,43 @@ class SketchicApp {
         this.relatedScenarioSelect.addEventListener('change', () => {
             this.handleAssetTypeChange();
             this.updateSuggestedPrompt();
+            
+            // Auto-populate Title based on Scenario Selection
+            const type = this.assetTypeSelect.value;
+            const scenId = this.relatedScenarioSelect.value;
+            if (scenId) {
+                const scenAsset = this.assets.find(a => a.id === scenId);
+                if (scenAsset && !this.assetTitleInput.value.trim()) {
+                    const typeLabels = {
+                        'character': 'شخصية لـ',
+                        'environment': 'بيئة لـ',
+                        'voice': 'صوت لـ',
+                        'music': 'ساوندتراك لـ',
+                        'comic': 'لوحة قصة لـ',
+                        'video': 'فيديو لـ',
+                        'game': 'لعبة لـ'
+                    };
+                    const label = typeLabels[type] || 'أصل لـ';
+                    this.assetTitleInput.value = `${label} (${scenAsset.title})`;
+                }
+            }
         });
         this.relatedSourceSelect.addEventListener('change', () => {
             this.updateSuggestedPrompt();
+            
+            // Auto-populate Title based on Narrative Source Selection
+            const type = this.assetTypeSelect.value;
+            if (type === 'scenario' && this.relatedSourceSelect.value) {
+                const sourceAsset = this.assets.find(a => a.id === this.relatedSourceSelect.value);
+                if (sourceAsset && (!this.assetTitleInput.value.trim() || this.assetTitleInput.value.startsWith("سيناريو"))) {
+                    this.assetTitleInput.value = `سيناريو: ${sourceAsset.title}`;
+                }
+            } else if (type === 'creator' && this.relatedSourceSelect.value) {
+                const sourceAsset = this.assets.find(a => a.id === this.relatedSourceSelect.value);
+                if (sourceAsset && (!this.assetTitleInput.value.trim() || this.assetTitleInput.value.startsWith("الرسام"))) {
+                    this.assetTitleInput.value = `الرسام الكوني لـ (${sourceAsset.title})`;
+                }
+            }
         });
         if (this.btnExtractAssets) {
             this.btnExtractAssets.addEventListener('click', () => this.extractAssetsFromSource());
