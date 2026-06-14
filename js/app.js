@@ -1025,11 +1025,11 @@ class SketchicApp {
                 }
             }
 
-            prompt = `A cinematic environment design sheet for a Sketchic World location.
-Environment Type: [${envType}].
-Style Rules inherited from Creator: Drawn strictly in [${creatorStyle}].
-Clash Density: [${clashDensity}].
-Details: The landscape must display the architectural and terrain features constructed with the textures of this art style. Highlight the boundary of visual clash with other dimensions. Wide angle view.`;
+            prompt = `لوحة تصميم بيئة سينمائية لموقع في عالم سكتشيك (Sketchic World).
+طبيعة البيئة: [${envType}].
+قواعد الأسلوب الموروثة من الرسام: مرسومة بدقة بأسلوب [${creatorStyle}].
+كثافة التداخل الفني: [${clashDensity}].
+التفاصيل: يجب أن تظهر المناظر الطبيعية والتضاريس والخصائص المعمارية مبنية بوضوح بملامس وقوام هذا الأسلوب الفني. إبراز حدود الصدام والتلامس البصري مع الأبعاد الأخرى. لقطة بزاوية واسعة.`;
         } else if (type === 'character') {
             const charClass = document.getElementById('opt-charClass').value;
             
@@ -1059,27 +1059,27 @@ Details: The landscape must display the architectural and terrain features const
                 }
             }
 
-            prompt = `A professional visual character design sheet for a Sketchic Cinematic Universe character.
-Character Role: [${charClass}].
-Faction: [${factionText}].
-Signature Cosmic Weapon: [${weaponText}].
-Style Rules inherited from Creator: Drawn in [${styleText}] using [${toolText}].
-Details: The character sheet must display a clean design of the character on a neutral background, highlighting the distinct lines, texture, and strokes of this specific art medium. Also illustrate their faction insignia and signature weapon.`;
+            prompt = `ورقة تصميم شخصية بصرية احترافية لشخصية في كون سكتشيك السينمائي.
+الدور السردي للشخصية: [${charClass}].
+الفصيل الكوني: [${factionText}].
+السلاح الكوني المميز: [${weaponText}].
+قوانين الأسلوب الموروثة من الرسام: مرسومة بأسلوب [${styleText}] باستخدام [${toolText}].
+التفاصيل: يجب أن تعرض ورقة تصميم الشخصية مظهراً نظيفاً وواضحاً للشخصية على خلفية محايدة، مع إبراز الخطوط والملامس وقوام ضربات الأداة الفنية الخاصة بهذا الرسام. قم بتوضيح شعار فصيلهم وسلاحهم المميز.`;
         } else if (type === 'voice') {
             const voiceEngine = document.getElementById('opt-voiceEngine').value;
-            prompt = `A cosmic text-to-speech audio profile prompt for Google AI Studio (gemini-3.1-flash-tts-preview).
-Voice Engine: [${voiceEngine}].`;
+            prompt = `موجه توليد ملف صوت تعبيري كوني مخصص لـ Google AI Studio (gemini-3.1-flash-tts-preview).
+محرك الصوت: [${voiceEngine}].`;
 
             if (voiceEngine === 'gemini-3.1-flash-tts-preview') {
                 const voiceScene = document.getElementById('opt-voiceScene').value;
                 const voiceContext = document.getElementById('opt-voiceContext').value;
                 const voiceSpeaker = document.getElementById('opt-voiceSpeaker').value;
                 const voiceTags = document.getElementById('opt-voiceTags').value;
-                prompt += `\n\nGoogle AI Studio Multimodal Audio Settings:
-- Audio Scene Setting: [${voiceScene}]
-- Conversation/Performance Context: [${voiceContext}]
-- Target Speaker Voice: [${voiceSpeaker}]
-- Expressive Input Audio tags: [${voiceTags}]`;
+                prompt += `\n\nإعدادات الصوت المتعدد الوسائط في Google AI Studio:
+- إعداد المشهد الخلفي: [${voiceScene}]
+- سياق الكلام والأداء التعبيري: [${voiceContext}]
+- المتحدث الصوتي المختار: [${voiceSpeaker}]
+- النص الموجه بالأوسمة التعبيرية المباشرة: [${voiceTags}]`;
             }
         } else if (type === 'comic') {
             const format = document.getElementById('opt-format').value;
@@ -1112,10 +1112,10 @@ Voice Engine: [${voiceEngine}].`;
                 physicsText = "التفاعل مع فقاعات الكلام المادية (Physical Speech Bubbles) - تحول فقاعات الكلام لكتل صلبة قابلة للمس والتحطيم";
             }
 
-            prompt = `Generate a high-quality video prompt for AI generation tool [${tool}]:
-Scene: A dynamic visual clash between two characters in the Sketchic universe. One character is animated with [${fps}] to show the distinct rendering properties, with beautiful light casting flat shadows on the 2D side and photorealistic shading on the oil-painted side.
-Physics Interaction: Show the following interface physics in action: [${physicsText}].
-High contrast, gorgeous cinematic light.`;
+            prompt = `توليد موجه فيديو عالي الجودة لأداة التوليد بالذكاء الاصطناعي [${tool}]:
+المشهد: صدام بصري ديناميكي بين شخصيتين في كون سكتشيك. إحداهما متحركة بمعدل إطارات [${fps}] لإبراز الخصائص المتنافرة للرسم، مع إضاءة خلابة وظلال مسطحة ثنائية الأبعاد على الجانب الكرتوني، وتظليل واقعي ناعم على جانب اللوحة الزيتية.
+تفاعل الفيزياء الكونية: إظهار ميكانيكية فيزياء التماس التالية أثناء العمل: [${physicsText}].
+تباين عالي، إضاءة سينمائية ساحرة.`;
         } else if (type === 'music') {
             const engine = document.getElementById('opt-musicEngine').value;
             const genre = document.getElementById('opt-musicGenre').value;
@@ -1123,20 +1123,20 @@ High contrast, gorgeous cinematic light.`;
             const instruments = document.getElementById('opt-musicInstruments').value;
             const musicPrompt = document.getElementById('opt-musicPrompt').value;
             
-            prompt = `Generate a cosmic soundtrack using [${engine}]:
-Style Tags: [Genre: ${genre}, Tempo: ${tempo}, Instruments: ${instruments}, Atmosphere: celestial, visual clash, cinematic, stereophonic soundscape].
-Prompt/Vibe Descriptors: ${musicPrompt}
+            prompt = `توليد مقطع موسيقي تصويري كوني باستخدام [${engine}]:
+أوسمة النمط الموسيقي: [النمط: ${genre}، السرعة: ${tempo}، الآلات: ${instruments}، الأجواء: سماوية، صدام بصري، سينمائي، لوحة صوتية مجسمة].
+واصفات وتفاصيل اللحن: ${musicPrompt}
 
-Structure suggestion:
-- [Intro: Ethereal cosmic pad introducing the visual boundary]
-- [Build-up: Adding strings and tension as the two art styles collide]
-- [Climax: Cinematic drop showing the contrast and tension of the Sketchic Universe]
-- [Outro: Fading notes representing the parallel layers]`;
+الهيكل اللحني المقترح للمقطع:
+- [مقدمة]: نغمة كوكبية أثيرية تمهد لبداية خط التماس البصري.
+- [تصاعد]: إدخال الأوتار وتصاعد حدة التوتر مع اقتراب الأسلوبين الفنيين من الصدام.
+- [الذروة]: هبوط لحني ملحمي يجسد التنافر والصدام المادي لكون سكتشيك.
+- [خاتمة]: نغمات متلاشية تمثل صدى الطبقات الزمنية المتوازية.`;
         } else if (type === 'game') {
             const gameGenre = document.getElementById('opt-gameGenre').value;
             const mechanic = document.getElementById('opt-mechanic').value;
-            prompt = `Write a game design draft and Godot GDScript structure for [${gameGenre}] set in Sketchic universe.
-The primary gameplay mechanic is [${mechanic}]. Explain how the rendering shaders change the player's physical properties (weight, gravity, interaction).`;
+            prompt = `كتابة مسودة تصميم لعبة وبنية أكواد Godot GDScript للعبة من تصنيف [${gameGenre}] تدور في كون سكتشيك.
+الميكانيكية الرئيسية للعب هي: [${mechanic}]. اشرح كيف تقوم شيدرات الرندرة والأسلوب الفني بتغيير الخصائص الفيزيائية للاعب (الوزن، الجاذبية، وتفاعله مع البيئة).`;
         }
 
         this.suggestedPromptText.textContent = prompt;
