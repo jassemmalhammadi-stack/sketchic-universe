@@ -9,11 +9,11 @@ const MOCK_ASSETS = [];
 class SketchicApp {
     constructor() {
         // Force reset database once for a fresh startup as requested
-        const initializedClean = localStorage.getItem('sketchic_clean_v4');
+        const initializedClean = localStorage.getItem('sketchic_clean_v5');
         if (!initializedClean) {
             localStorage.setItem('sketchic_assets', JSON.stringify([]));
             localStorage.setItem('sketchic_scenes', JSON.stringify([]));
-            localStorage.setItem('sketchic_clean_v4', 'true');
+            localStorage.setItem('sketchic_clean_v5', 'true');
         }
 
         this.assets = this.loadAssets();
@@ -1096,7 +1096,7 @@ class SketchicApp {
                 </div>
             `;
         } else if (type === 'creator') {
-            optionsHtml = `
+            optionsHtml += `
                 <div class="form-group">
                     <label for="opt-artStyle">الأسلوب الفني الحاكم للرسام *</label>
                     <select id="opt-artStyle" required>
@@ -1119,7 +1119,7 @@ class SketchicApp {
                 </div>
             `;
         } else if (type === 'scenario') {
-            optionsHtml = `
+            optionsHtml += `
                 <div class="form-group">
                     <label for="opt-scenarioSourceType">نوع المصدر السردي الأصلي (Source Type) *</label>
                     <select id="opt-scenarioSourceType" required>
@@ -1168,7 +1168,7 @@ class SketchicApp {
                 </div>
             `;
         } else if (type === 'environment') {
-            optionsHtml = `
+            optionsHtml += `
                 <div class="form-group">
                      <label for="opt-envType">طبيعة البيئة الكونية *</label>
                      <select id="opt-envType" required>
@@ -1188,7 +1188,7 @@ class SketchicApp {
                 </div>
             `;
         } else if (type === 'character') {
-            optionsHtml = `
+            optionsHtml += `
                 <div class="form-group">
                     <label for="opt-charClass">الدور السردي للشخصية *</label>
                     <select id="opt-charClass" required>
@@ -1200,7 +1200,7 @@ class SketchicApp {
                 </div>
             `;
         } else if (type === 'voice') {
-            optionsHtml = `
+            optionsHtml += `
                 <div class="form-group">
                     <label for="opt-voiceEngine">محرك الصوت بالذكاء الاصطناعي (Voice Engine) *</label>
                     <select id="opt-voiceEngine" required>
@@ -1239,7 +1239,7 @@ class SketchicApp {
                 </div>
             `;
         } else if (type === 'music') {
-            optionsHtml = `
+            optionsHtml += `
                 <div class="form-group">
                     <label for="opt-musicEngine">محرك الموسيقى بالذكاء الاصطناعي (Music Engine) *</label>
                     <select id="opt-musicEngine" required>
@@ -1281,7 +1281,7 @@ class SketchicApp {
                 </div>
             `;
         } else if (type === 'comic') {
-            optionsHtml = `
+            optionsHtml += `
                 <div class="form-group">
                     <label for="opt-format">صيغة وعرض القصة المصورة *</label>
                     <select id="opt-format" required>
@@ -1300,7 +1300,7 @@ class SketchicApp {
                 </div>
             `;
         } else if (type === 'video') {
-            optionsHtml = `
+            optionsHtml += `
                 <div class="form-group">
                     <label for="opt-tool">محرك التوليد والتحريك بالذكاء الاصطناعي *</label>
                     <select id="opt-tool" required>
@@ -1320,7 +1320,7 @@ class SketchicApp {
                 </div>
             `;
         } else if (type === 'game') {
-            optionsHtml = `
+            optionsHtml += `
                 <div class="form-group">
                     <label for="opt-gameGenre">تصنيف اللعبة للتحميل *</label>
                     <select id="opt-gameGenre" required>
@@ -3142,9 +3142,76 @@ Show how style shaders swap dynamically.`
         }
 
         if (type === 'creator') {
-            const hasOilKeyword = (theme + plot + setting + scenarioTitle).includes("زيت") || (theme + plot + setting + scenarioTitle).includes("oil") || (theme + plot + setting + scenarioTitle).includes("نهضة");
-            const artStyle = hasOilKeyword ? "لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)" : "مانجا يابانية تقليدية بحبر أسود حاد";
-            const tool = hasOilKeyword ? "فرشاة شعر السنجاب الغليظة المشبعة بالزيت" : "ريشة الرسم الكرتونية المعدنية الحادة (G-Pen)";
+            const searchText = (theme + " " + plot + " " + setting + " " + scenarioTitle + " " + sourceTitle).toLowerCase();
+            
+            // Define categories, their options, and keywords
+            const categories = [
+                {
+                    artStyle: "لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)",
+                    tool: "فرشاة شعر السنجاب الغليظة المشبعة بالزيت",
+                    keywords: ["زيت", "oil", "نهضة", "renaissance", "زيتية", "فرشاة", "سنجاب"]
+                },
+                {
+                    artStyle: "مانجا يابانية تقليدية بحبر أسود حاد",
+                    tool: "ريشة الرسم الكرتونية المعدنية الحادة (G-Pen)",
+                    keywords: ["مانجا", "manga", "حبر", "ink", "g-pen", "ريشة", "يابانية"]
+                },
+                {
+                    artStyle: "رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)",
+                    tool: "ممحاة مطاطية لمضاد المادة (Cosmic Eraser)",
+                    keywords: ["كارتون كلاسيكي", "ثلاثينات", "rubber hose", "eraser", "ممحاة", "ممحاه", "مطاطية", "كارتون"]
+                },
+                {
+                    artStyle: "رسم تخطيطي خفيف بقلم الرصاص (Graphite Sketch)",
+                    tool: "قلم رصاص غرافيت فحم ناعم وقابل للمحو",
+                    keywords: ["رصاص", "graphite", "sketch", "تخطيطي", "فحم", "مخطط", "رسم تخطيطي"]
+                },
+                {
+                    artStyle: "رسوم رقمية حديثة ذات متجهات هندسية (Vectors)",
+                    tool: "قلم الألواح الرقمية اللاسلكي اللانهائي",
+                    keywords: ["رقمية", "متجهات", "vectors", "digital", "ألواح", "لاسلكي", "هندسية"]
+                }
+            ];
+
+            // Count keyword matches for each category
+            let bestCategory = categories[1]; // Default to Manga
+            let maxScore = 0;
+
+            categories.forEach(cat => {
+                let score = 0;
+                cat.keywords.forEach(kw => {
+                    if (searchText.includes(kw)) {
+                        score += 1;
+                    }
+                });
+                if (score > maxScore) {
+                    maxScore = score;
+                    bestCategory = cat;
+                }
+            });
+
+            if (maxScore === 0) {
+                const choice = prompt(
+                    "لم يتم العثور على أسلوب فني محدد في المصدر السردي.\n" +
+                    "يرجى اختيار أحد الأساليب والفرش الكونية التالية بكتابة رقمه (1-5):\n\n" +
+                    "1. لوحة زيتية كلاسيكية من عصر النهضة (Renaissance) & فرشاة شعر السنجاب\n" +
+                    "2. مانجا يابانية تقليدية بحبر أسود حاد & ريشة الرسم المعدنية (G-Pen)\n" +
+                    "3. رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose) & ممحاة مضاد المادة\n" +
+                    "4. رسم تخطيطي خفيف بقلم الرصاص (Graphite Sketch) & قلم رصاص غرافيت فحم\n" +
+                    "5. رسوم رقمية حديثة ذات متجهات هندسية (Vectors) & قلم الألواح الرقمية اللاسلكي\n\n" +
+                    "اكتب رقم الخيار:"
+                );
+                
+                const selectedIdx = parseInt(choice) - 1;
+                if (selectedIdx >= 0 && selectedIdx < categories.length) {
+                    bestCategory = categories[selectedIdx];
+                } else {
+                    alert("اختيار غير صالح. تم تطبيق خيار المانجا كخيار افتراضي.");
+                }
+            }
+
+            const artStyle = bestCategory.artStyle;
+            const tool = bestCategory.tool;
 
             this.assetTitleInput.value = sourceTitle ? `الرسام الكوني لـ (${sourceTitle})` : "الرسام الكوني الحالم";
             this.assetDescTextarea.value = sourceTitle 
