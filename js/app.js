@@ -1503,7 +1503,8 @@ class SketchicApp {
             sonicDissonance: this.chkSonicDissonance.checked
         };
 
-        if (this.editingAssetId) {
+        const isEditing = this.assets.some(a => a.id === this.editingAssetId);
+        if (isEditing) {
             // Edit mode
             this.assets = this.assets.map(a => {
                 if (a.id === this.editingAssetId) {
@@ -1530,7 +1531,7 @@ class SketchicApp {
         } else {
             // Add mode
             const newAsset = {
-                id: 'asset-' + Date.now(),
+                id: this.editingAssetId || ('asset-' + Date.now()),
                 type,
                 title,
                 desc,
