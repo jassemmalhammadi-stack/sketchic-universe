@@ -1561,27 +1561,46 @@ class SketchicApp {
             subOptions[key] = ta.value;
         });
 
-        if (!type || !title || !driveUrl) {
-            alert("يرجى ملء جميع الحقول المطلوبة الكونية.");
+        if (!type || !title) {
+            alert("يرجى ملء الحقول المطلوبة الأساسية (النوع والعنوان).");
             return;
+        }
+
+        let finalDriveUrl = driveUrl;
+        if (!finalDriveUrl) {
+            const folderMapping = {
+                'source': '00_Source_Materials',
+                'scenario': '01_Scenarios',
+                'creator': '02_Creators_Paintings',
+                'character': '03_Characters_Assets',
+                'environment': '04_Environments_Assets',
+                'voice': '05_Voices_Audios',
+                'music': '06_Cosmic_Soundtracks',
+                'comic': '07_Comics_Storyboards',
+                'video': '08_Videos_Cinematics',
+                'game': '09_Downloadable_Games'
+            };
+            const folderName = folderMapping[type] || 'General_Assets';
+            const safeTitle = title.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
+            finalDriveUrl = `https://drive.google.com/drive/folders/Sketchic_Universe_Root/${folderName}/${safeTitle}`;
         }
 
         // Strict Workflow Rule: No Creator without Narrative Source
         if (type === 'creator' && !relatedSource) {
-            alert("خطأ: لا يمكن إنشاء أو حفظ الرسام الكوني بدون ربطه بمصدر سردي مرتبط!");
-            return;
+            const proceed = confirm("تنبيه: لم تقم بربط الرسام بمصدر سردي بعد. هل ترغب في حفظه كمسودة بدون ربط مؤقتاً؟");
+            if (!proceed) return;
         }
 
         // Strict Workflow Rule: No Scenario without Narrative Source
         if (type === 'scenario' && !relatedSource) {
-            alert("خطأ: لا يمكن إنشاء أو حفظ السيناريو بدون ربطه بمصدر سردي مرتبط!");
-            return;
+            const proceed = confirm("تنبيه: لم تقم بربط السيناريو بمصدر سردي بعد. هل ترغب في حفظه كمسودة بدون ربط مؤقتاً؟");
+            if (!proceed) return;
         }
 
         // Strict Workflow Rule: No Sub-assets without Scenario
         if (['character', 'environment', 'voice', 'music'].includes(type) && !relatedScenario) {
-            alert("خطأ: لا يمكن إنشاء أو حفظ هذا الأصل بدون ربطه بسيناريو مفعل!");
-            return;
+            const proceed = confirm(`تنبيه: لم تقم بربط هذا الأصل (${type}) بسيناريو مفعّل بعد. هل ترغب في حفظه كمسودة بدون ربط مؤقتاً؟`);
+            if (!proceed) return;
         }
 
         // Validate Director's Checklist before saving as finished
@@ -1621,7 +1640,7 @@ class SketchicApp {
                         type,
                         title,
                         desc,
-                        driveUrl,
+                        driveUrl: finalDriveUrl,
                         status,
                         relatedScenario,
                         relatedCreator,
@@ -1643,7 +1662,7 @@ class SketchicApp {
                 type,
                 title,
                 desc,
-                driveUrl,
+                driveUrl: finalDriveUrl,
                 status,
                 relatedScenario,
                 relatedCreator,
