@@ -90,6 +90,7 @@ class SketchicApp {
         this.btnCopyModalPrompt = document.getElementById('btn-copy-modal-prompt');
         this.assetUsedPromptInput = document.getElementById('asset-used-prompt');
         this.btnSaveToDrive = document.getElementById('btn-save-to-drive');
+        this.btnSaveToDrive = document.getElementById('btn-save-to-drive');
 
         // Conditional linkage inputs
         this.groupRelatedScenario = document.getElementById('group-related-scenario');
@@ -204,6 +205,10 @@ class SketchicApp {
                 this.btnCopyModalPrompt.textContent = "نسخ";
             }, 2000);
         });
+
+        if (this.btnSaveToDrive) {
+            this.btnSaveToDrive.addEventListener('click', () => this.saveAssetToDrive());
+        }
 
         if (this.btnSaveToDrive) {
             this.btnSaveToDrive.addEventListener('click', () => this.saveAssetToDrive());
@@ -995,6 +1000,11 @@ class SketchicApp {
             if (btnGen) {
                 btnGen.addEventListener('click', () => this.generateSourceWithAI());
             }
+        } else {
+            const btnGen = document.getElementById('btn-generate-asset-ai');
+            if (btnGen) {
+                btnGen.addEventListener('click', () => this.generateAssetWithAI(type));
+            }
         }
     }
 
@@ -1003,6 +1013,16 @@ class SketchicApp {
         this.groupSuggestedPrompt.style.display = "block";
 
         let optionsHtml = "";
+
+        if (type !== 'source') {
+            optionsHtml += `
+                <div style="margin-bottom:12px; display:flex; justify-content:flex-end; width:100%;">
+                    <button type="button" id="btn-generate-asset-ai" class="btn" style="background-color: var(--color-accent); color: #fff; font-size: 0.8rem; font-weight: bold; padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; display: flex; align-items: center; gap: 4px; width: 100%; justify-content: center; margin-top: 5px;">
+                        <span>🤖</span> <span>توليد وتعبئة تفاصيل الأصل بالذكاء الاصطناعي</span>
+                    </button>
+                </div>
+            `;
+        }
 
         if (type === 'source') {
             optionsHtml = `
@@ -3036,6 +3056,149 @@ Show how style shaders swap dynamically.`
         this.assetDriveUrlInput.value = simulatedUrl;
 
         alert(`🎉 تم محاكاة حفظ الملف بنجاح!\n\nتم تصدير ملف الوثيقة (${folderName}_${safeTitle}.md) وتحميله على جهازك.\nتم ربط المسار الافتراضي تلقائياً في خانة Google Drive:\n${simulatedUrl}`);
+    }
+
+    generateAssetWithAI(type) {
+        let scenarioTitle = "";
+        let sourceTitle = "";
+        let theme = "";
+        let plot = "";
+        let setting = "";
+
+        const scenarioId = this.relatedScenarioSelect.value;
+        const scenarioAsset = this.assets.find(a => a.id === scenarioId);
+        if (scenarioAsset) {
+            scenarioTitle = scenarioAsset.title;
+            const sourceId = scenarioAsset.relatedSource;
+            const sourceAsset = this.assets.find(a => a.id === sourceId);
+            if (sourceAsset) {
+                sourceTitle = sourceAsset.title;
+                theme = (sourceAsset.subOptions && (sourceAsset.subOptions.theme || sourceAsset.subOptions.sourceTheme)) || "";
+                plot = (sourceAsset.subOptions && (sourceAsset.subOptions.plot || sourceAsset.subOptions.sourcePlot)) || "";
+                setting = (sourceAsset.subOptions && (sourceAsset.subOptions.setting || sourceAsset.subOptions.sourceSetting)) || "";
+            }
+        }
+
+        const sourceIdDirect = this.relatedSourceSelect.value;
+        const sourceAssetDirect = this.assets.find(a => a.id === sourceIdDirect);
+        if (sourceAssetDirect) {
+            sourceTitle = sourceAssetDirect.title;
+            theme = (sourceAssetDirect.subOptions && (sourceAssetDirect.subOptions.theme || sourceAssetDirect.subOptions.sourceTheme)) || "";
+            plot = (sourceAssetDirect.subOptions && (sourceAssetDirect.subOptions.plot || sourceAssetDirect.subOptions.sourcePlot)) || "";
+            setting = (sourceAssetDirect.subOptions && (sourceAssetDirect.subOptions.setting || sourceAssetDirect.subOptions.sourceSetting)) || "";
+        }
+
+        if (type === 'creator') {
+            const hasOilKeyword = (theme + plot + setting + scenarioTitle).includes("زيت") || (theme + plot + setting + scenarioTitle).includes("oil") || (theme + plot + setting + scenarioTitle).includes("نهضة");
+            const artStyle = hasOilKeyword ? "لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)" : "مانجا يابانية تقليدية بحبر أسود حاد";
+            const tool = hasOilKeyword ? "فرشاة شعر السنجاب الغليظة المشبعة بالزيت" : "ريشة الرسم الكرتونية المعدنية الحادة (G-Pen)";
+
+            this.assetTitleInput.value = sourceTitle ? `الرسام الكوني لـ (${sourceTitle})` : "الرسام الكوني الحالم";
+            this.assetDescTextarea.value = sourceTitle 
+                ? `الرسام الكلاسيكي المسؤول عن تجسيد وتأطير فيزياء الأسلوب الفني لـ: ${sourceTitle}.` 
+                : "رسام كوني غامض يقوم بتجسيد ضربات الفرشاة وتصادم أبعاد الرسم.";
+            
+            const styleSel = document.getElementById('opt-artStyle');
+            if (styleSel) styleSel.value = artStyle;
+            const toolSel = document.getElementById('opt-tool');
+            if (toolSel) toolSel.value = tool;
+
+        } else if (type === 'scenario') {
+            const hasNovel = (sourceTitle).includes("رواية") || (sourceTitle).includes("Novel");
+            const sourceType = hasNovel ? "رواية كوكبية طويلة (Cosmic Novel)" : "قصة قصيرة (Short Story)";
+            const genre = (theme + plot).includes("خيال") ? "خيال علمي (Sci-Fi)" : "دراما الصدام المرئي (Visual Clash Drama)";
+            const style = (plot).includes("حركة") ? "سرد حركي سريع ومليء بالإثارة" : "سرد فلسفي ميتافيزيقي";
+
+            this.assetTitleInput.value = sourceTitle ? `سيناريو: صراع الأبعاد في (${sourceTitle})` : "سيناريو اللقاء الأول";
+            this.assetDescTextarea.value = plot 
+                ? `سيناريو تفصيلي يعكس العقدة الجوهرية للمصدر: ${plot.substring(0, 150)}...`
+                : "سيناريو تجريبي يصف لحظة تصادم الأبعاد الفنية عند التماس المباشر.";
+
+            const stSel = document.getElementById('opt-scenarioSourceType');
+            if (stSel) stSel.value = sourceType;
+            const linkIn = document.getElementById('opt-scenarioSourceLink');
+            if (linkIn) linkIn.value = sourceAssetDirect ? sourceAssetDirect.driveUrl : "https://docs.google.com/document/d/source-story";
+            const genSel = document.getElementById('opt-genre');
+            if (genSel) genSel.value = genre;
+            const stySel = document.getElementById('opt-style');
+            if (stySel) stySel.value = style;
+            const layerSel = document.getElementById('opt-parallelLayer');
+            if (layerSel) layerSel.value = "Layer 1 - الوجود المادي الفعلي";
+            const fpsSel = document.getElementById('opt-framerate');
+            if (fpsSel) fpsSel.value = "24fps";
+
+        } else if (type === 'character') {
+            const charClass = (plot).includes("مستيقظ") || (plot).includes("وعي") 
+                ? "شخصية مستيقظة تدرك أنها مرسومة (Awakened)" 
+                : "بطل القصة الرئيسي (Protagonist)";
+            const faction = charClass.includes("Awakened") ? "awakened" : "keepers";
+
+            this.assetTitleInput.value = scenarioTitle ? `شخصية: بطل (${scenarioTitle})` : "الشخصية المستيقظة الأولى";
+            this.assetDescTextarea.value = plot 
+                ? `شخصية محورية تنحدر من الصراع السردي: ${plot.substring(0, 100)}...`
+                : "شخصية قيادية تملك القدرة على عبور حواف التماس الفني بين الأبعاد.";
+
+            const classSel = document.getElementById('opt-charClass');
+            if (classSel) classSel.value = charClass;
+            this.relatedFactionSelect.value = faction;
+
+        } else if (type === 'environment') {
+            const hasPaper = (setting + plot).includes("ورق") || (setting + plot).includes("جريد");
+            const envType = hasPaper 
+                ? "جزيرة عائمة مبنية من قصاصات الصحف والورق" 
+                : "داخل لوحة قماشية مائعة (Fluid Canvas Interior)";
+
+            this.assetTitleInput.value = scenarioTitle ? `بيئة: ${scenarioTitle}` : "موقع تماس الأبعاد الكونية";
+            this.assetDescTextarea.value = setting 
+                ? `بيئة درامية مخصصة للسيناريو مستوحاة من: ${setting.substring(0, 120)}`
+                : "بيئة هجينة تتداخل فيها الخطوط والكتل والجاذبية بدون اندماج.";
+
+            const envSel = document.getElementById('opt-envType');
+            if (envSel) envSel.value = envType;
+            const clashSel = document.getElementById('opt-clashDensity');
+            if (clashSel) clashSel.value = "متوسطة (تداخل الضوء والجاذبية)";
+
+        } else if (type === 'music') {
+            const hasAction = (plot + scenarioTitle).includes("حركة") || (plot + scenarioTitle).includes("صراع");
+            const genre = hasAction ? "Epic Cosmic Orchestral (أوركسترا كونية ملحمية)" : "Dark Ambient Synthwave (سينث-ويف غامض وبيئي)";
+            const tempo = hasAction ? "Fast / Action-packed (سريع وحركي)" : "Medium / Dramatic (متوسط ودرامي)";
+            const instruments = hasAction ? "Epic Timpani & Brass (نحاسيات وملحميات)" : "Cosmic Pad & Ethereal Keys (بيانو كوني وألحان سماوية)";
+
+            this.assetTitleInput.value = scenarioTitle ? `ساوندتراك: ملحمة (${scenarioTitle})` : "اللحن الكوني المتنافر";
+            this.assetDescTextarea.value = theme 
+                ? `ساوندتراك وموسيقى تصويرية تعزز ثيمة: ${theme.substring(0, 100)}`
+                : "موسيقى تصويرية تجمع بين آلات وترية دافئة وتأثيرات رقمية حادة لتمثيل تصادم الأبعاد.";
+
+            const engineSel = document.getElementById('opt-musicEngine');
+            if (engineSel) engineSel.value = "Suno AI (توليد كامل اللحن مع الكلمات)";
+            const genreSel = document.getElementById('opt-musicGenre');
+            if (genreSel) genreSel.value = genre;
+            const tempoSel = document.getElementById('opt-musicTempo');
+            if (tempoSel) tempoSel.value = tempo;
+            const instSel = document.getElementById('opt-musicInstruments');
+            if (instSel) instSel.value = instruments;
+            const promptInput = document.getElementById('opt-musicPrompt');
+            if (promptInput) promptInput.value = hasAction ? "Epic orchestral strings, aggressive timpani, synthetic glitch undertone" : "Atmospheric space ambient pads, slow dramatic violin chords";
+
+        } else if (type === 'voice') {
+            this.assetTitleInput.value = scenarioTitle ? `صوت: بطل المشاهد لـ (${scenarioTitle})` : "الملف الصوتي الافتراضي";
+            this.assetDescTextarea.value = "بصمة صوتية مستخرجة بمحركات Google AI Studio للتعبير عن خطوط الحوار الكونية للشخصية.";
+            
+            const engSel = document.getElementById('opt-voiceEngine');
+            if (engSel) engSel.value = "gemini-3.1-flash-tts-preview";
+            const sceneInput = document.getElementById('opt-voiceScene');
+            if (sceneInput) sceneInput.value = setting ? `In the location: ${setting.substring(0, 50)}` : "A quiet drawing studio";
+            const contextInput = document.getElementById('opt-voiceContext');
+            if (contextInput) contextInput.value = plot ? `Struggling in: ${plot.substring(0, 50)}` : "Speaking thoughtfully";
+            const speakerSel = document.getElementById('opt-voiceSpeaker');
+            if (speakerSel) speakerSel.value = "Charon (Calm, Deep voice)";
+        } else {
+            this.assetTitleInput.value = `أصل ${type} التابع لـ ${scenarioTitle || 'الكون'}`;
+            this.assetDescTextarea.value = `أصل إنتاج تم توليده تلقائياً لدعم تشكيل وتجسيد الكون السينمائي.`;
+        }
+
+        this.updateSuggestedPrompt();
+        alert(`🤖 تم توليد وتعبئة تفاصيل الأصل (${type}) بنجاح! تم قراءة البيانات وتطويعها سياقياً ${scenarioTitle ? `بناءً على سيناريو: "${scenarioTitle}"` : 'تلقائياً كخيار بديل لعدم توفر مصدر سردي'}.`);
     }
 }
 
