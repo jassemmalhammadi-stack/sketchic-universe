@@ -209,15 +209,48 @@ class SketchicApp {
             
             // Auto-populate Title based on Narrative Source Selection
             const type = this.assetTypeSelect.value;
-            if (type === 'scenario' && this.relatedSourceSelect.value) {
-                const sourceAsset = this.assets.find(a => a.id === this.relatedSourceSelect.value);
-                if (sourceAsset && (!this.assetTitleInput.value.trim() || this.assetTitleInput.value.startsWith("سيناريو"))) {
-                    this.assetTitleInput.value = `سيناريو: ${sourceAsset.title}`;
-                }
-            } else if (type === 'creator' && this.relatedSourceSelect.value) {
-                const sourceAsset = this.assets.find(a => a.id === this.relatedSourceSelect.value);
-                if (sourceAsset && (!this.assetTitleInput.value.trim() || this.assetTitleInput.value.startsWith("الرسام"))) {
-                    this.assetTitleInput.value = `الرسام الكوني لـ (${sourceAsset.title})`;
+            const sourceId = this.relatedSourceSelect.value;
+            if (!sourceId) return;
+
+            const sourceAsset = this.assets.find(a => a.id === sourceId);
+            if (!sourceAsset) return;
+
+            if (type === 'scenario' && (!this.assetTitleInput.value.trim() || this.assetTitleInput.value.startsWith("سيناريو"))) {
+                this.assetTitleInput.value = `سيناريو: ${sourceAsset.title}`;
+            } else if (type === 'creator' && (!this.assetTitleInput.value.trim() || this.assetTitleInput.value.startsWith("الرسام"))) {
+                this.assetTitleInput.value = `الرسام الكوني لـ (${sourceAsset.title})`;
+            }
+
+            // Google Drive Actual Document Reading Integration
+            if (this.isGDriveConnected && sourceAsset.driveUrl) {
+                const fileId = this.parseGDriveFileId(sourceAsset.driveUrl);
+                if (fileId) {
+                    console.log("Fetching live document content from Google Drive for ID:", fileId);
+                    this.fetchGoogleFileContent(fileId).then(content => {
+                        if (content) {
+                            const parsed = this.parseMarkdownSource(content);
+                            
+                            // Dynamically update in-memory cache
+                            if (!sourceAsset.subOptions) sourceAsset.subOptions = {};
+                            sourceAsset.subOptions.theme = parsed.theme;
+                            sourceAsset.subOptions.plot = parsed.plot;
+                            sourceAsset.subOptions.setting = parsed.setting;
+                            sourceAsset.desc = parsed.desc;
+                            
+                            console.log("Successfully fetched and parsed document:", parsed);
+
+                            // Pre-fill inputs if current form is editing/showing the source
+                            if (this.editingAssetId === sourceAsset.id) {
+                                const themeTA = document.getElementById('opt-sourceTheme');
+                                if (themeTA) themeTA.value = parsed.theme;
+                                const plotTA = document.getElementById('opt-sourcePlot');
+                                if (plotTA) plotTA.value = parsed.plot;
+                                const settingTA = document.getElementById('opt-sourceSetting');
+                                if (settingTA) settingTA.value = parsed.setting;
+                                this.assetDescTextarea.value = parsed.desc;
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -515,13 +548,59 @@ class SketchicApp {
         const plot = (source.subOptions && source.subOptions.plot) || (source.subOptions && source.subOptions.sourcePlot) || "";
         const setting = (source.subOptions && source.subOptions.setting) || (source.subOptions && source.subOptions.sourceSetting) || "";
 
+        // Dynamic style and tool classification for the extracted Creator
+        const searchText = (theme + " " + plot + " " + setting + " " + source.title).toLowerCase();
+        const categories = [
+            {
+                artStyle: "لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)",
+                tool: "فرشاة شعر السنجاب الغليظة المشبعة بالزيت",
+                keywords: ["زيت", "oil", "نهضة", "renaissance", "زيتية", "فرشاة", "سنجاب"]
+            },
+            {
+                artStyle: "مانجا يابانية تقليدية بحبر أسود حاد",
+                tool: "ريشة الرسم الكرتونية المعدنية الحادة (G-Pen)",
+                keywords: ["مانجا", "manga", "حبر", "ink", "g-pen", "ريشة", "يابانية"]
+            },
+            {
+                artStyle: "رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)",
+                tool: "ممحاة مطاطية لمضاد المادة (Cosmic Eraser)",
+                keywords: ["كارتون كلاسيكي", "ثلاثينات", "rubber hose", "eraser", "ممحاة", "ممحاه", "مطاطية", "كارتون"]
+            },
+            {
+                artStyle: "رسم تخطيطي خفيف بقلم الرصاص (Graphite Sketch)",
+                tool: "قلم رصاص غرافيت فحم ناعم وقابل للمحو",
+                keywords: ["رصاص", "graphite", "sketch", "تخطيطي", "فحم", "مخطط", "رسم تخطيطي"]
+            },
+            {
+                artStyle: "رسوم رقمية حديثة ذات متجهات هندسية (Vectors)",
+                tool: "قلم الألواح الرقمية اللاسلكي اللانهائي",
+                keywords: ["رقمية", "متجهات", "vectors", "digital", "ألواح", "لاسلكي", "هندسية"]
+            }
+        ];
+
+        let bestCategory = categories[1]; // Default to Manga
+        let maxScore = 0;
+        categories.forEach(cat => {
+            let score = 0;
+            cat.keywords.forEach(kw => {
+                if (searchText.includes(kw)) score += 1;
+            });
+            if (score > maxScore) {
+                maxScore = score;
+                bestCategory = cat;
+            }
+        });
+
+        const artStyle = bestCategory.artStyle;
+        const tool = bestCategory.tool;
+
         // Generate proposed assets based on source content
         const proposed = [
             {
                 type: 'creator',
                 title: `الرسام الكوني لـ (${source.title})`,
                 desc: `الرسام المسؤول عن تجسيد وتحديد الأسلوب الفني والأداة الكونية لـ: ${source.title}.`,
-                subOptions: { artStyle: 'لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)', tool: 'فرشاة شعر السنجاب الغليظة المشبعة بالزيت' }
+                subOptions: { artStyle: artStyle, tool: tool }
             },
             {
                 type: 'character',
@@ -3644,6 +3723,63 @@ Show how style shaders swap dynamically.`
             console.error("Error fetching file content from Google Drive: " + fileId, err);
             return null;
         }
+    }
+
+    parseGDriveFileId(url) {
+        if (!url) return null;
+        const matches = url.match(/\/d\/([a-zA-Z0-9-_]+)/) || url.match(/[?&]id=([a-zA-Z0-9-_]+)/);
+        if (matches && matches[1]) {
+            return matches[1];
+        }
+        const parts = url.split('/');
+        for (let part of parts) {
+            if (part.length >= 25 && /^[a-zA-Z0-9-_]+$/.test(part)) {
+                return part;
+            }
+        }
+        return null;
+    }
+
+    parseMarkdownSource(mdText) {
+        const result = {
+            theme: "",
+            plot: "",
+            setting: "",
+            desc: ""
+        };
+
+        const lines = mdText.split('\n');
+        let inDesc = false;
+        let descLines = [];
+
+        lines.forEach(line => {
+            const cleanLine = line.trim();
+            if (cleanLine.startsWith('## التفاصيل والوصف')) {
+                inDesc = true;
+                return;
+            }
+            if (inDesc && (cleanLine.startsWith('*') || cleanLine.startsWith('#'))) {
+                inDesc = false;
+            }
+            if (inDesc) {
+                descLines.push(cleanLine);
+                return;
+            }
+
+            if (cleanLine.includes('الفكرة والمغزى') || cleanLine.includes('theme') || cleanLine.includes('المغزى المحوري')) {
+                const parts = cleanLine.split('**');
+                result.theme = parts[parts.length - 1]?.replace(/^[:\s*\-]+/, '') || "";
+            } else if (cleanLine.includes('الحبكة الكونية') || cleanLine.includes('plot') || cleanLine.includes('الصراع الرئيسي')) {
+                const parts = cleanLine.split('**');
+                result.plot = parts[parts.length - 1]?.replace(/^[:\s*\-]+/, '') || "";
+            } else if (cleanLine.includes('البيئة الزمنية') || cleanLine.includes('setting') || cleanLine.includes('البيئة')) {
+                const parts = cleanLine.split('**');
+                result.setting = parts[parts.length - 1]?.replace(/^[:\s*\-]+/, '') || "";
+            }
+        });
+
+        result.desc = descLines.join('\n').trim();
+        return result;
     }
 }
 
