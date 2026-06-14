@@ -1171,10 +1171,13 @@
                 <!-- Google Drive URL input with specialized prompt -->
                 <div class="form-group">
                     <label for="asset-drive-url">رابط الملف على Google Drive *</label>
-                    <div class="input-with-hint">
-                        <input type="url" id="asset-drive-url" placeholder="https://drive.google.com/..." required>
-                        <span class="input-hint">ارفع ملفك على حساب Google AI Pro الخاص بك (5 TB) وضع رابط المشاركة هنا.</span>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="url" id="asset-drive-url" placeholder="https://drive.google.com/..." required style="flex: 1;">
+                        <button type="button" id="btn-save-to-drive" class="btn" style="background-color: var(--color-cyan); color: #fff; font-size: 0.78rem; font-weight: bold; padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                            <span>💾</span> <span>حفظ في Drive</span>
+                        </button>
                     </div>
+                    <span class="input-hint">ارفع ملفك على حساب Google AI Pro الخاص بك (5 TB) وضع رابط المشاركة هنا. أو انقر حفظ لتوليد رابط ومستند تلقائياً.</span>
                 </div>
 
                 <!-- Status Selection -->

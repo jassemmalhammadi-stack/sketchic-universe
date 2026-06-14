@@ -89,6 +89,7 @@ class SketchicApp {
         this.suggestedPromptText = document.getElementById('modal-suggested-prompt-text');
         this.btnCopyModalPrompt = document.getElementById('btn-copy-modal-prompt');
         this.assetUsedPromptInput = document.getElementById('asset-used-prompt');
+        this.btnSaveToDrive = document.getElementById('btn-save-to-drive');
 
         // Conditional linkage inputs
         this.groupRelatedScenario = document.getElementById('group-related-scenario');
@@ -203,6 +204,10 @@ class SketchicApp {
                 this.btnCopyModalPrompt.textContent = "نسخ";
             }, 2000);
         });
+
+        if (this.btnSaveToDrive) {
+            this.btnSaveToDrive.addEventListener('click', () => this.saveAssetToDrive());
+        }
 
         // Form Submit
         this.assetForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
@@ -984,6 +989,13 @@ class SketchicApp {
 
         this.prereqBox.innerHTML = warningHtml;
         this.renderDynamicOptions(type, editData);
+
+        if (type === 'source') {
+            const btnGen = document.getElementById('btn-generate-source-ai');
+            if (btnGen) {
+                btnGen.addEventListener('click', () => this.generateSourceWithAI());
+            }
+        }
     }
 
     renderDynamicOptions(type, editData = null) {
@@ -994,6 +1006,11 @@ class SketchicApp {
 
         if (type === 'source') {
             optionsHtml = `
+                <div style="margin-bottom:12px; display:flex; justify-content:flex-end; width:100%;">
+                    <button type="button" id="btn-generate-source-ai" class="btn" style="background-color: var(--color-accent); color: #fff; font-size: 0.8rem; font-weight: bold; padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; display: flex; align-items: center; gap: 4px; width: 100%; justify-content: center; margin-top: 5px;">
+                        <span>🤖</span> <span>توليد قصة ومصدر سردي تلقائياً بالذكاء الاصطناعي</span>
+                    </button>
+                </div>
                 <div class="form-group">
                     <label for="opt-sourceType">نوع المصدر السردي *</label>
                     <select id="opt-sourceType" required>
@@ -2897,6 +2914,128 @@ Show how style shaders swap dynamically.`
         this.scenes = [...this.scenes, ...generatedScenes];
         this.saveScenes();
         alert("تم توليد لوحة عمل كاملة مكونة من 3 مشاهد بنجاح! 🎉");
+    }
+
+    generateSourceWithAI() {
+        const concepts = [
+            {
+                title: "بوابة الألوان المفقودة",
+                type: "رواية كوكبية طويلة (Novel)",
+                author: "أرييل الحبر الأعظم",
+                wordCount: "3500",
+                theme: "صراع الوجود بين أسلوب المانجا الحركي سريع الإطارات 12fps والرسم الزيتي الواقعي بطيء الحركة 60fps",
+                plot: "يكتشف الرسام كائنًا هجينًا مرسومًا بخطوط حبر سائلة تتسرب إلى لوحة زيتية مقدسة لعصر النهضة، مما يهدد بتسييل معالم القديسين وتحويل العالم إلى حطام أسود مائع.",
+                setting: "المكتبة العتيقة الواقعة عند الحد الفاصل لمرسم الأبعاد السبعة.",
+                desc: "ملحمة فنية تعكس الصدام البصري المباشر وقوانين الفيزياء المتنافرة عند التقاط الحبر بالزيت."
+            },
+            {
+                title: "أصداء الغرافيت الكونية",
+                type: "قصة قصيرة (Short Story)",
+                author: "سارة الفحمية",
+                wordCount: "1200",
+                theme: "مقاومة المحو والتلاشي الكوني للوجود البصري للأصول الفنية",
+                plot: "يحاول حارس من حراس الأزمان حماية ما تبقى من مدينة كارتونية من فوضى ممحاة المحو المطلق التي تزيل الحواف الخارجية للبنايات وتحولها لفراغ أبيض تسقط منه الشخصيات.",
+                setting: "شوارع مدينة الرصاص المتربة الواقعة في الطبقة الثالثة من مخططات الهيكل الكوني.",
+                desc: "قصة مشوقة عن صراع البقاء ومحاولة إعادة الرسم الذاتي للأبعاد قبل الانهيار الكلي للجاذبية الجمالية."
+            },
+            {
+                title: "عازفة الحبر المائي والأوتار",
+                type: "مسودة فكرة أصلية (Concept Draft)",
+                author: "بافلو السكتش البصري",
+                wordCount: "800",
+                theme: "التنافر الصوتي والبصري وتصادم الأبعاد السمعية المولدة ذكائياً مع الرسم الورقي",
+                plot: "عازفة كمان مرسومة بالرصاص تجد نفسها محاصرة داخل نوتة موسيقية زيتية لزجة، وتستخدم نغماتها الحادة لتمزيق النوتة والعبور لعالمها الخفيف.",
+                setting: "المسرح المعلق للطبقة الثانية من الظلال والأصداء المتقطعة.",
+                desc: "فكرة مسودة لاستكشاف التداخل البصري والسمعي بين الموسيقى والرسامين الكونيين."
+            }
+        ];
+
+        const random = concepts[Math.floor(Math.random() * concepts.length)];
+
+        this.assetTitleInput.value = random.title;
+        this.assetDescTextarea.value = random.desc;
+        
+        const typeSelect = document.getElementById('opt-sourceType');
+        if (typeSelect) typeSelect.value = random.type;
+
+        const authorInput = document.getElementById('opt-sourceAuthor');
+        if (authorInput) authorInput.value = random.author;
+
+        const wcInput = document.getElementById('opt-sourceWordCount');
+        if (wcInput) wcInput.value = random.wordCount;
+
+        const themeTA = document.getElementById('opt-sourceTheme');
+        if (themeTA) themeTA.value = random.theme;
+
+        const plotTA = document.getElementById('opt-sourcePlot');
+        if (plotTA) plotTA.value = random.plot;
+
+        const settingTA = document.getElementById('opt-sourceSetting');
+        if (settingTA) settingTA.value = random.setting;
+
+        this.updateSuggestedPrompt();
+        alert(`🤖 تم توليد القصة بنجاح! الفكرة المقترحة: "${random.title}". يمكنك الآن تعديل أي حقول أو الضغط مباشرة على "حفظ في Drive".`);
+    }
+
+    saveAssetToDrive() {
+        const title = this.assetTitleInput.value.trim();
+        const type = this.assetTypeSelect.value;
+        if (!title) {
+            alert("يرجى إدخال عنوان للأصل أولاً لتتمكن من حفظه في Google Drive.");
+            return;
+        }
+
+        const folderMapping = {
+            'source': '00_Source_Materials',
+            'scenario': '01_Scenarios',
+            'creator': '02_Creators_Paintings',
+            'character': '03_Characters_Assets',
+            'environment': '04_Environments_Assets',
+            'voice': '05_Voices_Audios',
+            'music': '06_Cosmic_Soundtracks',
+            'comic': '07_Comics_Storyboards',
+            'video': '08_Videos_Cinematics',
+            'game': '09_Downloadable_Games'
+        };
+
+        const folderName = folderMapping[type] || 'General_Assets';
+        const safeTitle = title.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
+        const simulatedUrl = `https://drive.google.com/drive/folders/Sketchic_Universe_Root/${folderName}/${safeTitle}`;
+
+        let mdContent = `# ${title}\n\n`;
+        mdContent += `* **نوع الأصل:** ${type}\n`;
+        mdContent += `* **تاريخ الإنشاء:** ${new Date().toLocaleDateString('ar-EG')}\n\n`;
+        mdContent += `## التفاصيل والوصف\n${this.assetDescTextarea.value.trim() || 'لا يوجد وصف.'}\n\n`;
+
+        const selects = this.dynamicOptionsContainer.querySelectorAll('select');
+        selects.forEach(sel => {
+            const label = sel.previousElementSibling ? sel.previousElementSibling.textContent : sel.id;
+            mdContent += `* **${label}:** ${sel.value}\n`;
+        });
+        const inputs = this.dynamicOptionsContainer.querySelectorAll('input');
+        inputs.forEach(inp => {
+            const label = inp.previousElementSibling ? inp.previousElementSibling.textContent : inp.id;
+            mdContent += `* **${label}:** ${inp.value}\n`;
+        });
+        const textareas = this.dynamicOptionsContainer.querySelectorAll('textarea');
+        textareas.forEach(ta => {
+            const label = ta.previousElementSibling ? ta.previousElementSibling.textContent : ta.id;
+            mdContent += `\n### ${label}\n${ta.value}\n`;
+        });
+
+        const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", `${folderName}_${safeTitle}.md`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        this.assetDriveUrlInput.value = simulatedUrl;
+
+        alert(`🎉 تم محاكاة حفظ الملف بنجاح!\n\nتم تصدير ملف الوثيقة (${folderName}_${safeTitle}.md) وتحميله على جهازك.\nتم ربط المسار الافتراضي تلقائياً في خانة Google Drive:\n${simulatedUrl}`);
     }
 }
 
