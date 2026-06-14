@@ -280,10 +280,6 @@ class SketchicApp {
             this.btnSaveToDrive.addEventListener('click', () => this.saveAssetToDrive());
         }
 
-        if (this.btnSaveToDrive) {
-            this.btnSaveToDrive.addEventListener('click', () => this.saveAssetToDrive());
-        }
-
         // Form Submit
         this.assetForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
 
