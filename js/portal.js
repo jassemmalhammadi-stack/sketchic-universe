@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const creators = finishedAssets.filter(a => a.type === 'creator');
         const scenarios = finishedAssets.filter(a => a.type === 'scenario');
         const characters = finishedAssets.filter(a => a.type === 'character');
+        const voices = finishedAssets.filter(a => a.type === 'voice');
         const comics = finishedAssets.filter(a => a.type === 'comic');
         const videos = finishedAssets.filter(a => a.type === 'video');
         const games = finishedAssets.filter(a => a.type === 'game');
@@ -135,6 +136,42 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } else {
             charsHtml = `<p class="portal-empty-state" style="padding:1rem;width:100%;">لم يتم إضافة أي شخصيات منتهية لعرضها بعد.</p>`;
+        }
+
+        // Generate Voices Profiles HTML
+        let voicesHtml = "";
+        if (voices.length > 0) {
+            voices.forEach(v => {
+                let charText = "";
+                if (v.relatedCharacters && v.relatedCharacters.length > 0) {
+                    const chr = finishedAssets.find(a => a.id === v.relatedCharacters[0]) || assets.find(a => a.id === v.relatedCharacters[0]);
+                    if (chr) {
+                        charText = `صوت الشخصية: ${chr.title}`;
+                    }
+                }
+                const engine = v.subOptions ? (v.subOptions.voiceEngine || "gemini-3.1-flash-tts-preview") : "gemini-3.1-flash-tts-preview";
+                const speaker = v.subOptions ? (v.subOptions.voiceSpeaker || "Algenib") : "Algenib";
+                const scene = v.subOptions ? (v.subOptions.voiceScene || "") : "";
+                
+                voicesHtml += `
+                    <div class="portal-card" style="border-top: 4px solid var(--color-accent); background: linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%);">
+                        <div class="portal-card-body">
+                            <span class="portal-card-meta" style="color:var(--color-accent); font-weight:700;">🎙️ صوت كوني (Voice Profile)</span>
+                            <h4 style="margin: 10px 0 5px 0; font-size:1.2rem;">${v.title}</h4>
+                            ${charText ? `<span style="font-size:0.75rem; color:var(--text-secondary); font-weight:700; margin-bottom:4px; display:block;">👤 ${charText}</span>` : ''}
+                            <div style="font-size:0.75rem; color:var(--color-accent); margin-bottom: 10px;">
+                                <span>🤖 المحرك: ${engine}</span><br>
+                                <span style="margin-top:2px; display:inline-block;">🔊 المتحدث: ${speaker}</span>
+                                ${scene ? `<br><span style="margin-top:2px; display:inline-block;">🎬 المشهد: ${scene}</span>` : ''}
+                            </div>
+                            <p style="font-size:0.8rem; line-height:1.5; color:var(--text-secondary);">${v.desc}</p>
+                            <div class="portal-card-action">
+                                <a href="${v.driveUrl}" target="_blank" class="portal-btn portal-btn-outline" style="border-color:var(--color-accent); color:var(--color-accent);">استماع للملف الصوتي</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
         }
 
         // Generate Scenarios / Lore
@@ -316,6 +353,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${charsHtml}
                     </div>
                 </div>
+
+                <!-- Finished Cosmic Voices -->
+                ${voices.length > 0 ? `
+                <div class="portal-section">
+                    <div class="portal-section-header">
+                        <h3>المكتبة الصوتية والأصوات التعبيرية</h3>
+                        <span class="section-tag" style="background-color:var(--color-accent); color:#fff;">أصوات ذكاء اصطناعي</span>
+                    </div>
+                    <div class="portal-grid">
+                        ${voicesHtml}
+                    </div>
+                </div>
+                ` : ''}
 
                 <!-- Comics Section -->
                 ${comics.length > 0 ? `

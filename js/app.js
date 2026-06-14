@@ -300,15 +300,16 @@ class SketchicApp {
         const draft = this.assets.filter(a => a.status === 'draft').length;
         const finished = this.assets.filter(a => a.status === 'finished').length;
 
-        this.statTotal.textContent = total;
-        this.statDraft.textContent = draft;
-        this.statFinished.textContent = finished;
+        if (this.statTotal) this.statTotal.textContent = total;
+        if (this.statDraft) this.statDraft.textContent = draft;
+        if (this.statFinished) this.statFinished.textContent = finished;
 
         // Smart production recommendation based on counts
         const creators = this.assets.filter(a => a.type === 'creator' && a.status === 'finished');
         const scenarios = this.assets.filter(a => a.type === 'scenario' && a.status === 'finished');
         const environments = this.assets.filter(a => a.type === 'environment' && a.status === 'finished');
         const characters = this.assets.filter(a => a.type === 'character' && a.status === 'finished');
+        const voices = this.assets.filter(a => a.type === 'voice' && a.status === 'finished');
         const comics = this.assets.filter(a => a.type === 'comic' && a.status === 'finished');
         const videos = this.assets.filter(a => a.type === 'video' && a.status === 'finished');
         const games = this.assets.filter(a => a.type === 'game' && a.status === 'finished');
@@ -319,11 +320,13 @@ class SketchicApp {
         } else if (scenarios.length === 0) {
             recText = "📝 ابدأ بكتابة أول سيناريو لكون سكتشيك! لا يمكنك إنتاج بقية الأصول دون وجود سيناريو مكتوب لتقسيم القصة.";
         } else if (environments.length === 0) {
-            recText = "🌌 الخطوة التالية هي صياغة أول بيئة أو عالم رسم (Environment) تجري فيه أحداث السيناريو وتتداخل فيه الخطوط.";
-        } else if (characters.length < 2) {
-            recText = "🎨 تحتاج الآن إلى تصميم شخصيتين على الأقل وربطهما برسّام صانع لتفعيل ظاهرة 'الصدام المرئي'.";
+            recText = "🌌 ابدأ بتصميم عالم وبيئة رسم (Environment) لتوطيد جغرافية وقوانين موقعك الكوني.";
+        } else if (characters.length === 0) {
+            recText = "🎨 قم بتصميم شخصية كرتونية أو مانجا أولى وربطها برسام صانع لتحديد شكلها الفيزيائي.";
+        } else if (voices.length === 0) {
+            recText = "🎙️ حان الوقت لإنشاء أول ملف صوت كوني (Cosmic Voice Profile) للشخصيات باستخدام Gemini TTS لتكسبهم بعداً صوتياً متميزاً.";
         } else if (comics.length === 0) {
-            recText = "📚 لديك سيناريوهات وشخصيات جاهزة! الخطوة المثالية التالية هي صياغة أول قصة مصورة (Comic) أو لوحة سيناريو (Storyboard).";
+            recText = "📚 لديك سيناريوهات وشخصيات وأصوات جاهزة! الخطوة المثالية التالية هي صياغة أول قصة مصورة (Comic) أو لوحة سيناريو (Storyboard) لتمثيل الصدام.";
         } else if (videos.length === 0) {
             recText = "🎬 ممتاز! حان الوقت لإنتاج أول فيديو متحرك (Video) لتجسيد الحركة المتنافرة وتطبيق ميثاق الإطارات الكوني.";
         } else if (games.length === 0) {
@@ -331,7 +334,7 @@ class SketchicApp {
         } else {
             recText = "🌐 واو! لديك أصول جاهزة في كل المراحل. قم بنشرها كلها وتحديث حالة الأصول لتراها منعكسة فوراً في موقعك العام.";
         }
-        this.recBox.innerHTML = recText;
+        if (this.recBox) this.recBox.innerHTML = recText;
     }
 
     renderPipelineCounts() {
@@ -339,6 +342,7 @@ class SketchicApp {
             scenario: 0,
             environment: 0,
             character: 0,
+            voice: 0,
             comic: 0,
             video: 0,
             game: 0
@@ -647,6 +651,27 @@ class SketchicApp {
                 if (editData.relatedScenario) this.relatedScenarioSelect.value = editData.relatedScenario;
                 if (editData.relatedCreator) this.relatedCreatorSelect.value = editData.relatedCreator;
             }
+        } else if (type === 'voice') {
+            this.groupRelatedScenario.style.display = "block";
+            this.groupRelatedCreator.style.display = "none";
+            this.groupRelatedCharacters.style.display = "block";
+
+            if (characters.length === 0) {
+                this.prereqBox.className = "prereq-guide-box alert-important";
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-danger)">⚠️ تنبيه هام: لا يوجد شخصيات</div>
+                    <p>أنت بحاجة لتصميم شخصية واحدة على الأقل لربط الملف الصوتي بها.</p>
+                `;
+            } else {
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-cyan)">🎙️ إرشاد الأصوات الكونية</div>
+                    <p>صمم البصمة الصوتية التعبيرية واربطها بالشخصية والسيناريو لتفعيل الأداء الصوتي في باني المشاهد.</p>
+                `;
+            }
+
+            if (editData) {
+                if (editData.relatedScenario) this.relatedScenarioSelect.value = editData.relatedScenario;
+            }
         }
 
         this.prereqBox.innerHTML = warningHtml;
@@ -749,9 +774,12 @@ class SketchicApp {
                         <option value="حارس زمن يحمي طبقات اللوحة (Time Keeper)">حارس زمن يحمي طبقات اللوحة (Time Keeper)</option>
                     </select>
                 </div>
+            `;
+        } else if (type === 'voice') {
+            optionsHtml = `
                 <div class="form-group">
-                    <label for="opt-charVoice">بصمة وصوت الشخصية بالذكاء الاصطناعي (Google AI Voice Profile) *</label>
-                    <select id="opt-charVoice" required>
+                    <label for="opt-voiceEngine">محرك الصوت بالذكاء الاصطناعي (Voice Engine) *</label>
+                    <select id="opt-voiceEngine" required>
                         <option value="gemini-3.1-flash-tts-preview">gemini-3.1-flash-tts-preview (توليد تعبيري مباشر في Google AI Studio)</option>
                         <option value="Gemini Live (صوت تفاعلي عاطفي فوري)">Gemini Live (صوت تفاعلي عاطفي فوري)</option>
                         <option value="NotebookLM Audio Overview (حوار ثنائي تفاعلي)">NotebookLM Audio Overview (حوار ثنائي تفاعلي)</option>
@@ -854,8 +882,8 @@ class SketchicApp {
             });
         }
 
-        // Toggle voice settings fields if character voice is gemini-3.1-flash-tts-preview
-        const voiceSelect = this.dynamicOptionsContainer.querySelector('#opt-charVoice');
+        // Toggle voice settings fields if voice engine is gemini-3.1-flash-tts-preview
+        const voiceSelect = this.dynamicOptionsContainer.querySelector('#opt-voiceEngine');
         if (voiceSelect) {
             const toggleFields = () => {
                 const isTTS = voiceSelect.value === 'gemini-3.1-flash-tts-preview';
@@ -935,7 +963,6 @@ Clash Density: [${clashDensity}].
 Details: The landscape must display the architectural and terrain features constructed with the textures of this art style. Highlight the boundary of visual clash with other dimensions. Wide angle view.`;
         } else if (type === 'character') {
             const charClass = document.getElementById('opt-charClass').value;
-            const charVoice = document.getElementById('opt-charVoice').value;
             
             // Faction text & weapons
             let factionText = "لا ينتمي لأي فصيل كوني";
@@ -967,16 +994,19 @@ Details: The landscape must display the architectural and terrain features const
 Character Role: [${charClass}].
 Faction: [${factionText}].
 Signature Cosmic Weapon: [${weaponText}].
-AI Voice Profile Configuration: [${charVoice}].
 Style Rules inherited from Creator: Drawn in [${styleText}] using [${toolText}].
-Details: The character sheet must display a clean design of the character on a neutral background, highlighting the distinct lines, texture, and strokes of this specific art medium. Also illustrate their faction insignia and signature weapon. Describe character voice parameters for text-to-speech rendering.`;
+Details: The character sheet must display a clean design of the character on a neutral background, highlighting the distinct lines, texture, and strokes of this specific art medium. Also illustrate their faction insignia and signature weapon.`;
+        } else if (type === 'voice') {
+            const voiceEngine = document.getElementById('opt-voiceEngine').value;
+            prompt = `A cosmic text-to-speech audio profile prompt for Google AI Studio (gemini-3.1-flash-tts-preview).
+Voice Engine: [${voiceEngine}].`;
 
-            if (charVoice === 'gemini-3.1-flash-tts-preview') {
+            if (voiceEngine === 'gemini-3.1-flash-tts-preview') {
                 const voiceScene = document.getElementById('opt-voiceScene').value;
                 const voiceContext = document.getElementById('opt-voiceContext').value;
                 const voiceSpeaker = document.getElementById('opt-voiceSpeaker').value;
                 const voiceTags = document.getElementById('opt-voiceTags').value;
-                prompt += `\n\nGoogle AI Studio Multimodal Audio Settings (gemini-3.1-flash-tts-preview):
+                prompt += `\n\nGoogle AI Studio Multimodal Audio Settings:
 - Audio Scene Setting: [${voiceScene}]
 - Conversation/Performance Context: [${voiceContext}]
 - Target Speaker Voice: [${voiceSpeaker}]
@@ -1050,6 +1080,11 @@ The primary gameplay mechanic is [${mechanic}]. Explain how the rendering shader
         selects.forEach(sel => {
             const key = sel.id.replace('opt-', '');
             subOptions[key] = sel.value;
+        });
+        const inputs = this.dynamicOptionsContainer.querySelectorAll('input');
+        inputs.forEach(inp => {
+            const key = inp.id.replace('opt-', '');
+            subOptions[key] = inp.value;
         });
 
         if (!type || !title || !driveUrl) {
@@ -1225,6 +1260,7 @@ The primary gameplay mechanic is [${mechanic}]. Explain how the rendering shader
                 scenario: 'سيناريو وقصة',
                 environment: 'عالم وبيئة',
                 character: 'تصميم شخصية',
+                voice: 'صوت كوني',
                 comic: 'قصة مصورة',
                 video: 'فيديو متحرك',
                 game: 'لعبة تحميل'
@@ -1264,11 +1300,18 @@ The primary gameplay mechanic is [${mechanic}]. Explain how the rendering shader
                 `;
             } else if (asset.type === 'character' && asset.subOptions) {
                 const charClass = asset.subOptions.charClass || "دور غير محدد";
-                const charVoice = asset.subOptions.charVoice || "صوت غير محدد";
                 creatorDetailsHtml = `
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>👤 <strong>الدور السردي:</strong> ${charClass}</div>
-                        <div style="margin-top:4px;">🔊 <strong>البصمة الصوتية:</strong> ${charVoice}</div>
+                    </div>
+                `;
+            } else if (asset.type === 'voice' && asset.subOptions) {
+                const voiceEngine = asset.subOptions.voiceEngine || "gemini-3.1-flash-tts-preview";
+                const voiceSpeaker = asset.subOptions.voiceSpeaker || "Algenib";
+                creatorDetailsHtml = `
+                    <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
+                        <div>🎙️ <strong>المحرك:</strong> ${voiceEngine}</div>
+                        <div style="margin-top:4px;">🔊 <strong>المتحدث:</strong> ${voiceSpeaker}</div>
                     </div>
                 `;
             }
@@ -1481,6 +1524,7 @@ Show how style shaders swap dynamically.`
         const creators = finishedAssets.filter(a => a.type === 'creator');
         const scenarios = finishedAssets.filter(a => a.type === 'scenario');
         const characters = finishedAssets.filter(a => a.type === 'character');
+        const voices = finishedAssets.filter(a => a.type === 'voice');
         const comics = finishedAssets.filter(a => a.type === 'comic');
         const videos = finishedAssets.filter(a => a.type === 'video');
         const games = finishedAssets.filter(a => a.type === 'game');
@@ -1577,6 +1621,42 @@ Show how style shaders swap dynamically.`
             });
         } else {
             charsHtml = `<p class="portal-empty-state" style="padding:1rem;width:100%;">لم يتم إضافة أي شخصيات منتهية لعرضها بعد.</p>`;
+        }
+
+        // Generate Voices Profiles HTML
+        let voicesHtml = "";
+        if (voices.length > 0) {
+            voices.forEach(v => {
+                let charText = "";
+                if (v.relatedCharacters && v.relatedCharacters.length > 0) {
+                    const chr = finishedAssets.find(a => a.id === v.relatedCharacters[0]) || this.assets.find(a => a.id === v.relatedCharacters[0]);
+                    if (chr) {
+                        charText = `صوت الشخصية: ${chr.title}`;
+                    }
+                }
+                const engine = v.subOptions ? (v.subOptions.voiceEngine || "gemini-3.1-flash-tts-preview") : "gemini-3.1-flash-tts-preview";
+                const speaker = v.subOptions ? (v.subOptions.voiceSpeaker || "Algenib") : "Algenib";
+                const scene = v.subOptions ? (v.subOptions.voiceScene || "") : "";
+                
+                voicesHtml += `
+                    <div class="portal-card" style="border-top: 4px solid var(--color-accent); background: linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%);">
+                        <div class="portal-card-body">
+                            <span class="portal-card-meta" style="color:var(--color-accent); font-weight:700;">🎙️ صوت كوني (Voice Profile)</span>
+                            <h4 style="margin: 10px 0 5px 0; font-size:1.2rem;">${v.title}</h4>
+                            ${charText ? `<span style="font-size:0.75rem; color:var(--text-secondary); font-weight:700; margin-bottom:4px; display:block;">👤 ${charText}</span>` : ''}
+                            <div style="font-size:0.75rem; color:var(--color-accent); margin-bottom: 10px;">
+                                <span>🤖 المحرك: ${engine}</span><br>
+                                <span style="margin-top:2px; display:inline-block;">🔊 المتحدث: ${speaker}</span>
+                                ${scene ? `<br><span style="margin-top:2px; display:inline-block;">🎬 المشهد: ${scene}</span>` : ''}
+                            </div>
+                            <p style="font-size:0.8rem; line-height:1.5; color:var(--text-secondary);">${v.desc}</p>
+                            <div class="portal-card-action">
+                                <a href="${v.driveUrl}" target="_blank" class="portal-btn portal-btn-outline" style="border-color:var(--color-accent); color:var(--color-accent);">استماع للملف الصوتي</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
         }
 
         // Generate Scenarios / Lore
@@ -1758,6 +1838,19 @@ Show how style shaders swap dynamically.`
                         ${charsHtml}
                     </div>
                 </div>
+
+                <!-- Finished Cosmic Voices -->
+                ${voices.length > 0 ? `
+                <div class="portal-section">
+                    <div class="portal-section-header">
+                        <h3>المكتبة الصوتية والأصوات التعبيرية</h3>
+                        <span class="section-tag" style="background-color:var(--color-accent); color:#fff;">أصوات ذكاء اصطناعي</span>
+                    </div>
+                    <div class="portal-grid">
+                        ${voicesHtml}
+                    </div>
+                </div>
+                ` : ''}
 
                 <!-- Comics Section -->
                 ${comics.length > 0 ? `

@@ -82,7 +82,7 @@
                 <h3 class="card-title">مخطط تدفق الأصول الكوني (Visual Production Pipeline)</h3>
                 <p class="card-subtitle">الترتيب الأمثل لبناء كون سكتشيك السينمائي وعلاقة الأصول بين المراحل</p>
                 
-                <div class="visual-pipeline" id="visual-pipeline">
+                <div class="visual-pipeline" id="visual-pipeline" style="grid-template-columns: repeat(7, 1fr);">
                     <!-- Stage 1: Scenarios -->
                     <div class="pipeline-node" data-stage="scenario">
                         <div class="node-icon">📝</div>
@@ -104,24 +104,31 @@
                         <span class="node-count" id="count-character">0 أصل</span>
                         <div class="node-connector"></div>
                     </div>
-                    <!-- Stage 3: Comics -->
+                    <!-- Stage 4: Cosmic Voices -->
+                    <div class="pipeline-node" data-stage="voice">
+                        <div class="node-icon">🎙️</div>
+                        <h4>4. الأصوات الكونية</h4>
+                        <span class="node-count" id="count-voice">0 أصل</span>
+                        <div class="node-connector"></div>
+                    </div>
+                    <!-- Stage 5: Comics -->
                     <div class="pipeline-node" data-stage="comic">
                         <div class="node-icon">📚</div>
-                        <h4>3. القصص المصورة</h4>
+                        <h4>5. القصص المصورة</h4>
                         <span class="node-count" id="count-comic">0 أصل</span>
                         <div class="node-connector"></div>
                     </div>
-                    <!-- Stage 4: Videos -->
+                    <!-- Stage 6: Videos -->
                     <div class="pipeline-node" data-stage="video">
                         <div class="node-icon">🎬</div>
-                        <h4>4. الفيديوهات</h4>
+                        <h4>6. الفيديوهات</h4>
                         <span class="node-count" id="count-video">0 أصل</span>
                         <div class="node-connector"></div>
                     </div>
-                    <!-- Stage 5: Games -->
+                    <!-- Stage 7: Games -->
                     <div class="pipeline-node" data-stage="game">
                         <div class="node-icon">🎮</div>
-                        <h4>5. الألعاب</h4>
+                        <h4>7. الألعاب</h4>
                         <span class="node-count" id="count-game">0 أصل</span>
                     </div>
                 </div>
@@ -201,6 +208,7 @@
                     <button class="filter-btn" data-filter="scenario">📝 سيناريوهات</button>
                     <button class="filter-btn" data-filter="environment">🌌 عوالم وبيئات</button>
                     <button class="filter-btn" data-filter="character">🎨 شخصيات</button>
+                    <button class="filter-btn" data-filter="voice">🎙️ أصوات</button>
                     <button class="filter-btn" data-filter="comic">📚 قصص مصورة</button>
                     <button class="filter-btn" data-filter="video">🎬 فيديوهات</button>
                     <button class="filter-btn" data-filter="game">🎮 ألعاب</button>
@@ -739,6 +747,24 @@
                         </div>
                     </div>
 
+                    <!-- 3.5 الأصوات الكونية (Cosmic Voices) -->
+                    <div style="background-color: var(--bg-secondary); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-sm);">
+                        <div style="display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--color-accent); padding-bottom: 6px;">
+                            <span style="font-size: 1.5rem;">🎙️</span>
+                            <h4 style="font-size: 1.05rem; margin: 0; color: var(--text-primary);">الأصوات الكونية (Cosmic Voices)</h4>
+                        </div>
+                        <div style="font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); display: flex; flex-direction: column; gap: 12px;">
+                            <div>
+                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🤖 محرك الصوت AI (Voice Engine):</strong>
+                                <p style="margin: 0;">يُحدد محرك الذكاء الاصطناعي المناسب لإنشاء الأداء الصوتي التعبيري التفاعلي مثل gemini-3.1-flash-tts-preview في Google AI Studio.</p>
+                            </div>
+                            <div>
+                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">⚙️ إعدادات المشهد والسياق (Scene & Context):</strong>
+                                <p style="margin: 0;">لوصف الخلفية الصوتية المناسبة (مثل مكتبة هادئة، أو رياح عاتية) وسياق الأداء التعبيري للحوار.</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- 4. العوالم والبيئات (Environments) -->
                     <div style="background-color: var(--bg-secondary); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-sm);">
                         <div style="display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--color-green); padding-bottom: 6px;">
@@ -871,10 +897,11 @@
                     <label for="asset-type">نوع الأصل *</label>
                     <select id="asset-type" required>
                         <option value="" disabled selected>اختر النوع...</option>
-                        <option value="creator">✍️ رسام كوني (The Creator)</option>
+                        <option value="creator">✍️ الرسام الكوني (The Creator)</option>
                         <option value="scenario">📝 سيناريو وقصة مكتوبة</option>
                         <option value="environment">🌌 عالم وبيئة رسم (Environment)</option>
                         <option value="character">🎨 تصميم شخصية (Character Concept)</option>
+                        <option value="voice">🎙️ صوت كوني (Cosmic Voice Profile)</option>
                         <option value="comic">📚 قصة مصورة أو لوحة قصة (Comic/Storyboard)</option>
                         <option value="video">🎬 مقطع فيديو متحرك (Video Asset)</option>
                         <option value="game">🎮 لعبة قابلة للتحميل (Downloadable Game)</option>
