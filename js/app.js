@@ -1257,7 +1257,7 @@ The primary gameplay mechanic is [${mechanic}]. Explain how the rendering shader
                     },
                     {
                         title: "الخطوة الثانية: تشغيل موجه الذكاء الاصطناعي (Gemini Prompter)",
-                        desc: "انسخ الموجه المتطور أدناه والصقه في محادثة Gemini Advanced مع إدخال تفاصيل قصتك للحصول على سيناريو يدمج مبادئ كون سكتشيك الفلسفية."
+                        desc: "انسخ الموجه المتطور أدناه والصقه في محادثة Gemini Advanced مع إدخال تفاصيل قصتك للحصول على سيناريو يدمج مبادئ كون سكتشيك الفلسفية ويحدد أثر الرسام المرتبط."
                     }
                 ],
                 prompt: `بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لقصة تدور حول 'الصدام المرئي الأول'.
@@ -1266,8 +1266,26 @@ The primary gameplay mechanic is [${mechanic}]. Explain how the rendering shader
 - حوار يوضح أسلوب الرسم المتباين وتفاعله فيزيائياً (مثل تصادم فقاعات كلامية مانجا مع درع زيتى كلاسيكى).
 - كتابة القصة بهيكل المشاهد السينمائية (داخلي/خارجي - لقطات الكاميرا).`
             },
+            environment: {
+                title: "2. تصميم وتأصيل العوالم والبيئات الكونية",
+                reqs: "سيناريو مكتوب جاهز + تحديد الرسام الكوني الصانع (لتوريث أسلوب الرسم الافتراضي وقوانين الجاذبية).",
+                steps: [
+                    {
+                        title: "الخطوة الأولى: تحديد طبيعة البيئة الجغرافية والجمالية",
+                        desc: "اختر نوع البيئة (لوحة مائعة، جزيرة قصاصات ورق، مدينة سايبربانك) واضبط كثافة التداخل المطلوبة للتماس البصري."
+                    },
+                    {
+                        title: "الخطوة الثانية: توليد موجه البيئة ثلاثي الأبعاد بالذكاء الاصطناعي (Imagen 3 / Midjourney)",
+                        desc: "استخدم الموجه التالي لصياغة بيئة دقيقة تحتوي على الصدام البصري الفني المطلوب."
+                    }
+                ],
+                prompt: `A beautiful wide-angle concept art design sheet for a Sketchic Cinematic Universe landscape.
+Environment: [طبيعة البيئة، مثلاً: A floating island made of newspaper scraps / Fluid paint canvas landscape].
+Art Style rules inherited from Creator: Drawn strictly in [الأسلوب الفني للرسام، مثلاً: Renaissance classical oil painting].
+Clash Boundary: Show visual intersection and contrast with other styles near the edges. Epic lighting, cinematic rendering, neutral tone.`
+            },
             character: {
-                title: "2. تصميم ورسم شخصيات الأكوان المتباينة",
+                title: "3. تصميم ورسم شخصيات الأكوان المتباينة",
                 reqs: "سيناريو مكتوب جاهز + تحديد الرسام الصانع (لتوريث أسلوب الرسم والفيزياء الكونية للشخصية).",
                 steps: [
                     {
@@ -1285,7 +1303,7 @@ Visual Style: [النمط الفني، مثلاً: A 1930s classic rubber-hose c
 Details: The character must preserve its distinct artistic strokes, textures, and lines, with clear outlines. Show on a pure neutral background for asset sheet.`
             },
             comic: {
-                title: "3. إنتاج القصص المصورة ولوحات القصة (Comics & Storyboards)",
+                title: "4. إنتاج القصص المصورة ولوحات القصة (Comics & Storyboards)",
                 reqs: "سيناريو معتمد + شخصيتين على الأقل تم تصميمهما بصرياً.",
                 steps: [
                     {
@@ -1303,7 +1321,7 @@ Details: The character must preserve its distinct artistic strokes, textures, an
 - اللوحة 3: لقطة قريبة توضح تفاعل فيزيائي بين نمطين فنيين مختلفين دون اندماجهما.`
             },
             video: {
-                title: "4. تحريك وإنتاج الفيديوهات السينمائية (Videos)",
+                title: "5. تحريك وإنتاج الفيديوهات السينمائية (Videos)",
                 reqs: "سيناريو + لوحة قصة (Storyboard) جاهزة ومحددة التفاصيل.",
                 steps: [
                     {
@@ -1320,7 +1338,7 @@ Subject: A cinematic scene showing a visual clash. One character rendered in hig
 Motion: The manga character moves with snappy keyframed animation (12fps feel) while the oil paint knight moves smoothly (60fps feel). High contrast, gorgeous cinematic light.`
             },
             game: {
-                title: "5. برمجة الألعاب الكونية القابلة للتحميل (Games)",
+                title: "6. برمجة الألعاب الكونية القابلة للتحميل (Games)",
                 reqs: "أصول شخصيات ثلاثية/ثنائية الأبعاد مرسومة + قصة محددة للمستويات.",
                 steps: [
                     {
