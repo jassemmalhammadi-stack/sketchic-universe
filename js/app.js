@@ -28,6 +28,9 @@ class SketchicApp {
         // Bind Event Listeners
         this.bindEvents();
 
+        // Initialize Google Drive Integration settings
+        this.initGoogleDriveIntegration();
+
         // Initial Renders
         this.switchTab('dashboard');
         this.updateStats();
@@ -3096,19 +3099,23 @@ Show how style shaders swap dynamically.`
             mdContent += `\n### ${label}\n${ta.value}\n`;
         });
 
-        const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8;' });
-        const link = document.createElement("a");
-        const url = URL.createObjectURL(blob);
-        link.setAttribute("href", url);
-        link.setAttribute("download", `${folderName}_${safeTitle}.md`);
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        if (this.isGDriveConnected) {
+            this.saveFileToGDrive(folderName, safeTitle, mdContent);
+        } else {
+            const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `${folderName}_${safeTitle}.md`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
 
-        this.assetDriveUrlInput.value = simulatedUrl;
+            this.assetDriveUrlInput.value = simulatedUrl;
 
-        alert(`🎉 تم محاكاة حفظ الملف بنجاح!\n\nتم تصدير ملف الوثيقة (${folderName}_${safeTitle}.md) وتحميله على جهازك.\nتم ربط المسار الافتراضي تلقائياً في خانة Google Drive:\n${simulatedUrl}`);
+            alert(`🎉 تم محاكاة حفظ الملف بنجاح!\n\nتم تصدير ملف الوثيقة (${folderName}_${safeTitle}.md) وتحميله على جهازك.\nتم ربط المسار الافتراضي تلقائياً في خانة Google Drive:\n${simulatedUrl}`);
+        }
     }
 
     generateAssetWithAI(type) {
@@ -3319,6 +3326,324 @@ Show how style shaders swap dynamically.`
 
         this.updateSuggestedPrompt();
         alert(`🤖 تم توليد وتعبئة تفاصيل الأصل (${type}) بنجاح! تم قراءة البيانات وتطويعها سياقياً ${scenarioTitle ? `بناءً على سيناريو: "${scenarioTitle}"` : 'تلقائياً كخيار بديل لعدم توفر مصدر سردي'}.`);
+    }
+
+    initGoogleDriveIntegration() {
+        this.gdriveStatusBadge = document.getElementById('gdrive-status-badge');
+        this.btnGDriveConnect = document.getElementById('btn-gdrive-connect');
+        this.btnGDriveDisconnect = document.getElementById('btn-gdrive-disconnect');
+        this.btnToggleGDriveSettings = document.getElementById('btn-toggle-gdrive-settings');
+        this.gdriveConfigPanel = document.getElementById('gdrive-config-panel');
+        this.gdriveClientId = document.getElementById('gdrive-client-id');
+        this.gdriveApiKey = document.getElementById('gdrive-api-key');
+        this.btnSaveGDriveConfig = document.getElementById('btn-save-gdrive-config');
+        this.gdriveRootIndicator = document.getElementById('gdrive-root-indicator');
+
+        // State variables
+        this.gdriveClientIdVal = localStorage.getItem('sketchic_gdrive_client_id') || "";
+        this.gdriveApiKeyVal = localStorage.getItem('sketchic_gdrive_api_key') || "";
+        this.gdriveAccessToken = localStorage.getItem('sketchic_gdrive_access_token') || "";
+        this.isGDriveConnected = false;
+        this.gapiInited = false;
+        this.gisInited = false;
+
+        // Fill fields
+        if (this.gdriveClientId) this.gdriveClientId.value = this.gdriveClientIdVal;
+        if (this.gdriveApiKey) this.gdriveApiKey.value = this.gdriveApiKeyVal;
+
+        // Bind events
+        if (this.btnToggleGDriveSettings) {
+            this.btnToggleGDriveSettings.addEventListener('click', () => {
+                const isHidden = this.gdriveConfigPanel.style.display === 'none';
+                this.gdriveConfigPanel.style.display = isHidden ? 'block' : 'none';
+            });
+        }
+
+        if (this.btnSaveGDriveConfig) {
+            this.btnSaveGDriveConfig.addEventListener('click', () => {
+                const cid = this.gdriveClientId.value.trim();
+                const key = this.gdriveApiKey.value.trim();
+                if (!cid || !key) {
+                    alert("يرجى إدخال Client ID و API Key معاً لحفظ الإعدادات.");
+                    return;
+                }
+                localStorage.setItem('sketchic_gdrive_client_id', cid);
+                localStorage.setItem('sketchic_gdrive_api_key', key);
+                this.gdriveClientIdVal = cid;
+                this.gdriveApiKeyVal = key;
+                alert("تم حفظ إعدادات جوجل درايف بنجاح في جهازك. يرجى تجربة الاتصال الآن!");
+                this.gdriveConfigPanel.style.display = 'none';
+                this.loadGoogleAPILibraries();
+            });
+        }
+
+        if (this.btnGDriveConnect) {
+            this.btnGDriveConnect.addEventListener('click', () => this.connectGoogleDrive());
+        }
+
+        if (this.btnGDriveDisconnect) {
+            this.btnGDriveDisconnect.addEventListener('click', () => this.disconnectGoogleDrive());
+        }
+
+        // Try load libraries on start if config exists
+        if (this.gdriveClientIdVal && this.gdriveApiKeyVal) {
+            setTimeout(() => this.loadGoogleAPILibraries(), 1000);
+        }
+    }
+
+    loadGoogleAPILibraries() {
+        if (typeof gapi === 'undefined' || typeof google === 'undefined') {
+            console.log("Waiting for Google API scripts to load...");
+            setTimeout(() => this.loadGoogleAPILibraries(), 1000);
+            return;
+        }
+
+        gapi.load('client', () => {
+            gapi.client.init({
+                apiKey: this.gdriveApiKeyVal,
+                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
+            }).then(() => {
+                console.log("GAPI client initialized.");
+                this.gapiInited = true;
+                
+                // If we have a stored token, load it
+                if (this.gdriveAccessToken) {
+                    gapi.client.setToken({ access_token: this.gdriveAccessToken });
+                    this.isGDriveConnected = true;
+                    this.updateGDriveStatusUI();
+                }
+            }).catch(err => {
+                console.error("Error initializing GAPI client", err);
+            });
+        });
+
+        // Initialize GIS Client
+        try {
+            this.tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: this.gdriveClientIdVal,
+                scope: 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.metadata.readonly',
+                callback: (resp) => {
+                    if (resp.error !== undefined) {
+                        throw (resp);
+                    }
+                    this.gdriveAccessToken = resp.access_token;
+                    localStorage.setItem('sketchic_gdrive_access_token', resp.access_token);
+                    this.isGDriveConnected = true;
+                    this.updateGDriveStatusUI();
+                },
+            });
+            this.gisInited = true;
+        } catch (e) {
+            console.error("Error initializing Google Identity Services Token client", e);
+        }
+    }
+
+    connectGoogleDrive() {
+        if (!this.gdriveClientIdVal || !this.gdriveApiKeyVal) {
+            alert("⚠️ يرجى النقر على زر 'الإعدادات' وإدخال الـ Client ID والـ API Key أولاً!");
+            this.gdriveConfigPanel.style.display = 'block';
+            return;
+        }
+
+        if (this.tokenClient) {
+            this.tokenClient.requestAccessToken({ prompt: 'consent' });
+        } else {
+            this.loadGoogleAPILibraries();
+            setTimeout(() => {
+                if (this.tokenClient) {
+                    this.tokenClient.requestAccessToken({ prompt: 'consent' });
+                } else {
+                    alert("تعذر تهيئة مكتبة Google Auth. يرجى التحقق من اتصال الإنترنت ومن إعدادات المفاتيح.");
+                }
+            }, 1500);
+        }
+    }
+
+    disconnectGoogleDrive() {
+        if (this.isGDriveConnected) {
+            try {
+                google.accounts.oauth2.revokeToken(this.gdriveAccessToken, () => {
+                    console.log("Token revoked.");
+                });
+            } catch (e) {}
+            this.gdriveAccessToken = "";
+            localStorage.removeItem('sketchic_gdrive_access_token');
+            this.isGDriveConnected = false;
+            this.updateGDriveStatusUI();
+            alert("تم قطع الاتصال بحساب Google Drive بنجاح.");
+        }
+    }
+
+    updateGDriveStatusUI() {
+        if (this.isGDriveConnected) {
+            if (this.gdriveStatusBadge) {
+                this.gdriveStatusBadge.textContent = "متصل";
+                this.gdriveStatusBadge.style.backgroundColor = "var(--color-success)";
+            }
+            if (this.btnGDriveConnect) this.btnGDriveConnect.style.display = "none";
+            if (this.btnGDriveDisconnect) this.btnGDriveDisconnect.style.display = "block";
+            if (this.gdriveRootIndicator) {
+                this.gdriveRootIndicator.textContent = "متصل بالدرايف الفعلي 🟢";
+                this.gdriveRootIndicator.style.color = "var(--color-success)";
+            }
+        } else {
+            if (this.gdriveStatusBadge) {
+                this.gdriveStatusBadge.textContent = "غير متصل";
+                this.gdriveStatusBadge.style.backgroundColor = "var(--color-danger)";
+            }
+            if (this.btnGDriveConnect) {
+                this.btnGDriveConnect.style.display = "block";
+                this.btnGDriveConnect.innerHTML = `<span>🔗</span> <span>تسجيل الدخول والربط</span>`;
+            }
+            if (this.btnGDriveDisconnect) this.btnGDriveDisconnect.style.display = "none";
+            if (this.gdriveRootIndicator) {
+                this.gdriveRootIndicator.textContent = "مجلد افتراضي (Offline)";
+                this.gdriveRootIndicator.style.color = "var(--text-tertiary)";
+            }
+        }
+    }
+
+    async getOrCreateFolder(folderName, parentId = null) {
+        let query = `name = '${folderName}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false`;
+        if (parentId) {
+            query += ` and '${parentId}' in parents`;
+        }
+        
+        try {
+            const response = await gapi.client.drive.files.list({
+                q: query,
+                fields: 'files(id, name)',
+                spaces: 'drive'
+            });
+            
+            const files = response.result.files;
+            if (files && files.length > 0) {
+                return files[0].id;
+            } else {
+                const folderMetadata = {
+                    name: folderName,
+                    mimeType: 'application/vnd.google-apps.folder'
+                };
+                if (parentId) {
+                    folderMetadata.parents = [parentId];
+                }
+                const folder = await gapi.client.drive.files.create({
+                    resource: folderMetadata,
+                    fields: 'id'
+                });
+                return folder.result.id;
+            }
+        } catch (err) {
+            console.error("Error in getOrCreateFolder for: " + folderName, err);
+            throw err;
+        }
+    }
+
+    async saveFileToGDrive(folderName, safeTitle, mdContent) {
+        const originalText = this.btnSaveToDrive.innerHTML;
+        this.btnSaveToDrive.disabled = true;
+        this.btnSaveToDrive.innerHTML = `<span>⏳</span> <span>جاري الحفظ في Drive...</span>`;
+
+        try {
+            const rootId = await this.getOrCreateFolder("Sketchic_Universe_Root");
+            const subFolderId = await this.getOrCreateFolder(folderName, rootId);
+            
+            const fileName = `${safeTitle}.md`;
+            const fileQuery = `name = '${fileName}' and '${subFolderId}' in parents and trashed = false`;
+            const searchResponse = await gapi.client.drive.files.list({
+                q: fileQuery,
+                fields: 'files(id)',
+                spaces: 'drive'
+            });
+            const existingFiles = searchResponse.result.files;
+            
+            const boundary = '314159265358979323846';
+            const delimiter = "\r\n--" + boundary + "\r\n";
+            const close_delim = "\r\n--" + boundary + "--";
+            
+            const contentType = 'text/markdown';
+            const metadata = {
+                'name': fileName,
+                'mimeType': contentType,
+                'parents': [subFolderId]
+            };
+            
+            const multipartRequestBody =
+                delimiter +
+                'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
+                JSON.stringify(metadata) +
+                delimiter +
+                'Content-Type: ' + contentType + '\r\n\r\n' +
+                mdContent +
+                close_delim;
+
+            let request;
+            if (existingFiles && existingFiles.length > 0) {
+                const fileId = existingFiles[0].id;
+                request = gapi.client.request({
+                    'path': `/upload/drive/v3/files/${fileId}`,
+                    'method': 'PATCH',
+                    'params': {'uploadType': 'multipart'},
+                    'headers': {
+                        'Content-Type': 'multipart/related; boundary=' + boundary
+                    },
+                    'body': multipartRequestBody
+                });
+            } else {
+                request = gapi.client.request({
+                    'path': '/upload/drive/v3/files',
+                    'method': 'POST',
+                    'params': {'uploadType': 'multipart', 'fields': 'id,webViewLink'},
+                    'headers': {
+                        'Content-Type': 'multipart/related; boundary=' + boundary
+                    },
+                    'body': multipartRequestBody
+                });
+            }
+
+            const response = await request;
+            const fileId = response.result.id;
+            
+            const detailsResponse = await gapi.client.drive.files.get({
+                fileId: fileId,
+                fields: 'webViewLink'
+            });
+            
+            const webViewLink = detailsResponse.result.webViewLink;
+            
+            this.assetDriveUrlInput.value = webViewLink;
+            
+            alert(`🎉 تم حفظ الملف بنجاح وتحديثه مباشرة على Google Drive! \n\nالرابط الفعلي للملف:\n${webViewLink}`);
+        } catch (err) {
+            console.error("Failed to save to Google Drive", err);
+            alert("⚠️ فشل الاتصال/الحفظ الفعلي في Google Drive. يرجى مراجعة صلاحيات الحساب أو الـ API Key الخاص بك. سنقوم بتحميل الملف محلياً كحل بديل.");
+            
+            const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `${folderName}_${safeTitle}.md`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } finally {
+            this.btnSaveToDrive.disabled = false;
+            this.btnSaveToDrive.innerHTML = originalText;
+        }
+    }
+
+    async fetchGoogleFileContent(fileId) {
+        try {
+            const response = await gapi.client.drive.files.get({
+                fileId: fileId,
+                alt: 'media'
+            });
+            return response.body;
+        } catch (err) {
+            console.error("Error fetching file content from Google Drive: " + fileId, err);
+            return null;
+        }
     }
 }
 

@@ -143,26 +143,64 @@
 
             <!-- Stats & Quick Actions Grid -->
             <div class="dashboard-grid">
-                <!-- Google Drive Integration Guide -->
+                <!-- Google Drive Integration Guide & API Connection -->
                 <div class="card-box drive-card">
-                    <div class="card-header-icon">
-                        <span class="icon-big">☁️</span>
-                        <h3>مساحة التخزين السحابية (Google AI Pro)</h3>
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:10px; margin-bottom:12px;">
+                        <div class="card-header-icon" style="margin-bottom:0;">
+                            <span class="icon-big">☁️</span>
+                            <h3 style="margin:0;">ربط Google Drive الفعلي</h3>
+                        </div>
+                        <span id="gdrive-status-badge" style="background-color: var(--color-danger); color: white; padding: 2px 8px; border-radius: 20px; font-size: 0.72rem; font-weight: bold;">غير متصل</span>
                     </div>
-                    <p>أنت تستخدم مساحة تخزين تبلغ <strong>5 تيرابايت</strong>. ننصح بحفظ ملفات الأصول الثقيلة في Drive ووضع الروابط المشتركة هنا لتسريع التصفح وحمايتها.</p>
                     
+                    <p style="font-size:0.8rem; margin-bottom:12px;">قم بتهيئة الاتصال لحفظ وقراءة الأصول مباشرة من حساب Google Drive الخاص بك.</p>
+                    
+                    <!-- Settings Button & Auth buttons -->
+                    <div style="display:flex; gap:8px; margin-bottom:12px;">
+                        <button type="button" id="btn-gdrive-connect" class="btn btn-primary" style="flex:1; font-size:0.8rem; padding:6px 12px; font-weight:bold; height:36px; display:flex; align-items:center; justify-content:center; gap:6px;">
+                            <span>🔗</span> <span>تسجيل الدخول والربط</span>
+                        </button>
+                        <button type="button" id="btn-gdrive-disconnect" class="btn btn-secondary" style="font-size:0.8rem; padding:6px 12px; font-weight:bold; height:36px; display:none;">
+                            قطع الاتصال
+                        </button>
+                        <button type="button" id="btn-toggle-gdrive-settings" class="btn" style="background:#e2e8f0; color:#475569; font-size:0.8rem; padding:6px 12px; font-weight:bold; height:36px;">
+                            ⚙️ الإعدادات
+                        </button>
+                    </div>
+
+                    <!-- Config Input Fields (Hidden by default) -->
+                    <div id="gdrive-config-panel" style="display:none; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:6px; padding:10px; margin-bottom:12px;">
+                        <h4 style="font-size:0.8rem; margin-top:0; margin-bottom:8px; color:var(--color-accent);">مفاتيح واجهة جوجل (Local Config):</h4>
+                        <div class="form-group" style="margin-bottom:8px;">
+                            <label style="font-size:0.7rem; margin-bottom:2px; display:block;">OAuth 2.0 Client ID *</label>
+                            <input type="text" id="gdrive-client-id" placeholder="أدخل Client ID المستخرج من Google Cloud..." style="width:100%; font-size:0.75rem; padding:5px; border:1px solid var(--border-color); border-radius:4px;">
+                        </div>
+                        <div class="form-group" style="margin-bottom:8px;">
+                            <label style="font-size:0.7rem; margin-bottom:2px; display:block;">Developer API Key *</label>
+                            <input type="password" id="gdrive-api-key" placeholder="أدخل API Key المستخرج من Google Cloud..." style="width:100%; font-size:0.75rem; padding:5px; border:1px solid var(--border-color); border-radius:4px;">
+                        </div>
+                        <button type="button" id="btn-save-gdrive-config" class="btn" style="background:var(--color-green); color:white; font-size:0.75rem; padding:4px 8px; border:none; border-radius:4px; cursor:pointer; font-weight:bold; width:100%;">
+                            حفظ الإعدادات محلياً
+                        </button>
+                    </div>
+
                     <div class="drive-folder-structure">
-                        <h4>هيكل المجلدات المقترح في Google Drive وصيغ الملفات المعتمدة:</h4>
-                        <pre id="drive-structure-display">
+                        <h4 style="font-size:0.8rem; margin-bottom:6px; display:flex; justify-content:space-between;">
+                            <span>مجلدات المشروع النشطة:</span>
+                            <span id="gdrive-root-indicator" style="font-size:0.72rem; color:var(--text-tertiary);">مجلد افتراضي (Offline)</span>
+                        </h4>
+                        <pre id="drive-structure-display" style="font-size:0.75rem; margin:0; line-height:1.4;">
 📁 Sketchic_Universe_Root/
-├── 📁 01_Scenarios/     (ملفات السيناريو والقصة المكتوبة) -> [Google Docs, .pdf]
-├── 📁 02_Environments/  (تصاميم العوالم وبيئات الرسم) -> [.png, .jpg, .psd]
-├── 📁 03_Characters/    (تصاميم الشخصيات والأساليب) -> [.png, .jpg, .psd, .blend]
-├── 📁 04_Voices/        (ملفات الأصوات التعبيرية للشخصيات) -> [.mp3, .wav]
-├── 📁 05_Music/         (الموسيقى التصويرية والساوندتراكات) -> [.mp3, .wav, .flac]
-├── 📁 06_Comics/        (اللوحات والقصص المصورة والمسودات) -> [.pdf, .png, .jpg]
-├── 📁 07_Videos/        (ملفات الفيديو والمشاهد النهائية) -> [.mp4, .mov]
-└── 📁 08_Games/         (ملفات الألعاب للتحميل والتثبيت) -> [.zip, .rar]
+├── 📁 00_Source_Materials/
+├── 📁 01_Scenarios/
+├── 📁 02_Creators_Paintings/
+├── 📁 03_Characters_Assets/
+├── 📁 04_Environments_Assets/
+├── 📁 05_Voices_Audios/
+├── 📁 06_Cosmic_Soundtracks/
+├── 📁 07_Comics_Storyboards/
+├── 📁 08_Videos_Cinematics/
+└── 📁 09_Downloadable_Games/
                         </pre>
                     </div>
                 </div>
@@ -1217,6 +1255,10 @@
         </div>
     </div>
 
+    <!-- Google APIs -->
+    <script src="https://apis.google.com/js/api.js" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
     <!-- Script imports -->
     <script src="js/app.js"></script>
 </body>
