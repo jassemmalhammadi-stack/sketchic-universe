@@ -170,6 +170,10 @@ class SketchicApp {
         
         // Form asset type change (Prerequisite triggers)
         this.assetTypeSelect.addEventListener('change', () => this.handleAssetTypeChange());
+        this.relatedScenarioSelect.addEventListener('change', () => {
+            this.handleAssetTypeChange();
+            this.updateSuggestedPrompt();
+        });
         this.assetStatusSelect.addEventListener('change', () => this.toggleChecklistDisplay());
         this.relatedFactionSelect.addEventListener('change', () => this.updateSuggestedPrompt());
         this.interfacePhysicsSelect.addEventListener('change', () => this.updateSuggestedPrompt());
@@ -438,6 +442,27 @@ class SketchicApp {
         }
     }
 
+    validateScenarioCompletion(scenarioId) {
+        if (!scenarioId) return { complete: false, details: [] };
+        
+        const linkedAssets = this.assets.filter(a => a.relatedScenario === scenarioId);
+        
+        const finishedEnvironments = linkedAssets.filter(a => a.type === 'environment' && a.status === 'finished');
+        const finishedCharacters = linkedAssets.filter(a => a.type === 'character' && a.status === 'finished');
+        const finishedVoices = linkedAssets.filter(a => a.type === 'voice' && a.status === 'finished');
+        const finishedMusic = linkedAssets.filter(a => a.type === 'music' && a.status === 'finished');
+        
+        const details = [
+            { label: "🌌 تصميم البيئة والموقع (Environment)", status: finishedEnvironments.length > 0, count: finishedEnvironments.length },
+            { label: "🎨 تصميم الشخصيات (Characters)", status: finishedCharacters.length >= 2, count: finishedCharacters.length, minNeeded: 2 },
+            { label: "🎙️ أصوات الشخصيات (Voices)", status: finishedVoices.length > 0, count: finishedVoices.length },
+            { label: "🎵 الموسيقى التصويرية (Music)", status: finishedMusic.length > 0, count: finishedMusic.length }
+        ];
+        
+        const complete = details.every(d => d.status);
+        return { complete, details };
+    }
+
     handleAssetTypeChange(editData = null) {
         const type = this.assetTypeSelect.value;
         if (!type) return;
@@ -596,19 +621,42 @@ class SketchicApp {
             this.groupRelatedCreator.style.display = "block";
             this.groupRelatedCharacters.style.display = "block";
 
-            const hasScen = scenarios.length > 0;
-            const hasChar = characters.length >= 2;
+            const selectedScenId = editData ? editData.relatedScenario : this.relatedScenarioSelect.value;
+            const validation = this.validateScenarioCompletion(selectedScenId);
 
-            if (!hasScen || !hasChar) {
+            if (scenarios.length === 0) {
                 this.prereqBox.className = "prereq-guide-box alert-important";
                 warningHtml = `
                     <div class="prereq-title" style="color:var(--color-danger)">⚠️ متطلبات ناقصة لإنشاء القصة المصورة</div>
-                    <p>لإضافة قصة مصورة تحتاج على الأقل إلى: <strong>سيناريو واحد</strong> و <strong>شخصيتين (2)</strong> للصدام المرئي.</p>
+                    <p>لإضافة قصة مصورة تحتاج على الأقل إلى سيناريو واحد.</p>
+                `;
+            } else if (!selectedScenId) {
+                this.prereqBox.className = "prereq-guide-box alert-important";
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-danger)">⚠️ يرجى ربط وتحديد السيناريو أولاً</div>
+                    <p>اختر السيناريو المرتبط لتفعيل فحص اكتمال الأصول (بوابات التثبيت البصرية).</p>
+                `;
+            } else if (!validation.complete) {
+                this.prereqBox.className = "prereq-guide-box alert-important";
+                let checklistHtml = validation.details.map(d => {
+                    let statusIcon = d.status ? "✅ جاهز" : "❌ مفقود/قيد العمل";
+                    let color = d.status ? "var(--color-success)" : "var(--color-danger)";
+                    let countInfo = d.minNeeded ? `(المتوفر: ${d.count} من ${d.minNeeded})` : `(المتوفر: ${d.count})`;
+                    return `<li style="color:${color}; font-weight:bold; margin-bottom:4px;">${d.label}: ${statusIcon} ${countInfo}</li>`;
+                }).join('');
+
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-danger)">⚠️ بوابة الإنتاج مغلقة: أصول السيناريو غير مكتملة!</div>
+                    <p>لا يمكنك البدء بتشكيل لوحة القصة (Storyboard) إلا بعد استخراج وتجهيز كافة الأصول الأساسية المرتبطة بالسيناريو المختار:</p>
+                    <ul style="padding-right: 1.2rem; margin-top: 6px; list-style-type: none;">
+                        ${checklistHtml}
+                    </ul>
                 `;
             } else {
+                this.prereqBox.className = "prereq-guide-box";
                 warningHtml = `
-                    <div class="prereq-title" style="color:var(--color-orange)">📚 إرشاد إنشاء قصة مصورة / لوحة قصة</div>
-                    <p>ارفع ملف القصة المصورة (المسودة أو النهائية) على مجلد Drive المخصص <code>03_Comics</code> واربطه بالسيناريو والشخصيات.</p>
+                    <div class="prereq-title" style="color:var(--color-success)">🎉 بوابة الإنتاج مفتوحة: كافة الأصول مكتملة!</div>
+                    <p>أحسنت! جميع الشخصيات، والبيئات، والأصوات، والموسيقى جاهزة ومنتهية للسيناريو المختار. يمكنك الآن إطلاق وتصميم الـ Storyboard بأمان.</p>
                 `;
             }
 
@@ -1179,6 +1227,13 @@ class SketchicApp {
 
         // Validate Director's Checklist before saving as finished
         if (status === 'finished' && ['comic', 'video', 'game'].includes(type)) {
+            if (type === 'comic') {
+                const validation = this.validateScenarioCompletion(relatedScenario);
+                if (!validation.complete) {
+                    alert("خطأ: لا يمكن تحويل القصة المصورة (Comic/Storyboard) إلى حالة 'منتهي وجاهز' إلا بعد تجهيز وإنهاء كافة الأصول المرتبطة بالسيناريو المختار (البيئة، شخصيتين على الأقل، الأصوات، والموسيقى) أولاً!");
+                    return;
+                }
+            }
             const blendingChecked = this.chkNoBlending.checked;
             const depthChecked = this.chkDepthContrast.checked;
             const sonicChecked = this.chkSonicDissonance.checked;
