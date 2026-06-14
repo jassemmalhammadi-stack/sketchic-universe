@@ -752,12 +752,38 @@ class SketchicApp {
                 <div class="form-group">
                     <label for="opt-charVoice">بصمة وصوت الشخصية بالذكاء الاصطناعي (Google AI Voice Profile) *</label>
                     <select id="opt-charVoice" required>
-                        <option value="gemini-3.1-flash-tts-preview (توليد صوتي عاطفي وتعبيري مباشر في Google AI Studio)">gemini-3.1-flash-tts-preview (توليد صوتي عاطفي وتعبيري مباشر في Google AI Studio - أداء ناطق وتعبيري فوري)</option>
-                        <option value="Gemini Live (صوت تفاعلي عاطفي فوري - استجابة لحظية ونبرات معبرة)">Gemini Live (صوت تفاعلي عاطفي فوري - استجابة لحظية ونبرات معبرة)</option>
-                        <option value="NotebookLM Audio Overview (حوار ثنائي تفاعلي - ضحكات طبيعية ومقاطعات حية)">NotebookLM Audio Overview (حوار ثنائي تفاعلي - ضحكات طبيعية ومقاطعات حية)</option>
-                        <option value="Google WaveNet/Neural TTS (تعليق سردي ملحمي بوقار كلاسيكي)">Google WaveNet/Neural TTS (تعليق سردي ملحمي بوقار كلاسيكي)</option>
-                        <option value="صوت معدني رقمي متقطع (Digital Glitch Voice لشخصيات السايبربانك والطبقة 3)">صوت معدني رقمي متقطع (Digital Glitch Voice لشخصيات السايبربانك والطبقة 3)</option>
+                        <option value="gemini-3.1-flash-tts-preview">gemini-3.1-flash-tts-preview (توليد تعبيري مباشر في Google AI Studio)</option>
+                        <option value="Gemini Live (صوت تفاعلي عاطفي فوري)">Gemini Live (صوت تفاعلي عاطفي فوري)</option>
+                        <option value="NotebookLM Audio Overview (حوار ثنائي تفاعلي)">NotebookLM Audio Overview (حوار ثنائي تفاعلي)</option>
+                        <option value="Google WaveNet/Neural TTS (تعليق سردي ملحمي)">Google WaveNet/Neural TTS (تعليق سردي ملحمي)</option>
+                        <option value="Digital Glitch Voice (صوت معدني رقمي متقطع)">صوت معدني رقمي متقطع (Digital Glitch Voice)</option>
                     </select>
+                </div>
+                <div id="tts-preview-fields" style="display: block; border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-sm); background: rgba(99, 102, 241, 0.03); margin-top: 10px;">
+                    <div style="font-weight: bold; font-size: 0.82rem; color: var(--color-accent); margin-bottom: 8px;">⚙️ إعدادات نموذج Google AI Studio (Voice Settings):</div>
+                    <div class="form-group" style="margin-bottom: 8px;">
+                        <label style="font-size: 0.75rem;">المشهد الصوتي الخلفي (Scene) *</label>
+                        <input type="text" id="opt-voiceScene" placeholder="مثال: A quiet library / A bustling street at night..." style="font-size: 0.8rem; width: 100%; box-sizing: border-box; padding: 6px; border-radius:4px; border:1px solid var(--border-color);" value="A quiet drawing studio with scratching pencils">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 8px;">
+                        <label style="font-size: 0.75rem;">سياق الكلام والعينة (Sample Context) *</label>
+                        <input type="text" id="opt-voiceContext" placeholder="مثال: Whispering a secret / Speaker just finished a battle..." style="font-size: 0.8rem; width: 100%; box-sizing: border-box; padding: 6px; border-radius:4px; border:1px solid var(--border-color);" value="Explaining a secret cosmic drawing rule to a student">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 8px;">
+                        <label style="font-size: 0.75rem;">صوت المتحدث المختار (Speaker Settings) *</label>
+                        <select id="opt-voiceSpeaker" style="font-size: 0.8rem; width: 100%; padding: 6px; border-radius:4px; border:1px solid var(--border-color);">
+                            <option value="Algenib (Gravely, Lower pitch)">Algenib (Gravely, Lower pitch)</option>
+                            <option value="Puck (Energetic, Mid pitch)">Puck (Energetic, Mid pitch)</option>
+                            <option value="Charon (Calm, Deep voice)">Charon (Calm, Deep voice)</option>
+                            <option value="Kore (Bright, Higher pitch)">Kore (Bright, Higher pitch)</option>
+                            <option value="Fenrir (Dark, Growling tone)">Fenrir (Dark, Growling tone)</option>
+                            <option value="Aoede (Melodic, Soft tone)">Aoede (Melodic, Soft tone)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 0.75rem;">مثال لأداء النص بالوسوم التعبيرية (Text with Expressive Tags) *</label>
+                        <input type="text" id="opt-voiceTags" placeholder="مثال: [amused] That's a great idea! [laughs]" style="font-size: 0.8rem; width: 100%; box-sizing: border-box; padding: 6px; border-radius:4px; border:1px solid var(--border-color);" value="[thoughtful] Wait, are you saying... [sighs] we are all just drawing lines? [laughs]">
+                    </div>
                 </div>
             `;
         } else if (type === 'comic') {
@@ -828,10 +854,27 @@ class SketchicApp {
             });
         }
 
+        // Toggle voice settings fields if character voice is gemini-3.1-flash-tts-preview
+        const voiceSelect = this.dynamicOptionsContainer.querySelector('#opt-charVoice');
+        if (voiceSelect) {
+            const toggleFields = () => {
+                const isTTS = voiceSelect.value === 'gemini-3.1-flash-tts-preview';
+                const fieldsDiv = this.dynamicOptionsContainer.querySelector('#tts-preview-fields');
+                if (fieldsDiv) fieldsDiv.style.display = isTTS ? 'block' : 'none';
+            };
+            voiceSelect.addEventListener('change', toggleFields);
+            toggleFields();
+        }
+
         // Attach event listeners to update suggested prompt in real-time
         const selects = this.dynamicOptionsContainer.querySelectorAll('select');
         selects.forEach(sel => {
             sel.addEventListener('change', () => this.updateSuggestedPrompt());
+        });
+
+        const inputs = this.dynamicOptionsContainer.querySelectorAll('input');
+        inputs.forEach(inp => {
+            inp.addEventListener('input', () => this.updateSuggestedPrompt());
         });
 
         this.updateSuggestedPrompt();
@@ -927,6 +970,18 @@ Signature Cosmic Weapon: [${weaponText}].
 AI Voice Profile Configuration: [${charVoice}].
 Style Rules inherited from Creator: Drawn in [${styleText}] using [${toolText}].
 Details: The character sheet must display a clean design of the character on a neutral background, highlighting the distinct lines, texture, and strokes of this specific art medium. Also illustrate their faction insignia and signature weapon. Describe character voice parameters for text-to-speech rendering.`;
+
+            if (charVoice === 'gemini-3.1-flash-tts-preview') {
+                const voiceScene = document.getElementById('opt-voiceScene').value;
+                const voiceContext = document.getElementById('opt-voiceContext').value;
+                const voiceSpeaker = document.getElementById('opt-voiceSpeaker').value;
+                const voiceTags = document.getElementById('opt-voiceTags').value;
+                prompt += `\n\nGoogle AI Studio Multimodal Audio Settings (gemini-3.1-flash-tts-preview):
+- Audio Scene Setting: [${voiceScene}]
+- Conversation/Performance Context: [${voiceContext}]
+- Target Speaker Voice: [${voiceSpeaker}]
+- Expressive Input Audio tags: [${voiceTags}]`;
+            }
         } else if (type === 'comic') {
             const format = document.getElementById('opt-format').value;
             const color = document.getElementById('opt-color').value;
