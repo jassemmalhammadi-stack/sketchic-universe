@@ -752,6 +752,7 @@ class SketchicApp {
                 <div class="form-group">
                     <label for="opt-charVoice">بصمة وصوت الشخصية بالذكاء الاصطناعي (Google AI Voice Profile) *</label>
                     <select id="opt-charVoice" required>
+                        <option value="gemini-3.1-flash-tts-preview (توليد صوتي عاطفي وتعبيري مباشر في Google AI Studio)">gemini-3.1-flash-tts-preview (توليد صوتي عاطفي وتعبيري مباشر في Google AI Studio - أداء ناطق وتعبيري فوري)</option>
                         <option value="Gemini Live (صوت تفاعلي عاطفي فوري - استجابة لحظية ونبرات معبرة)">Gemini Live (صوت تفاعلي عاطفي فوري - استجابة لحظية ونبرات معبرة)</option>
                         <option value="NotebookLM Audio Overview (حوار ثنائي تفاعلي - ضحكات طبيعية ومقاطعات حية)">NotebookLM Audio Overview (حوار ثنائي تفاعلي - ضحكات طبيعية ومقاطعات حية)</option>
                         <option value="Google WaveNet/Neural TTS (تعليق سردي ملحمي بوقار كلاسيكي)">Google WaveNet/Neural TTS (تعليق سردي ملحمي بوقار كلاسيكي)</option>
