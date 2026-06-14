@@ -3589,13 +3589,21 @@ Show how style shaders swap dynamically.`
         }
         
         try {
-            const response = await gapi.client.drive.files.list({
-                q: query,
-                fields: 'files(id, name)',
-                spaces: 'drive'
+            const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&fields=files(id,name)&spaces=drive`;
+            const response = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${this.gdriveAccessToken}`
+                }
             });
             
-            const files = response.result.files;
+            if (!response.ok) {
+                const errBody = await response.text();
+                throw new Error(`Google API list folders error: ${response.status} - ${errBody}`);
+            }
+            
+            const data = await response.json();
+            const files = data.files;
+            
             if (files && files.length > 0) {
                 return files[0].id;
             } else {
@@ -3606,11 +3614,23 @@ Show how style shaders swap dynamically.`
                 if (parentId) {
                     folderMetadata.parents = [parentId];
                 }
-                const folder = await gapi.client.drive.files.create({
-                    resource: folderMetadata,
-                    fields: 'id'
+                
+                const createResponse = await fetch('https://www.googleapis.com/drive/v3/files', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${this.gdriveAccessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(folderMetadata)
                 });
-                return folder.result.id;
+                
+                if (!createResponse.ok) {
+                    const errBody = await createResponse.text();
+                    throw new Error(`Google API create folder error: ${createResponse.status} - ${errBody}`);
+                }
+                
+                const folder = await createResponse.json();
+                return folder.id;
             }
         } catch (err) {
             console.error("Error in getOrCreateFolder for: " + folderName, err);
@@ -3629,12 +3649,17 @@ Show how style shaders swap dynamically.`
             
             const fileName = `${safeTitle}.md`;
             const fileQuery = `name = '${fileName}' and '${subFolderId}' in parents and trashed = false`;
-            const searchResponse = await gapi.client.drive.files.list({
-                q: fileQuery,
-                fields: 'files(id)',
-                spaces: 'drive'
+            
+            const listUrl = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(fileQuery)}&fields=files(id)&spaces=drive`;
+            const searchResponse = await fetch(listUrl, {
+                headers: {
+                    'Authorization': `Bearer ${this.gdriveAccessToken}`
+                }
             });
-            const existingFiles = searchResponse.result.files;
+            
+            if (!searchResponse.ok) throw new Error("Search file failed");
+            const searchData = await searchResponse.json();
+            const existingFiles = searchData.files;
             
             const boundary = '314159265358979323846';
             const delimiter = "\r\n--" + boundary + "\r\n";
@@ -3643,9 +3668,12 @@ Show how style shaders swap dynamically.`
             const contentType = 'text/markdown';
             const metadata = {
                 'name': fileName,
-                'mimeType': contentType,
-                'parents': [subFolderId]
+                'mimeType': contentType
             };
+            
+            if (!existingFiles || existingFiles.length === 0) {
+                metadata.parents = [subFolderId];
+            }
             
             const multipartRequestBody =
                 delimiter +
@@ -3656,42 +3684,45 @@ Show how style shaders swap dynamically.`
                 mdContent +
                 close_delim;
 
-            let request;
+            let uploadUrl;
+            let method;
             if (existingFiles && existingFiles.length > 0) {
                 const fileId = existingFiles[0].id;
-                request = gapi.client.request({
-                    'path': `/upload/drive/v3/files/${fileId}`,
-                    'method': 'PATCH',
-                    'params': {'uploadType': 'multipart'},
-                    'headers': {
-                        'Content-Type': 'multipart/related; boundary=' + boundary
-                    },
-                    'body': multipartRequestBody
-                });
+                uploadUrl = `https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=multipart`;
+                method = 'PATCH';
             } else {
-                request = gapi.client.request({
-                    'path': '/upload/drive/v3/files',
-                    'method': 'POST',
-                    'params': {'uploadType': 'multipart', 'fields': 'id,webViewLink'},
-                    'headers': {
-                        'Content-Type': 'multipart/related; boundary=' + boundary
-                    },
-                    'body': multipartRequestBody
-                });
+                uploadUrl = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
+                method = 'POST';
             }
 
-            const response = await request;
-            const fileId = response.result.id;
+            const uploadResponse = await fetch(uploadUrl, {
+                method: method,
+                headers: {
+                    'Authorization': `Bearer ${this.gdriveAccessToken}`,
+                    'Content-Type': `multipart/related; boundary=${boundary}`
+                },
+                body: multipartRequestBody
+            });
+
+            if (!uploadResponse.ok) {
+                const errBody = await uploadResponse.text();
+                throw new Error(`Upload file failed: ${uploadResponse.status} - ${errBody}`);
+            }
+
+            const uploadedFile = await uploadResponse.json();
+            const fileId = uploadedFile.id;
             
-            const detailsResponse = await gapi.client.drive.files.get({
-                fileId: fileId,
-                fields: 'webViewLink'
+            const detailsResponse = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?fields=webViewLink`, {
+                headers: {
+                    'Authorization': `Bearer ${this.gdriveAccessToken}`
+                }
             });
             
-            const webViewLink = detailsResponse.result.webViewLink;
+            if (!detailsResponse.ok) throw new Error("Fetch webViewLink failed");
+            const detailsData = await detailsResponse.json();
+            const webViewLink = detailsData.webViewLink;
             
             this.assetDriveUrlInput.value = webViewLink;
-            
             alert(`🎉 تم حفظ الملف بنجاح وتحديثه مباشرة على Google Drive! \n\nالرابط الفعلي للملف:\n${webViewLink}`);
         } catch (err) {
             console.error("Failed to save to Google Drive", err);
@@ -3714,11 +3745,14 @@ Show how style shaders swap dynamically.`
 
     async fetchGoogleFileContent(fileId) {
         try {
-            const response = await gapi.client.drive.files.get({
-                fileId: fileId,
-                alt: 'media'
+            const url = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
+            const response = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${this.gdriveAccessToken}`
+                }
             });
-            return response.body;
+            if (!response.ok) throw new Error(`Status ${response.status}`);
+            return await response.text();
         } catch (err) {
             console.error("Error fetching file content from Google Drive: " + fileId, err);
             return null;
