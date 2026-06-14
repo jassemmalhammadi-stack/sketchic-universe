@@ -173,6 +173,7 @@ class SketchicApp {
         this.assetStatusSelect.addEventListener('change', () => this.toggleChecklistDisplay());
         this.relatedFactionSelect.addEventListener('change', () => this.updateSuggestedPrompt());
         this.interfacePhysicsSelect.addEventListener('change', () => this.updateSuggestedPrompt());
+        this.relatedCreatorSelect.addEventListener('change', () => this.updateSuggestedPrompt());
 
         // Publish to Github Pages click listener
         if (this.btnPublishGithub) {
@@ -512,12 +513,24 @@ class SketchicApp {
         } else if (type === 'scenario') {
             this.groupRelatedScenario.style.display = "none";
             this.groupRelatedCharacters.style.display = "none";
-            this.groupRelatedCreator.style.display = "none";
+            this.groupRelatedCreator.style.display = "block";
             
-            warningHtml = `
-                <div class="prereq-title">📝 إرشاد بناء السيناريو</div>
-                <p>السيناريو هو نواة العالم. يمكنك توليد مسودة سيناريو غنية لكون سكتشيك باستخدام <strong>Gemini Advanced</strong> عبر الأمر المحدد بالخيارات أدناه.</p>
-            `;
+            if (creators.length === 0) {
+                this.prereqBox.className = "prereq-guide-box alert-important";
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-danger)">⚠️ تنبيه هام: لا يوجد رسامون</div>
+                    <p>أنت بحاجة لتحديد رسام كوني واحد على الأقل ليقوم برسم وتجسيد الأسلوب الفني الأساسي لهذا السيناريو.</p>
+                `;
+            } else {
+                warningHtml = `
+                    <div class="prereq-title">📝 إرشاد بناء السيناريو</div>
+                    <p>السيناريو هو نواة العالم. اربط السيناريو بالرسام الكوني الحاكم لتحديد الأسلوب الفني وتوليد البرومبت المقترح.</p>
+                `;
+            }
+
+            if (editData && editData.relatedCreator) {
+                this.relatedCreatorSelect.value = editData.relatedCreator;
+            }
         } else if (type === 'character') {
             this.groupRelatedScenario.style.display = "block";
             this.groupRelatedCreator.style.display = "block";
@@ -835,7 +848,19 @@ class SketchicApp {
             const style = document.getElementById('opt-style').value;
             const layer = document.getElementById('opt-parallelLayer').value;
             const fps = document.getElementById('opt-framerate').value;
+            
+            let creatorStyle = "أسلوب رسم فني متباين";
+            let creatorTool = "أداة رسم كوني مميزة";
+            if (this.relatedCreatorSelect.value) {
+                const creator = this.assets.find(a => a.id === this.relatedCreatorSelect.value);
+                if (creator && creator.subOptions) {
+                    creatorStyle = creator.subOptions.artStyle || creatorStyle;
+                    creatorTool = creator.subOptions.tool || creatorTool;
+                }
+            }
+
             prompt = `بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لقصة من تصنيف [${genre}] وبأسلوب [${style}]. 
+يخضع هذا السيناريو لرؤية الرسام الكوني المرتبط ذي الأسلوب [${creatorStyle}] مستخدماً الأداة الكونية [${creatorTool}].
 يتموضع هذا السيناريو في [${layer}] ويخضع لمعدل إطارات كوني قدره [${fps}].
 يجب أن تركز القصة على صدام الأسلوب الفني في الكادر ووجود أبعاد مرسومة متداخلة دون اندماج، مع كتابة السيناريو بهيكل مشاهد سينمائية تفصيلية.`;
         } else if (type === 'environment') {
