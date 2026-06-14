@@ -9,11 +9,11 @@ const MOCK_ASSETS = [];
 class SketchicApp {
     constructor() {
         // Force reset database once for a fresh startup as requested
-        const initializedClean = localStorage.getItem('sketchic_clean_v3');
+        const initializedClean = localStorage.getItem('sketchic_clean_v4');
         if (!initializedClean) {
             localStorage.setItem('sketchic_assets', JSON.stringify([]));
             localStorage.setItem('sketchic_scenes', JSON.stringify([]));
-            localStorage.setItem('sketchic_clean_v3', 'true');
+            localStorage.setItem('sketchic_clean_v4', 'true');
         }
 
         this.assets = this.loadAssets();
@@ -93,6 +93,11 @@ class SketchicApp {
         // Conditional linkage inputs
         this.groupRelatedScenario = document.getElementById('group-related-scenario');
         this.relatedScenarioSelect = document.getElementById('asset-related-scenario');
+        this.groupRelatedSource = document.getElementById('group-related-source');
+        this.relatedSourceSelect = document.getElementById('asset-related-source');
+        this.btnExtractAssets = document.getElementById('btn-extract-assets');
+        this.aiExtractionPanel = document.getElementById('ai-extraction-panel');
+        this.extractedAssetsList = document.getElementById('extracted-assets-list');
         
         // Creator Linkage selectors
         this.groupRelatedCreator = document.getElementById('group-related-creator');
@@ -174,6 +179,12 @@ class SketchicApp {
             this.handleAssetTypeChange();
             this.updateSuggestedPrompt();
         });
+        this.relatedSourceSelect.addEventListener('change', () => {
+            this.updateSuggestedPrompt();
+        });
+        if (this.btnExtractAssets) {
+            this.btnExtractAssets.addEventListener('click', () => this.extractAssetsFromSource());
+        }
         this.assetStatusSelect.addEventListener('change', () => this.toggleChecklistDisplay());
         this.relatedFactionSelect.addEventListener('change', () => this.updateSuggestedPrompt());
         this.interfacePhysicsSelect.addEventListener('change', () => this.updateSuggestedPrompt());
@@ -372,12 +383,13 @@ class SketchicApp {
 
     // Modal Control & Validation Checks
     openAddModal() {
-        this.editingAssetId = null;
+        this.editingAssetId = 'asset-' + Date.now(); // Pre-generate ID to support sub-asset linkage
         this.modalTitle.textContent = "إضافة أصل جديد";
         this.assetIdInput.value = "";
         this.assetForm.reset();
         this.prereqBox.style.display = "none";
         this.groupRelatedScenario.style.display = "none";
+        this.groupRelatedSource.style.display = "none";
         this.groupRelatedCreator.style.display = "none";
         this.groupRelatedFaction.style.display = "none";
         this.groupRelatedCharacters.style.display = "none";
@@ -389,6 +401,8 @@ class SketchicApp {
         this.dynamicOptionsContainer.innerHTML = "";
         this.groupSuggestedPrompt.style.display = "none";
         this.assetUsedPromptInput.value = "";
+        if (this.aiExtractionPanel) this.aiExtractionPanel.style.display = "none";
+        if (this.extractedAssetsList) this.extractedAssetsList.innerHTML = "";
         this.modal.classList.add('open');
     }
 
@@ -408,6 +422,7 @@ class SketchicApp {
 
         this.relatedFactionSelect.value = asset.relatedFaction || "";
         this.interfacePhysicsSelect.value = asset.interfacePhysics || "";
+        this.relatedSourceSelect.value = asset.relatedSource || "";
 
         if (asset.directorChecklist) {
             this.chkNoBlending.checked = !!asset.directorChecklist.noBlending;
@@ -421,13 +436,111 @@ class SketchicApp {
             this.chkSonicDissonance.checked = isFinished && isVisualAsset;
         }
 
+        if (this.aiExtractionPanel) this.aiExtractionPanel.style.display = "none";
+        if (this.extractedAssetsList) this.extractedAssetsList.innerHTML = "";
+
         this.toggleChecklistDisplay();
         this.modal.classList.add('open');
     }
 
     closeModal() {
         this.modal.classList.remove('open');
+        // Do not clear editingAssetId here if we need it, but it's safe to clear now
         this.editingAssetId = null;
+        if (this.aiExtractionPanel) this.aiExtractionPanel.style.display = "none";
+        if (this.extractedAssetsList) this.extractedAssetsList.innerHTML = "";
+    }
+
+    extractAssetsFromSource() {
+        const sourceId = this.relatedSourceSelect.value;
+        if (!sourceId) {
+            alert("الرجاء اختيار مصدر سردي أولاً للاستكشاف!");
+            return;
+        }
+
+        const source = this.assets.find(a => a.id === sourceId);
+        if (!source) {
+            alert("المصدر السردي المحدد غير موجود!");
+            return;
+        }
+
+        const theme = (source.subOptions && source.subOptions.theme) || (source.subOptions && source.subOptions.sourceTheme) || "";
+        const plot = (source.subOptions && source.subOptions.plot) || (source.subOptions && source.subOptions.sourcePlot) || "";
+        const setting = (source.subOptions && source.subOptions.setting) || (source.subOptions && source.subOptions.sourceSetting) || "";
+
+        // Generate proposed assets based on source content
+        const proposed = [
+            {
+                type: 'character',
+                title: `شخصية: البطل المستيقظ من (${source.title})`,
+                desc: `شخصية قيادية مستوحاة من الصراع السردي: ${plot.substring(0, 100) || "صراع الأبعاد والفصائل الكونية"}...`,
+                subOptions: { charClass: 'شخصية مستيقظة تدرك أنها مرسومة (Awakened)' },
+                relatedFaction: 'awakened'
+            },
+            {
+                type: 'environment',
+                title: `بيئة: موقع صدام الأبعاد في (${source.title})`,
+                desc: `موقع سينمائي ذو طابع فريد مستوحى من الخلفية المكانية: ${setting.substring(0, 100) || "خط التماس المباشر بين بوابات الرسم الحبرية الخشنة واللوحات الزيتية"}...`,
+                subOptions: { envType: 'داخل لوحة قماشية مائعة (Fluid Canvas Interior)', clashDensity: 'متوسطة (تداخل الضوء والجاذبية)' }
+            },
+            {
+                type: 'music',
+                title: `ساوندتراك: لحن الأثير لـ (${source.title})`,
+                desc: `مقطوعة موسيقية تصويرية تعبر عن المغزى المحوري: ${theme.substring(0, 100) || "صراع أبعاد الرسم المتنافرة"}...`,
+                subOptions: { musicEngine: 'Suno AI', musicGenre: 'Epic Orchestral', musicTempo: 'Medium/Dramatic', musicInstruments: 'Acoustic Strings' }
+            }
+        ];
+
+        this.extractedAssetsList.innerHTML = "";
+        proposed.forEach((p, idx) => {
+            const item = document.createElement('div');
+            item.style.cssText = "display: flex; justify-content: space-between; align-items: center; background: var(--bg-secondary); padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); font-size: 0.8rem; margin-top: 4px;";
+            
+            const info = document.createElement('div');
+            info.style.cssText = "display: flex; flex-direction: column; gap: 2px; text-align: right;";
+            info.innerHTML = `<strong style="color:var(--text-primary)">${p.title}</strong><div style="font-size:0.7rem; color:var(--text-secondary);">${p.desc.substring(0, 70)}...</div>`;
+            
+            const btn = document.createElement('button');
+            btn.type = "button";
+            btn.className = "btn";
+            btn.style.cssText = "background-color: var(--color-success); color: #fff; font-size: 0.72rem; padding: 4px 10px; border: none; cursor: pointer; border-radius: 3px; font-weight: bold;";
+            btn.textContent = "اعتماد وإضافة";
+            
+            btn.addEventListener('click', () => {
+                const newAssetId = 'asset-extracted-' + Date.now() + '-' + idx;
+                const newAsset = {
+                    id: newAssetId,
+                    type: p.type,
+                    title: p.title,
+                    desc: p.desc,
+                    driveUrl: "https://drive.google.com/drive/folders/extracted-mock-folder",
+                    status: 'draft',
+                    relatedScenario: this.editingAssetId,
+                    relatedCreator: this.relatedCreatorSelect.value || "",
+                    relatedSource: sourceId,
+                    relatedFaction: p.relatedFaction || "",
+                    relatedCharacters: [],
+                    interfacePhysics: "",
+                    directorChecklist: { noBlending: false, depthContrast: false, sonicDissonance: false },
+                    usedPrompt: `توليد أصل مقترح من المصدر السردي: ${source.title}`,
+                    subOptions: p.subOptions,
+                    createdAt: new Date().toISOString()
+                };
+                
+                this.assets.push(newAsset);
+                this.saveAssets();
+                
+                btn.disabled = true;
+                btn.style.backgroundColor = "var(--text-tertiary)";
+                btn.textContent = "✅ تم الاعتماد";
+            });
+
+            item.appendChild(info);
+            item.appendChild(btn);
+            this.extractedAssetsList.appendChild(item);
+        });
+
+        this.aiExtractionPanel.style.display = "block";
     }
 
     toggleChecklistDisplay() {
@@ -482,6 +595,12 @@ class SketchicApp {
             this.groupRelatedFaction.style.display = 'none';
         }
 
+        if (type === 'scenario') {
+            this.groupRelatedSource.style.display = 'block';
+        } else {
+            this.groupRelatedSource.style.display = 'none';
+        }
+
         if (type === 'comic' || type === 'video') {
             this.groupInterfacePhysics.style.display = 'block';
         } else {
@@ -497,6 +616,16 @@ class SketchicApp {
             opt.value = s.id;
             opt.textContent = s.title;
             this.relatedScenarioSelect.appendChild(opt);
+        });
+
+        // Populate Related Source Dropdown
+        const sources = this.assets.filter(a => a.type === 'source');
+        this.relatedSourceSelect.innerHTML = '<option value="">لا يوجد مصدر سردي مرتبط (أو اختر مصدراً...)</option>';
+        sources.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = s.title;
+            this.relatedSourceSelect.appendChild(opt);
         });
 
         // Populate Related Creator Dropdown
@@ -534,10 +663,21 @@ class SketchicApp {
         // Configure Prerequisites and Guidance message
         let warningHtml = "";
         
-        if (type === 'creator') {
+        if (type === 'source') {
             this.groupRelatedScenario.style.display = "none";
             this.groupRelatedCharacters.style.display = "none";
             this.groupRelatedCreator.style.display = "none";
+            this.groupRelatedSource.style.display = "none";
+            
+            warningHtml = `
+                <div class="prereq-title" style="color:var(--color-cyan)">📖 إرشاد المصدر السردي الأصلي</div>
+                <p>قم بتوثيق الرواية أو القصة أو الفكرة الأساسية لكون سكتشيك. سيتم اشتقاق السيناريوهات واللوحات منها لاحقاً لضمان ثبات الهوية السردية.</p>
+            `;
+        } else if (type === 'creator') {
+            this.groupRelatedScenario.style.display = "none";
+            this.groupRelatedCharacters.style.display = "none";
+            this.groupRelatedCreator.style.display = "none";
+            this.groupRelatedSource.style.display = "none";
             
             warningHtml = `
                 <div class="prereq-title">✍️ إرشاد صياغة الرسام الكوني</div>
@@ -547,8 +687,15 @@ class SketchicApp {
             this.groupRelatedScenario.style.display = "none";
             this.groupRelatedCharacters.style.display = "none";
             this.groupRelatedCreator.style.display = "block";
+            this.groupRelatedSource.style.display = "block";
             
-            if (creators.length === 0) {
+            if (sources.length === 0) {
+                this.prereqBox.className = "prereq-guide-box alert-important";
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-danger)">⚠️ تنبيه هام: المصادر السردية مفقودة</div>
+                    <p>أنت بحاجة لتسجيل مصدر سردي واحد على الأقل (رواية أو قصة أصلية) للاشتقاق وكتابة السيناريو منه.</p>
+                `;
+            } else if (creators.length === 0) {
                 this.prereqBox.className = "prereq-guide-box alert-important";
                 warningHtml = `
                     <div class="prereq-title" style="color:var(--color-danger)">⚠️ تنبيه هام: لا يوجد رسامون</div>
@@ -557,12 +704,13 @@ class SketchicApp {
             } else {
                 warningHtml = `
                     <div class="prereq-title">📝 إرشاد بناء السيناريو</div>
-                    <p>السيناريو هو نواة العالم. اربط السيناريو بالرسام الكوني الحاكم لتحديد الأسلوب الفني وتوليد البرومبت المقترح.</p>
+                    <p>السيناريو هو نواة العالم. اربط السيناريو بالرسام الكوني الحاكم والمصدر السردي لتحديد الأسلوب الفني وتوليد البرومبت المقترح.</p>
                 `;
             }
 
-            if (editData && editData.relatedCreator) {
-                this.relatedCreatorSelect.value = editData.relatedCreator;
+            if (editData) {
+                if (editData.relatedCreator) this.relatedCreatorSelect.value = editData.relatedCreator;
+                if (editData.relatedSource) this.relatedSourceSelect.value = editData.relatedSource;
             }
         } else if (type === 'character') {
             this.groupRelatedScenario.style.display = "block";
@@ -758,7 +906,39 @@ class SketchicApp {
 
         let optionsHtml = "";
 
-        if (type === 'creator') {
+        if (type === 'source') {
+            optionsHtml = `
+                <div class="form-group">
+                    <label for="opt-sourceType">نوع المصدر السردي *</label>
+                    <select id="opt-sourceType" required>
+                        <option value="رواية كوكبية طويلة (Novel)">رواية كوكبية طويلة (Novel)</option>
+                        <option value="قصة قصيرة (Short Story)">قصة قصيرة (Short Story)</option>
+                        <option value="أسطورة شعبية أو فلكلور أبعاد (Folklore)">أسطورة شعبية أو فلكلور أبعاد (Folklore)</option>
+                        <option value="مسودة فكرة أصلية (Concept Draft)">مسودة فكرة أصلية (Concept Draft)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-sourceAuthor">المؤلف السردي الأصلي *</label>
+                    <input type="text" id="opt-sourceAuthor" placeholder="اسم الكاتب أو المرجع..." value="الكاتب الكوني الأول" required>
+                </div>
+                <div class="form-group">
+                    <label for="opt-sourceWordCount">عدد الكلمات التقريبي *</label>
+                    <input type="number" id="opt-sourceWordCount" placeholder="مثال: 5000..." value="1500" required>
+                </div>
+                <div class="form-group">
+                    <label for="opt-sourceTheme">الفكرة والمغزى المحوري للقصة *</label>
+                    <textarea id="opt-sourceTheme" rows="2" placeholder="اكتب الفكرة الفلسفية أو المغزى الرئيسي الحاكم للمصدر السردي..." required>صراع بين أبعاد الرسم المتنافرة وفكرة استحالة الاندماج الكامل للطبقات الزمنية البصرية</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="opt-sourcePlot">الحبكة الكونية والصراع الرئيسي *</label>
+                    <textarea id="opt-sourcePlot" rows="2" placeholder="اكتب الحبكة الكونية والصراع الأساسي بين الشخصيات أو الفصائل..." required>استيقاظ شخصية من البعد ثنائي الأبعاد ومحاولتها الهرب إلى البعد الزيتي ثلاثي الأبعاد مما يؤدي لتداخل الأبعاد وتنافر الجاذبية والخطوط</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="opt-sourceSetting">البيئة الزمنية والمكانية المقترحة *</label>
+                    <textarea id="opt-sourceSetting" rows="2" placeholder="صف الزمان والمكان السردي العام للمشاهد..." required>موقع أثري قديم يقع عند خط التماس المباشر بين بوابات الرسم الحبرية الخشنة واللوحات الزيتية المائعة</textarea>
+                </div>
+            `;
+        } else if (type === 'creator') {
             optionsHtml = `
                 <div class="form-group">
                     <label for="opt-artStyle">الأسلوب الفني الحاكم للرسام *</label>
@@ -1047,7 +1227,16 @@ class SketchicApp {
 
         let prompt = "";
 
-        if (type === 'creator') {
+        if (type === 'source') {
+            const sourceType = document.getElementById('opt-sourceType').value;
+            const sourceAuthor = document.getElementById('opt-sourceAuthor').value;
+            const sourceWordCount = document.getElementById('opt-sourceWordCount').value;
+            prompt = `اكتب فكرة عامة وحبكة وسينوبسيس مفصل لمصدر سردي في كون سكتشيك السينمائي.
+نوع المصدر: [${sourceType}].
+المؤلف الكوني: [${sourceAuthor}].
+الحجم المستهدف: [حدود ${sourceWordCount} كلمة].
+يجب أن تركز القصة على الأبعاد المتوازية والصدام الفني البصري بين أبعاد الرسم المختلفة (الزيتي، الكارتون، الحبر، الغرافيت) وصراعات الفصائل الكونية في هذا الكون.`;
+        } else if (type === 'creator') {
             const artStyle = document.getElementById('opt-artStyle').value;
             const tool = document.getElementById('opt-tool').value;
             prompt = `اكتب ملفاً تعريفياً سردياً وأدبياً لرسام كوني في كون سكتشيك السينمائي يسمى [اسم الرسام].
@@ -1055,11 +1244,20 @@ class SketchicApp {
 الأداة الكونية الخاصة التي يرسم بها: [${tool}].
 اشرح صراعه الفلسفي وكيف تنعكس ضربات أداته وقوانينها الفيزيائية على رسوماته وعوالمه التي يرسمها.`;
         } else if (type === 'scenario') {
-            const sourceType = document.getElementById('opt-scenarioSourceType').value;
             const genre = document.getElementById('opt-genre').value;
             const style = document.getElementById('opt-style').value;
             const layer = document.getElementById('opt-parallelLayer').value;
             const fps = document.getElementById('opt-framerate').value;
+            
+            let sourceInfo = "مصدر سردي كوني عام";
+            if (this.relatedSourceSelect.value) {
+                const sourceAsset = this.assets.find(a => a.id === this.relatedSourceSelect.value);
+                if (sourceAsset && sourceAsset.subOptions) {
+                    const sType = sourceAsset.subOptions.sourceType || "مصدر غير محدد";
+                    const sAuthor = sourceAsset.subOptions.sourceAuthor || "مؤلف غير معروف";
+                    sourceInfo = `${sType} للكاتب [${sAuthor}] بعنوان (${sourceAsset.title})`;
+                }
+            }
             
             let creatorStyle = "أسلوب رسم فني متباين";
             let creatorTool = "أداة رسم كوني مميزة";
@@ -1071,7 +1269,7 @@ class SketchicApp {
                 }
             }
 
-            prompt = `بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لقصة مشتقة من مصدر نوعه: [${sourceType}]، ومن تصنيف [${genre}] وبأسلوب [${style}]. 
+            prompt = `بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لقصة مشتقة من: [${sourceInfo}]، ومن تصنيف [${genre}] وبأسلوب [${style}]. 
 يخضع هذا السيناريو لرؤية الرسام الكوني المرتبط ذي الأسلوب [${creatorStyle}] مستخدماً الأداة الكونية [${creatorTool}].
 يتموضع هذا السيناريو في [${layer}] ويخضع لمعدل إطارات كوني قدره [${fps}].
 يجب أن تركز القصة على صدام الأسلوب الفني في الكادر ووجود أبعاد مرسومة متداخلة دون اندماج، مع كتابة السيناريو بهيكل مشاهد سينمائية تفصيلية.`;
@@ -1215,6 +1413,7 @@ class SketchicApp {
         
         const relatedScenario = this.relatedScenarioSelect.value;
         const relatedCreator = this.relatedCreatorSelect.value;
+        const relatedSource = this.relatedSourceSelect.value;
         
         const cbChecked = this.charactersCheckboxContainer.querySelectorAll('input[name="related-chars"]:checked');
         const relatedCharacters = Array.from(cbChecked).map(cb => cb.value);
@@ -1233,9 +1432,26 @@ class SketchicApp {
             const key = inp.id.replace('opt-', '');
             subOptions[key] = inp.value;
         });
+        const textareas = this.dynamicOptionsContainer.querySelectorAll('textarea');
+        textareas.forEach(ta => {
+            const key = ta.id.replace('opt-', '');
+            subOptions[key] = ta.value;
+        });
 
         if (!type || !title || !driveUrl) {
             alert("يرجى ملء جميع الحقول المطلوبة الكونية.");
+            return;
+        }
+
+        // Strict Workflow Rule: No Scenario without Narrative Source
+        if (type === 'scenario' && !relatedSource) {
+            alert("خطأ: لا يمكن إنشاء أو حفظ السيناريو بدون ربطه بمصدر سردي مرتبط!");
+            return;
+        }
+
+        // Strict Workflow Rule: No Sub-assets without Scenario
+        if (['character', 'environment', 'voice', 'music'].includes(type) && !relatedScenario) {
+            alert("خطأ: لا يمكن إنشاء أو حفظ هذا الأصل بدون ربطه بسيناريو مفعل!");
             return;
         }
 
@@ -1279,6 +1495,7 @@ class SketchicApp {
                         status,
                         relatedScenario,
                         relatedCreator,
+                        relatedSource,
                         relatedFaction,
                         relatedCharacters,
                         interfacePhysics,
@@ -1300,6 +1517,7 @@ class SketchicApp {
                 status,
                 relatedScenario,
                 relatedCreator,
+                relatedSource,
                 relatedFaction,
                 relatedCharacters,
                 interfacePhysics,
@@ -1355,6 +1573,13 @@ class SketchicApp {
                 const creator = this.assets.find(a => a.id === asset.relatedCreator);
                 if (creator) {
                     relationHtml += `<span class="relation-tag" style="background-color:#fef3c7; color:#b45309; border:1px solid rgba(217,119,6,0.15)">✍️ الرسام: ${creator.title}</span>`;
+                }
+            }
+
+            if (asset.relatedSource) {
+                const parentSource = this.assets.find(a => a.id === asset.relatedSource);
+                if (parentSource) {
+                    relationHtml += `<span class="relation-tag" style="background-color:#e2f0d9; color:#385723; border:1px solid rgba(56,87,35,0.15)">📖 المصدر: ${parentSource.title}</span>`;
                 }
             }
 
@@ -1428,7 +1653,18 @@ class SketchicApp {
 
             // Inject Creator Art Style or Tools if creator card
             let creatorDetailsHtml = "";
-            if (asset.type === 'creator' && asset.subOptions) {
+            if (asset.type === 'source' && asset.subOptions) {
+                const sourceType = asset.subOptions.sourceType || "رواية كوكبية طويلة";
+                const author = asset.subOptions.sourceAuthor || "الكاتب الكوني الأول";
+                const wordCount = asset.subOptions.sourceWordCount || "0";
+                creatorDetailsHtml = `
+                    <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
+                        <div>📖 <strong>نوع المصدر:</strong> ${sourceType}</div>
+                        <div style="margin-top:4px;">✍️ <strong>المؤلف:</strong> ${author}</div>
+                        <div style="margin-top:4px;">📊 <strong>عدد الكلمات:</strong> ${wordCount} كلمة</div>
+                    </div>
+                `;
+            } else if (asset.type === 'creator' && asset.subOptions) {
                 creatorDetailsHtml = `
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>🎨 <strong>الأسلوب:</strong> ${asset.subOptions.artStyle}</div>
@@ -1447,13 +1683,18 @@ class SketchicApp {
             } else if (asset.type === 'scenario' && asset.subOptions) {
                 const layer = asset.subOptions.parallelLayer || "Layer 1 - الوجود المادي الفعلي";
                 const fps = asset.subOptions.framerate || "24fps";
-                const sourceType = asset.subOptions.scenarioSourceType || "فكرة أصلية";
-                const sourceLink = asset.subOptions.scenarioSourceLink ? `<a href="${asset.subOptions.scenarioSourceLink}" target="_blank" style="color:var(--color-cyan); text-decoration:underline; font-weight:bold;">رابط المصدر 🔗</a>` : "لا يوجد رابط";
+                let sourceText = "لا يوجد مصدر مرتبط";
+                if (asset.relatedSource) {
+                    const sourceAsset = this.assets.find(a => a.id === asset.relatedSource);
+                    if (sourceAsset) {
+                        sourceText = `<a href="${sourceAsset.driveUrl}" target="_blank" style="color:var(--color-cyan); text-decoration:underline; font-weight:bold;">${sourceAsset.title} 🔗</a>`;
+                    }
+                }
                 creatorDetailsHtml = `
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>📂 <strong>الطبقة الزمنية:</strong> ${layer}</div>
                         <div style="margin-top:4px;">⏱️ <strong>معدل الإطارات:</strong> ${fps}</div>
-                        <div style="margin-top:4px;">📖 <strong>المصدر السردي:</strong> ${sourceType} (${sourceLink})</div>
+                        <div style="margin-top:4px;">📖 <strong>المصدر السردي:</strong> ${sourceText}</div>
                     </div>
                 `;
             } else if (asset.type === 'character' && asset.subOptions) {

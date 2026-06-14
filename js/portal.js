@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Filter out finished assets (just in case)
         const finishedAssets = assets.filter(a => a.status === 'finished');
         
+        const sources = finishedAssets.filter(a => a.type === 'source');
         const creators = finishedAssets.filter(a => a.type === 'creator');
         const scenarios = finishedAssets.filter(a => a.type === 'scenario');
         const characters = finishedAssets.filter(a => a.type === 'character');
@@ -213,12 +214,48 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // Generate Narrative Sources HTML
+        let sourcesHtml = "";
+        if (sources.length > 0) {
+            sources.forEach(s => {
+                const sourceType = s.subOptions ? (s.subOptions.sourceType || "رواية كوكبية طويلة") : "رواية كوكبية طويلة";
+                const author = s.subOptions ? (s.subOptions.sourceAuthor || "الكاتب الكوني الأول") : "الكاتب الكوني الأول";
+                const wordCount = s.subOptions ? (s.subOptions.sourceWordCount || "0") : "0";
+                
+                sourcesHtml += `
+                    <div class="portal-card" style="border-top: 4px solid #10b981; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);">
+                        <div class="portal-card-body">
+                            <span class="portal-card-meta" style="color:#047857; font-weight:700;">📖 مصدر سردي (Source Material)</span>
+                            <h4 style="margin: 10px 0 5px 0; font-size:1.2rem;">${s.title}</h4>
+                            <div style="font-size:0.75rem; color:#059669; margin-bottom: 10px;">
+                                <span>📖 النوع: ${sourceType}</span><br>
+                                <span style="margin-top:2px; display:inline-block;">✍️ المؤلف: ${author}</span><br>
+                                <span style="margin-top:2px; display:inline-block;">📊 الحجم: ${wordCount} كلمة</span>
+                            </div>
+                            <p style="font-size:0.8rem; line-height:1.5; color:#065f46;">${s.desc}</p>
+                            <div class="portal-card-action">
+                                <a href="${s.driveUrl}" target="_blank" class="portal-btn portal-btn-outline" style="border-color:#10b981; color:#10b981;">قراءة المصدر الأصلي</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
         // Generate Scenarios / Lore
         let scenariosHtml = "";
         if (scenarios.length > 0) {
             scenarios.forEach(s => {
                 let layerText = s.subOptions ? (s.subOptions.parallelLayer || "Layer 1") : "Layer 1";
                 let fpsText = s.subOptions ? (s.subOptions.framerate || "24fps") : "24fps";
+                
+                let sourceLinkHtml = "";
+                if (s.relatedSource) {
+                    const src = finishedAssets.find(a => a.id === s.relatedSource) || assets.find(a => a.id === s.relatedSource);
+                    if (src) {
+                        sourceLinkHtml = `<div style="font-size:0.8rem; color:#64748b; margin: 4px 0 10px 0;">📖 مقتبس من المصدر: <a href="${src.driveUrl}" target="_blank" style="color:var(--color-cyan); text-decoration:underline; font-weight:bold;">${src.title}</a></div>`;
+                    }
+                }
                 
                 scenariosHtml += `
                     <div class="portal-card" style="grid-column: 1 / -1; border-top: 4px solid var(--color-accent)">
@@ -227,7 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span class="portal-card-meta">📝 سيناريو رئيسي</span>
                                 <span class="portal-card-meta" style="color:var(--color-accent); font-weight:bold;">📂 ${layerText} • ⏱️ ${fpsText}</span>
                             </div>
-                            <h4 style="font-size:1.4rem;margin:10px 0;">${s.title}</h4>
+                            <h4 style="font-size:1.4rem;margin:10px 0 5px 0;">${s.title}</h4>
+                            ${sourceLinkHtml}
                             <p>${s.desc}</p>
                             <div class="portal-card-action">
                                 <a href="${s.driveUrl}" target="_blank" class="portal-btn portal-btn-primary">قراءة السيناريو الكامل على Google Docs</a>
@@ -365,6 +403,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="portal-grid">
                         ${creatorsHtml}
+                    </div>
+                </div>
+                ` : ''}
+
+                <!-- Finished Sources -->
+                ${sources.length > 0 ? `
+                <div class="portal-section">
+                    <div class="portal-section-header">
+                        <h3>المصادر السردية والأفكار الأصلية</h3>
+                        <span class="section-tag" style="background-color:#10b981; color:#fff;">روايات وقصص مصادر</span>
+                    </div>
+                    <div class="portal-grid">
+                        ${sourcesHtml}
                     </div>
                 </div>
                 ` : ''}
