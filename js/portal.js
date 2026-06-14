@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const scenarios = finishedAssets.filter(a => a.type === 'scenario');
         const characters = finishedAssets.filter(a => a.type === 'character');
         const voices = finishedAssets.filter(a => a.type === 'voice');
+        const musics = finishedAssets.filter(a => a.type === 'music');
         const comics = finishedAssets.filter(a => a.type === 'comic');
         const videos = finishedAssets.filter(a => a.type === 'video');
         const games = finishedAssets.filter(a => a.type === 'game');
@@ -167,6 +168,44 @@ document.addEventListener('DOMContentLoaded', () => {
                             <p style="font-size:0.8rem; line-height:1.5; color:var(--text-secondary);">${v.desc}</p>
                             <div class="portal-card-action">
                                 <a href="${v.driveUrl}" target="_blank" class="portal-btn portal-btn-outline" style="border-color:var(--color-accent); color:var(--color-accent);">استماع للملف الصوتي</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Generate Music Profiles HTML
+        let musicsHtml = "";
+        if (musics.length > 0) {
+            musics.forEach(m => {
+                let scenarioText = "";
+                if (m.relatedScenario) {
+                    const sc = finishedAssets.find(a => a.id === m.relatedScenario) || assets.find(a => a.id === m.relatedScenario);
+                    if (sc) {
+                        scenarioText = `مرتبط بسيناريو: ${sc.title}`;
+                    }
+                }
+                const engine = m.subOptions ? (m.subOptions.musicEngine || "Suno AI") : "Suno AI";
+                const genre = m.subOptions ? (m.subOptions.musicGenre || "أوركسترا كوني") : "أوركسترا كوني";
+                const tempo = m.subOptions ? (m.subOptions.musicTempo || "متوسط") : "متوسط";
+                const instruments = m.subOptions ? (m.subOptions.musicInstruments || "أوتار وهارب") : "أوتار وهارب";
+                
+                musicsHtml += `
+                    <div class="portal-card" style="border-top: 4px solid var(--color-cyan); background: linear-gradient(180deg, #ffffff 0%, #ecfeff 100%);">
+                        <div class="portal-card-body">
+                            <span class="portal-card-meta" style="color:var(--color-cyan); font-weight:700;">🎵 موسيقى كونيّة (Music Profile)</span>
+                            <h4 style="margin: 10px 0 5px 0; font-size:1.2rem;">${m.title}</h4>
+                            ${scenarioText ? `<span style="font-size:0.75rem; color:var(--text-secondary); font-weight:700; margin-bottom:4px; display:block;">📖 ${scenarioText}</span>` : ''}
+                            <div style="font-size:0.75rem; color:var(--color-cyan); margin-bottom: 10px;">
+                                <span>🤖 المحرك: ${engine}</span><br>
+                                <span style="margin-top:2px; display:inline-block;">🎼 النمط: ${genre}</span><br>
+                                <span style="margin-top:2px; display:inline-block;">⏱️ السرعة: ${tempo}</span><br>
+                                <span style="margin-top:2px; display:inline-block;">🎸 الآلات: ${instruments}</span>
+                            </div>
+                            <p style="font-size:0.8rem; line-height:1.5; color:var(--text-secondary);">${m.desc}</p>
+                            <div class="portal-card-action">
+                                <a href="${m.driveUrl}" target="_blank" class="portal-btn portal-btn-outline" style="border-color:var(--color-cyan); color:var(--color-cyan);">استماع للساوندتراك</a>
                             </div>
                         </div>
                     </div>
@@ -363,6 +402,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="portal-grid">
                         ${voicesHtml}
+                    </div>
+                </div>
+                ` : ''}
+
+                <!-- Finished Cosmic Music -->
+                ${musics.length > 0 ? `
+                <div class="portal-section">
+                    <div class="portal-section-header">
+                        <h3>المكتبة الموسيقية والساوندتراك</h3>
+                        <span class="section-tag" style="background-color:var(--color-cyan); color:#fff;">موسيقى وألحان كوكبية</span>
+                    </div>
+                    <div class="portal-grid">
+                        ${musicsHtml}
                     </div>
                 </div>
                 ` : ''}

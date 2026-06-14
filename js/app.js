@@ -310,6 +310,7 @@ class SketchicApp {
         const environments = this.assets.filter(a => a.type === 'environment' && a.status === 'finished');
         const characters = this.assets.filter(a => a.type === 'character' && a.status === 'finished');
         const voices = this.assets.filter(a => a.type === 'voice' && a.status === 'finished');
+        const musics = this.assets.filter(a => a.type === 'music' && a.status === 'finished');
         const comics = this.assets.filter(a => a.type === 'comic' && a.status === 'finished');
         const videos = this.assets.filter(a => a.type === 'video' && a.status === 'finished');
         const games = this.assets.filter(a => a.type === 'game' && a.status === 'finished');
@@ -325,8 +326,10 @@ class SketchicApp {
             recText = "🎨 قم بتصميم شخصية كرتونية أو مانجا أولى وربطها برسام صانع لتحديد شكلها الفيزيائي.";
         } else if (voices.length === 0) {
             recText = "🎙️ حان الوقت لإنشاء أول ملف صوت كوني (Cosmic Voice Profile) للشخصيات باستخدام Gemini TTS لتكسبهم بعداً صوتياً متميزاً.";
+        } else if (musics.length === 0) {
+            recText = "🎵 خطوتك التالية هي توليد أول ملف موسيقى كوني (Cosmic Music Profile) عبر Suno/Udio لربطه بالسيناريو وتحديد نغمة العمل.";
         } else if (comics.length === 0) {
-            recText = "📚 لديك سيناريوهات وشخصيات وأصوات جاهزة! الخطوة المثالية التالية هي صياغة أول قصة مصورة (Comic) أو لوحة سيناريو (Storyboard) لتمثيل الصدام.";
+            recText = "📚 لديك سيناريوهات وشخصيات وأصوات وموسيقى جاهزة! الخطوة المثالية التالية هي صياغة أول قصة مصورة (Comic) أو لوحة سيناريو (Storyboard) لتمثيل الصدام.";
         } else if (videos.length === 0) {
             recText = "🎬 ممتاز! حان الوقت لإنتاج أول فيديو متحرك (Video) لتجسيد الحركة المتنافرة وتطبيق ميثاق الإطارات الكوني.";
         } else if (games.length === 0) {
@@ -343,6 +346,7 @@ class SketchicApp {
             environment: 0,
             character: 0,
             voice: 0,
+            music: 0,
             comic: 0,
             video: 0,
             game: 0
@@ -672,6 +676,28 @@ class SketchicApp {
             if (editData) {
                 if (editData.relatedScenario) this.relatedScenarioSelect.value = editData.relatedScenario;
             }
+        } else if (type === 'music') {
+            this.groupRelatedScenario.style.display = "block";
+            this.groupRelatedCreator.style.display = "none";
+            this.groupRelatedFaction.style.display = "none";
+            this.groupRelatedCharacters.style.display = "block";
+
+            if (scenarios.length === 0) {
+                this.prereqBox.className = "prereq-guide-box alert-important";
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-danger)">⚠️ تنبيه هام: لا يوجد سيناريوهات</div>
+                    <p>أنت بحاجة لتأليف سيناريو واحد على الأقل لربط الملف الموسيقي به وتحديد النغمة الحاكمة.</p>
+                `;
+            } else {
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-cyan)">🎵 إرشاد الموسيقى الكونية</div>
+                    <p>صمم البصمة الموسيقية والساوندتراك، واربطها بالسيناريو والشخصيات لتحديد الألحان الحاكمة.</p>
+                `;
+            }
+
+            if (editData) {
+                if (editData.relatedScenario) this.relatedScenarioSelect.value = editData.relatedScenario;
+            }
         }
 
         this.prereqBox.innerHTML = warningHtml;
@@ -812,6 +838,48 @@ class SketchicApp {
                         <label style="font-size: 0.75rem;">مثال لأداء النص بالوسوم التعبيرية (Text with Expressive Tags) *</label>
                         <input type="text" id="opt-voiceTags" placeholder="مثال: [amused] That's a great idea! [laughs]" style="font-size: 0.8rem; width: 100%; box-sizing: border-box; padding: 6px; border-radius:4px; border:1px solid var(--border-color);" value="[thoughtful] Wait, are you saying... [sighs] we are all just drawing lines? [laughs]">
                     </div>
+                </div>
+            `;
+        } else if (type === 'music') {
+            optionsHtml = `
+                <div class="form-group">
+                    <label for="opt-musicEngine">محرك الموسيقى بالذكاء الاصطناعي (Music Engine) *</label>
+                    <select id="opt-musicEngine" required>
+                        <option value="Suno AI (توليد كامل اللحن مع الكلمات)">Suno AI (توليد كامل اللحن مع الكلمات)</option>
+                        <option value="Udio AI (توليد أصوات خلفية كلاسيكية متميزة)">Udio AI (توليد أصوات خلفية كلاسيكية متميزة)</option>
+                        <option value="Google Lyria / MusicLM (ألحان خلفية بيئية وتأثيرات)">Google Lyria / MusicLM (ألحان خلفية بيئية وتأثيرات)</option>
+                        <option value="Custom Engine (محرك خاص)">Custom Engine (محرك خاص)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-musicGenre">النمط والمزاج الموسيقي (Genre & Vibe) *</label>
+                    <select id="opt-musicGenre" required>
+                        <option value="Epic Cosmic Orchestral (أوركسترا كونية ملحمية)">Epic Cosmic Orchestral (أوركسترا كونية ملحمية)</option>
+                        <option value="Dark Ambient Synthwave (سينث-ويف غامض وبيئي)">Dark Ambient Synthwave (سينث-ويف غامض وبيئي)</option>
+                        <option value="Renaissance Acoustic (ألحان ريفية كلاسيكية)">Renaissance Acoustic (ألحان ريفية كلاسيكية)</option>
+                        <option value="Galactic Lo-fi (لو-فاي مجري مريح)">Galactic Lo-fi (لو-فاي مجري مريح)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-musicTempo">الإيقاع والسرعة (Tempo) *</label>
+                    <select id="opt-musicTempo" required>
+                        <option value="Slow / Solemn (بطيء ووقور)">Slow / Solemn (بطيء ووقور)</option>
+                        <option value="Medium / Dramatic (متوسط ودرامي)">Medium / Dramatic (متوسط ودرامي)</option>
+                        <option value="Fast / Action-packed (سريع وحركي)">Fast / Action-packed (سريع وحركي)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-musicInstruments">الآلات المهيمنة (Key Instruments) *</label>
+                    <select id="opt-musicInstruments" required>
+                        <option value="Acoustic Strings & Harp (أوتار كلاسيكية وهارب)">Acoustic Strings & Harp (أوتار كلاسيكية وهارب)</option>
+                        <option value="Synthesizers & Analog Lead (سينث وألحان تناظرية)">Synthesizers & Analog Lead (سينث وألحان تناظرية)</option>
+                        <option value="Epic Timpani & Brass (نحاسيات وملحميات)">Epic Timpani & Brass (نحاسيات وملحميات)</option>
+                        <option value="Cosmic Pad & Ethereal Keys (بيانو كوني وألحان سماوية)">Cosmic Pad & Ethereal Keys (بيانو كوني وألحان سماوية)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-musicPrompt">واصفات مخصصة وسياق الأغنية (Custom Descriptors / Lyrics Vibe) *</label>
+                    <input type="text" id="opt-musicPrompt" placeholder="مثال: Cinematic climax, space exploration, sudden transition..." style="font-size: 0.8rem; width: 100%; box-sizing: border-box; padding: 6px; border-radius:4px; border:1px solid var(--border-color);" value="Space opera climax with heavy vocal chorus and sharp synth drops">
                 </div>
             `;
         } else if (type === 'comic') {
@@ -1047,6 +1115,22 @@ Voice Engine: [${voiceEngine}].`;
 Scene: A dynamic visual clash between two characters in the Sketchic universe. One character is animated with [${fps}] to show the distinct rendering properties, with beautiful light casting flat shadows on the 2D side and photorealistic shading on the oil-painted side.
 Physics Interaction: Show the following interface physics in action: [${physicsText}].
 High contrast, gorgeous cinematic light.`;
+        } else if (type === 'music') {
+            const engine = document.getElementById('opt-musicEngine').value;
+            const genre = document.getElementById('opt-musicGenre').value;
+            const tempo = document.getElementById('opt-musicTempo').value;
+            const instruments = document.getElementById('opt-musicInstruments').value;
+            const musicPrompt = document.getElementById('opt-musicPrompt').value;
+            
+            prompt = `Generate a cosmic soundtrack using [${engine}]:
+Style Tags: [Genre: ${genre}, Tempo: ${tempo}, Instruments: ${instruments}, Atmosphere: celestial, visual clash, cinematic, stereophonic soundscape].
+Prompt/Vibe Descriptors: ${musicPrompt}
+
+Structure suggestion:
+- [Intro: Ethereal cosmic pad introducing the visual boundary]
+- [Build-up: Adding strings and tension as the two art styles collide]
+- [Climax: Cinematic drop showing the contrast and tension of the Sketchic Universe]
+- [Outro: Fading notes representing the parallel layers]`;
         } else if (type === 'game') {
             const gameGenre = document.getElementById('opt-gameGenre').value;
             const mechanic = document.getElementById('opt-mechanic').value;
@@ -1261,6 +1345,7 @@ The primary gameplay mechanic is [${mechanic}]. Explain how the rendering shader
                 environment: 'عالم وبيئة',
                 character: 'تصميم شخصية',
                 voice: 'صوت كوني',
+                music: 'موسيقى كونيّة',
                 comic: 'قصة مصورة',
                 video: 'فيديو متحرك',
                 game: 'لعبة تحميل'
@@ -1312,6 +1397,16 @@ The primary gameplay mechanic is [${mechanic}]. Explain how the rendering shader
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>🎙️ <strong>المحرك:</strong> ${voiceEngine}</div>
                         <div style="margin-top:4px;">🔊 <strong>المتحدث:</strong> ${voiceSpeaker}</div>
+                    </div>
+                `;
+            } else if (asset.type === 'music' && asset.subOptions) {
+                const musicEngine = asset.subOptions.musicEngine || "Suno AI";
+                const musicGenre = asset.subOptions.musicGenre || "أوركسترا كوني";
+                const musicTempo = asset.subOptions.musicTempo || "متوسط";
+                creatorDetailsHtml = `
+                    <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
+                        <div>🎵 <strong>المحرك:</strong> ${musicEngine}</div>
+                        <div style="margin-top:4px;">🎼 <strong>النمط:</strong> ${musicGenre} (${musicTempo})</div>
                     </div>
                 `;
             }
@@ -1525,6 +1620,7 @@ Show how style shaders swap dynamically.`
         const scenarios = finishedAssets.filter(a => a.type === 'scenario');
         const characters = finishedAssets.filter(a => a.type === 'character');
         const voices = finishedAssets.filter(a => a.type === 'voice');
+        const musics = finishedAssets.filter(a => a.type === 'music');
         const comics = finishedAssets.filter(a => a.type === 'comic');
         const videos = finishedAssets.filter(a => a.type === 'video');
         const games = finishedAssets.filter(a => a.type === 'game');
@@ -1652,6 +1748,44 @@ Show how style shaders swap dynamically.`
                             <p style="font-size:0.8rem; line-height:1.5; color:var(--text-secondary);">${v.desc}</p>
                             <div class="portal-card-action">
                                 <a href="${v.driveUrl}" target="_blank" class="portal-btn portal-btn-outline" style="border-color:var(--color-accent); color:var(--color-accent);">استماع للملف الصوتي</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Generate Music Profiles HTML
+        let musicsHtml = "";
+        if (musics.length > 0) {
+            musics.forEach(m => {
+                let scenarioText = "";
+                if (m.relatedScenario) {
+                    const sc = finishedAssets.find(a => a.id === m.relatedScenario) || this.assets.find(a => a.id === m.relatedScenario);
+                    if (sc) {
+                        scenarioText = `مرتبط بسيناريو: ${sc.title}`;
+                    }
+                }
+                const engine = m.subOptions ? (m.subOptions.musicEngine || "Suno AI") : "Suno AI";
+                const genre = m.subOptions ? (m.subOptions.musicGenre || "أوركسترا كوني") : "أوركسترا كوني";
+                const tempo = m.subOptions ? (m.subOptions.musicTempo || "متوسط") : "متوسط";
+                const instruments = m.subOptions ? (m.subOptions.musicInstruments || "أوتار وهارب") : "أوتار وهارب";
+                
+                musicsHtml += `
+                    <div class="portal-card" style="border-top: 4px solid var(--color-cyan); background: linear-gradient(180deg, #ffffff 0%, #ecfeff 100%);">
+                        <div class="portal-card-body">
+                            <span class="portal-card-meta" style="color:var(--color-cyan); font-weight:700;">🎵 موسيقى كونيّة (Music Profile)</span>
+                            <h4 style="margin: 10px 0 5px 0; font-size:1.2rem;">${m.title}</h4>
+                            ${scenarioText ? `<span style="font-size:0.75rem; color:var(--text-secondary); font-weight:700; margin-bottom:4px; display:block;">📖 ${scenarioText}</span>` : ''}
+                            <div style="font-size:0.75rem; color:var(--color-cyan); margin-bottom: 10px;">
+                                <span>🤖 المحرك: ${engine}</span><br>
+                                <span style="margin-top:2px; display:inline-block;">🎼 النمط: ${genre}</span><br>
+                                <span style="margin-top:2px; display:inline-block;">⏱️ السرعة: ${tempo}</span><br>
+                                <span style="margin-top:2px; display:inline-block;">🎸 الآلات: ${instruments}</span>
+                            </div>
+                            <p style="font-size:0.8rem; line-height:1.5; color:var(--text-secondary);">${m.desc}</p>
+                            <div class="portal-card-action">
+                                <a href="${m.driveUrl}" target="_blank" class="portal-btn portal-btn-outline" style="border-color:var(--color-cyan); color:var(--color-cyan);">استماع للساوندتراك</a>
                             </div>
                         </div>
                     </div>
@@ -1848,6 +1982,19 @@ Show how style shaders swap dynamically.`
                     </div>
                     <div class="portal-grid">
                         ${voicesHtml}
+                    </div>
+                </div>
+                ` : ''}
+
+                <!-- Finished Cosmic Music -->
+                ${musics.length > 0 ? `
+                <div class="portal-section">
+                    <div class="portal-section-header">
+                        <h3>المكتبة الموسيقية والساوندتراك</h3>
+                        <span class="section-tag" style="background-color:var(--color-cyan); color:#fff;">موسيقى وألحان كوكبية</span>
+                    </div>
+                    <div class="portal-grid">
+                        ${musicsHtml}
                     </div>
                 </div>
                 ` : ''}
