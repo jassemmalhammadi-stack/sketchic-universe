@@ -784,6 +784,19 @@ class SketchicApp {
         } else if (type === 'scenario') {
             optionsHtml = `
                 <div class="form-group">
+                    <label for="opt-scenarioSourceType">نوع المصدر السردي الأصلي (Source Type) *</label>
+                    <select id="opt-scenarioSourceType" required>
+                        <option value="رواية كوكبية طويلة (Cosmic Novel)">رواية كوكبية طويلة (Cosmic Novel)</option>
+                        <option value="قصة قصيرة (Short Story)">قصة قصيرة (Short Story)</option>
+                        <option value="أسطورة شعبية أو فلكلور أبعادي (Folklore)">أسطورة شعبية أو فلكلور أبعادي (Folklore)</option>
+                        <option value="مسودة فكرة أو فكرة أصلية (Concept Draft)">مسودة فكرة أو فكرة أصلية (Concept Draft)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-scenarioSourceLink">رابط المستند المصدر (Source Link - Google Drive) *</label>
+                    <input type="text" id="opt-scenarioSourceLink" placeholder="رابط مستند الرواية أو القصة الأصلية في Drive..." style="font-size: 0.8rem; width: 100%; box-sizing: border-box; padding: 6px; border-radius:4px; border:1px solid var(--border-color);" value="https://docs.google.com/document/d/source-story" required>
+                </div>
+                <div class="form-group">
                     <label for="opt-genre">تصنيف قصة السيناريو *</label>
                     <select id="opt-genre" required>
                         <option value="خيال علمي (Sci-Fi)">خيال علمي (Sci-Fi)</option>
@@ -1042,6 +1055,7 @@ class SketchicApp {
 الأداة الكونية الخاصة التي يرسم بها: [${tool}].
 اشرح صراعه الفلسفي وكيف تنعكس ضربات أداته وقوانينها الفيزيائية على رسوماته وعوالمه التي يرسمها.`;
         } else if (type === 'scenario') {
+            const sourceType = document.getElementById('opt-scenarioSourceType').value;
             const genre = document.getElementById('opt-genre').value;
             const style = document.getElementById('opt-style').value;
             const layer = document.getElementById('opt-parallelLayer').value;
@@ -1057,7 +1071,7 @@ class SketchicApp {
                 }
             }
 
-            prompt = `بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لقصة من تصنيف [${genre}] وبأسلوب [${style}]. 
+            prompt = `بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لقصة مشتقة من مصدر نوعه: [${sourceType}]، ومن تصنيف [${genre}] وبأسلوب [${style}]. 
 يخضع هذا السيناريو لرؤية الرسام الكوني المرتبط ذي الأسلوب [${creatorStyle}] مستخدماً الأداة الكونية [${creatorTool}].
 يتموضع هذا السيناريو في [${layer}] ويخضع لمعدل إطارات كوني قدره [${fps}].
 يجب أن تركز القصة على صدام الأسلوب الفني في الكادر ووجود أبعاد مرسومة متداخلة دون اندماج، مع كتابة السيناريو بهيكل مشاهد سينمائية تفصيلية.`;
@@ -1433,10 +1447,13 @@ class SketchicApp {
             } else if (asset.type === 'scenario' && asset.subOptions) {
                 const layer = asset.subOptions.parallelLayer || "Layer 1 - الوجود المادي الفعلي";
                 const fps = asset.subOptions.framerate || "24fps";
+                const sourceType = asset.subOptions.scenarioSourceType || "فكرة أصلية";
+                const sourceLink = asset.subOptions.scenarioSourceLink ? `<a href="${asset.subOptions.scenarioSourceLink}" target="_blank" style="color:var(--color-cyan); text-decoration:underline; font-weight:bold;">رابط المصدر 🔗</a>` : "لا يوجد رابط";
                 creatorDetailsHtml = `
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>📂 <strong>الطبقة الزمنية:</strong> ${layer}</div>
                         <div style="margin-top:4px;">⏱️ <strong>معدل الإطارات:</strong> ${fps}</div>
+                        <div style="margin-top:4px;">📖 <strong>المصدر السردي:</strong> ${sourceType} (${sourceLink})</div>
                     </div>
                 `;
             } else if (asset.type === 'character' && asset.subOptions) {
