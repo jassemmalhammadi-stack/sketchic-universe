@@ -471,6 +471,12 @@ class SketchicApp {
         // Generate proposed assets based on source content
         const proposed = [
             {
+                type: 'creator',
+                title: `الرسام الكوني لـ (${source.title})`,
+                desc: `الرسام المسؤول عن تجسيد وتحديد الأسلوب الفني والأداة الكونية لـ: ${source.title}.`,
+                subOptions: { artStyle: 'لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)', tool: 'فرشاة شعر السنجاب الغليظة المشبعة بالزيت' }
+            },
+            {
                 type: 'character',
                 title: `شخصية: البطل المستيقظ من (${source.title})`,
                 desc: `شخصية قيادية مستوحاة من الصراع السردي: ${plot.substring(0, 100) || "صراع الأبعاد والفصائل الكونية"}...`,
@@ -595,7 +601,7 @@ class SketchicApp {
             this.groupRelatedFaction.style.display = 'none';
         }
 
-        if (type === 'scenario') {
+        if (type === 'scenario' || type === 'creator') {
             this.groupRelatedSource.style.display = 'block';
         } else {
             this.groupRelatedSource.style.display = 'none';
@@ -677,12 +683,21 @@ class SketchicApp {
             this.groupRelatedScenario.style.display = "none";
             this.groupRelatedCharacters.style.display = "none";
             this.groupRelatedCreator.style.display = "none";
-            this.groupRelatedSource.style.display = "none";
+            this.groupRelatedSource.style.display = "block";
             
-            warningHtml = `
-                <div class="prereq-title">✍️ إرشاد صياغة الرسام الكوني</div>
-                <p>حدد الأسلوب الفني الحاكم والأداة المميزة للرسام. سيقوم النظام بتأصيل فيزيائه الكونية وتوزيعها تلقائياً على الشخصيات التي يرسمها.</p>
-            `;
+            const sources = this.assets.filter(a => a.type === 'source');
+            if (sources.length === 0) {
+                this.prereqBox.className = "prereq-guide-box alert-important";
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-danger)">⚠️ تنبيه هام: المصادر السردية مفقودة</div>
+                    <p>أنت بحاجة لتسجيل مصدر سردي واحد على الأقل لربط الرسام الكوني به وتحديد أسلوب عوالمه.</p>
+                `;
+            } else {
+                warningHtml = `
+                    <div class="prereq-title">✍️ إرشاد صياغة الرسام الكوني</div>
+                    <p>حدد الأسلوب الفني الحاكم والأداة المميزة للرسام واربطه بالمصدر السردي. سيقوم النظام بتأصيل فيزيائه الكونية وتوزيعها تلقائياً.</p>
+                `;
+            }
         } else if (type === 'scenario') {
             this.groupRelatedScenario.style.display = "none";
             this.groupRelatedCharacters.style.display = "none";
@@ -1440,6 +1455,12 @@ class SketchicApp {
 
         if (!type || !title || !driveUrl) {
             alert("يرجى ملء جميع الحقول المطلوبة الكونية.");
+            return;
+        }
+
+        // Strict Workflow Rule: No Creator without Narrative Source
+        if (type === 'creator' && !relatedSource) {
+            alert("خطأ: لا يمكن إنشاء أو حفظ الرسام الكوني بدون ربطه بمصدر سردي مرتبط!");
             return;
         }
 

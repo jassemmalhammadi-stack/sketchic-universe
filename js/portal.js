@@ -68,14 +68,24 @@ document.addEventListener('DOMContentLoaded', () => {
             creators.forEach(c => {
                 const style = (c.subOptions && c.subOptions.artStyle) ? c.subOptions.artStyle : "أسلوب رسم متفرد";
                 const tool = (c.subOptions && c.subOptions.tool) ? c.subOptions.tool : "أداة كونيّة";
+                
+                let sourceLinkHtml = "";
+                if (c.relatedSource) {
+                    const src = finishedAssets.find(a => a.id === c.relatedSource) || assets.find(a => a.id === c.relatedSource);
+                    if (src) {
+                        sourceLinkHtml = `<div style="font-size:0.75rem; color:#64748b; margin-top:4px;">📖 مرتبط بالمصدر: <a href="${src.driveUrl}" target="_blank" style="color:#10b981; text-decoration:underline; font-weight:bold;">${src.title}</a></div>`;
+                    }
+                }
+                
                 creatorsHtml += `
                     <div class="portal-card" style="border-top: 4px solid #f59e0b; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
                         <div class="portal-card-body">
-                            <span class="portal-card-meta" style="color:#b45309; font-weight:700;">✍️ رسام كوني (The Drawer)</span>
+                            <span class="portal-card-meta" style="color:#b45309; font-weight:700;">✍️ الرسام الكوني (The Drawer)</span>
                             <h4 style="margin: 10px 0 5px 0; font-size:1.2rem;">${c.title}</h4>
                             <div style="font-size:0.75rem; color:#d97706; margin-bottom: 10px;">
                                 <span>🎨 الأسلوب الحاكم: ${style}</span><br>
                                 <span style="margin-top:2px; display:inline-block;">✍️ الأداة: ${tool}</span>
+                                ${sourceLinkHtml}
                             </div>
                             <p style="font-size:0.8rem; line-height:1.5; color:#78350f;">${c.desc}</p>
                         </div>
