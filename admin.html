@@ -424,16 +424,84 @@
             </div>
 
                         <!-- Nav tabs inside Manuals for different asset interactions -->
-                        <div class="filter-tabs" style="margin-top: 10px; margin-bottom: 15px; background: var(--bg-secondary); padding: 5px; border-radius: 8px; display: flex; gap: 8px;">
-                            <button class="filter-btn active" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-creators').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">✍️ الرسام والأداة</button>
+                        <div class="filter-tabs" style="margin-top: 10px; margin-bottom: 15px; background: var(--bg-secondary); padding: 5px; border-radius: 8px; display: flex; gap: 8px; overflow-x: auto;">
+                            <button class="filter-btn active" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-sources').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">📖 المصادر والمجلدات</button>
+                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-guide').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">💡 مرشد الإنتاج الذكي</button>
+                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-creators').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">✍️ الرسام والأداة</button>
                             <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-scenarios').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">📝 السيناريو والطبقات</button>
                             <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-environments').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">🌌 البيئة وتكامل الفيزياء</button>
                             <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-characters').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">🎨 الشخصية والفصائل</button>
                             <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-media').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">📚🎬🎮 الوسائط والألعاب</button>
                         </div>
 
+                        <!-- Subtab 0: Narrative Sources & Drive Folders -->
+                        <div id="subtab-sources" class="manuals-subtab" style="display: block;">
+                            <h4 style="color: var(--color-cyan); margin-bottom: 8px;">📂 هيكل المجلدات المقترح في Google Drive وصيغ الملفات المعتمدة</h4>
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 15px;">
+                                <thead>
+                                    <tr style="background-color: var(--bg-tertiary);">
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 35%;">المجلد الكوني في Drive</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">الصيغ المعتمدة للتحميل</th>
+                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">إرشاد وملاحظات الاستخدام</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">00_Source_Materials (المصادر السردية)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">DOCX, GDOC, PDF</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">توثيق الروايات والأفكار التأسيسية التي تشتق منها كافة السيناريوهات لضمان تماسك البناء الدرامي.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">01_Scenarios (السيناريوهات والقصص)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">GDOC, PDF, TXT</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">سيناريوهات تفصيلية مقسمة لمشاهد كارتونية وزيتية، ومرتبطة بـ "رسام كوني" لتحديد فيزياء الأبعاد الحاكمة.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">02_Creators_Paintings (الرسوم والرسامين)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">PSD, PNG, JPEG</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">ملفات الرسامين الفنية المفتوحة لتعديل ضربات الفرشاة أو الحبر وتحديد معايير الفرشاة والأبعاد الحاكمة.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">03_Characters_Assets (أصول الشخصيات)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">PNG, SVG, EXR</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">أوراق تصميم الشخصيات بخلفية شفافة وبأبعاد معيارية للتماس البصري، مفصولة عن المحيط البصري.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">04_Environments_Assets (أصول البيئات)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">PNG, EXR, JPEG</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">تصاميم ثنائية الأبعاد للمانجا وثلاثية الأبعاد للزيتي، مجهّزة مع قنوات العمق (Depth Maps) لمعالجة التداخل.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">05_Voices_Audios (الملفات الصوتية والأصوات)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">MP3, WAV</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">البصمات الصوتية التعبيرية المستخرجة بمحركات Google AI Studio الصوتية والمرتبطة بالشخصيات مباشرة.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">06_Cosmic_Soundtracks (موسيقى كوكبية)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">MP3, WAV</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الألحان الحاكمة لخطوط التماس والموسيقى التصويرية المولدة ذكائياً لتعزيز الصدام البصري.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">07_Comics_Storyboards (لوحات العمل)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">PDF, ZIP, PNG</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">ملفات القصص المصورة والمسودات التفصيلية التي توضح موضع صدام الأبعاد وقوانين ميثاق المخرج البصري.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">08_Videos_Cinematics (المقاطع والفيديو)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">MP4, MOV</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">لقطات الفيديو النهائية بمعدلات إطارات مختلطة متنافرة وبقنوات صوتية منفصلة تعزز التنافر الصوتي.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">09_Downloadable_Games (ألعاب للتحميل)</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">ZIP, EXE, DMG</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الألعاب الكونية المعدّة للتحميل المباشر والتي تدعم تبديل الشيدرات البرمجية والتحكم بكتلة الشخصيات.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                         <!-- Subtab 1: Creators -->
-                        <div id="subtab-creators" class="manuals-subtab" style="display: block;">
+                        <div id="subtab-creators" class="manuals-subtab" style="display: none;">
                             <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
                                 <thead>
                                     <tr style="background-color: var(--bg-tertiary);">
@@ -591,6 +659,58 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+
+                        <!-- Subtab: Smart Production Guide -->
+                        <div id="subtab-guide" class="manuals-subtab" style="display: none;">
+                            <div style="background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.15); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                                <h4 style="color: var(--color-cyan); margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                                    <span>💡</span> مرشد الإنتاج الذكي وقواعد الترابط الكونية
+                                </h4>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 12px;">
+                                    لتسهيل وتنظيم عملية الإنتاج من الفكرة القصصية إلى الأصول النهائية، يعتمد نظام سكتشيك على <strong>دورة حياة صارمة ومترابطة للأصول</strong> لضمان تماسك البناء الدرامي والفيزيائي للكون الكرتوني والزيتي.
+                                </p>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+                                    <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 6px; border-right: 3px solid var(--color-orange);">
+                                        <h5 style="color: var(--color-orange); margin-top: 0; margin-bottom: 6px; font-size: 0.85rem;">🚫 قواعد الترابط الصارمة</h5>
+                                        <ul style="font-size: 0.78rem; color: var(--text-secondary); padding-right: 15px; margin: 0; line-height: 1.4;">
+                                            <li><strong>لا سيناريو بدون مصدر:</strong> لا يُسمح بحفظ السيناريو إلا بعد ربطه بمصدر سردي معتمد.</li>
+                                            <li><strong>لا أصول بدون سيناريو:</strong> يمنع تماماً حفظ الشخصيات، البيئات، الأصوات، أو الموسيقى دون ربطها بسيناريو مفعّل.</li>
+                                        </ul>
+                                    </div>
+                                    <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 6px; border-right: 3px solid var(--color-cyan);">
+                                        <h5 style="color: var(--color-cyan); margin-top: 0; margin-bottom: 6px; font-size: 0.85rem;">🔍 استكشاف الأصول بالذكاء الاصطناعي</h5>
+                                        <p style="font-size: 0.78rem; color: var(--text-secondary); margin: 0; line-height: 1.4;">
+                                            عند كتابة السيناريو، انقر على زر <strong>"🔍 استكشاف الأصول من المصدر السردي"</strong> لتقوم خوارزمية الذكاء الاصطناعي بتحليل الحبكة والثيمة واستخراج أصول مقترحة واعتمادها بضغطة زر.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 style="color: var(--text-primary); margin-bottom: 8px; font-size: 0.85rem;">📈 خريطة سير العمل والإنتاج (Workflow Map)</h5>
+                            <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.8rem; line-height: 1.6;">
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="background: var(--color-cyan); color: var(--bg-primary); padding: 2px 6px; border-radius: 4px; font-weight: bold; min-width: 60px; text-align: center;">الخطوة 1</span>
+                                        <span>تعبئة وتوثيق <strong>المصدر السردي (00)</strong> الأصلي (رواية، فكرة ملحمية) من خلال الحقول المخصصة.</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="background: var(--color-accent); color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold; min-width: 60px; text-align: center;">الخطوة 2</span>
+                                        <span>إنشاء <strong>السيناريو (01)</strong> وربطه بالمصدر. ثم استخدام ميزة الاستكشاف التلقائي لاستخراج مسودات الأصول.</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="background: var(--color-orange); color: var(--bg-primary); padding: 2px 6px; border-radius: 4px; font-weight: bold; min-width: 60px; text-align: center;">الخطوة 3</span>
+                                        <span>ربط السيناريو بـ <strong>الرسام الكوني (02)</strong> لتحديد الأسلوب الحاكم وفيزياء ضربات الفرشاة وتصادم الألوان.</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="background: var(--color-green); color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold; min-width: 60px; text-align: center;">الخطوة 4</span>
+                                        <span>تحميل وتدقيق أوراق تصميم <strong>الشخصيات والبيئات والأصوات والموسيقى (03 - 06)</strong> ومطابقتها للمواصفات.</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="background: var(--text-muted); color: var(--bg-primary); padding: 2px 6px; border-radius: 4px; font-weight: bold; min-width: 60px; text-align: center;">الخطوة 5</span>
+                                        <span>تجميع الأصول لإنتاج <strong>لوحات العمل والقصص والمقاطع واللعبة النهائية (07 - 09)</strong>.</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
