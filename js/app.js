@@ -909,6 +909,7 @@ class SketchicApp {
                         <option value="Runway Gen-3 Alpha">Runway Gen-3 Alpha</option>
                         <option value="OpenAI Sora">OpenAI Sora</option>
                         <option value="Luma Dream Machine">Luma Dream Machine</option>
+                        <option value="Google Vids (توليد وتلخيص فيديوهات الأعمال الكونية)">Google Vids (توليد وتلخيص فيديوهات الأعمال الكونية)</option>
                     </select>
                 </div>
                 <div class="form-group">

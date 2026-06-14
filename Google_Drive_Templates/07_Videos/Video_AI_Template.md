@@ -5,7 +5,7 @@
 
 ## 1. محددات المشهد الإرشادية (Video Specifications)
 * **عنوان لقطة الفيديو:** [اسم اللقطة المتحركة]
-* **محرك التحريك المقترح:** [Runway Gen-3 Alpha / OpenAI Sora / Luma Dream Machine]
+* **محرك التحريك المقترح:** [Runway Gen-3 Alpha / OpenAI Sora / Luma Dream Machine / Google Vids]
 * **معدل الإطارات الكوني والتنافر:** [حركة سينمائية 24fps / حركة مانجا خشنة 12fps / حركة زيتية ناعمة 60fps]
 
 ---
