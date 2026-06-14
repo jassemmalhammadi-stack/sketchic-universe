@@ -749,6 +749,15 @@ class SketchicApp {
                         <option value="حارس زمن يحمي طبقات اللوحة (Time Keeper)">حارس زمن يحمي طبقات اللوحة (Time Keeper)</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="opt-charVoice">بصمة وصوت الشخصية بالذكاء الاصطناعي (Google AI Voice Profile) *</label>
+                    <select id="opt-charVoice" required>
+                        <option value="Gemini Live (صوت تفاعلي عاطفي فوري - استجابة لحظية ونبرات معبرة)">Gemini Live (صوت تفاعلي عاطفي فوري - استجابة لحظية ونبرات معبرة)</option>
+                        <option value="NotebookLM Audio Overview (حوار ثنائي تفاعلي - ضحكات طبيعية ومقاطعات حية)">NotebookLM Audio Overview (حوار ثنائي تفاعلي - ضحكات طبيعية ومقاطعات حية)</option>
+                        <option value="Google WaveNet/Neural TTS (تعليق سردي ملحمي بوقار كلاسيكي)">Google WaveNet/Neural TTS (تعليق سردي ملحمي بوقار كلاسيكي)</option>
+                        <option value="صوت معدني رقمي متقطع (Digital Glitch Voice لشخصيات السايبربانك والطبقة 3)">صوت معدني رقمي متقطع (Digital Glitch Voice لشخصيات السايبربانك والطبقة 3)</option>
+                    </select>
+                </div>
             `;
         } else if (type === 'comic') {
             optionsHtml = `
@@ -882,6 +891,7 @@ Clash Density: [${clashDensity}].
 Details: The landscape must display the architectural and terrain features constructed with the textures of this art style. Highlight the boundary of visual clash with other dimensions. Wide angle view.`;
         } else if (type === 'character') {
             const charClass = document.getElementById('opt-charClass').value;
+            const charVoice = document.getElementById('opt-charVoice').value;
             
             // Faction text & weapons
             let factionText = "لا ينتمي لأي فصيل كوني";
@@ -913,8 +923,9 @@ Details: The landscape must display the architectural and terrain features const
 Character Role: [${charClass}].
 Faction: [${factionText}].
 Signature Cosmic Weapon: [${weaponText}].
+AI Voice Profile Configuration: [${charVoice}].
 Style Rules inherited from Creator: Drawn in [${styleText}] using [${toolText}].
-Details: The character sheet must display a clean design of the character on a neutral background, highlighting the distinct lines, texture, and strokes of this specific art medium. Also illustrate their faction insignia and signature weapon.`;
+Details: The character sheet must display a clean design of the character on a neutral background, highlighting the distinct lines, texture, and strokes of this specific art medium. Also illustrate their faction insignia and signature weapon. Describe character voice parameters for text-to-speech rendering.`;
         } else if (type === 'comic') {
             const format = document.getElementById('opt-format').value;
             const color = document.getElementById('opt-color').value;
@@ -1193,6 +1204,15 @@ The primary gameplay mechanic is [${mechanic}]. Explain how the rendering shader
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>📂 <strong>الطبقة الزمنية:</strong> ${layer}</div>
                         <div style="margin-top:4px;">⏱️ <strong>معدل الإطارات:</strong> ${fps}</div>
+                    </div>
+                `;
+            } else if (asset.type === 'character' && asset.subOptions) {
+                const charClass = asset.subOptions.charClass || "دور غير محدد";
+                const charVoice = asset.subOptions.charVoice || "صوت غير محدد";
+                creatorDetailsHtml = `
+                    <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
+                        <div>👤 <strong>الدور السردي:</strong> ${charClass}</div>
+                        <div style="margin-top:4px;">🔊 <strong>البصمة الصوتية:</strong> ${charVoice}</div>
                     </div>
                 `;
             }
