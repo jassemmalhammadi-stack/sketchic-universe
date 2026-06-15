@@ -694,6 +694,141 @@ class SketchicApp {
             });
         }
 
+        // 5. Written Texts (written)
+        if (source.subOptions && Array.isArray(source.subOptions.extractedWritten) && source.subOptions.extractedWritten.length > 0) {
+            source.subOptions.extractedWritten.forEach(w => {
+                proposed.push({
+                    type: 'written',
+                    title: w.title,
+                    desc: w.desc,
+                    subOptions: { 
+                        writtenType: w.writtenType || 'حوار سينمائي (Dialogue)', 
+                        writtenLanguage: w.writtenLanguage || 'العربية (Arabic)', 
+                        writtenStyle: w.writtenStyle || 'فلسفي ملحمي (Epic Philosophical)' 
+                    }
+                });
+            });
+        } else {
+            proposed.push({
+                type: 'written',
+                title: `نص حوار كوني لـ (${source.title})`,
+                desc: `مخطوطة حوارية تفصيلية مبنية على صراع الحبكة: ${plot.substring(0, 100) || "صراع الأبعاد والطبقات الزمنية البصرية"}...`,
+                subOptions: { 
+                    writtenType: 'حوار سينمائي (Dialogue)', 
+                    writtenLanguage: 'العربية (Arabic)', 
+                    writtenStyle: 'فلسفي ملحمي (Epic Philosophical)' 
+                }
+            });
+        }
+
+        // 6. Voices (voice)
+        if (source.subOptions && Array.isArray(source.subOptions.extractedVoices) && source.subOptions.extractedVoices.length > 0) {
+            source.subOptions.extractedVoices.forEach(v => {
+                proposed.push({
+                    type: 'voice',
+                    title: v.title,
+                    desc: v.desc,
+                    subOptions: { 
+                        voiceActor: v.actor || 'مؤدي ذكاء اصطناعي كوني', 
+                        voicePitch: v.pitch || 'عميق ووقور (Deep/Resonant)', 
+                        voiceAccent: v.accent || 'عربية فصحى درامية' 
+                    }
+                });
+            });
+        } else {
+            proposed.push({
+                type: 'voice',
+                title: `صوت للشخصية البطلة من (${source.title})`,
+                desc: `الأداء الصوتي واللكنة المقترحة للشخصية القيادية المستوحاة من: ${source.title}`,
+                subOptions: { 
+                    voiceActor: 'مؤدي ذكاء اصطناعي كوني', 
+                    voicePitch: 'عميق ووقور (Deep/Resonant)', 
+                    voiceAccent: 'عربية فصحى درامية' 
+                }
+            });
+        }
+
+        // 7. Comics (comic)
+        if (source.subOptions && Array.isArray(source.subOptions.extractedComics) && source.subOptions.extractedComics.length > 0) {
+            source.subOptions.extractedComics.forEach(c => {
+                proposed.push({
+                    type: 'comic',
+                    title: c.title,
+                    desc: c.desc,
+                    subOptions: { 
+                        comicEngine: c.engine || 'Midjourney v6', 
+                        comicStyle: c.style || 'مانجا مظللة حبرية خشنة', 
+                        comicPanelCount: c.panelCount || '4 لوحات' 
+                    }
+                });
+            });
+        } else {
+            proposed.push({
+                type: 'comic',
+                title: `لوحة قصة لـ (${source.title})`,
+                desc: `قصة مصورة تجسد اللحظة الحاسمة في صراع: ${plot.substring(0, 100) || "صراع الأبعاد والجاذبية والخطوط"}...`,
+                subOptions: { 
+                    comicEngine: 'Midjourney v6', 
+                    comicStyle: 'مانجا مظللة حبرية خشنة', 
+                    comicPanelCount: '4 لوحات' 
+                }
+            });
+        }
+
+        // 8. Videos (video)
+        if (source.subOptions && Array.isArray(source.subOptions.extractedVideos) && source.subOptions.extractedVideos.length > 0) {
+            source.subOptions.extractedVideos.forEach(v => {
+                proposed.push({
+                    type: 'video',
+                    title: v.title,
+                    desc: v.desc,
+                    subOptions: { 
+                        videoEngine: v.engine || 'Runway Gen-2', 
+                        videoDuration: v.duration || '4 ثواني', 
+                        videoFps: v.fps || '24' 
+                    }
+                });
+            });
+        } else {
+            proposed.push({
+                type: 'video',
+                title: `مقطع سينمائي لـ (${source.title})`,
+                desc: `فيديو متحرك قصير يعبر بصرياً عن بيئة: ${setting.substring(0, 100) || "موقع أثري يقع عند خط التماس المباشر بين بوابات الرسم الحبرية"}...`,
+                subOptions: { 
+                    videoEngine: 'Runway Gen-2', 
+                    videoDuration: '4 ثواني', 
+                    videoFps: '24' 
+                }
+            });
+        }
+
+        // 9. Games (game)
+        if (source.subOptions && Array.isArray(source.subOptions.extractedGames) && source.subOptions.extractedGames.length > 0) {
+            source.subOptions.extractedGames.forEach(g => {
+                proposed.push({
+                    type: 'game',
+                    title: g.title,
+                    desc: g.desc,
+                    subOptions: { 
+                        gameEngine: g.engine || 'Unity 2D', 
+                        gameGenre: g.genre || 'منصات ولغز فيزيائي (Physics Platformer)', 
+                        gamePlatform: g.platform || 'PC/Web' 
+                    }
+                });
+            });
+        } else {
+            proposed.push({
+                type: 'game',
+                title: `لعبة أبعاد تفاعلية لـ (${source.title})`,
+                desc: `لعبة تحميل مصغرة تفاعلية تحاكي موقع صدام الأبعاد في: ${setting.substring(0, 100) || "موقع أثري يقع عند خط التماس المباشر بين بوابات الرسم"}...`,
+                subOptions: { 
+                    gameEngine: 'Unity 2D', 
+                    gameGenre: 'منصات ولغز فيزيائي (Physics Platformer)', 
+                    gamePlatform: 'PC/Web' 
+                }
+            });
+        }
+
         this.extractedAssetsList.innerHTML = "";
         proposed.forEach((p, idx) => {
             const item = document.createElement('div');
