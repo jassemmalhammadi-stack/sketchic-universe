@@ -477,6 +477,7 @@ class SketchicApp {
         this.dynamicOptionsContainer.innerHTML = "";
         this.groupSuggestedPrompt.style.display = "none";
         this.assetUsedPromptInput.value = "";
+        this.generatedSourceExtractedData = null;
         if (this.aiExtractionPanel) this.aiExtractionPanel.style.display = "none";
         if (this.extractedAssetsList) this.extractedAssetsList.innerHTML = "";
         this.modal.classList.add('open');
@@ -499,6 +500,17 @@ class SketchicApp {
         this.relatedFactionSelect.value = asset.relatedFaction || "";
         this.interfacePhysicsSelect.value = asset.interfacePhysics || "";
         this.relatedSourceSelect.value = asset.relatedSource || "";
+
+        if (asset.type === 'source' && asset.subOptions) {
+            this.generatedSourceExtractedData = {
+                extractedCreator: asset.subOptions.extractedCreator || null,
+                extractedCharacters: asset.subOptions.extractedCharacters || [],
+                extractedEnvironments: asset.subOptions.extractedEnvironments || [],
+                extractedMusic: asset.subOptions.extractedMusic || []
+            };
+        } else {
+            this.generatedSourceExtractedData = null;
+        }
 
         if (asset.directorChecklist) {
             this.chkNoBlending.checked = !!asset.directorChecklist.noBlending;
@@ -570,7 +582,7 @@ class SketchicApp {
             {
                 artStyle: "رسوم رقمية حديثة ذات متجهات هندسية (Vectors)",
                 tool: "قلم الألواح الرقمية اللاسلكي اللانهائي",
-                keywords: ["رقمية", "متجهات", "vectors", "digital", "ألواح", "لاسلكي", "هندسية"]
+                keywords: ["رقمية", "metajat", "vectors", "digital", "ألواح", "لاسلكي", "هندسية"]
             }
         ];
 
@@ -591,32 +603,94 @@ class SketchicApp {
         const tool = bestCategory.tool;
 
         // Generate proposed assets based on source content
-        const proposed = [
-            {
+        const proposed = [];
+
+        // 1. Creator
+        if (source.subOptions && source.subOptions.extractedCreator) {
+            proposed.push({
+                type: 'creator',
+                title: source.subOptions.extractedCreator.title,
+                desc: source.subOptions.extractedCreator.desc,
+                subOptions: {
+                    artStyle: source.subOptions.extractedCreator.artStyle,
+                    tool: source.subOptions.extractedCreator.tool
+                }
+            });
+        } else {
+            proposed.push({
                 type: 'creator',
                 title: `الرسام الكوني لـ (${source.title})`,
                 desc: `الرسام المسؤول عن تجسيد وتحديد الأسلوب الفني والأداة الكونية لـ: ${source.title}.`,
                 subOptions: { artStyle: artStyle, tool: tool }
-            },
-            {
+            });
+        }
+
+        // 2. Characters
+        if (source.subOptions && Array.isArray(source.subOptions.extractedCharacters) && source.subOptions.extractedCharacters.length > 0) {
+            source.subOptions.extractedCharacters.forEach(c => {
+                proposed.push({
+                    type: 'character',
+                    title: c.title,
+                    desc: c.desc,
+                    subOptions: { charClass: c.class || 'شخصية مستيقظة تدرك أنها مرسومة (Awakened)' },
+                    relatedFaction: c.faction || 'awakened'
+                });
+            });
+        } else {
+            proposed.push({
                 type: 'character',
                 title: `شخصية: البطل المستيقظ من (${source.title})`,
                 desc: `شخصية قيادية مستوحاة من الصراع السردي: ${plot.substring(0, 100) || "صراع الأبعاد والفصائل الكونية"}...`,
                 subOptions: { charClass: 'شخصية مستيقظة تدرك أنها مرسومة (Awakened)' },
                 relatedFaction: 'awakened'
-            },
-            {
+            });
+        }
+
+        // 3. Environments
+        if (source.subOptions && Array.isArray(source.subOptions.extractedEnvironments) && source.subOptions.extractedEnvironments.length > 0) {
+            source.subOptions.extractedEnvironments.forEach(e => {
+                proposed.push({
+                    type: 'environment',
+                    title: e.title,
+                    desc: e.desc,
+                    subOptions: { 
+                        envType: e.envType || 'داخل لوحة قماشية مائعة (Fluid Canvas Interior)', 
+                        clashDensity: e.clashDensity || 'متوسطة (تداخل الضوء والجاذبية)' 
+                    }
+                });
+            });
+        } else {
+            proposed.push({
                 type: 'environment',
                 title: `بيئة: موقع صدام الأبعاد في (${source.title})`,
                 desc: `موقع سينمائي ذو طابع فريد مستوحى من الخلفية المكانية: ${setting.substring(0, 100) || "خط التماس المباشر بين بوابات الرسم الحبرية الخشنة واللوحات الزيتية"}...`,
                 subOptions: { envType: 'داخل لوحة قماشية مائعة (Fluid Canvas Interior)', clashDensity: 'متوسطة (تداخل الضوء والجاذبية)' }
-            },
-            {
+            });
+        }
+
+        // 4. Music
+        if (source.subOptions && Array.isArray(source.subOptions.extractedMusic) && source.subOptions.extractedMusic.length > 0) {
+            source.subOptions.extractedMusic.forEach(m => {
+                proposed.push({
+                    type: 'music',
+                    title: m.title,
+                    desc: m.desc,
+                    subOptions: { 
+                        musicEngine: 'Suno AI', 
+                        musicGenre: m.genre || 'Epic Orchestral', 
+                        musicTempo: m.tempo || 'Medium/Dramatic', 
+                        musicInstruments: m.instruments || 'Acoustic Strings' 
+                    }
+                });
+            });
+        } else {
+            proposed.push({
                 type: 'music',
                 title: `ساوندتراك: لحن الأثير لـ (${source.title})`,
                 desc: `مقطوعة موسيقية تصويرية تعبر عن المغزى المحوري: ${theme.substring(0, 100) || "صراع أبعاد الرسم المتنافرة"}...`,
                 subOptions: { musicEngine: 'Suno AI', musicGenre: 'Epic Orchestral', musicTempo: 'Medium/Dramatic', musicInstruments: 'Acoustic Strings' }
-            }
+            });
+        }
         ];
 
         this.extractedAssetsList.innerHTML = "";
@@ -1672,6 +1746,13 @@ class SketchicApp {
             const key = ta.id.replace('opt-', '');
             subOptions[key] = ta.value;
         });
+
+        if (type === 'source' && this.generatedSourceExtractedData) {
+            subOptions.extractedCreator = this.generatedSourceExtractedData.extractedCreator;
+            subOptions.extractedCharacters = this.generatedSourceExtractedData.extractedCharacters;
+            subOptions.extractedEnvironments = this.generatedSourceExtractedData.extractedEnvironments;
+            subOptions.extractedMusic = this.generatedSourceExtractedData.extractedMusic;
+        }
 
         if (!type || !title) {
             alert("يرجى ملء الحقول المطلوبة الأساسية (النوع والعنوان).");
@@ -3070,34 +3151,163 @@ Show how style shaders swap dynamically.`
     generateSourceWithAI() {
         const concepts = [
             {
-                title: "بوابة الألوان المفقودة",
+                title: "بوابة الألوان المفقودة (The Gate of Lost Colors)",
                 type: "رواية كوكبية طويلة (Novel)",
                 author: "أرييل الحبر الأعظم",
-                wordCount: "3500",
-                theme: "صراع الوجود بين أسلوب المانجا الحركي سريع الإطارات 12fps والرسم الزيتي الواقعي بطيء الحركة 60fps",
-                plot: "يكتشف الرسام كائنًا هجينًا مرسومًا بخطوط حبر سائلة تتسرب إلى لوحة زيتية مقدسة لعصر النهضة، مما يهدد بتسييل معالم القديسين وتحويل العالم إلى حطام أسود مائع.",
-                setting: "المكتبة العتيقة الواقعة عند الحد الفاصل لمرسم الأبعاد السبعة.",
-                desc: "ملحمة فنية تعكس الصدام البصري المباشر وقوانين الفيزياء المتنافرة عند التقاط الحبر بالزيت."
+                wordCount: "4200",
+                theme: "صراع الوجود المطلق بين أسلوب المانجا الحركي سريع الإطارات (12fps) ذي الحدود الحبرية الخشنة، والرسم الزيتي الواقعي بطيء الحركة لعصر النهضة (60fps) ذي التظليل الناعم والعمق الملموس. يمثل التباين بين ضربات فرشاة شعر السنجاب المشبعة بالزيت وخطوط ريشة الـ G-Pen الحادة.",
+                plot: "يكتشف رسام كوني كائناً هجيناً (المستيقظ الأول) مرسوماً بخطوط حبر سوداء سائلة يتسرب خفية لداخل لوحة زيتية مقدسة لعصر النهضة. هذا التماس الجمالي يهدد بتسييل معالم الشخصيات الزيتية وتحويل الأبعاد إلى بقايا حبرية مائعة. يتدخل حراس الأزمان مستخدمين أقلام القياس الكونية لإصلاح الحدود وإعادة عزل الأبعاد قبل حدوث الانهيار الكلي للجاذبية الجمالية للكون.",
+                setting: "المكتبة العتيقة الواقعة عند الحد الفاصل لمرسم الأبعاد السبعة (نقطة التماس المادي والخطوط الحبرية ثنائية الأبعاد مع البيئة ثلاثية الأبعاد).",
+                desc: "ملحمة فنية تعكس الصدام البصري المباشر وقوانين الفيزياء المتنافرة عند التقاط الحبر بالزيت، وتعتبر بمثابة وثيقة التخطيط الأساسية لبناء كافة الأصول اللاحقة.",
+                extractedCreator: {
+                    title: "الرسام الكوني أرييل",
+                    desc: "الرسام المسؤول عن تجسيد الصدام البصري المباشر بين الحبر السائل والزيت الكلاسيكي.",
+                    artStyle: "لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)",
+                    tool: "فرشاة شعر السنجاب الغليظة المشبعة بالزيت"
+                },
+                extractedCharacters: [
+                    {
+                        title: "المستيقظ المائي (الرسم المائع)",
+                        desc: "كائن هجين مرسوم بخطوط حبر سائلة سوداء يتسرب لداخل اللوحة الزيتية ويدرك أنه مرسوم داخل كون سكتشيك البصري.",
+                        faction: "awakened",
+                        class: "شخصية مستيقظة تدرك أنها مرسومة (Awakened)"
+                    },
+                    {
+                        title: "الكاردينال الزيتي الحارس",
+                        desc: "حارس فني كلاسيكي من عصر النهضة يحاول الحفاظ على ثبات الألوان واستقرار الأبعاد ومنع تدفق الحبر السائل.",
+                        faction: "order",
+                        class: "حامي التماثل والتقاليد الفنية الكلاسيكية (Classic)"
+                    }
+                ],
+                extractedEnvironments: [
+                    {
+                        title: "برج القماش الزيتي المائع",
+                        desc: "برج كوني شاهق تذوب جدرانه وتتداخل مع خطوط حبر خشنة سوداء بفعل التماس البصري بين أبعاد الرسم المتنافرة.",
+                        envType: "داخل لوحة قماشية مائعة (Fluid Canvas Interior)",
+                        clashDensity: "عالية جداً (ثقوب أبعاد مائعة)"
+                    },
+                    {
+                        title: "مرسم الأبعاد السبعة",
+                        desc: "المساحة اللانهائية التي تتصادم فيها أدوات الرسم الكونية وتنشأ منها بوابات الألوان البصرية المفقودة.",
+                        envType: "فضاء البعد البصري السابع (Seven Dimension Atelier)",
+                        clashDensity: "متوسطة (تداخل الضوء والجاذبية)"
+                    }
+                ],
+                extractedMusic: [
+                    {
+                        title: "لحن كمان كلاسيكي حاد يتداخل مع تشويش رقمي",
+                        desc: "أوتار كمان أوركسترالي كلاسيكي بطيء يعبر عن التقاليد، ثم يتداخل بشكل متنافر مع نبضات تشويش رقمي وصخب حاد ليعكس التنافر الصوتي والبصري للكون.",
+                        genre: "Epic Classical / Noise Clash",
+                        tempo: "Slow/Dramatic",
+                        instruments: "Violin, Cello, Analog Distortion"
+                    }
+                ]
             },
             {
-                title: "أصداء الغرافيت الكونية",
+                title: "أصداء الغرافيت الكونية (Cosmic Graphite Echoes)",
                 type: "قصة قصيرة (Short Story)",
                 author: "سارة الفحمية",
-                wordCount: "1200",
-                theme: "مقاومة المحو والتلاشي الكوني للوجود البصري للأصول الفنية",
-                plot: "يحاول حارس من حراس الأزمان حماية ما تبقى من مدينة كارتونية من فوضى ممحاة المحو المطلق التي تزيل الحواف الخارجية للبنايات وتحولها لفراغ أبيض تسقط منه الشخصيات.",
-                setting: "شوارع مدينة الرصاص المتربة الواقعة في الطبقة الثالثة من مخططات الهيكل الكوني.",
-                desc: "قصة مشوقة عن صراع البقاء ومحاولة إعادة الرسم الذاتي للأبعاد قبل الانهيار الكلي للجاذبية الجمالية."
+                wordCount: "2500",
+                theme: "مقاومة المحو والتلاشي الكوني للوجود البصري للأصول الفنية، وصراع الخطوط المتربة الخفيفة ضد ممحاة الفوضى الكونية التي تزيل حواف البنايات وتحيل الأشكال إلى فراغ أبيض مطبق.",
+                plot: "يحاول حارس من حراس الأزمان (سيد الغرافيت) حماية ما تبقى من مدينة كارتونية كلاسيكية (Rubber Hose) من موجات ممحاة الفوضى المطلقة التي تمسح خطوط التظليل الخارجي للمدينة وتتسبب في سقوط الشخصيات في العدم. يبتكر الحارس أسلوب الرسم الذاتي (Self-Redrawing) لإعادة بناء حدود الأبعاد يدوياً قبل أن يختفي الأسلوب الفني للمدينة بالكامل.",
+                setting: "شوارع مدينة الرصاص المتربة الواقعة في الطبقة الثالثة (Wireframe) من مخططات الهيكل الكوني العام.",
+                desc: "دراسة قصصية مشوقة عن صراع البقاء ومحاولة إعادة الرسم الذاتي للأبعاد لإنقاذ خطوط الوجود الأولى من خطر الممحاة الكونية.",
+                extractedCreator: {
+                    title: "الرسامة الكونية سارة",
+                    desc: "الرسامة المتخصصة بالغرافيت الكوني والمشرفة على خطوط الظلال المهددة بالمحو التام.",
+                    artStyle: "رسم تخطيطي خفيف بقلم الرصاص (Graphite Sketch)",
+                    tool: "قلم رصاص غرافيت فحم ناعم وقابل للمحو"
+                },
+                extractedCharacters: [
+                    {
+                        title: "سيد الغرافيت الحامي",
+                        desc: "حارس أزمان يحمي الخطوط الأولى المتبقية للمدينة ومخططات الهيكل الكوني العام من المحو.",
+                        faction: "order",
+                        class: "حامي التماثل والتقاليد الفنية الكلاسيكية (Classic)"
+                    },
+                    {
+                        title: "كائن الممحاة الفوضوي",
+                        desc: "وحش هلامي يلتهم الحدود البصرية ويزيل الحواف الخارجية للبنايات ويحيل الأشكال لفراغ أبيض مطبق.",
+                        faction: "chaos",
+                        class: "كيان هجين غير متناسق ومهدد للاستقرار (Clash)"
+                    }
+                ],
+                extractedEnvironments: [
+                    {
+                        title: "شوارع مدينة الرصاص المتربة",
+                        desc: "شوارع خالية مرسومة بالكامل بخطوط غرافيت رقيقة تتطاير ذراتها مع ممحاة الفوضى الكونية.",
+                        envType: "مدينة كروية عائمة (Floating Spherical City)",
+                        clashDensity: "منخفضة (حواف باهتة)"
+                    },
+                    {
+                        title: "بوابة الفراغ الأبيض الممحو",
+                        desc: "فجوة مكانية بيضاء مطلقة لا تحتوي على أي خطوط أو ظلال سقطت بفعل ممحاة الفوضى الكونية.",
+                        envType: "فراغ البعد الممسوح (Null White Space)",
+                        clashDensity: "عالية جداً (ثقوب أبعاد مائعة)"
+                    }
+                ],
+                extractedMusic: [
+                    {
+                        title: "أصداء الغرافيت الورقية وإيقاع السيكوانسر الكوني",
+                        desc: "إيقاع سينث-ويف غامض ومتكرر يتداخل مع مؤثرات صوتية ورقية لخطوط قلم رصاص تحتك بالورق بعنف.",
+                        genre: "Lo-Fi Industrial / Synthwave",
+                        tempo: "Medium/Dramatic",
+                        instruments: "Paper Scratch FX, Analog Synth, Drum Machine"
+                    }
+                ]
             },
             {
-                title: "عازفة الحبر المائي والأوتار",
+                title: "عازفة الحبر المائي والأوتار (The Watercolor Violinist)",
                 type: "مسودة فكرة أصلية (Concept Draft)",
                 author: "بافلو السكتش البصري",
-                wordCount: "800",
-                theme: "التنافر الصوتي والبصري وتصادم الأبعاد السمعية المولدة ذكائياً مع الرسم الورقي",
-                plot: "عازفة كمان مرسومة بالرصاص تجد نفسها محاصرة داخل نوتة موسيقية زيتية لزجة، وتستخدم نغماتها الحادة لتمزيق النوتة والعبور لعالمها الخفيف.",
-                setting: "المسرح المعلق للطبقة الثانية من الظلال والأصداء المتقطعة.",
-                desc: "فكرة مسودة لاستكشاف التداخل البصري والسمعي بين الموسيقى والرسامين الكونيين."
+                wordCount: "1800",
+                theme: "التنافر السمعي والبصري عند تصادم الأبعاد السمعية والموسيقى المولدة بالذكاء الاصطناعي مع الكيانات الورقية المرسومة يدوياً بالقلم الفحم.",
+                plot: "عازفة كمان مرسومة بالرصاص الخفيف تجد نفسها محاصرة داخل لوحة زيتية كثيفة ولزجة. تكتشف أن نغمات كمانها الحادة والاهتزازات الصوتية تستطيع تمزيق كثافة الألوان الزيتية وفتح شقوق في اللوحة للعبور نحو عالمها الخفيف ثنائي الأبعاد، مما يؤدي لنشوء ظلال وانعكاسات متمردة في المشاهد.",
+                setting: "المسرح المعلق للطبقة الثانية من الظلال والأصداء المتقطعة لكون سكتشيك البصري.",
+                desc: "مسودة فكرة تأسيسية لاستكشاف التداخل البصري والسمعي العميق والتماس المباشر بين الموسيقى والرسامين الكونيين.",
+                extractedCreator: {
+                    title: "الرسام الكوني بافلو",
+                    desc: "الرسام الكوني المتخصص في دمج الحبر المائي مع النوتات الموسيقية والأثير الصوتي.",
+                    artStyle: "مانجا يابانية تقليدية بحبر أسود حاد",
+                    tool: "ريشة الرسم الكرتونية المعدنية الحادة (G-Pen)"
+                },
+                extractedCharacters: [
+                    {
+                        title: "عازفة الأوتار الرصاصية",
+                        desc: "فتاة مرسومة بالفحم والغرافيت الخفيف تعزف نغمات كمان حادة لفتح بوابات الأبعاد والهرب من اللوحة اللزجة.",
+                        faction: "awakened",
+                        class: "شخصية مستيقظة تدرك أنها مرسومة (Awakened)"
+                    },
+                    {
+                        title: "ظلال الألوان المتمردة",
+                        desc: "كيانات مائية ملونة ولزجة تتشكل عشوائياً من ضربات الفرشاة وتتصادم مع عازفة الأوتار لعرقلتها.",
+                        faction: "chaos",
+                        class: "كيان هجين غير متناسق ومهدد للاستقرار (Clash)"
+                    }
+                ],
+                extractedEnvironments: [
+                    {
+                        title: "مسرح الألوان السائل",
+                        desc: "مسرح موسيقي تتغير أرضيته باستمرار كبقعة حبر مائي تسقط في ماء نقي بفعل الاهتزازات الصوتية.",
+                        envType: "داخل لوحة قماشية مائعة (Fluid Canvas Interior)",
+                        clashDensity: "متوسطة (تداخل الضوء والجاذبية)"
+                    },
+                    {
+                        title: "بوابة الأثير الموسيقية المعلقة",
+                        desc: "جسر من نغمات الضوء المعلقة بالأثير يربط بين اللوحة الزيتية والبعد الورقي ثنائي الأبعاد.",
+                        envType: "مسرح معلق بالفضاء (Suspended Ether Stage)",
+                        clashDensity: "منخفضة (حواف باهتة)"
+                    }
+                ],
+                extractedMusic: [
+                    {
+                        title: "سيمفونية الأثير المائي المكسور",
+                        desc: "عزف منفرد ملحمي بكمان آكوستيك ذو نغمات حادة وتأثيرات الصدى والتردد المتقطع لتمزيق الألوان.",
+                        genre: "Epic Orchestral / Acoustic Solo",
+                        tempo: "Fast/Intense",
+                        instruments: "Solo Violin, Ambient Reverb, Sub-bass"
+                    }
+                ]
             }
         ];
 
@@ -3124,8 +3334,15 @@ Show how style shaders swap dynamically.`
         const settingTA = document.getElementById('opt-sourceSetting');
         if (settingTA) settingTA.value = random.setting;
 
+        this.generatedSourceExtractedData = {
+            extractedCreator: random.extractedCreator,
+            extractedCharacters: random.extractedCharacters,
+            extractedEnvironments: random.extractedEnvironments,
+            extractedMusic: random.extractedMusic
+        };
+
         this.updateSuggestedPrompt();
-        alert(`🤖 تم توليد القصة بنجاح! الفكرة المقترحة: "${random.title}". يمكنك الآن تعديل أي حقول أو الضغط مباشرة على "حفظ في Drive".`);
+        alert(`🤖 تم توليد المصدر السردي بالكامل بنجاح!\n\nالفكرة التأسيسية المقترحة: "${random.title}".\nتم صياغة حبكة وثيمة غنية تحتوي على خطط الأصول والشخصيات المستهدفة لتغذي كامل أقسام الكون. يمكنك حفظها مباشرة الآن!`);
     }
 
     saveAssetToDrive() {
@@ -3158,21 +3375,76 @@ Show how style shaders swap dynamically.`
         mdContent += `* **تاريخ الإنشاء:** ${new Date().toLocaleDateString('ar-EG')}\n\n`;
         mdContent += `## التفاصيل والوصف\n${this.assetDescTextarea.value.trim() || 'لا يوجد وصف.'}\n\n`;
 
-        const selects = this.dynamicOptionsContainer.querySelectorAll('select');
-        selects.forEach(sel => {
-            const label = sel.previousElementSibling ? sel.previousElementSibling.textContent : sel.id;
-            mdContent += `* **${label}:** ${sel.value}\n`;
-        });
-        const inputs = this.dynamicOptionsContainer.querySelectorAll('input');
-        inputs.forEach(inp => {
-            const label = inp.previousElementSibling ? inp.previousElementSibling.textContent : inp.id;
-            mdContent += `* **${label}:** ${inp.value}\n`;
-        });
-        const textareas = this.dynamicOptionsContainer.querySelectorAll('textarea');
-        textareas.forEach(ta => {
-            const label = ta.previousElementSibling ? ta.previousElementSibling.textContent : ta.id;
-            mdContent += `\n### ${label}\n${ta.value}\n`;
-        });
+        if (type === 'source') {
+            const sourceType = document.getElementById('opt-sourceType').value;
+            const sourceAuthor = document.getElementById('opt-sourceAuthor').value;
+            const sourceWordCount = document.getElementById('opt-sourceWordCount').value;
+            const sourceTheme = document.getElementById('opt-sourceTheme').value;
+            const sourcePlot = document.getElementById('opt-sourcePlot').value;
+            const sourceSetting = document.getElementById('opt-sourceSetting').value;
+
+            mdContent += `* **نوع المصدر السردي:** ${sourceType}\n`;
+            mdContent += `* **المؤلف السردي الأصلي:** ${sourceAuthor}\n`;
+            mdContent += `* **عدد الكلمات التقريبي:** ${sourceWordCount}\n\n`;
+            
+            mdContent += `## الفكرة والمغزى\n${sourceTheme}\n\n`;
+            mdContent += `## الحبكة الكونية\n${sourcePlot}\n\n`;
+            mdContent += `## البيئة الزمنية\n${sourceSetting}\n\n`;
+
+            const extData = this.generatedSourceExtractedData || (this.editingAssetId ? (this.assets.find(a => a.id === this.editingAssetId)?.subOptions) : null);
+            if (extData) {
+                const ec = extData.extractedCreator;
+                const ech = extData.extractedCharacters;
+                const eenv = extData.extractedEnvironments;
+                const em = extData.extractedMusic;
+
+                mdContent += `## خطة استخلاص الأصول\n\n`;
+                if (ec) {
+                    mdContent += `### الرسام الكوني\n`;
+                    mdContent += `* **العنوان:** ${ec.title}\n`;
+                    mdContent += `* **الأسلوب:** ${ec.artStyle}\n`;
+                    mdContent += `* **الأداة الكونية:** ${ec.tool}\n`;
+                    mdContent += `* **الوصف:** ${ec.desc}\n\n`;
+                }
+                if (ech && ech.length > 0) {
+                    mdContent += `### الشخصيات المستهدفة\n`;
+                    ech.forEach(c => {
+                        mdContent += `* **شخصية**: ${c.title} - ${c.desc} (${c.faction}, ${c.class})\n`;
+                    });
+                    mdContent += `\n`;
+                }
+                if (eenv && eenv.length > 0) {
+                    mdContent += `### البيئات المستهدفة\n`;
+                    eenv.forEach(e => {
+                        mdContent += `* **بيئة**: ${e.title} - ${e.desc} (${e.envType}, ${e.clashDensity})\n`;
+                    });
+                    mdContent += `\n`;
+                }
+                if (em && em.length > 0) {
+                    mdContent += `### المؤثرات الصوتية والموسيقى\n`;
+                    em.forEach(m => {
+                        mdContent += `* **ساوندتراك**: ${m.title} - ${m.desc} (${m.genre}, ${m.tempo}, ${m.instruments})\n`;
+                    });
+                    mdContent += `\n`;
+                }
+            }
+        } else {
+            const selects = this.dynamicOptionsContainer.querySelectorAll('select');
+            selects.forEach(sel => {
+                const label = sel.previousElementSibling ? sel.previousElementSibling.textContent : sel.id;
+                mdContent += `* **${label}:** ${sel.value}\n`;
+            });
+            const inputs = this.dynamicOptionsContainer.querySelectorAll('input');
+            inputs.forEach(inp => {
+                const label = inp.previousElementSibling ? inp.previousElementSibling.textContent : inp.id;
+                mdContent += `* **${label}:** ${inp.value}\n`;
+            });
+            const textareas = this.dynamicOptionsContainer.querySelectorAll('textarea');
+            textareas.forEach(ta => {
+                const label = ta.previousElementSibling ? ta.previousElementSibling.textContent : ta.id;
+                mdContent += `\n### ${label}\n${ta.value}\n`;
+            });
+        }
 
         if (this.isGDriveConnected) {
             this.saveFileToGDrive(folderName, safeTitle, mdContent);
@@ -3775,12 +4047,18 @@ Show how style shaders swap dynamically.`
             theme: "",
             plot: "",
             setting: "",
-            desc: ""
+            desc: "",
+            extractedCreator: null,
+            extractedCharacters: [],
+            extractedEnvironments: [],
+            extractedMusic: []
         };
 
         const lines = mdText.split('\n');
         let inDesc = false;
         let descLines = [];
+        
+        let currentSection = ""; // "creator", "characters", "environments", "music"
 
         lines.forEach(line => {
             const cleanLine = line.trim();
@@ -3805,6 +4083,67 @@ Show how style shaders swap dynamically.`
             } else if (cleanLine.includes('البيئة الزمنية') || cleanLine.includes('setting') || cleanLine.includes('البيئة')) {
                 const parts = cleanLine.split('**');
                 result.setting = parts[parts.length - 1]?.replace(/^[:\s*\-]+/, '') || "";
+            }
+
+            // Section tracking
+            if (cleanLine.startsWith('### الرسام الكوني') || cleanLine.includes('Creator')) {
+                currentSection = "creator";
+                result.extractedCreator = { title: "", desc: "", artStyle: "", tool: "" };
+            } else if (cleanLine.startsWith('### الشخصيات المستهدفة') || cleanLine.includes('Characters')) {
+                currentSection = "characters";
+            } else if (cleanLine.startsWith('### البيئات المستهدفة') || cleanLine.includes('Environments')) {
+                currentSection = "environments";
+            } else if (cleanLine.startsWith('### المؤثرات الصوتية والموسيقى') || cleanLine.includes('Soundscape') || cleanLine.includes('Music')) {
+                currentSection = "music";
+            } else if (cleanLine.startsWith('## ') || cleanLine.startsWith('# ')) {
+                currentSection = "";
+            }
+
+            // Parsing sections
+            if (currentSection === "creator" && (cleanLine.startsWith('*') || cleanLine.startsWith('-'))) {
+                if (cleanLine.includes('العنوان:')) {
+                    result.extractedCreator.title = cleanLine.replace(/.*?العنوان:\s*\*\*/, '').replace(/\*\*/, '').trim();
+                } else if (cleanLine.includes('الأسلوب:')) {
+                    result.extractedCreator.artStyle = cleanLine.replace(/.*?الأسلوب:\s*\*\*/, '').replace(/\*\*/, '').trim();
+                } else if (cleanLine.includes('الأداة الكونية:')) {
+                    result.extractedCreator.tool = cleanLine.replace(/.*?الأداة الكونية:\s*\*\*/, '').replace(/\*\*/, '').trim();
+                } else if (cleanLine.includes('الوصف:')) {
+                    result.extractedCreator.desc = cleanLine.replace(/.*?الوصف:\s*\*\*/, '').replace(/\*\*/, '').trim();
+                }
+            } else if (currentSection === "characters" && (cleanLine.startsWith('*') || cleanLine.startsWith('-'))) {
+                const text = cleanLine.replace(/^[\*\-\s]+/, '');
+                const match = text.match(/\*\*(.*?)\*\*:\s*(.*?)\s*-\s*(.*?)\s*\((.*?),\s*(.*?)\)/) || text.match(/\*\*(.*?)\*\*:\s*(.*?)\s*-\s*(.*)/);
+                if (match) {
+                    result.extractedCharacters.push({
+                        title: match[2]?.trim() || "شخصية مستهدفة",
+                        desc: match[3]?.trim() || "شخصية مستخلصة من المصدر",
+                        faction: match[4]?.trim() || "awakened",
+                        class: match[5]?.trim() || "شخصية مستيقظة تدرك أنها مرسومة (Awakened)"
+                    });
+                }
+            } else if (currentSection === "environments" && (cleanLine.startsWith('*') || cleanLine.startsWith('-'))) {
+                const text = cleanLine.replace(/^[\*\-\s]+/, '');
+                const match = text.match(/\*\*(.*?)\*\*:\s*(.*?)\s*-\s*(.*?)\s*\((.*?),\s*(.*?)\)/) || text.match(/\*\*(.*?)\*\*:\s*(.*?)\s*-\s*(.*)/);
+                if (match) {
+                    result.extractedEnvironments.push({
+                        title: match[2]?.trim() || "بيئة مستهدفة",
+                        desc: match[3]?.trim() || "بيئة مستخلصة من المصدر",
+                        envType: match[4]?.trim() || "داخل لوحة قماشية مائعة (Fluid Canvas Interior)",
+                        clashDensity: match[5]?.trim() || "متوسطة (تداخل الضوء والجاذبية)"
+                    });
+                }
+            } else if (currentSection === "music" && (cleanLine.startsWith('*') || cleanLine.startsWith('-'))) {
+                const text = cleanLine.replace(/^[\*\-\s]+/, '');
+                const match = text.match(/\*\*(.*?)\*\*:\s*(.*?)\s*-\s*(.*?)\s*\((.*?),\s*(.*?),\s*(.*?)\)/) || text.match(/\*\*(.*?)\*\*:\s*(.*?)\s*-\s*(.*)/);
+                if (match) {
+                    result.extractedMusic.push({
+                        title: match[2]?.trim() || "ساوندتراك مستهدف",
+                        desc: match[3]?.trim() || "موسيقى مستخلصة من المصدر",
+                        genre: match[4]?.trim() || "Epic Orchestral",
+                        tempo: match[5]?.trim() || "Medium/Dramatic",
+                        instruments: match[6]?.trim() || "Acoustic Strings"
+                    });
+                }
             }
         });
 
