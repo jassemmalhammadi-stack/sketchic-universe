@@ -1759,29 +1759,34 @@ class SketchicApp {
             return;
         }
 
+        const valOf = (id, fallback = "") => {
+            const el = document.getElementById(id);
+            return el ? el.value : fallback;
+        };
+
         let prompt = "";
 
         if (type === 'source') {
-            const sourceType = document.getElementById('opt-sourceType').value;
-            const sourceAuthor = document.getElementById('opt-sourceAuthor').value;
-            const sourceWordCount = document.getElementById('opt-sourceWordCount').value;
+            const sourceType = valOf('opt-sourceType', 'رواية كوكبية طويلة (Novel)');
+            const sourceAuthor = valOf('opt-sourceAuthor', 'الكاتب الكوني الأول');
+            const sourceWordCount = valOf('opt-sourceWordCount', '1000');
             prompt = `اكتب فكرة عامة وحبكة وسينوبسيس مفصل لمصدر سردي في كون سكتشيك السينمائي.
 نوع المصدر: [${sourceType}].
 المؤلف الكوني: [${sourceAuthor}].
 الحجم المستهدف: [حدود ${sourceWordCount} كلمة].
 يجب أن تركز القصة على الأبعاد المتوازية والصدام الفني البصري بين أبعاد الرسم المختلفة (الزيتي، الكارتون، الحبر، الغرافيت) وصراعات الفصائل الكونية في هذا الكون.`;
         } else if (type === 'creator') {
-            const artStyle = document.getElementById('opt-artStyle').value;
-            const tool = document.getElementById('opt-tool').value;
+            const artStyle = valOf('opt-artStyle', 'لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)');
+            const tool = valOf('opt-tool', 'فرشاة شعر السنجاب الغليظة المشبعة بالزيت');
             prompt = `اكتب ملفاً تعريفياً سردياً وأدبياً لرسام كوني في كون سكتشيك السينمائي يسمى [اسم الرسام].
 الأسلوب الفني الحاكم لرسوماته وعالمه: [${artStyle}].
 الأداة الكونية الخاصة التي يرسم بها: [${tool}].
 اشرح صراعه الفلسفي وكيف تنعكس ضربات أداته وقوانينها الفيزيائية على رسوماته وعوالمه التي يرسمها.`;
         } else if (type === 'scenario') {
-            const genre = document.getElementById('opt-genre').value;
-            const style = document.getElementById('opt-style').value;
-            const layer = document.getElementById('opt-parallelLayer').value;
-            const fps = document.getElementById('opt-framerate').value;
+            const genre = valOf('opt-genre', 'خيال علمي (Sci-Fi)');
+            const style = valOf('opt-style', 'سرد تفصيلي بطيء ومكثف');
+            const layer = valOf('opt-parallelLayer', 'Layer 1 - الوجود المادي الفعلي');
+            const fps = valOf('opt-framerate', '24fps');
             
             let sourceInfo = "مصدر سردي كوني عام";
             if (this.relatedSourceSelect.value) {
@@ -1808,8 +1813,8 @@ class SketchicApp {
 يتموضع هذا السيناريو في [${layer}] ويخضع لمعدل إطارات كوني قدره [${fps}].
 يجب أن تركز القصة على صدام الأسلوب الفني في الكادر ووجود أبعاد مرسومة متداخلة دون اندماج، مع كتابة السيناريو بهيكل مشاهد سينمائية تفصيلية.`;
         } else if (type === 'environment') {
-            const envType = document.getElementById('opt-envType').value;
-            const clashDensity = document.getElementById('opt-clashDensity').value;
+            const envType = valOf('opt-envType', 'داخل لوحة قماشية مائعة (Fluid Canvas Interior)');
+            const clashDensity = valOf('opt-clashDensity', 'متوسطة (تداخل الضوء والجاذبية)');
             
             let creatorStyle = "أسلوب رسم فني متباين";
             if (this.relatedCreatorSelect.value) {
@@ -1825,7 +1830,7 @@ class SketchicApp {
 كثافة التداخل الفني: [${clashDensity}].
 التفاصيل: يجب أن تظهر المناظر الطبيعية والتضاريس والخصائص المعمارية مبنية بوضوح بملامس وقوام هذا الأسلوب الفني. إبراز حدود الصدام والتلامس البصري مع الأبعاد الأخرى. لقطة بزاوية واسعة.`;
         } else if (type === 'character') {
-            const charClass = document.getElementById('opt-charClass').value;
+            const charClass = valOf('opt-charClass', 'شخصية مستيقظة تدرك أنها مرسومة (Awakened)');
             
             // Faction text & weapons
             let factionText = "لا ينتمي لأي فصيل كوني";
@@ -1860,15 +1865,15 @@ class SketchicApp {
 قوانين الأسلوب الموروثة من الرسام: مرسومة بأسلوب [${styleText}] باستخدام [${toolText}].
 التفاصيل: يجب أن تعرض ورقة تصميم الشخصية مظهراً نظيفاً وواضحاً للشخصية على خلفية محايدة، مع إبراز الخطوط والملامس وقوام ضربات الأداة الفنية الخاصة بهذا الرسام. قم بتوضيح شعار فصيلهم وسلاحهم المميز.`;
         } else if (type === 'voice') {
-            const voiceEngine = document.getElementById('opt-voiceEngine').value;
+            const voiceEngine = valOf('opt-voiceEngine', 'gemini-3.1-flash-tts-preview');
             prompt = `موجه توليد ملف صوت تعبيري كوني مخصص لـ Google AI Studio (gemini-3.1-flash-tts-preview).
 محرك الصوت: [${voiceEngine}].`;
 
             if (voiceEngine === 'gemini-3.1-flash-tts-preview') {
-                const voiceScene = document.getElementById('opt-voiceScene').value;
-                const voiceContext = document.getElementById('opt-voiceContext').value;
-                const voiceSpeaker = document.getElementById('opt-voiceSpeaker').value;
-                const voiceTags = document.getElementById('opt-voiceTags').value;
+                const voiceScene = valOf('opt-voiceScene', '');
+                const voiceContext = valOf('opt-voiceContext', '');
+                const voiceSpeaker = valOf('opt-voiceSpeaker', 'Algenib');
+                const voiceTags = valOf('opt-voiceTags', '');
                 prompt += `\n\nإعدادات الصوت المتعدد الوسائط في Google AI Studio:
 - إعداد المشهد الخلفي: [${voiceScene}]
 - سياق الكلام والأداء التعبيري: [${voiceContext}]
@@ -1876,8 +1881,8 @@ class SketchicApp {
 - النص الموجه بالأوسمة التعبيرية المباشرة: [${voiceTags}]`;
             }
         } else if (type === 'comic') {
-            const format = document.getElementById('opt-format').value;
-            const color = document.getElementById('opt-color').value;
+            const format = valOf('opt-format', 'ويب تون طولي للموبايل (Vertical Webtoon)');
+            const color = valOf('opt-color', 'قص لوني متباين (ألوان زيتية متداخلة مع حبر مانجا)');
             
             let physicsText = "ميكانيكية فيزياء تماس افتراضية";
             const physicsVal = this.interfacePhysicsSelect.value;
@@ -1893,8 +1898,8 @@ class SketchicApp {
 تُطبق في لوحات القصة ميكانيكية فيزياء التماس: [${physicsText}].
 أريد تقسيم المشهد إلى لوحات (Panels) وتحديد مظهر وتأثيرات الصدام البصري الفني والفيزيائي في كل كادر عند خط التماس.`;
         } else if (type === 'video') {
-            const tool = document.getElementById('opt-tool').value;
-            const fps = document.getElementById('opt-fps').value;
+            const tool = valOf('opt-tool', 'Runway Gen-3 Alpha');
+            const fps = valOf('opt-fps', 'مختلط متنافر (12 إطاراً للمانجا مقابل 60 إطاراً للزيتي)');
             
             let physicsText = "ميكانيكية فيزياء تماس افتراضية";
             const physicsVal = this.interfacePhysicsSelect.value;
@@ -1911,11 +1916,11 @@ class SketchicApp {
 تفاعل الفيزياء الكونية: إظهار ميكانيكية فيزياء التماس التالية أثناء العمل: [${physicsText}].
 تباين عالي، إضاءة سينمائية ساحرة.`;
         } else if (type === 'music') {
-            const engine = document.getElementById('opt-musicEngine').value;
-            const genre = document.getElementById('opt-musicGenre').value;
-            const tempo = document.getElementById('opt-musicTempo').value;
-            const instruments = document.getElementById('opt-musicInstruments').value;
-            const musicPrompt = document.getElementById('opt-musicPrompt').value;
+            const engine = valOf('opt-musicEngine', 'Suno AI');
+            const genre = valOf('opt-musicGenre', 'Epic Orchestral');
+            const tempo = valOf('opt-musicTempo', 'Medium/Dramatic');
+            const instruments = valOf('opt-musicInstruments', 'Acoustic Strings');
+            const musicPrompt = valOf('opt-musicPrompt', '');
             
             prompt = `توليد مقطع موسيقي تصويري كوني باستخدام [${engine}]:
 أوسمة النمط الموسيقي: [النمط: ${genre}، السرعة: ${tempo}، الآلات: ${instruments}، الأجواء: سماوية، صدام بصري، سينمائي، لوحة صوتية مجسمة].
@@ -1927,10 +1932,10 @@ class SketchicApp {
 - [الذروة]: هبوط لحني ملحمي يجسد التنافر والصدام المادي لكون سكتشيك.
 - [خاتمة]: نغمات متلاشية تمثل صدى الطبقات الزمنية المتوازية.`;
         } else if (type === 'written') {
-            const wrType = document.getElementById('opt-writtenType').value;
-            const wrLang = document.getElementById('opt-writtenLanguage').value;
-            const wrStyle = document.getElementById('opt-writtenStyle').value;
-            const wrText = document.getElementById('opt-writtenText').value;
+            const wrType = valOf('opt-writtenType', 'حوار تفصيلي سينمائي');
+            const wrLang = valOf('opt-writtenLanguage', 'العربية الفصحى');
+            const wrStyle = valOf('opt-writtenStyle', 'ملحمي وجاد');
+            const wrText = valOf('opt-writtenText', '');
 
             prompt = `تحسين وتأصيل المخطوطة الأدبية التالية ذات النوع [${wrType}] باللغة [${wrLang}] وبأسلوب [${wrStyle}]:
 
@@ -1944,8 +1949,8 @@ ${wrText}
 2. إذا كان حواراً، أضف إشارات سينمائية توضح لغة الجسد، وانفعالات الشخصية المكتوبة مقابل الشخصية الزيتية/الكلاسيكية.
 3. عزز الغموض والعمق الفلسفي للصراع الجمالي بين ضربات الفرشاة وخطوط الحبر.`;
         } else if (type === 'game') {
-            const gameGenre = document.getElementById('opt-gameGenre').value;
-            const mechanic = document.getElementById('opt-mechanic').value;
+            const gameGenre = valOf('opt-gameGenre', 'لعبة منصات وألغاز ثنائية أبعاد (2D Platformer)');
+            const mechanic = valOf('opt-mechanic', 'بوابات تغيير أبعاد الرسم لحل الألغاز الكونية');
             prompt = `كتابة مسودة تصميم لعبة وبنية أكواد Godot GDScript للعبة من تصنيف [${gameGenre}] تدور في كون سكتشيك.
 الميكانيكية الرئيسية للعب هي: [${mechanic}]. اشرح كيف تقوم شيدرات الرندرة والأسلوب الفني بتغيير الخصائص الفيزيائية للاعب (الوزن، الجاذبية، وتفاعله مع البيئة).`;
         }
