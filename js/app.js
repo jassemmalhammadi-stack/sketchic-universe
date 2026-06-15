@@ -191,6 +191,7 @@ class SketchicApp {
                 const scenAsset = this.assets.find(a => a.id === scenId);
                 if (scenAsset && !this.assetTitleInput.value.trim()) {
                     const typeLabels = {
+                        'written': 'نص حوار لـ',
                         'character': 'شخصية لـ',
                         'environment': 'بيئة لـ',
                         'voice': 'صوت لـ',
@@ -434,6 +435,7 @@ class SketchicApp {
     renderPipelineCounts() {
         const counts = {
             scenario: 0,
+            written: 0,
             environment: 0,
             character: 0,
             voice: 0,
