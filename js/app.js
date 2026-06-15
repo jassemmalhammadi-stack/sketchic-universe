@@ -993,6 +993,28 @@ class SketchicApp {
                 if (editData.relatedCreator) this.relatedCreatorSelect.value = editData.relatedCreator;
                 if (editData.relatedSource) this.relatedSourceSelect.value = editData.relatedSource;
             }
+        } else if (type === 'written') {
+            this.groupRelatedScenario.style.display = "block";
+            this.groupRelatedCharacters.style.display = "none";
+            this.groupRelatedCreator.style.display = "none";
+            this.groupRelatedSource.style.display = "none";
+            
+            if (scenarios.length === 0) {
+                this.prereqBox.className = "prereq-guide-box alert-important";
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-danger)">⚠️ تنبيه هام: السيناريوهات مفقودة</div>
+                    <p>أنت بحاجة لتأليف سيناريو واحد على الأقل لربط النصوص والمخطوطات به.</p>
+                `;
+            } else {
+                warningHtml = `
+                    <div class="prereq-title" style="color:var(--color-cyan)">📜 إرشاد المخطوطات والنصوص المكتوبة</div>
+                    <p>اكتب الحوارات التفصيلية، الأساطير Lore، ونصوص العالم واربطها بالسيناريو التابع لها.</p>
+                `;
+            }
+
+            if (editData) {
+                if (editData.relatedScenario) this.relatedScenarioSelect.value = editData.relatedScenario;
+            }
         } else if (type === 'character') {
             this.groupRelatedScenario.style.display = "block";
             this.groupRelatedCreator.style.display = "block";
@@ -1509,6 +1531,34 @@ class SketchicApp {
                     </select>
                 </div>
             `;
+        } else if (type === 'written') {
+            optionsHtml += `
+                <div class="form-group">
+                    <label for="opt-writtenType">نوع المخطوط المكتوب *</label>
+                    <select id="opt-writtenType" required>
+                        <option value="حوار تفصيلي سينمائي">حوار تفصيلي سينمائي</option>
+                        <option value="تاريخ كوني وأساطير (Lore)">تاريخ كوني وأساطير (Lore)</option>
+                        <option value="وثيقة تصميم وتوصيف للعالم">وثيقة تصميم وتوصيف للعالم</option>
+                        <option value="وصف الكيانات والعناصر الكونية">وصف الكيانات والعناصر الكونية</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-writtenLanguage">اللغة المستهدفة *</label>
+                    <input type="text" id="opt-writtenLanguage" placeholder="مثال: العربية الفصحى..." value="العربية الفصحى" required>
+                </div>
+                <div class="form-group">
+                    <label for="opt-writtenStyle">الأسلوب التعبيري البلاغي *</label>
+                    <select id="opt-writtenStyle" required>
+                        <option value="ملحمي وجاد">ملحمي وجاد</option>
+                        <option value="شاعري غامض وفلسفي">شاعري غامض وفلسفي</option>
+                        <option value="سردي مباشر ووصفي">سردي مباشر ووصفي</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-writtenText">المخطوطة / النص المكتوب التفصيلي *</label>
+                    <textarea id="opt-writtenText" rows="6" placeholder="اكتب هنا النص أو الحوار أو المخطوطة التفصيلية التي تغذي العمل..." required></textarea>
+                </div>
+            `;
         } else if (type === 'game') {
             optionsHtml += `
                 <div class="form-group">
@@ -1739,6 +1789,23 @@ class SketchicApp {
 - [تصاعد]: إدخال الأوتار وتصاعد حدة التوتر مع اقتراب الأسلوبين الفنيين من الصدام.
 - [الذروة]: هبوط لحني ملحمي يجسد التنافر والصدام المادي لكون سكتشيك.
 - [خاتمة]: نغمات متلاشية تمثل صدى الطبقات الزمنية المتوازية.`;
+        } else if (type === 'written') {
+            const wrType = document.getElementById('opt-writtenType').value;
+            const wrLang = document.getElementById('opt-writtenLanguage').value;
+            const wrStyle = document.getElementById('opt-writtenStyle').value;
+            const wrText = document.getElementById('opt-writtenText').value;
+
+            prompt = `تحسين وتأصيل المخطوطة الأدبية التالية ذات النوع [${wrType}] باللغة [${wrLang}] وبأسلوب [${wrStyle}]:
+
+المخطوطة الحالية:
+"""
+${wrText}
+"""
+
+التعليمات:
+1. صياغة النص بأسلوب بلاغي يعكس تباين الأبعاد والتصادم الفني المميز لكون سكتشيك البصري.
+2. إذا كان حواراً، أضف إشارات سينمائية توضح لغة الجسد، وانفعالات الشخصية المكتوبة مقابل الشخصية الزيتية/الكلاسيكية.
+3. عزز الغموض والعمق الفلسفي للصراع الجمالي بين ضربات الفرشاة وخطوط الحبر.`;
         } else if (type === 'game') {
             const gameGenre = document.getElementById('opt-gameGenre').value;
             const mechanic = document.getElementById('opt-mechanic').value;
@@ -1809,7 +1876,8 @@ class SketchicApp {
                 'music': '06_Cosmic_Soundtracks',
                 'comic': '07_Comics_Storyboards',
                 'video': '08_Videos_Cinematics',
-                'game': '09_Downloadable_Games'
+                'game': '09_Downloadable_Games',
+                'written': '10_Written_Texts'
             };
             const folderName = folderMapping[type] || 'General_Assets';
             const safeTitle = title.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
@@ -2017,6 +2085,7 @@ class SketchicApp {
             const typeLabels = {
                 creator: 'رسام كوني',
                 scenario: 'سيناريو وقصة',
+                written: 'نصوص ومخطوطات',
                 environment: 'عالم وبيئة',
                 character: 'تصميم شخصية',
                 voice: 'صوت كوني',
@@ -2101,6 +2170,16 @@ class SketchicApp {
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>🎵 <strong>المحرك:</strong> ${musicEngine}</div>
                         <div style="margin-top:4px;">🎼 <strong>النمط:</strong> ${musicGenre} (${musicTempo})</div>
+                    </div>
+                `;
+            } else if (asset.type === 'written' && asset.subOptions) {
+                const wrType = asset.subOptions.writtenType || "نص سردي";
+                const wrLang = asset.subOptions.writtenLanguage || "العربية الفصحى";
+                const wrStyle = asset.subOptions.writtenStyle || "ملحمي وجاد";
+                creatorDetailsHtml = `
+                    <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
+                        <div>📜 <strong>نوع النص:</strong> ${wrType}</div>
+                        <div style="margin-top:4px;">🌐 <strong>اللغة:</strong> ${wrLang} (${wrStyle})</div>
                     </div>
                 `;
             }
@@ -3401,7 +3480,8 @@ Show how style shaders swap dynamically.`
             'music': '06_Cosmic_Soundtracks',
             'comic': '07_Comics_Storyboards',
             'video': '08_Videos_Cinematics',
-            'game': '09_Downloadable_Games'
+            'game': '09_Downloadable_Games',
+            'written': '10_Written_Texts'
         };
 
         const folderName = folderMapping[type] || 'General_Assets';
@@ -3728,6 +3808,36 @@ Show how style shaders swap dynamically.`
             if (contextInput) contextInput.value = plot ? `Struggling in: ${plot.substring(0, 50)}` : "Speaking thoughtfully";
             const speakerSel = document.getElementById('opt-voiceSpeaker');
             if (speakerSel) speakerSel.value = "Charon (Calm, Deep voice)";
+        } else if (type === 'written') {
+            this.assetTitleInput.value = scenarioTitle ? `مخطوطة: حوار وأساطير لـ (${scenarioTitle})` : "مخطوطة الأبعاد الكونية الأولى";
+            this.assetDescTextarea.value = `نصوص تفصيلية وحوارات كوكبية تعبر عن صراع الأبعاد الحاكم لسيناريو: "${scenarioTitle || 'الكون'}".`;
+
+            const typeSel = document.getElementById('opt-writtenType');
+            const langInput = document.getElementById('opt-writtenLanguage');
+            const styleSel = document.getElementById('opt-writtenStyle');
+            const textTA = document.getElementById('opt-writtenText');
+
+            if (typeSel) typeSel.value = scenarioTitle ? "حوار تفصيلي سينمائي" : "تاريخ كوني وأساطير (Lore)";
+            if (langInput) langInput.value = "العربية الفصحى";
+            
+            let chosenStyle = "ملحمي وجاد";
+            let scriptText = "مخطوطة كوكبية عامة تسرد أساطير الطبقات السبع وعوالم الرسم المتنافرة لكون سكتشيك.";
+
+            const lowerSearch = (theme + " " + plot + " " + setting + " " + sourceTitle).toLowerCase();
+            if (lowerSearch.includes("زيت") || lowerSearch.includes("renaissance") || lowerSearch.includes("كمان") || lowerSearch.includes("violin")) {
+                chosenStyle = "شاعري غامض وفلسفي";
+                if (lowerSearch.includes("كمان") || lowerSearch.includes("violin") || lowerSearch.includes("مائي")) {
+                    scriptText = `[عازفة الأوتار الرصاصية]: "نغمات كماني ليست صوتاً عابراً يا هذا، إنها ريشة حادة تمزق سماكة ألوانكم الزيتية وتفتح شقوقاً للعبور!"\n\n[كيان الألوان المتمردة]: "كلما عزفتِ نغمة أشد حدة، سالت أصباغنا وامتزجت ظلالنا... لا مفر لكِ من الغرق في بحر الأثير اللوني!"`;
+                } else {
+                    scriptText = `[الكاردينال الزيتي]: "حدودك الحبرية الخشنة يا مستيقظ تمزق نعومة تظليلي الكلاسيكي وتفسد طهارة عصر النهضة!"\n\n[المستيقظ المائي]: "بل أنا أحرركم من الجمود! خطوط حبري السائلة ستمنحكم الحياة والحركة حتى لو تسيّلت معالم قماشكم!"`;
+                }
+            } else if (lowerSearch.includes("رصاص") || lowerSearch.includes("غرافيت") || lowerSearch.includes("graphite") || lowerSearch.includes("ممحاة")) {
+                chosenStyle = "سردي مباشر ووصفي";
+                scriptText = `[سيد الغرافيت الحامي]: "ممحاة الفوضى تقترب، تمسح حواف البنايات وتسقط الأبعاد في الفراغ! يجب أن نعيد رسم أنفسنا فوراً!"\n\n[كائن الممحاة]: "الرسم مجرد وهم مؤقت يا سيد الغرافيت... المحو المطلق هو المصير الحتمي لكافة الأصول والوجود البصري!"`;
+            }
+
+            if (styleSel) styleSel.value = chosenStyle;
+            if (textTA) textTA.value = scriptText;
         } else {
             this.assetTitleInput.value = `أصل ${type} التابع لـ ${scenarioTitle || 'الكون'}`;
             this.assetDescTextarea.value = `أصل إنتاج تم توليده تلقائياً لدعم تشكيل وتجسيد الكون السينمائي.`;
