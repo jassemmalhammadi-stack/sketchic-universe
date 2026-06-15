@@ -1004,7 +1004,7 @@ class SketchicApp {
             this.groupRelatedFaction.style.display = 'none';
         }
 
-        if (type === 'scenario' || type === 'creator') {
+        if (type !== 'source') {
             this.groupRelatedSource.style.display = 'block';
         } else {
             this.groupRelatedSource.style.display = 'none';
@@ -1134,7 +1134,7 @@ class SketchicApp {
             this.groupRelatedScenario.style.display = "block";
             this.groupRelatedCharacters.style.display = "none";
             this.groupRelatedCreator.style.display = "none";
-            this.groupRelatedSource.style.display = "none";
+            this.groupRelatedSource.style.display = "block";
             
             if (scenarios.length === 0) {
                 this.prereqBox.className = "prereq-guide-box alert-important";
