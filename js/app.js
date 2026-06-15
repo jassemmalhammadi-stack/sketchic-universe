@@ -691,7 +691,6 @@ class SketchicApp {
                 subOptions: { musicEngine: 'Suno AI', musicGenre: 'Epic Orchestral', musicTempo: 'Medium/Dramatic', musicInstruments: 'Acoustic Strings' }
             });
         }
-        ];
 
         this.extractedAssetsList.innerHTML = "";
         proposed.forEach((p, idx) => {
