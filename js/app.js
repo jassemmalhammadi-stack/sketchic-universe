@@ -1246,6 +1246,45 @@ class SketchicApp {
                     <textarea id="opt-sourceSetting" rows="2" placeholder="صف الزمان والمكان السردي العام للمشاهد..." required>موقع أثري قديم يقع عند خط التماس المباشر بين بوابات الرسم الحبرية الخشنة واللوحات الزيتية المائعة</textarea>
                 </div>
             `;
+            
+            if (this.editingAssetId) {
+                const linked = this.assets.filter(a => a.relatedSource === this.editingAssetId && a.id !== this.editingAssetId);
+                if (linked.length > 0) {
+                    optionsHtml += `
+                        <div class="form-group" style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                            <label style="color: var(--color-success); font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                                <span>🔗</span> <span>الأصول المنتجة المرتبطة حالياً بهذا المصدر (${linked.length})</span>
+                            </label>
+                            <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px; max-height: 200px; overflow-y: auto; padding-right: 2px;">
+                    `;
+                    const typesAr = {
+                        'scenario': '🎬 سيناريو',
+                        'creator': '🎨 رسام',
+                        'character': '👤 شخصية',
+                        'environment': '🏞️ بيئة',
+                        'voice': '🗣️ صوت',
+                        'music': '🎵 موسيقى',
+                        'comic': '📚 قصة مصورة',
+                        'video': '🎥 فيديو كوني',
+                        'game': '🎮 لعبة كوكبية'
+                    };
+                    linked.forEach(la => {
+                        const typeStr = typesAr[la.type] || la.type;
+                        optionsHtml += `
+                            <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-secondary); padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); font-size: 0.8rem;">
+                                <span><strong>${la.title}</strong> (${typeStr})</span>
+                                <span style="font-size: 0.72rem; padding: 2px 6px; border-radius: 3px; background: ${la.status === 'finished' ? 'rgba(46, 204, 113, 0.15)' : 'rgba(127, 140, 141, 0.15)'}; color: ${la.status === 'finished' ? 'var(--color-success)' : 'var(--text-tertiary)'}; font-weight: bold;">
+                                    ${la.status === 'finished' ? 'منتهي' : 'مسودة'}
+                                </span>
+                            </div>
+                        `;
+                    });
+                    optionsHtml += `
+                            </div>
+                        </div>
+                    `;
+                }
+            }
         } else if (type === 'creator') {
             optionsHtml += `
                 <div class="form-group">
@@ -3423,6 +3462,30 @@ Show how style shaders swap dynamically.`
                     mdContent += `### المؤثرات الصوتية والموسيقى\n`;
                     em.forEach(m => {
                         mdContent += `* **ساوندتراك**: ${m.title} - ${m.desc} (${m.genre}, ${m.tempo}, ${m.instruments})\n`;
+                    });
+                    mdContent += `\n`;
+                }
+            }
+            
+            const assetId = this.editingAssetId;
+            if (assetId) {
+                const linkedAssets = this.assets.filter(a => a.relatedSource === assetId && a.id !== assetId);
+                if (linkedAssets.length > 0) {
+                    mdContent += `## الأصول المنتجة والمنفذة فعلياً\n\n`;
+                    const typesAr = {
+                        'scenario': 'سيناريو',
+                        'creator': 'رسام',
+                        'character': 'شخصية',
+                        'environment': 'بيئة',
+                        'voice': 'صوت',
+                        'music': 'موسيقى',
+                        'comic': 'قصة مصورة',
+                        'video': 'فيديو كوني',
+                        'game': 'لعبة كوكبية'
+                    };
+                    linkedAssets.forEach(la => {
+                        const typeStr = typesAr[la.type] || la.type;
+                        mdContent += `* **[${typeStr}]** [${la.title}](${la.driveUrl || '#'}) - الحالة: *${la.status === 'finished' ? 'منتهي' : 'مسودة'}*\n`;
                     });
                     mdContent += `\n`;
                 }
