@@ -184,24 +184,29 @@ class SketchicApp {
             this.handleAssetTypeChange();
             this.updateSuggestedPrompt();
             
-            // Auto-populate Title based on Scenario Selection
+            // Auto-populate Title and Narrative Source based on Scenario Selection
             const type = this.assetTypeSelect.value;
             const scenId = this.relatedScenarioSelect.value;
             if (scenId) {
                 const scenAsset = this.assets.find(a => a.id === scenId);
-                if (scenAsset && !this.assetTitleInput.value.trim()) {
-                    const typeLabels = {
-                        'written': 'نص حوار لـ',
-                        'character': 'شخصية لـ',
-                        'environment': 'بيئة لـ',
-                        'voice': 'صوت لـ',
-                        'music': 'ساوندتراك لـ',
-                        'comic': 'لوحة قصة لـ',
-                        'video': 'فيديو لـ',
-                        'game': 'لعبة لـ'
-                    };
-                    const label = typeLabels[type] || 'أصل لـ';
-                    this.assetTitleInput.value = `${label} (${scenAsset.title})`;
+                if (scenAsset) {
+                    if (scenAsset.relatedSource) {
+                        this.relatedSourceSelect.value = scenAsset.relatedSource;
+                    }
+                    if (!this.assetTitleInput.value.trim()) {
+                        const typeLabels = {
+                            'written': 'نص حوار لـ',
+                            'character': 'شخصية لـ',
+                            'environment': 'بيئة لـ',
+                            'voice': 'صوت لـ',
+                            'music': 'ساوندتراك لـ',
+                            'comic': 'لوحة قصة لـ',
+                            'video': 'فيديو لـ',
+                            'game': 'لعبة لـ'
+                        };
+                        const label = typeLabels[type] || 'أصل لـ';
+                        this.assetTitleInput.value = `${label} (${scenAsset.title})`;
+                    }
                 }
             }
         });
