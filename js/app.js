@@ -399,6 +399,7 @@ class SketchicApp {
         // Smart production recommendation based on counts
         const creators = this.assets.filter(a => a.type === 'creator' && a.status === 'finished');
         const scenarios = this.assets.filter(a => a.type === 'scenario' && a.status === 'finished');
+        const writtens = this.assets.filter(a => a.type === 'written' && a.status === 'finished');
         const environments = this.assets.filter(a => a.type === 'environment' && a.status === 'finished');
         const characters = this.assets.filter(a => a.type === 'character' && a.status === 'finished');
         const voices = this.assets.filter(a => a.type === 'voice' && a.status === 'finished');
@@ -412,6 +413,8 @@ class SketchicApp {
             recText = "✍️ ابدأ بصياغة أول رسام كوني! الرسامون هم الكيانات التي تصيغ الأساليب وتحدد فيزياء الوجود والمادة للشخصيات.";
         } else if (scenarios.length === 0) {
             recText = "📝 ابدأ بكتابة أول سيناريو لكون سكتشيك! لا يمكنك إنتاج بقية الأصول دون وجود سيناريو مكتوب لتقسيم القصة.";
+        } else if (writtens.length === 0) {
+            recText = "📜 خطوتك التالية هي إنتاج أول أصل مكتوب ومخطوطة نصية (Written Texts) لتوثيق الحوارات ونصوص العالم بناءً على السيناريو المعتمد.";
         } else if (environments.length === 0) {
             recText = "🌌 ابدأ بتصميم عالم وبيئة رسم (Environment) لتوطيد جغرافية وقوانين موقعك الكوني.";
         } else if (characters.length === 0) {
