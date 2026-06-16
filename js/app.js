@@ -1033,6 +1033,39 @@ class SketchicApp {
         const type = this.assetTypeSelect.value;
         if (!type) return;
 
+        // 1. Capture current values of selectors and sub-options to prevent loss of state
+        const prevScenario = editData ? editData.relatedScenario : this.relatedScenarioSelect.value;
+        const prevSource = editData ? editData.relatedSource : this.relatedSourceSelect.value;
+        const prevCreator = editData ? editData.relatedCreator : this.relatedCreatorSelect.value;
+        const prevChars = editData ? (editData.relatedCharacters || []) : Array.from(this.charactersCheckboxContainer.querySelectorAll('input[name="related-chars"]:checked')).map(cb => cb.value);
+
+        const currentSubOptions = {};
+        if (this.dynamicOptionsContainer) {
+            const selects = this.dynamicOptionsContainer.querySelectorAll('select');
+            selects.forEach(sel => {
+                const key = sel.id.replace('opt-', '');
+                currentSubOptions[key] = sel.value;
+            });
+            const inputs = this.dynamicOptionsContainer.querySelectorAll('input');
+            inputs.forEach(inp => {
+                const key = inp.id.replace('opt-', '');
+                currentSubOptions[key] = inp.value;
+            });
+            const textareas = this.dynamicOptionsContainer.querySelectorAll('textarea');
+            textareas.forEach(ta => {
+                const key = ta.id.replace('opt-', '');
+                currentSubOptions[key] = ta.value;
+            });
+        }
+        
+        const mergedEditData = editData || {
+            relatedScenario: prevScenario,
+            relatedSource: prevSource,
+            relatedCreator: prevCreator,
+            relatedCharacters: prevChars,
+            subOptions: currentSubOptions
+        };
+
         this.prereqBox.style.display = "block";
         this.prereqBox.className = "prereq-guide-box"; // Reset classes
 
@@ -1103,7 +1136,7 @@ class SketchicApp {
                 cb.type = 'checkbox';
                 cb.value = c.id;
                 cb.name = 'related-chars';
-                if (editData && editData.relatedCharacters && editData.relatedCharacters.includes(c.id)) {
+                if (mergedEditData.relatedCharacters && mergedEditData.relatedCharacters.includes(c.id)) {
                     cb.checked = true;
                 }
                 
@@ -1169,11 +1202,6 @@ class SketchicApp {
                     <p>السيناريو هو نواة العالم. اربط السيناريو بالرسام الكوني الحاكم والمصدر السردي لتحديد الأسلوب الفني وتوليد البرومبت المقترح.</p>
                 `;
             }
-
-            if (editData) {
-                if (editData.relatedCreator) this.relatedCreatorSelect.value = editData.relatedCreator;
-                if (editData.relatedSource) this.relatedSourceSelect.value = editData.relatedSource;
-            }
         } else if (type === 'written') {
             this.groupRelatedScenario.style.display = "block";
             this.groupRelatedCharacters.style.display = "none";
@@ -1191,10 +1219,6 @@ class SketchicApp {
                     <div class="prereq-title" style="color:var(--color-cyan)">📜 إرشاد المخطوطات والنصوص المكتوبة</div>
                     <p>اكتب الحوارات التفصيلية، الأساطير Lore، ونصوص العالم واربطها بالسيناريو التابع لها.</p>
                 `;
-            }
-
-            if (editData) {
-                if (editData.relatedScenario) this.relatedScenarioSelect.value = editData.relatedScenario;
             }
         } else if (type === 'character') {
             this.groupRelatedScenario.style.display = "block";
@@ -1219,12 +1243,6 @@ class SketchicApp {
                     <p>اربط الشخصية بالسيناريو وبالرسام الصانع لترث خواصه الفنية تلقائياً.</p>
                 `;
             }
-
-            if (editData) {
-                if (editData.relatedScenario) this.relatedScenarioSelect.value = editData.relatedScenario;
-                if (editData.relatedCreator) this.relatedCreatorSelect.value = editData.relatedCreator;
-            }
-
         } else if (type === 'environment') {
             this.groupRelatedScenario.style.display = "block";
             this.groupRelatedCreator.style.display = "block";
@@ -1242,18 +1260,12 @@ class SketchicApp {
                     <p>اربط البيئة أو العالم بالسيناريو وبالرسام الصانع ليرث خواصه الجمالية وقوانين الفرشاة والخطوط تلقائياً.</p>
                 `;
             }
-
-            if (editData) {
-                if (editData.relatedScenario) this.relatedScenarioSelect.value = editData.relatedScenario;
-                if (editData.relatedCreator) this.relatedCreatorSelect.value = editData.relatedCreator;
-            }
-
         } else if (type === 'comic') {
             this.groupRelatedScenario.style.display = "block";
             this.groupRelatedCreator.style.display = "block";
             this.groupRelatedCharacters.style.display = "block";
 
-            const selectedScenId = editData ? editData.relatedScenario : this.relatedScenarioSelect.value;
+            const selectedScenId = mergedEditData.relatedScenario;
             const validation = this.validateScenarioCompletion(selectedScenId);
 
             if (scenarios.length === 0) {
@@ -1291,12 +1303,6 @@ class SketchicApp {
                     <p>أحسنت! جميع الشخصيات، والبيئات، والأصوات، والموسيقى جاهزة ومنتهية للسيناريو المختار. يمكنك الآن إطلاق وتصميم الـ Storyboard بأمان.</p>
                 `;
             }
-
-            if (editData) {
-                if (editData.relatedScenario) this.relatedScenarioSelect.value = editData.relatedScenario;
-                if (editData.relatedCreator) this.relatedCreatorSelect.value = editData.relatedCreator;
-            }
-
         } else if (type === 'video') {
             this.groupRelatedScenario.style.display = "block";
             this.groupRelatedCreator.style.display = "block";
