@@ -610,6 +610,42 @@ class SketchicApp {
         // Generate proposed assets based on source content
         const proposed = [];
 
+        // 0. Scenario (سيناريو مقترح)
+        if (this.assetTypeSelect.value !== 'scenario') {
+            if (source.subOptions && source.subOptions.extractedScenario) {
+                proposed.push({
+                    type: 'scenario',
+                    title: source.subOptions.extractedScenario.title,
+                    desc: source.subOptions.extractedScenario.desc,
+                    subOptions: {
+                        scenarioSourceType: source.subOptions.extractedScenario.sourceType || "قصة قصيرة (Short Story)",
+                        scenarioSourceLink: "https://docs.google.com/document/d/source-story",
+                        genre: source.subOptions.extractedScenario.genre || "خيال علمي (Sci-Fi)",
+                        style: source.subOptions.extractedScenario.style || "سرد تفصيلي بطيء ومكثف",
+                        parallelLayer: source.subOptions.extractedScenario.parallelLayer || "Layer 1 - الوجود المادي الفعلي",
+                        framerate: source.subOptions.extractedScenario.framerate || "24fps"
+                    }
+                });
+            } else {
+                const hasNovel = (source.title || "").includes("رواية") || (source.title || "").includes("Novel");
+                const sourceType = hasNovel ? "رواية كوكبية طويلة (Cosmic Novel)" : "قصة قصيرة (Short Story)";
+                const genre = (theme + plot).includes("خيال") ? "خيال علمي (Sci-Fi)" : "دراما الصدام المرئي (Visual Clash Drama)";
+                proposed.push({
+                    type: 'scenario',
+                    title: `سيناريو: خط الحبكة لـ (${source.title})`,
+                    desc: `السيناريو الحاكم والمقسم للحبكة الدرامية لـ: ${source.title}. المستوحى من الثيمة: ${theme.substring(0, 50) || "صراع الأبعاد"}...`,
+                    subOptions: {
+                        scenarioSourceType: sourceType,
+                        scenarioSourceLink: "https://docs.google.com/document/d/source-story",
+                        genre: genre,
+                        style: "سرد تفصيلي بطيء ومكثف",
+                        parallelLayer: "Layer 1 - الوجود المادي الفعلي",
+                        framerate: "24fps"
+                    }
+                });
+            }
+        }
+
         // 1. Creator
         if (source.subOptions && source.subOptions.extractedCreator) {
             proposed.push({
@@ -932,7 +968,7 @@ class SketchicApp {
                     desc: p.desc,
                     driveUrl: "https://drive.google.com/drive/folders/extracted-mock-folder",
                     status: 'draft',
-                    relatedScenario: relatedScenarioId,
+                    relatedScenario: p.type === 'scenario' ? "" : relatedScenarioId,
                     relatedCreator: this.relatedCreatorSelect.value || "",
                     relatedSource: sourceId,
                     relatedFaction: p.relatedFaction || "",
