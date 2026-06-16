@@ -746,9 +746,10 @@ class SketchicApp {
                     title: w.title,
                     desc: w.desc,
                     subOptions: { 
-                        writtenType: w.writtenType || 'حوار سينمائي (Dialogue)', 
-                        writtenLanguage: w.writtenLanguage || 'العربية (Arabic)', 
-                        writtenStyle: w.writtenStyle || 'فلسفي ملحمي (Epic Philosophical)' 
+                        writtenType: w.writtenType || 'حوار تفصيلي سينمائي', 
+                        writtenLanguage: w.writtenLanguage || 'العربية الفصحى', 
+                        writtenStyle: w.writtenStyle || 'شاعري غامض وفلسفي',
+                        writtenText: w.text || w.desc || 'نص المخطوطة الكونية المقترح...'
                     }
                 });
             });
@@ -758,9 +759,10 @@ class SketchicApp {
                 title: `نص حوار كوني لـ (${source.title})`,
                 desc: `مخطوطة حوارية تفصيلية مبنية على صراع الحبكة: ${plot.substring(0, 100) || "صراع الأبعاد والطبقات الزمنية البصرية"}...`,
                 subOptions: { 
-                    writtenType: 'حوار سينمائي (Dialogue)', 
-                    writtenLanguage: 'العربية (Arabic)', 
-                    writtenStyle: 'فلسفي ملحمي (Epic Philosophical)' 
+                    writtenType: 'حوار تفصيلي سينمائي', 
+                    writtenLanguage: 'العربية الفصحى', 
+                    writtenStyle: 'شاعري غامض وفلسفي',
+                    writtenText: `نص حوار سينمائي مقترح مستوحى من صراع الحبكة: (${source.title}) وحبكة (${plot.substring(0, 150)}).`
                 }
             });
         }
