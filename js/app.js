@@ -910,6 +910,18 @@ class SketchicApp {
 
                 // 2. Create and add the new extracted asset
                 const newAssetId = 'asset-extracted-' + Date.now() + '-' + idx;
+                
+                // Map the relatedScenario linkage: if parent is scenario, link to it; otherwise look up matched scenario
+                let relatedScenarioId = "";
+                if (scenType === 'scenario') {
+                    relatedScenarioId = scenId;
+                } else {
+                    const matchedScenario = this.assets.find(a => a.type === 'scenario' && a.relatedSource === sourceId);
+                    if (matchedScenario) {
+                        relatedScenarioId = matchedScenario.id;
+                    }
+                }
+
                 const newAsset = {
                     id: newAssetId,
                     type: p.type,
@@ -917,7 +929,7 @@ class SketchicApp {
                     desc: p.desc,
                     driveUrl: "https://drive.google.com/drive/folders/extracted-mock-folder",
                     status: 'draft',
-                    relatedScenario: scenId,
+                    relatedScenario: relatedScenarioId,
                     relatedCreator: this.relatedCreatorSelect.value || "",
                     relatedSource: sourceId,
                     relatedFaction: p.relatedFaction || "",
@@ -935,13 +947,6 @@ class SketchicApp {
                 btn.disabled = true;
                 btn.style.backgroundColor = "var(--text-tertiary)";
                 btn.textContent = "✅ تم الاعتماد";
-
-                // 3. Prompt user and immediately open the newly created asset for editing/completion
-                setTimeout(() => {
-                    alert(`تم حفظ السيناريو بنجاح واعتماد أصل (${p.title}). سيفتح النموذج الآن لتتمكن من استكمال بقية التفاصيل حسب الترتيب الصحيح.`);
-                    this.closeModal();
-                    this.openEditModal(newAsset);
-                }, 300);
             });
 
             item.appendChild(info);
