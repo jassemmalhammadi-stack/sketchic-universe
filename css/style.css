@@ -1683,3 +1683,94 @@ h1, h2, h3, h4, h5, h6 {
     50% { transform: translateY(-5px); }
 }
 
+/* ==========================================
+   Cosmic Wizard Stepper Styles
+   ========================================== */
+.wizard-stepper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    gap: 8px;
+}
+
+.step-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: var(--transition-smooth);
+    min-width: 55px;
+    flex: 1;
+}
+
+.step-node .node-icon {
+    font-size: 1.4rem;
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
+
+.step-node .node-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    margin-top: 4px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+/* Node States */
+.step-node.active {
+    opacity: 1;
+}
+.step-node.active .node-icon {
+    border-color: var(--color-cyan);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+    background: rgba(6, 182, 212, 0.1);
+}
+.step-node.active .node-label {
+    color: var(--color-cyan);
+}
+
+.step-node.completed {
+    opacity: 0.85;
+}
+.step-node.completed .node-icon {
+    border-color: var(--color-green);
+    background: rgba(16, 185, 129, 0.1);
+}
+.step-node.completed .node-label {
+    color: var(--color-green);
+}
+
+.step-node.locked {
+    opacity: 0.25;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.step-line {
+    height: 2px;
+    background-color: var(--border-color);
+    flex: 2;
+    min-width: 15px;
+    transition: var(--transition-smooth);
+}
+
+.step-line.completed {
+    background-color: var(--color-green);
+}
+

@@ -22,6 +22,22 @@ class SketchicApp {
         this.currentFilter = 'all';
         this.editingAssetId = null;
 
+        // Initialize Wizard State
+        this.currentWizardStep = 1;
+        this.wizardSessionData = {
+            source: "",
+            scenario: "",
+            creator: "",
+            character: "",
+            environment: "",
+            voice: "",
+            music: "",
+            comic: "",
+            video: "",
+            game: "",
+            written: ""
+        };
+
         // Initialize UI Element Selectors
         this.initSelectors();
         
@@ -118,6 +134,17 @@ class SketchicApp {
         // Interface Physics Selector
         this.groupInterfacePhysics = document.getElementById('group-interface-physics');
         this.interfacePhysicsSelect = document.getElementById('asset-interface-physics');
+
+        // Wizard Elements
+        this.wizardStepTitle = document.getElementById('wizard-step-title');
+        this.wizardStepGuidance = document.getElementById('wizard-step-guidance');
+        this.wizardFormFields = document.getElementById('wizard-form-fields');
+        this.wizardPromptText = document.getElementById('wizard-prompt-text');
+        this.btnWizardPrev = document.getElementById('btn-wizard-prev');
+        this.btnWizardAi = document.getElementById('btn-wizard-ai');
+        this.btnWizardNext = document.getElementById('btn-wizard-next');
+        this.btnWizardCopyPrompt = document.getElementById('btn-wizard-copy-prompt');
+        this.wizardStepper = document.getElementById('wizard-stepper');
 
         // Director's Visual Checklist
         this.groupDirectorChecklist = document.getElementById('group-director-checklist');
@@ -289,6 +316,26 @@ class SketchicApp {
         // Form Submit
         this.assetForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
 
+        // Wizard Bindings
+        if (this.btnWizardPrev) {
+            this.btnWizardPrev.addEventListener('click', () => this.navigateWizard(-1));
+        }
+        if (this.btnWizardNext) {
+            this.btnWizardNext.addEventListener('click', () => this.validateAndNextWizardStep());
+        }
+        if (this.btnWizardAi) {
+            this.btnWizardAi.addEventListener('click', () => this.generateWizardStepWithAI());
+        }
+        if (this.btnWizardCopyPrompt) {
+            this.btnWizardCopyPrompt.addEventListener('click', () => {
+                navigator.clipboard.writeText(this.wizardPromptText.textContent);
+                this.btnWizardCopyPrompt.textContent = "تم النسخ!";
+                setTimeout(() => {
+                    this.btnWizardCopyPrompt.textContent = "نسخ البرومبت";
+                }, 2000);
+            });
+        }
+
         // Asset Filters
         this.filterButtons.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -387,6 +434,8 @@ class SketchicApp {
         } else if (tabId === 'dashboard') {
             this.updateStats();
             this.renderPipelineCounts();
+        } else if (tabId === 'wizard') {
+            this.initWizardTab();
         } else if (tabId === 'manuals') {
             // Manuals tab activated
         }
@@ -4520,6 +4569,801 @@ Show how style shaders swap dynamically.`
 
         result.desc = descLines.join('\n').trim();
         return result;
+    }
+
+    // ==========================================
+    // Production Wizard System (نظام المعالج الإنتاجي)
+    // ==========================================
+
+    initWizardTab() {
+        if (!this.currentWizardStep) {
+            this.currentWizardStep = 1;
+        }
+        this.renderWizardStep();
+        this.updateWizardStepperUI();
+    }
+
+    updateWizardStepperUI() {
+        if (!this.wizardStepper) return;
+        const nodes = this.wizardStepper.querySelectorAll('.step-node');
+        nodes.forEach(node => {
+            const stepNum = parseInt(node.dataset.step, 10);
+            node.classList.remove('active', 'completed');
+            if (stepNum === this.currentWizardStep) {
+                node.classList.add('active');
+            } else if (stepNum < this.currentWizardStep) {
+                node.classList.add('completed');
+            }
+        });
+
+        // Add interactive direct click on already completed or current steps
+        nodes.forEach(node => {
+            if (!node.onclick) {
+                node.onclick = () => {
+                    const stepNum = parseInt(node.dataset.step, 10);
+                    // Allow navigating backwards or to completed steps freely
+                    if (stepNum <= this.currentWizardStep || this.isStepCompleted(stepNum)) {
+                        this.navigateWizardDirect(stepNum);
+                    } else {
+                        alert("⚠️ يجب إكمال الخطوات السابقة بالترتيب أولاً!");
+                    }
+                };
+            }
+        });
+    }
+
+    isStepCompleted(step) {
+        // A step is considered completed if its corresponding asset exists in wizardSessionData
+        const type = this.getWizardStepType(step);
+        return !!this.wizardSessionData[type];
+    }
+
+    getWizardStepType(step) {
+        const types = {
+            1: 'source',
+            2: 'scenario',
+            3: 'written',
+            4: 'creator',
+            5: 'character',
+            6: 'environment',
+            7: 'voice',
+            8: 'music',
+            9: 'comic',
+            10: 'video',
+            11: 'game'
+        };
+        return types[step] || 'source';
+    }
+
+    getWizardStepMeta(step) {
+        const metas = {
+            1: {
+                title: "الخطوة 1: المصدر السردي الأصلي (Narrative Source)",
+                guidance: "قم بصياغة الفكرة وحبكة القصة الكونية لكون سكتشيك كقاعدة انطلاق لبقية الأصول."
+            },
+            2: {
+                title: "الخطوة 2: السيناريو السينمائي (Scenario)",
+                guidance: "حدد الخط الدرامي وتقسيم الفصول بناءً على المصدر السردي المعتمد."
+            },
+            3: {
+                title: "الخطوة 3: المخطوطة والنصوص (Written Texts)",
+                guidance: "اكتب نصوص الحوار التفصيلية أو Lore الكوني المعتمد للمشاهد."
+            },
+            4: {
+                title: "الخطوة 4: الرسام الكوني والأداة (Creator)",
+                guidance: "حدد الهوية البصرية، الأداة الكونية، والأسلوب الفني الحاكم للأصول المرئية."
+            },
+            5: {
+                title: "الخطوة 5: تصميم الشخصيات (Character)",
+                guidance: "حدد فصيلة الشخصية وتصنيفها الفيزيائي والدرامي لتعزيز الصدام البصري."
+            },
+            6: {
+                title: "الخطوة 6: العوالم والبيئات الكونية (Environment)",
+                guidance: "قم بتهيئة مسرح المشهد، كثافة التصادم، وفيزياء تداخل الجاذبية والضوء."
+            },
+            7: {
+                title: "الخطوة 7: البصمة الصوتية (Voice)",
+                guidance: "حدد الصوت المقترح ومحرك TTS المستخدم لنطق خطوط الحوار للشخصية."
+            },
+            8: {
+                title: "الخطوة 8: الموسيقى والساوندتراك (Music)",
+                guidance: "اختر الثيمة اللحنية، الآلات الكونية، ومحرك التوليد الصوتي المناسب للعمل."
+            },
+            9: {
+                title: "الخطوة 9: القصة المصورة ولوحة السيناريو (Comic)",
+                guidance: "قم بتنسيق الكوادر ورسم التناقض البصري بين أساليب الرسم المتنافرة."
+            },
+            10: {
+                title: "الخطوة 10: مقاطع الفيديو والتحريك (Video)",
+                guidance: "اصنع لقطة سينمائية متحركة تجسد الحركة المتنافرة وتمنع تمازج الخطوط والظلال."
+            },
+            11: {
+                title: "الخطوة 11: الألعاب التفاعلية (Game)",
+                guidance: "صمم بيئة تفاعلية مصغرة تجعل المشاهد قابلة للعب والتجربة الفعلية."
+            }
+        };
+        return metas[step] || metas[1];
+    }
+
+    renderWizardStep() {
+        const step = this.currentWizardStep;
+        const type = this.getWizardStepType(step);
+        const meta = this.getWizardStepMeta(step);
+
+        if (this.wizardStepTitle) this.wizardStepTitle.textContent = meta.title;
+        if (this.wizardStepGuidance) this.wizardStepGuidance.textContent = meta.guidance;
+
+        // Hide/Show Prev button
+        if (this.btnWizardPrev) {
+            this.btnWizardPrev.style.display = step > 1 ? 'block' : 'none';
+        }
+
+        // Change Next button text on the last step
+        if (this.btnWizardNext) {
+            this.btnWizardNext.textContent = step === 11 ? "حفظ وإنهاء المعالج 🎉" : "حفظ والانتقال للخطوة التالية ➡️";
+        }
+
+        // Check if an asset for this step already exists in this.wizardSessionData
+        const existingAssetId = this.wizardSessionData[type];
+        let assetData = null;
+        if (existingAssetId) {
+            assetData = this.assets.find(a => a.id === existingAssetId);
+        }
+
+        // Dynamically build HTML form fields based on asset type
+        let fieldsHtml = `
+            <div class="form-group">
+                <label>عنوان الأصل *</label>
+                <input type="text" id="wiz-title" placeholder="أدخل اسم الأصل..." value="${assetData ? assetData.title : ''}" required style="width: 100%; box-sizing: border-box; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+            </div>
+            <div class="form-group">
+                <label>الوصف والتفاصيل *</label>
+                <textarea id="wiz-desc" rows="3" placeholder="أدخل الوصف التفصيلي هنا..." required style="width: 100%; box-sizing: border-box; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">${assetData ? assetData.desc : ''}</textarea>
+            </div>
+            <div class="form-group">
+                <label>رابط Google Drive للملف *</label>
+                <input type="text" id="wiz-drive-url" placeholder="مثال: https://drive.google.com/..." value="${assetData ? assetData.driveUrl : 'https://drive.google.com/drive/folders/wizard-session'}" required style="width: 100%; box-sizing: border-box; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+            </div>
+        `;
+
+        // Type specific sub-options
+        let subOptionsHtml = "";
+        const subOptions = assetData ? (assetData.subOptions || {}) : {};
+
+        if (type === 'source') {
+            subOptionsHtml = `
+                <div class="form-group">
+                    <label>نوع المصدر السردي *</label>
+                    <select id="wiz-opt-sourceType" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="رواية كوكبية طويلة (Novel)" ${subOptions.sourceType === 'رواية كوكبية طويلة (Novel)' ? 'selected' : ''}>رواية كوكبية طويلة (Novel)</option>
+                        <option value="قصة قصيرة (Short Story)" ${subOptions.sourceType === 'قصة قصيرة (Short Story)' ? 'selected' : ''}>قصة قصيرة (Short Story)</option>
+                        <option value="أسطورة شعبية أو فلكلور أبعاد (Folklore)" ${subOptions.sourceType === 'أسطورة شعبية أو فلكلور أبعاد (Folklore)' ? 'selected' : ''}>أسطورة شعبية أو فلكلور أبعاد (Folklore)</option>
+                        <option value="مسودة فكرة أصلية (Concept Draft)" ${subOptions.sourceType === 'مسودة فكرة أصلية (Concept Draft)' ? 'selected' : ''}>مسودة فكرة أصلية (Concept Draft)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>المؤلف السردي الأصلي *</label>
+                    <input type="text" id="wiz-opt-sourceAuthor" value="${subOptions.sourceAuthor || 'الكاتب الكوني الأول'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                </div>
+                <div class="form-group">
+                    <label>عدد الكلمات التقريبي *</label>
+                    <input type="number" id="wiz-opt-sourceWordCount" value="${subOptions.sourceWordCount || '1500'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                </div>
+            `;
+        } else if (type === 'scenario') {
+            subOptionsHtml = `
+                <div class="form-group">
+                    <label>نوع المصدر السردي الأصلي *</label>
+                    <select id="wiz-opt-scenarioSourceType" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="رواية كوكبية طويلة (Cosmic Novel)" ${subOptions.scenarioSourceType === 'رواية كوكبية طويلة (Cosmic Novel)' ? 'selected' : ''}>رواية كوكبية طويلة (Cosmic Novel)</option>
+                        <option value="قصة قصيرة (Short Story)" ${subOptions.scenarioSourceType === 'قصة قصيرة (Short Story)' ? 'selected' : ''}>قصة قصيرة (Short Story)</option>
+                        <option value="أسطورة شعبية أو فلكلور أبعادي (Folklore)" ${subOptions.scenarioSourceType === 'أسطورة شعبية أو فلكلور أبعادي (Folklore)' ? 'selected' : ''}>أسطورة شعبية أو فلكلور أبعادي (Folklore)</option>
+                        <option value="مسودة فكرة أو فكرة أصلية (Concept Draft)" ${subOptions.scenarioSourceType === 'مسودة فكرة أو فكرة أصلية (Concept Draft)' ? 'selected' : ''}>مسودة فكرة أو فكرة أصلية (Concept Draft)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>تصنيف قصة السيناريو *</label>
+                    <select id="wiz-opt-genre" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="خيال علمي (Sci-Fi)" ${subOptions.genre === 'خيال علمي (Sci-Fi)' ? 'selected' : ''}>خيال علمي (Sci-Fi)</option>
+                        <option value="سايبربانك (Cyberpunk)" ${subOptions.genre === 'سايبربانك (Cyberpunk)' ? 'selected' : ''}>سايبربانك (Cyberpunk)</option>
+                        <option value="فانتازيا سحرية (Fantasy)" ${subOptions.genre === 'فانتازيا سحرية (Fantasy)' ? 'selected' : ''}>فانتازيا سحرية (Fantasy)</option>
+                        <option value="دراما الصدام المرئي (Visual Clash Drama)" ${subOptions.genre === 'دراما الصدام المرئي (Visual Clash Drama)' ? 'selected' : ''}>دراما الصدام المرئي (Visual Clash Drama)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>أسلوب السرد *</label>
+                    <select id="wiz-opt-style" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="سرد تفصيلي بطيء ومكثف" ${subOptions.style === 'سرد تفصيلي بطيء ومكثف' ? 'selected' : ''}>سرد تفصيلي بطيء ومكثف</option>
+                        <option value="سرد حركي سريع ومليء بالإثارة" ${subOptions.style === 'سرد حركي سريع ومليء بالإثارة' ? 'selected' : ''}>سرد حركي سريع ومليء بالإثارة</option>
+                        <option value="سرد فلسفي ميتافيزيقي" ${subOptions.style === 'سرد فلسفي ميتافيزيقي' ? 'selected' : ''}>سرد فلسفي ميتافيزيقي</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الطبقة الزمنية المتوازية (Parallel Layer) *</label>
+                    <select id="wiz-opt-parallelLayer" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="Layer 1 - الوجود المادي الفعلي" ${subOptions.parallelLayer === 'Layer 1 - الوجود المادي الفعلي' ? 'selected' : ''}>الطبقة الأولى - الوجود المادي الفعلي</option>
+                        <option value="Layer 2 - الانعكاس والظلال" ${subOptions.parallelLayer === 'Layer 2 - الانعكاس والظلال' ? 'selected' : ''}>الطبقة الثانية - الانعكاس والظلال</option>
+                        <option value="Layer 3 - المخطط الهيكلي الهندسي" ${subOptions.parallelLayer === 'Layer 3 - المخطط الهيكلي الهندسي' ? 'selected' : ''}>الطبقة الثالثة - المخطط الهيكلي الهندسي</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>معدل الإطارات الكوني (Framerate) *</label>
+                    <select id="wiz-opt-framerate" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="12fps" ${subOptions.framerate === '12fps' ? 'selected' : ''}>12 إطاراً في الثانية - حركة مانجا وكارتون خشنة</option>
+                        <option value="24fps" ${subOptions.framerate === '24fps' ? 'selected' : ''}>24 إطاراً في الثانية - حركة سينمائية كلاسيكية</option>
+                        <option value="60fps" ${subOptions.framerate === '60fps' ? 'selected' : ''}>60 إطاراً في الثانية - حركة ناعمة فائقة الواقعية (زيتي)</option>
+                    </select>
+                </div>
+            `;
+        } else if (type === 'written') {
+            subOptionsHtml = `
+                <div class="form-group">
+                    <label>نوع المخطوط المكتوب *</label>
+                    <select id="wiz-opt-writtenType" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="حوار تفصيلي سينمائي" ${subOptions.writtenType === 'حوار تفصيلي سينمائي' ? 'selected' : ''}>حوار تفصيلي سينمائي</option>
+                        <option value="تاريخ كوني وأساطير (Lore)" ${subOptions.writtenType === 'تاريخ كوني وأساطير (Lore)' ? 'selected' : ''}>تاريخ كوني وأساطير (Lore)</option>
+                        <option value="وثيقة تصميم وتوصيف للعالم" ${subOptions.writtenType === 'وثيقة تصميم وتوصيف للعالم' ? 'selected' : ''}>وثيقة تصميم وتوصيف للعالم</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>اللغة المستهدفة *</label>
+                    <input type="text" id="wiz-opt-writtenLanguage" value="${subOptions.writtenLanguage || 'العربية الفصحى'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                </div>
+                <div class="form-group">
+                    <label>الأسلوب التعبيري البلاغي *</label>
+                    <select id="wiz-opt-writtenStyle" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="ملحمي وجاد" ${subOptions.writtenStyle === 'ملحمي وجاد' ? 'selected' : ''}>ملحمي وجاد</option>
+                        <option value="شاعري غامض وفلسفي" ${subOptions.writtenStyle === 'شاعري غامض وفلسفي' ? 'selected' : ''}>شاعري غامض وفلسفي</option>
+                        <option value="سردي مباشر ووصفي" ${subOptions.writtenStyle === 'سردي مباشر ووصفي' ? 'selected' : ''}>سردي مباشر ووصفي</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>المخطوطة / النص المكتوب التفصيلي *</label>
+                    <textarea id="wiz-opt-writtenText" rows="4" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">${subOptions.writtenText || ''}</textarea>
+                </div>
+            `;
+        } else if (type === 'creator') {
+            subOptionsHtml = `
+                <div class="form-group">
+                    <label>الأسلوب الفني الحاكم للرسام *</label>
+                    <select id="wiz-opt-artStyle" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)" ${subOptions.artStyle === 'لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)' ? 'selected' : ''}>لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)</option>
+                        <option value="مانجا يابانية تقليدية بحبر أسود حاد" ${subOptions.artStyle === 'مانجا يابانية تقليدية بحبر أسود حاد' ? 'selected' : ''}>مانجا يابانية تقليدية بحبر أسود حاد</option>
+                        <option value="رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)" ${subOptions.artStyle === 'رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)' ? 'selected' : ''}>رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)</option>
+                        <option value="رسم تخطيطي خفيف بقلم الرصاص (Graphite Sketch)" ${subOptions.artStyle === 'رسم تخطيطي خفيف بقلم الرصاص (Graphite Sketch)' ? 'selected' : ''}>رسم تخطيطي خفيف بقلم الرصاص (Graphite Sketch)</option>
+                        <option value="رسوم رقمية حديثة ذات متجهات هندسية (Vectors)" ${subOptions.artStyle === 'رسوم رقمية حديثة ذات متجهات هندسية (Vectors)' ? 'selected' : ''}>رسوم رقمية حديثة ذات متجهات هندسية (Vectors)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الأداة الكونية المميزة الخاصة به *</label>
+                    <select id="wiz-opt-tool" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="فرشاة شعر السنجاب الغليظة المشبعة بالزيت" ${subOptions.tool === 'فرشاة شعر السنجاب الغليظة المشبعة بالزيت' ? 'selected' : ''}>فرشاة شعر السنجاب الغليظة المشبعة بالزيت</option>
+                        <option value="ريشة الرسم الكرتونية المعدنية الحادة (G-Pen)" ${subOptions.tool === 'ريشة الرسم الكرتونية المعدنية الحادة (G-Pen)' ? 'selected' : ''}>ريشة الرسم الكرتونية المعدنية الحادة (G-Pen)</option>
+                        <option value="قلم رصاص غرافيت فحم ناعم وقابل للمحو" ${subOptions.tool === 'قلم رصاص غرافيت فحم ناعم وقابل للمحو' ? 'selected' : ''}>قلم رصاص غرافيت فحم ناعم وقابل للمحو</option>
+                        <option value="قلم الألواح الرقمية اللاسلكي اللانهائي" ${subOptions.tool === 'قلم الألواح الرقمية اللاسلكي اللانهائي' ? 'selected' : ''}>قلم الألواح الرقمية اللاسلكي اللانهائي</option>
+                        <option value="ممحاة مطاطية لمضاد المادة (Cosmic Eraser)" ${subOptions.tool === 'ممحاة مطاطية لمضاد المادة (Cosmic Eraser)' ? 'selected' : ''}>ممحاة مطاطية لمضاد المادة (Cosmic Eraser)</option>
+                    </select>
+                </div>
+            `;
+        } else if (type === 'character') {
+            subOptionsHtml = `
+                <div class="form-group">
+                    <label>الدور السردي للشخصية *</label>
+                    <select id="wiz-opt-charClass" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="بطل القصة الرئيسي (Protagonist)" ${subOptions.charClass === 'بطل القصة الرئيسي (Protagonist)' ? 'selected' : ''}>بطل القصة الرئيسي (Protagonist)</option>
+                        <option value="الخصم أو الشرير الرئيسي (Antagonist)" ${subOptions.charClass === 'الخصم أو الشرير الرئيسي (Antagonist)' ? 'selected' : ''}>الخصم أو الشرير الرئيسي (Antagonist)</option>
+                        <option value="شخصية مستيقظة تدرك أنها مرسومة (Awakened)" ${subOptions.charClass === 'شخصية مستيقظة تدرك أنها مرسومة (Awakened)' ? 'selected' : ''}>شخصية مستيقظة تدرك أنها مرسومة (Awakened)</option>
+                        <option value="حارس زمن يحمي طبقات اللوحة (Time Keeper)" ${subOptions.charClass === 'حارس زمن يحمي طبقات اللوحة (Time Keeper)' ? 'selected' : ''}>حارس زمن يحمي طبقات اللوحة (Time Keeper)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الفصيل الكوني الحاكم *</label>
+                    <select id="wiz-relatedFaction" style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="awakened" ${assetData && assetData.relatedFaction === 'awakened' ? 'selected' : ''}>فصيل المستيقظين (The Awakened)</option>
+                        <option value="keepers" ${assetData && assetData.relatedFaction === 'keepers' ? 'selected' : ''}>فصيل الحراس (The Keepers)</option>
+                        <option value="erasers" ${assetData && assetData.relatedFaction === 'erasers' ? 'selected' : ''}>فصيل الممحاة والعدم (The Erasers)</option>
+                    </select>
+                </div>
+            `;
+        } else if (type === 'environment') {
+            subOptionsHtml = `
+                <div class="form-group">
+                     <label>طبيعة البيئة الكونية *</label>
+                     <select id="wiz-opt-envType" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                          <option value="داخل لوحة قماشية مائعة (Fluid Canvas Interior)" ${subOptions.envType === 'داخل لوحة قماشية مائعة (Fluid Canvas Interior)' ? 'selected' : ''}>داخل لوحة قماشية مائعة (Fluid Canvas Interior)</option>
+                          <option value="جزيرة عائمة مبنية من قصاصات الصحف والورق" ${subOptions.envType === 'جزيرة عائمة مبنية من قصاصات الصحف والورق' ? 'selected' : ''}>جزيرة عائمة مبنية من قصاصات الصحف والورق</option>
+                          <option value="غرفة ذات بعدين محاطة بجدران خشبية كلاسيكية 3D" ${subOptions.envType === 'غرفة ذات بعدين محاطة بجدران خشبية كلاسيكية 3D' ? 'selected' : ''}>غرفة ذات بعدين محاطة بجدران خشبية كلاسيكية 3D</option>
+                          <option value="مدينة سايبربانك مبنية بمتجهات هندسية حادة (Vector City)" ${subOptions.envType === 'مدينة سايبربانك مبنية بمتجهات هندسية حادة (Vector City)' ? 'selected' : ''}>مدينة سايبربانك مبنية بمتجهات هندسية حادة (Vector City)</option>
+                     </select>
+                </div>
+                <div class="form-group">
+                     <label>كثافة تداخل الأنماط في الموقع *</label>
+                     <select id="wiz-opt-clashDensity" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                          <option value="منخفضة (حافة تماس رفيعة جداً)" ${subOptions.clashDensity === 'منخفضة (حافة تماس رفيعة جداً)' ? 'selected' : ''}>منخفضة (حافة تماس رفيعة جداً)</option>
+                          <option value="متوسطة (تداخل الضوء والجاذبية)" ${subOptions.clashDensity === 'متوسطة (تداخل الضوء والجاذبية)' ? 'selected' : ''}>متوسطة (تداخل الضوء والجاذبية)</option>
+                          <option value="عالية (تداخل الأبنية والأرضيات دون اندماج)" ${subOptions.clashDensity === 'عالية (تداخل الأبنية والأرضيات دون اندماج)' ? 'selected' : ''}>عالية (تداخل الأبنية والأرضيات دون اندماج)</option>
+                     </select>
+                </div>
+            `;
+        } else if (type === 'voice') {
+            subOptionsHtml = `
+                <div class="form-group">
+                    <label>محرك الصوت بالذكاء الاصطناعي (Voice Engine) *</label>
+                    <select id="wiz-opt-voiceEngine" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="gemini-3.1-flash-tts-preview" ${subOptions.voiceEngine === 'gemini-3.1-flash-tts-preview' ? 'selected' : ''}>gemini-3.1-flash-tts-preview (توليد تعبيري مباشر في Google AI Studio)</option>
+                        <option value="Gemini Live (صوت تفاعلي عاطفي فوري)" ${subOptions.voiceEngine === 'Gemini Live (صوت تفاعلي عاطفي فوري)' ? 'selected' : ''}>Gemini Live (صوت تفاعلي عاطفي فوري)</option>
+                        <option value="NotebookLM Audio Overview (حوار ثنائي تفاعلي)" ${subOptions.voiceEngine === 'NotebookLM Audio Overview (حوار ثنائي تفاعلي)' ? 'selected' : ''}>NotebookLM Audio Overview (حوار ثنائي تفاعلي)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>صوت المتحدث المختار (Speaker Settings) *</label>
+                    <select id="wiz-opt-voiceSpeaker" style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="Algenib (Gravely, Lower pitch)" ${subOptions.voiceSpeaker === 'Algenib (Gravely, Lower pitch)' ? 'selected' : ''}>Algenib (Gravely, Lower pitch)</option>
+                        <option value="Puck (Energetic, Mid pitch)" ${subOptions.voiceSpeaker === 'Puck (Energetic, Mid pitch)' ? 'selected' : ''}>Puck (Energetic, Mid pitch)</option>
+                        <option value="Charon (Calm, Deep voice)" ${subOptions.voiceSpeaker === 'Charon (Calm, Deep voice)' ? 'selected' : ''}>Charon (Calm, Deep voice)</option>
+                    </select>
+                </div>
+            `;
+        } else if (type === 'music') {
+            subOptionsHtml = `
+                <div class="form-group">
+                    <label>محرك الموسيقى بالذكاء الاصطناعي *</label>
+                    <select id="wiz-opt-musicEngine" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="Suno AI (توليد كامل اللحن مع الكلمات)" ${subOptions.musicEngine === 'Suno AI (توليد كامل اللحن مع الكلمات)' ? 'selected' : ''}>Suno AI (توليد كامل اللحن مع الكلمات)</option>
+                        <option value="Udio AI (توليد أصوات خلفية كلاسيكية متميزة)" ${subOptions.musicEngine === 'Udio AI (توليد أصوات خلفية كلاسيكية متميزة)' ? 'selected' : ''}>Udio AI (توليد أصوات خلفية كلاسيكية متميزة)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>النمط والمزاج الموسيقي *</label>
+                    <select id="wiz-opt-musicGenre" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="Epic Cosmic Orchestral (أوركسترا كونية ملحمية)" ${subOptions.musicGenre === 'Epic Cosmic Orchestral (أوركسترا كونية ملحمية)' ? 'selected' : ''}>Epic Cosmic Orchestral (أوركسترا كونية ملحمية)</option>
+                        <option value="Dark Ambient Synthwave (سينث-ويف غامض وبيئي)" ${subOptions.musicGenre === 'Dark Ambient Synthwave (سينث-ويف غامض وبيئي)' ? 'selected' : ''}>Dark Ambient Synthwave (سينث-ويف غامض وبيئي)</option>
+                    </select>
+                </div>
+            `;
+        } else if (type === 'comic') {
+            subOptionsHtml = `
+                <div class="form-group">
+                    <label>صيغة وعرض القصة المصورة *</label>
+                    <select id="wiz-opt-format" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="ويب تون طولي للموبايل (Vertical Webtoon)" ${subOptions.format === 'ويب تون طولي للموبايل (Vertical Webtoon)' ? 'selected' : ''}>ويب تون طولي للموبايل (Vertical Webtoon)</option>
+                        <option value="صفحات مانجا تقليدية بالأبيض والأسود" ${subOptions.format === 'صفحات مانجا تقليدية بالأبيض والأسود' ? 'selected' : ''}>صفحات مانجا تقليدية بالأبيض والأسود</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>نمط الألوان والصدام *</label>
+                    <select id="wiz-opt-color" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="أحادية اللون بالكامل (أبيض وأسود)" ${subOptions.color === 'أحادية اللون بالكامل (أبيض وأسود)' ? 'selected' : ''}>أحادية اللون بالكامل (أبيض وأسود)</option>
+                        <option value="قص لوني متباين (ألوان زيتية متداخلة مع حبر مانجا)" ${subOptions.color === 'قص لوني متباين (ألوان زيتية متداخلة مع حبر مانجا)' ? 'selected' : ''}>قص لوني متباين (ألوان زيتية متداخلة مع حبر مانجا)</option>
+                    </select>
+                </div>
+            `;
+        } else if (type === 'video') {
+            subOptionsHtml = `
+                <div class="form-group">
+                    <label>محرك التوليد والتحريك بالذكاء الاصطناعي *</label>
+                    <select id="wiz-opt-tool" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="Runway Gen-3 Alpha" ${subOptions.tool === 'Runway Gen-3 Alpha' ? 'selected' : ''}>Runway Gen-3 Alpha</option>
+                        <option value="OpenAI Sora" ${subOptions.tool === 'OpenAI Sora' ? 'selected' : ''}>OpenAI Sora</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>انطباع حركة الإطارات الكونية *</label>
+                    <select id="wiz-opt-fps" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="مختلط متنافر (12 إطاراً للمانجا مقابل 60 إطاراً للزيتي)" ${subOptions.fps === 'مختلط متنافر (12 إطاراً للمانجا مقابل 60 إطاراً للزيتي)' ? 'selected' : ''}>مختلط متنافر (12 إطاراً للمانجا مقابل 60 إطاراً للزيتي)</option>
+                        <option value="حركة سينمائية كلاسيكية (24 إطاراً في الثانية)" ${subOptions.fps === 'حركة سينمائية كلاسيكية (24 إطاراً في الثانية)' ? 'selected' : ''}>حركة سينمائية كلاسيكية (24 إطاراً في الثانية)</option>
+                    </select>
+                </div>
+            `;
+        } else if (type === 'game') {
+            subOptionsHtml = `
+                <div class="form-group">
+                    <label>تصنيف اللعبة للتحميل *</label>
+                    <select id="wiz-opt-gameGenre" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="لعبة منصات وألغاز ثنائية أبعاد (2D Platformer)" ${subOptions.gameGenre === 'لعبة منصات وألغاز ثنائية أبعاد (2D Platformer)' ? 'selected' : ''}>لعبة منصات وألغاز ثنائية أبعاد (2D Platformer)</option>
+                        <option value="مغامرة آر بي جي ثلاثية أبعاد (3D RPG Adventure)" ${subOptions.gameGenre === 'مغامرة آر بي جي ثلاثية أبعاد (3D RPG Adventure)' ? 'selected' : ''}>مغامرة آر بي جي ثلاثية أبعاد (3D RPG Adventure)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>ميكانيكية التحكم بالأسلوب الفني *</label>
+                    <select id="wiz-opt-mechanic" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="تبديل شيدر اللاعب (من حبر مانجا خفيف إلى درع زيتي ثقيل)" ${subOptions.mechanic === 'تبديل شيدر اللاعب (من حبر مانجا خفيف إلى درع زيتي ثقيل)' ? 'selected' : ''}>تبديل شيدر اللاعب (من حبر مانجا خفيف إلى درع زيتي ثقيل)</option>
+                        <option value="بوابات تغيير أبعاد الرسم لحل الألغاز الكونية" ${subOptions.mechanic === 'بوابات تغيير أبعاد الرسم لحل الألغاز الكونية' ? 'selected' : ''}>بوابات تغيير أبعاد الرسم لحل الألغاز الكونية</option>
+                    </select>
+                </div>
+            `;
+        }
+
+        if (this.wizardFormFields) {
+            this.wizardFormFields.innerHTML = fieldsHtml + subOptionsHtml;
+        }
+
+        // Add event listeners to input fields to update the prompt in real-time
+        const inputs = this.wizardFormFields.querySelectorAll('input, select, textarea');
+        inputs.forEach(inp => {
+            inp.addEventListener('input', () => this.generateWizardPrompt());
+            inp.addEventListener('change', () => this.generateWizardPrompt());
+        });
+
+        this.generateWizardPrompt();
+    }
+
+    navigateWizard(offset) {
+        const targetStep = this.currentWizardStep + offset;
+        if (targetStep >= 1 && targetStep <= 11) {
+            this.navigateWizardDirect(targetStep);
+        }
+    }
+
+    navigateWizardDirect(step) {
+        this.currentWizardStep = step;
+        this.renderWizardStep();
+        this.updateWizardStepperUI();
+    }
+
+    generateWizardPrompt() {
+        const step = this.currentWizardStep;
+        const type = this.getWizardStepType(step);
+
+        const valOf = (id, fallback = "") => {
+            const el = document.getElementById(`wiz-opt-${id}`) || document.getElementById(`wiz-${id}`) || document.getElementById(id);
+            return el ? el.value : fallback;
+        };
+
+        const wizTitle = valOf('title', 'أصل غير محدد');
+        const wizDesc = valOf('desc', '');
+
+        let prompt = "";
+
+        if (type === 'source') {
+            const sourceType = valOf('sourceType', 'رواية كوكبية طويلة (Novel)');
+            const sourceAuthor = valOf('sourceAuthor', 'الكاتب الكوني الأول');
+            const sourceWordCount = valOf('sourceWordCount', '1500');
+            prompt = `اكتب فكرة عامة وحبكة وسينوبسيس مفصل لمصدر سردي في كون سكتشيك السينمائي.
+عنوان المصدر المقترح: [${wizTitle}].
+نوع المصدر: [${sourceType}].
+المؤلف الكوني: [${sourceAuthor}].
+الحجم المستهدف: [حدود ${sourceWordCount} كلمة].
+الوصف: ${wizDesc}
+يجب أن تركز القصة على الأبعاد المتوازية والصدام الفني البصري بين أبعاد الرسم المختلفة (الزيتي، الكارتون، الحبر، الغرافيت) وصراعات الفصائل الكونية في هذا الكون.`;
+        } else if (type === 'creator') {
+            const artStyle = valOf('artStyle', 'لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)');
+            const tool = valOf('tool', 'فرشاة شعر السنجاب الغليظة المشبعة بالزيت');
+            prompt = `اكتب ملفاً تعريفياً سردياً وأدبياً لرسام كوني في كون سكتشيك السينمائي يسمى [${wizTitle}].
+الأسلوب الفني الحاكم لرسوماته وعالمه: [${artStyle}].
+الأداة الكونية الخاصة التي يرسم بها: [${tool}].
+الوصف: ${wizDesc}
+اشرح صراعه الفلسفي وكيف تنعكس ضربات أداته وقوانينها الفيزيائية على رسوماته وعوالمه التي يرسمها.`;
+        } else if (type === 'scenario') {
+            const genre = valOf('genre', 'خيال علمي (Sci-Fi)');
+            const style = valOf('style', 'سرد تفصيلي بطيء ومكثف');
+            const layer = valOf('parallelLayer', 'Layer 1 - الوجود المادي الفعلي');
+            const fps = valOf('framerate', '24fps');
+            prompt = `بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لسيناريو [${wizTitle}].
+الوصف: ${wizDesc}
+التصنيف: [${genre}] وبأسلوب [${style}]. 
+يخضع لمعدل إطارات كوني قدره [${fps}] ويتمركز في الطبقة: [${layer}].
+يجب أن تركز القصة على صدام الأسلوب الفني في الكادر ووجود أبعاد مرسومة متداخلة دون اندماج، مع كتابة السيناريو بهيكل مشاهد سينمائية تفصيلية.`;
+        } else if (type === 'written') {
+            const writtenType = valOf('writtenType', 'حوار تفصيلي سينمائي');
+            const writtenLanguage = valOf('writtenLanguage', 'العربية الفصحى');
+            const writtenStyle = valOf('writtenStyle', 'ملحمي وجاد');
+            const writtenText = valOf('writtenText', '');
+            prompt = `بصفتك كاتباً كوكيباً، قم بتحسين وصياغة النص التالي لكون سكتشيك:
+نوع المخطوط: [${writtenType}].
+اللغة المستهدفة: [${writtenLanguage}].
+الأسلوب البلاغي: [${writtenStyle}].
+النص الأصلي:
+"${writtenText || wizDesc}"`;
+        } else if (type === 'character') {
+            const charClass = valOf('charClass', 'شخصية مستيقظة تدرك أنها مرسومة (Awakened)');
+            const faction = valOf('relatedFaction', 'awakened');
+            prompt = `توليد تصميم شخصية بصرية لكون سكتشيك السينمائي.
+اسم الشخصية: [${wizTitle}].
+الدور السردي: [${charClass}].
+الفصيل: [${faction}].
+الوصف والمظهر: ${wizDesc}`;
+        } else if (type === 'environment') {
+            const envType = valOf('envType', 'داخل لوحة قماشية مائعة (Fluid Canvas Interior)');
+            const clashDensity = valOf('clashDensity', 'متوسطة (تداخل الضوء والجاذبية)');
+            prompt = `لوحة تصميم بيئة سينمائية لموقع في عالم سكتشيك (Sketchic World).
+اسم الموقع: [${wizTitle}].
+طبيعة البيئة: [${envType}].
+كثافة التداخل الفني: [${clashDensity}].
+التفاصيل والمظهر: ${wizDesc}`;
+        } else if (type === 'voice') {
+            const voiceEngine = valOf('voiceEngine', 'gemini-3.1-flash-tts-preview');
+            const voiceSpeaker = valOf('voiceSpeaker', 'Charon (Calm, Deep voice)');
+            prompt = `توليد بصمة صوتية للشخصية [${wizTitle}] باستخدام محرك [${voiceEngine}].
+المتحدث: [${voiceSpeaker}].
+التعليمات الصوتية والوصف: ${wizDesc}`;
+        } else if (type === 'music') {
+            const musicEngine = valOf('musicEngine', 'Suno AI (توليد كامل اللحن مع الكلمات)');
+            const musicGenre = valOf('musicGenre', 'Epic Cosmic Orchestral (أوركسترا كونية ملحمية)');
+            prompt = `توليد موسيقى كوكبية تصويرية لكون سكتشيك.
+عنوان اللحن: [${wizTitle}].
+المحرك: [${musicEngine}].
+النمط: [${musicGenre}].
+الوصف والمزاج: ${wizDesc}`;
+        } else if (type === 'comic') {
+            const format = valOf('format', 'ويب تون طولي للموبايل (Vertical Webtoon)');
+            const color = valOf('color', 'قص لوني متباين (ألوان زيتية متداخلة مع حبر مانجا)');
+            prompt = `توليد لوحة قصة مصورة (Comic/Storyboard) لكون سكتشيك.
+العنوان: [${wizTitle}].
+الصيغة: [${format}].
+الألوان والصدام البصري: [${color}].
+الوصف والمشهد: ${wizDesc}`;
+        } else if (type === 'video') {
+            const tool = valOf('tool', 'Runway Gen-3 Alpha');
+            const fps = valOf('fps', 'حركة سينمائية كلاسيكية (24 إطاراً في الثانية)');
+            prompt = `توليد لقطة سينمائية متحركة لكون سكتشيك.
+العنوان: [${wizTitle}].
+المحرك: [${tool}].
+الحركة والإطارات: [${fps}].
+الوصف والمؤثرات البصرية: ${wizDesc}`;
+        } else if (type === 'game') {
+            const gameGenre = valOf('gameGenre', 'لعبة منصات وألغاز ثنائية أبعاد (2D Platformer)');
+            const mechanic = valOf('mechanic', 'بوابات تغيير أبعاد الرسم لحل الألغاز الكونية');
+            prompt = `تصميم لعبة تفاعلية مصغرة لكون سكتشيك.
+اسم اللعبة: [${wizTitle}].
+التصنيف: [${gameGenre}].
+الميكانيكية الرئيسية: [${mechanic}].
+الوصف العام: ${wizDesc}`;
+        }
+
+        if (this.wizardPromptText) {
+            this.wizardPromptText.textContent = prompt;
+        }
+    }
+
+    validateAndNextWizardStep() {
+        const step = this.currentWizardStep;
+        const type = this.getWizardStepType(step);
+
+        const titleEl = document.getElementById('wiz-title');
+        const descEl = document.getElementById('wiz-desc');
+        const driveUrlEl = document.getElementById('wiz-drive-url');
+
+        if (!titleEl || !titleEl.value.trim()) {
+            alert("⚠️ يرجى إدخال عنوان للأصل.");
+            if (titleEl) titleEl.focus();
+            return;
+        }
+        if (!descEl || !descEl.value.trim()) {
+            alert("⚠️ يرجى إدخال وصف للأصل.");
+            if (descEl) descEl.focus();
+            return;
+        }
+        if (!driveUrlEl || !driveUrlEl.value.trim()) {
+            alert("⚠️ يرجى إدخال رابط Google Drive.");
+            if (driveUrlEl) driveUrlEl.focus();
+            return;
+        }
+
+        // Validate type-specific options
+        const inputs = this.wizardFormFields.querySelectorAll('input[required], select[required], textarea[required]');
+        for (let inp of inputs) {
+            if (!inp.value.trim()) {
+                alert(`⚠️ يرجى إدخال القيمة المطلوبة في حقل: ${inp.previousElementSibling ? inp.previousElementSibling.textContent : 'الحقول المطلوبة'}`);
+                inp.focus();
+                return;
+            }
+        }
+
+        // Extract subOptions
+        const subOptions = {};
+        const selects = this.wizardFormFields.querySelectorAll('select');
+        selects.forEach(sel => {
+            const key = sel.id.replace('wiz-opt-', '').replace('wiz-', '');
+            if (key !== 'relatedFaction') {
+                subOptions[key] = sel.value;
+            }
+        });
+        const inputsText = this.wizardFormFields.querySelectorAll('input, textarea');
+        inputsText.forEach(inp => {
+            if (inp.id !== 'wiz-title' && inp.id !== 'wiz-desc' && inp.id !== 'wiz-drive-url') {
+                const key = inp.id.replace('wiz-opt-', '').replace('wiz-', '');
+                subOptions[key] = inp.value;
+            }
+        });
+
+        // 1. Determine or load asset ID
+        let assetId = this.wizardSessionData[type];
+        if (!assetId) {
+            assetId = 'wiz-' + type + '-' + Date.now();
+            this.wizardSessionData[type] = assetId;
+        }
+
+        // 2. Perform Automatic Linkage in the background!
+        let relatedSourceId = this.wizardSessionData['source'] || "";
+        let relatedScenarioId = this.wizardSessionData['scenario'] || "";
+        let relatedCreatorId = this.wizardSessionData['creator'] || "";
+        
+        // Character links can auto-link the previously created character or creators
+        let relatedChars = [];
+        if (this.wizardSessionData['character']) {
+            relatedChars.push(this.wizardSessionData['character']);
+        }
+
+        const factionEl = document.getElementById('wiz-relatedFaction');
+        const relatedFactionVal = factionEl ? factionEl.value : "";
+
+        // Build the asset object matching the exact model scheme
+        const assetObject = {
+            id: assetId,
+            type: type,
+            title: titleEl.value.trim(),
+            desc: descEl.value.trim(),
+            driveUrl: driveUrlEl.value.trim(),
+            status: 'finished', // Wizard marks assets as finished once moved forward
+            relatedSource: relatedSourceId,
+            relatedScenario: relatedScenarioId,
+            relatedCreator: relatedCreatorId,
+            relatedFaction: relatedFactionVal,
+            relatedCharacters: relatedChars,
+            interfacePhysics: "",
+            directorChecklist: {
+                noBlending: true,
+                depthContrast: true,
+                sonicDissonance: true
+            },
+            usedPrompt: this.wizardPromptText ? this.wizardPromptText.textContent : "",
+            subOptions: subOptions,
+            createdAt: new Date().toISOString()
+        };
+
+        // 3. Save or update inside this.assets
+        const existingIndex = this.assets.findIndex(a => a.id === assetId);
+        if (existingIndex > -1) {
+            this.assets[existingIndex] = assetObject;
+        } else {
+            this.assets.push(assetObject);
+        }
+
+        // Commit change to DB
+        this.saveAssets();
+
+        // 4. Advance
+        if (step === 11) {
+            alert("🎉 تم إكمال معالج الإنتاج الكوني بالكامل! تم حفظ كافة الأصول وربطها تلقائياً بالخلفية.");
+            this.switchTab('dashboard');
+        } else {
+            this.navigateWizard(1);
+        }
+    }
+
+    generateWizardStepWithAI() {
+        const step = this.currentWizardStep;
+        const type = this.getWizardStepType(step);
+
+        // Fetch parent data to keep context consistent
+        const parentSourceId = this.wizardSessionData['source'];
+        const parentSource = parentSourceId ? this.assets.find(a => a.id === parentSourceId) : null;
+        const sourceTitle = parentSource ? parentSource.title : "";
+        const sourceTheme = parentSource && parentSource.subOptions ? (parentSource.subOptions.theme || parentSource.subOptions.sourceTheme || "") : "";
+        const sourcePlot = parentSource && parentSource.subOptions ? (parentSource.subOptions.plot || parentSource.subOptions.sourcePlot || "") : "";
+        const sourceSetting = parentSource && parentSource.subOptions ? (parentSource.subOptions.setting || parentSource.subOptions.sourceSetting || "") : "";
+
+        const titleEl = document.getElementById('wiz-title');
+        const descEl = document.getElementById('wiz-desc');
+
+        if (type === 'source') {
+            if (titleEl) titleEl.value = "رواية: تمزق الأبعاد الحبرية لكون سكتشيك";
+            if (descEl) descEl.value = "رواية ملحمية ترصد قصة الرسام الكوني الأخير ومحاولاته اليائسة لإصلاح الشقوق الناتجة عن تداخل الأبعاد والفرشاة الجافة.";
+            
+            const typeSel = document.getElementById('wiz-opt-sourceType');
+            if (typeSel) typeSel.value = "رواية كوكبية طويلة (Novel)";
+            const authorInput = document.getElementById('wiz-opt-sourceAuthor');
+            if (authorInput) authorInput.value = "الكاتب الكوني الأول";
+            const wcInput = document.getElementById('wiz-opt-sourceWordCount');
+            if (wcInput) wcInput.value = "2500";
+
+        } else if (type === 'scenario') {
+            if (titleEl) titleEl.value = sourceTitle ? `سيناريو: ${sourceTitle}` : "سيناريو: بوابة التماس والألوان المتناثرة";
+            if (descEl) descEl.value = sourcePlot 
+                ? `السيناريو الحاكم والمقسم للحبكة المستوحاة من: ${sourcePlot.substring(0, 120)}`
+                : "صراع بصري حاد بين مستيقظ حبري وحارس الأبعاد على حافة لوحة زيتية متآكلة.";
+            
+            const genreSel = document.getElementById('wiz-opt-genre');
+            if (genreSel) genreSel.value = "دراما الصدام المرئي (Visual Clash Drama)";
+            const styleSel = document.getElementById('wiz-opt-style');
+            if (styleSel) styleSel.value = "سرد فلسفي ميتافيزيقي";
+            const layerSel = document.getElementById('wiz-opt-parallelLayer');
+            if (layerSel) layerSel.value = "Layer 1 - الوجود المادي الفعلي";
+            const fpsSel = document.getElementById('wiz-opt-framerate');
+            if (fpsSel) fpsSel.value = "24fps";
+
+        } else if (type === 'written') {
+            if (titleEl) titleEl.value = sourceTitle ? `مخطوطة: حوارات (${sourceTitle})` : "مخطوطة نصوص البعد المفقود";
+            if (descEl) descEl.value = "مخطوطة حوارية تفصيلية مبنية على صراع الطبقات الزمنية البصرية للأبعاد.";
+            
+            const wtSel = document.getElementById('wiz-opt-writtenType');
+            if (wtSel) wtSel.value = "حوار تفصيلي سينمائي";
+            const wlInput = document.getElementById('wiz-opt-writtenLanguage');
+            if (wlInput) wlInput.value = "العربية الفصحى";
+            const wsSel = document.getElementById('wiz-opt-writtenStyle');
+            if (wsSel) wsSel.value = "شاعري غامض وفلسفي";
+            
+            const textTA = document.getElementById('wiz-opt-writtenText');
+            if (textTA) {
+                textTA.value = `[المستيقظ الحبري]: "ضربات فرشاتك سميكة جداً.. إنها تخنق خطوطي الرفيعة!"\n[حارس الأبعاد]: "الحدود ضرورية للحفاظ على تماسك اللوحة الكونية، بدون أصباغي ستتلاشى خطوطك في الفراغ!"`;
+            }
+
+        } else if (type === 'creator') {
+            if (titleEl) titleEl.value = "الرسام الكوني: غريغوري الزيتي الأخير";
+            if (descEl) descEl.value = "رسام كوني غامض يفضل الأسلوب الكلاسيكي ويهوى دمج الفرشاة الجافة مع الأصباغ المتنافرة لمنع الاندماج الفني.";
+            
+            const styleSel = document.getElementById('wiz-opt-artStyle');
+            if (styleSel) styleSel.value = "لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)";
+            const toolSel = document.getElementById('wiz-opt-tool');
+            if (toolSel) toolSel.value = "فرشاة شعر السنجاب الغليظة المشبعة بالزيت";
+
+        } else if (type === 'character') {
+            if (titleEl) titleEl.value = "شخصية: كورين المستيقظة الحبرية";
+            if (descEl) descEl.value = "شخصية أنثوية ثنائية الأبعاد مرسومة بحبر المانجا الحاد، تدرك وجود المشاهدين وتحارب للبقاء خارج إطار اللوحة.";
+            
+            const ccSel = document.getElementById('wiz-opt-charClass');
+            if (ccSel) ccSel.value = "شخصية مستيقظة تدرك أنها مرسومة (Awakened)";
+            const factSel = document.getElementById('wiz-relatedFaction');
+            if (factSel) factSel.value = "awakened";
+
+        } else if (type === 'environment') {
+            if (titleEl) titleEl.value = "بيئة: مسرح بوابات الرسم الحبرية";
+            if (descEl) descEl.value = sourceSetting ? `بيئة المشهد مستلهمة من: ${sourceSetting.substring(0, 100)}` : "موقع تماس الأبعاد الكونية حيث تتداخل اللوحات الزيتية المائعة مع الخطوط الحبرية الجافة.";
+            
+            const etSel = document.getElementById('wiz-opt-envType');
+            if (etSel) etSel.value = "داخل لوحة قماشية مائعة (Fluid Canvas Interior)";
+            const cdSel = document.getElementById('wiz-opt-clashDensity');
+            if (cdSel) cdSel.value = "متوسطة (تداخل الضوء والجاذبية)";
+
+        } else if (type === 'voice') {
+            if (titleEl) titleEl.value = "صوت: كورين المستيقظة";
+            if (descEl) descEl.value = "بصمة صوتية مستخرجة بمحركات Google AI Studio للتعبير عن نبرة الحوار المتمردة لكورين.";
+            
+            const veSel = document.getElementById('wiz-opt-voiceEngine');
+            if (veSel) veSel.value = "gemini-3.1-flash-tts-preview";
+            const vsSel = document.getElementById('wiz-opt-voiceSpeaker');
+            if (vsSel) vsSel.value = "Charon (Calm, Deep voice)";
+
+        } else if (type === 'music') {
+            if (titleEl) titleEl.value = "موسيقى: سمفونية التمزق اللوني";
+            if (descEl) descEl.value = "ساوندتراك تصويري يجمع بين كمان كلاسيكي وأصوات نبضات رقمية حادة ومتنافرة.";
+            
+            const meSel = document.getElementById('wiz-opt-musicEngine');
+            if (meSel) meSel.value = "Suno AI (توليد كامل اللحن مع الكلمات)";
+            const mgSel = document.getElementById('wiz-opt-musicGenre');
+            if (mgSel) mgSel.value = "Epic Cosmic Orchestral (أوركسترا كونية ملحمية)";
+
+        } else if (type === 'comic') {
+            if (titleEl) titleEl.value = "لوحة قصة: صدام الأبعاد النهائي";
+            if (descEl) descEl.value = "4 كوادر توضح محاولات كورين لاقتحام اللوحة الزيتية ومواجهة حارس البوابة الكوني.";
+            
+            const fSel = document.getElementById('wiz-opt-format');
+            if (fSel) fSel.value = "ويب تون طولي للموبايل (Vertical Webtoon)";
+            const cSel = document.getElementById('wiz-opt-color');
+            if (cSel) cSel.value = "قص لوني متباين (ألوان زيتية متداخلة مع حبر مانجا)";
+
+        } else if (type === 'video') {
+            if (titleEl) titleEl.value = "فيديو: الحركة المتنافرة للألوان";
+            if (descEl) descEl.value = "مقطع تحريكي مدته 4 ثوانٍ يجسد تساقط واختلاط خطوط الحبر مع بقع الزيت دون اندماج.";
+            
+            const tSel = document.getElementById('wiz-opt-tool');
+            if (tSel) tSel.value = "Runway Gen-3 Alpha";
+            const fSel = document.getElementById('wiz-opt-fps');
+            if (fSel) fSel.value = "مختلط متنافر (12 إطاراً للمانجا مقابل 60 إطاراً للزيتي)";
+
+        } else if (type === 'game') {
+            if (titleEl) titleEl.value = "لعبة: متاهة شقوق الأبعاد الكونية";
+            if (descEl) descEl.value = "لعبة منصات ولغز فيزيائي يتحكم اللاعب فيها بخواص ألوانه لحل مشاكل تداخل الجاذبية والعبور للطبقة التالية.";
+            
+            const ggSel = document.getElementById('wiz-opt-gameGenre');
+            if (ggSel) ggSel.value = "لعبة منصات وألغاز ثنائية أبعاد (2D Platformer)";
+            const mSel = document.getElementById('wiz-opt-mechanic');
+            if (mSel) mSel.value = "بوابات تغيير أبعاد الرسم لحل الألغاز الكونية";
+        }
+
+        this.generateWizardPrompt();
+        alert(`🤖 تم توليد وتعبئة تفاصيل الخطوة ${step} بنجاح! تم استخدام بيانات السياق المتوفرة لضمان اتساق الأصول.`);
     }
 }
 
