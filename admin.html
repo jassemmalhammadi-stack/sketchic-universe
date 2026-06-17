@@ -296,6 +296,27 @@
                     <p>أداة إرشادية متسلسلة لإنشاء أصول كون سكتشيك بشكل متكامل مع ربط التبعيات تلقائياً.</p>
                 </div>
             </div>
+            <!-- Wizard Custom Options (Templates & Auto-Pilot) -->
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 15px; border-radius: var(--radius-md); margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <label style="font-weight: bold; color: var(--color-cyan); font-size: 0.88rem;">🎯 قالب المشروع:</label>
+                    <select id="wizard-project-template" style="padding: 6px 12px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.82rem; cursor: pointer;">
+                        <option value="full">🌌 إنتاج كوني متكامل شامل (11 خطوة)</option>
+                        <option value="film">🎬 فيلم سينمائي قصير (5 خطوات)</option>
+                        <option value="music">🎵 أغنية كونية مصورة (5 خطوات)</option>
+                        <option value="comic">📚 قصة مصورة تفاعلية (5 خطوات)</option>
+                    </select>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label style="font-weight: bold; color: var(--text-secondary); font-size: 0.82rem;">📁 مجلد التخزين الموحد:</label>
+                    <input type="text" id="wizard-global-drive-url" placeholder="رابط مجلد Google Drive للمشروع..." value="https://drive.google.com/drive/folders/wizard-session" style="width: 250px; padding: 6px 10px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.8rem;">
+                </div>
+                <div>
+                    <button type="button" id="btn-wizard-autopilot" class="btn" style="background: linear-gradient(135deg, var(--color-cyan), var(--color-accent)); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold; border: none; box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);">
+                        🤖 تشغيل الطيار الآلي الكوني (Autopilot)
+                    </button>
+                </div>
+            </div>
 
             <!-- Stepper Indicator -->
             <div class="wizard-stepper" id="wizard-stepper">
