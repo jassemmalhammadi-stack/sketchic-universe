@@ -25,17 +25,17 @@ class SketchicApp {
         // Initialize Wizard State
         this.currentWizardStep = 1;
         this.wizardSessionData = {
-            source: "",
-            scenario: "",
-            creator: "",
-            character: "",
-            environment: "",
-            voice: "",
-            music: "",
-            comic: "",
-            video: "",
-            game: "",
-            written: ""
+            source: [],
+            scenario: [],
+            creator: [],
+            character: [],
+            environment: [],
+            voice: [],
+            music: [],
+            comic: [],
+            video: [],
+            game: [],
+            written: []
         };
 
         // Initialize UI Element Selectors
@@ -145,6 +145,10 @@ class SketchicApp {
         this.btnWizardNext = document.getElementById('btn-wizard-next');
         this.btnWizardCopyPrompt = document.getElementById('btn-wizard-copy-prompt');
         this.wizardStepper = document.getElementById('wizard-stepper');
+        this.wizardSummaryView = document.getElementById('wizard-summary-view');
+        this.wizardSummaryTableBody = document.getElementById('wizard-summary-table-body');
+        this.btnWizardDownloadProject = document.getElementById('btn-wizard-download-project');
+        this.btnWizardResetProject = document.getElementById('btn-wizard-reset-project');
 
         // Director's Visual Checklist
         this.groupDirectorChecklist = document.getElementById('group-director-checklist');
@@ -334,6 +338,12 @@ class SketchicApp {
                     this.btnWizardCopyPrompt.textContent = "نسخ البرومبت";
                 }, 2000);
             });
+        }
+        if (this.btnWizardDownloadProject) {
+            this.btnWizardDownloadProject.addEventListener('click', () => this.downloadProjectSummaryMD());
+        }
+        if (this.btnWizardResetProject) {
+            this.btnWizardResetProject.addEventListener('click', () => this.resetWizardSession());
         }
 
         // Asset Filters
@@ -4576,8 +4586,9 @@ Show how style shaders swap dynamically.`
     // ==========================================
 
     initWizardTab() {
-        if (!this.currentWizardStep) {
-            this.currentWizardStep = 1;
+        this.currentWizardStep = this.currentWizardStep || 1;
+        if (!this.wizardSessionData || typeof this.wizardSessionData.source === 'string') {
+            this.resetWizardSession();
         }
         this.renderWizardStep();
         this.updateWizardStepperUI();
@@ -4594,28 +4605,19 @@ Show how style shaders swap dynamically.`
             } else if (stepNum < this.currentWizardStep) {
                 node.classList.add('completed');
             }
-        });
-
-        // Add interactive direct click on already completed or current steps
-        nodes.forEach(node => {
-            if (!node.onclick) {
-                node.onclick = () => {
-                    const stepNum = parseInt(node.dataset.step, 10);
-                    // Allow navigating backwards or to completed steps freely
-                    if (stepNum <= this.currentWizardStep || this.isStepCompleted(stepNum)) {
-                        this.navigateWizardDirect(stepNum);
-                    } else {
-                        alert("⚠️ يجب إكمال الخطوات السابقة بالترتيب أولاً!");
-                    }
-                };
-            }
+            node.onclick = () => {
+                if (stepNum <= this.currentWizardStep || this.isStepCompleted(stepNum)) {
+                    this.navigateWizardDirect(stepNum);
+                } else {
+                    alert("⚠️ يجب إكمال الخطوات السابقة بالترتيب أولاً!");
+                }
+            };
         });
     }
 
     isStepCompleted(step) {
-        // A step is considered completed if its corresponding asset exists in wizardSessionData
         const type = this.getWizardStepType(step);
-        return !!this.wizardSessionData[type];
+        return Array.isArray(this.wizardSessionData[type]) && this.wizardSessionData[type].length > 0;
     }
 
     getWizardStepType(step) {
@@ -4690,28 +4692,58 @@ Show how style shaders swap dynamically.`
         const type = this.getWizardStepType(step);
         const meta = this.getWizardStepMeta(step);
 
+        if (this.wizardSummaryView) this.wizardSummaryView.style.display = 'none';
+        const grid = document.querySelector('.wizard-container-grid');
+        if (grid) grid.style.display = 'grid';
+
         if (this.wizardStepTitle) this.wizardStepTitle.textContent = meta.title;
         if (this.wizardStepGuidance) this.wizardStepGuidance.textContent = meta.guidance;
 
-        // Hide/Show Prev button
         if (this.btnWizardPrev) {
             this.btnWizardPrev.style.display = step > 1 ? 'block' : 'none';
         }
 
-        // Change Next button text on the last step
         if (this.btnWizardNext) {
-            this.btnWizardNext.textContent = step === 11 ? "حفظ وإنهاء المعالج 🎉" : "حفظ والانتقال للخطوة التالية ➡️";
+            this.btnWizardNext.textContent = step === 11 ? "تجميع المشروع وعرض النتائج 📊" : "حفظ والانتقال للخطوة التالية ➡️";
         }
 
-        // Check if an asset for this step already exists in this.wizardSessionData
-        const existingAssetId = this.wizardSessionData[type];
+        const assetIds = this.wizardSessionData[type] || [];
+        let listHtml = "";
+        if (assetIds.length > 0) {
+            listHtml += `
+                <div style="margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                    <label style="font-weight: bold; font-size: 0.8rem; color: var(--color-cyan);">الأصول المنشأة في هذه الخطوة للمشروع الحالي (${assetIds.length}):</label>
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 5px;">
+            `;
+            assetIds.forEach(id => {
+                const asset = this.assets.find(a => a.id === id);
+                if (asset) {
+                    const isActive = this.currentWizardAssetId === id;
+                    listHtml += `
+                        <div style="display: flex; align-items: center; gap: 4px; background: ${isActive ? 'rgba(99, 102, 241, 0.15)' : 'var(--bg-secondary)'}; border: 1px solid ${isActive ? 'var(--color-accent)' : 'var(--border-color)'}; padding: 3px 6px; border-radius: 4px; font-size: 0.72rem;">
+                            <span style="cursor: pointer; font-weight: bold; color: var(--text-primary);" onclick="window.app.editSessionAsset('${id}')">🔹 ${asset.title}</span>
+                            <span style="color: var(--color-danger); cursor: pointer; font-weight: bold; margin-left: 2px;" onclick="window.app.deleteSessionAsset('${id}', '${type}')">×</span>
+                        </div>
+                    `;
+                }
+            });
+            listHtml += `
+                        <button type="button" class="btn" onclick="window.app.startNewSessionAsset()" style="background: var(--bg-tertiary); font-size: 0.7rem; padding: 2px 6px; border: 1px solid var(--border-color); cursor: pointer; color: var(--text-primary);">➕ إضافة أصل آخر</button>
+                    </div>
+                </div>
+            `;
+        }
+
         let assetData = null;
-        if (existingAssetId) {
-            assetData = this.assets.find(a => a.id === existingAssetId);
+        if (this.currentWizardAssetId) {
+            assetData = this.assets.find(a => a.id === this.currentWizardAssetId);
+        } else if (assetIds.length > 0) {
+            this.currentWizardAssetId = assetIds[0];
+            assetData = this.assets.find(a => a.id === this.currentWizardAssetId);
         }
 
-        // Dynamically build HTML form fields based on asset type
         let fieldsHtml = `
+            ${listHtml}
             <div class="form-group">
                 <label>عنوان الأصل *</label>
                 <input type="text" id="wiz-title" placeholder="أدخل اسم الأصل..." value="${assetData ? assetData.title : ''}" required style="width: 100%; box-sizing: border-box; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
@@ -4722,16 +4754,30 @@ Show how style shaders swap dynamically.`
             </div>
             <div class="form-group">
                 <label>رابط Google Drive للملف *</label>
-                <input type="text" id="wiz-drive-url" placeholder="مثال: https://drive.google.com/..." value="${assetData ? assetData.driveUrl : 'https://drive.google.com/drive/folders/wizard-session'}" required style="width: 100%; box-sizing: border-box; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+                <input type="text" id="wiz-drive-url" placeholder="رابط الملف..." value="	ext${assetData ? assetData.driveUrl : 'https://drive.google.com/drive/folders/wizard-session'}" required style="width: 100%; box-sizing: border-box; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
             </div>
         `;
 
-        // Type specific sub-options
         let subOptionsHtml = "";
         const subOptions = assetData ? (assetData.subOptions || {}) : {};
+        subOptionsHtml = this.getWizardSubOptionsHtml(type, subOptions);
 
+        if (this.wizardFormFields) {
+            this.wizardFormFields.innerHTML = fieldsHtml + subOptionsHtml;
+        }
+
+        const inputs = this.wizardFormFields.querySelectorAll('input, select, textarea');
+        inputs.forEach(inp => {
+            inp.addEventListener('input', () => this.generateWizardPrompt());
+            inp.addEventListener('change', () => this.generateWizardPrompt());
+        });
+
+        this.generateWizardPrompt();
+    }
+
+    getWizardSubOptionsHtml(type, subOptions) {
         if (type === 'source') {
-            subOptionsHtml = `
+            return `
                 <div class="form-group">
                     <label>نوع المصدر السردي *</label>
                     <select id="wiz-opt-sourceType" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
@@ -4747,11 +4793,12 @@ Show how style shaders swap dynamically.`
                 </div>
                 <div class="form-group">
                     <label>عدد الكلمات التقريبي *</label>
-                    <input type="number" id="wiz-opt-sourceWordCount" value="${subOptions.sourceWordCount || '1500'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                    <input type="number" id="wiz-opt-sourceWordCount" value="	ext${subOptions.sourceWordCount || '1500'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
                 </div>
             `;
-        } else if (type === 'scenario') {
-            subOptionsHtml = `
+        }
+        if (type === 'scenario') {
+            return `
                 <div class="form-group">
                     <label>نوع المصدر السردي الأصلي *</label>
                     <select id="wiz-opt-scenarioSourceType" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
@@ -4795,8 +4842,9 @@ Show how style shaders swap dynamically.`
                     </select>
                 </div>
             `;
-        } else if (type === 'written') {
-            subOptionsHtml = `
+        }
+        if (type === 'written') {
+            return `
                 <div class="form-group">
                     <label>نوع المخطوط المكتوب *</label>
                     <select id="wiz-opt-writtenType" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
@@ -4807,7 +4855,7 @@ Show how style shaders swap dynamically.`
                 </div>
                 <div class="form-group">
                     <label>اللغة المستهدفة *</label>
-                    <input type="text" id="wiz-opt-writtenLanguage" value="${subOptions.writtenLanguage || 'العربية الفصحى'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                    <input type="text" id="wiz-opt-writtenLanguage" value="	ext${subOptions.writtenLanguage || 'العربية الفصحى'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
                 </div>
                 <div class="form-group">
                     <label>الأسلوب التعبيري البلاغي *</label>
@@ -4822,8 +4870,9 @@ Show how style shaders swap dynamically.`
                     <textarea id="wiz-opt-writtenText" rows="4" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">${subOptions.writtenText || ''}</textarea>
                 </div>
             `;
-        } else if (type === 'creator') {
-            subOptionsHtml = `
+        }
+        if (type === 'creator') {
+            return `
                 <div class="form-group">
                     <label>الأسلوب الفني الحاكم للرسام *</label>
                     <select id="wiz-opt-artStyle" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
@@ -4845,8 +4894,9 @@ Show how style shaders swap dynamically.`
                     </select>
                 </div>
             `;
-        } else if (type === 'character') {
-            subOptionsHtml = `
+        }
+        if (type === 'character') {
+            return `
                 <div class="form-group">
                     <label>الدور السردي للشخصية *</label>
                     <select id="wiz-opt-charClass" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
@@ -4859,14 +4909,15 @@ Show how style shaders swap dynamically.`
                 <div class="form-group">
                     <label>الفصيل الكوني الحاكم *</label>
                     <select id="wiz-relatedFaction" style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
-                        <option value="awakened" ${assetData && assetData.relatedFaction === 'awakened' ? 'selected' : ''}>فصيل المستيقظين (The Awakened)</option>
-                        <option value="keepers" ${assetData && assetData.relatedFaction === 'keepers' ? 'selected' : ''}>فصيل الحراس (The Keepers)</option>
-                        <option value="erasers" ${assetData && assetData.relatedFaction === 'erasers' ? 'selected' : ''}>فصيل الممحاة والعدم (The Erasers)</option>
+                        <option value="awakened" ${subOptions.relatedFaction === 'awakened' ? 'selected' : ''}>فصيل المستيقظين (The Awakened)</option>
+                        <option value="keepers" ${subOptions.relatedFaction === 'keepers' ? 'selected' : ''}>فصيل الحراس (The Keepers)</option>
+                        <option value="erasers" ${subOptions.relatedFaction === 'erasers' ? 'selected' : ''}>فصيل الممحاة والعدم (The Erasers)</option>
                     </select>
                 </div>
             `;
-        } else if (type === 'environment') {
-            subOptionsHtml = `
+        }
+        if (type === 'environment') {
+            return `
                 <div class="form-group">
                      <label>طبيعة البيئة الكونية *</label>
                      <select id="wiz-opt-envType" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
@@ -4885,8 +4936,9 @@ Show how style shaders swap dynamically.`
                      </select>
                 </div>
             `;
-        } else if (type === 'voice') {
-            subOptionsHtml = `
+        }
+        if (type === 'voice') {
+            return `
                 <div class="form-group">
                     <label>محرك الصوت بالذكاء الاصطناعي (Voice Engine) *</label>
                     <select id="wiz-opt-voiceEngine" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
@@ -4904,8 +4956,9 @@ Show how style shaders swap dynamically.`
                     </select>
                 </div>
             `;
-        } else if (type === 'music') {
-            subOptionsHtml = `
+        }
+        if (type === 'music') {
+            return `
                 <div class="form-group">
                     <label>محرك الموسيقى بالذكاء الاصطناعي *</label>
                     <select id="wiz-opt-musicEngine" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
@@ -4921,8 +4974,9 @@ Show how style shaders swap dynamically.`
                     </select>
                 </div>
             `;
-        } else if (type === 'comic') {
-            subOptionsHtml = `
+        }
+        if (type === 'comic') {
+            return `
                 <div class="form-group">
                     <label>صيغة وعرض القصة المصورة *</label>
                     <select id="wiz-opt-format" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
@@ -4938,8 +4992,9 @@ Show how style shaders swap dynamically.`
                     </select>
                 </div>
             `;
-        } else if (type === 'video') {
-            subOptionsHtml = `
+        }
+        if (type === 'video') {
+            return `
                 <div class="form-group">
                     <label>محرك التوليد والتحريك بالذكاء الاصطناعي *</label>
                     <select id="wiz-opt-tool" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
@@ -4955,8 +5010,9 @@ Show how style shaders swap dynamically.`
                     </select>
                 </div>
             `;
-        } else if (type === 'game') {
-            subOptionsHtml = `
+        }
+        if (type === 'game') {
+            return `
                 <div class="form-group">
                     <label>تصنيف اللعبة للتحميل *</label>
                     <select id="wiz-opt-gameGenre" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
@@ -4973,19 +5029,30 @@ Show how style shaders swap dynamically.`
                 </div>
             `;
         }
+        return "";
+    }
 
-        if (this.wizardFormFields) {
-            this.wizardFormFields.innerHTML = fieldsHtml + subOptionsHtml;
+    editSessionAsset(id) {
+        this.currentWizardAssetId = id;
+        this.renderWizardStep();
+    }
+
+    startNewSessionAsset() {
+        this.currentWizardAssetId = null;
+        this.renderWizardStep();
+    }
+
+    deleteSessionAsset(id, type) {
+        if (confirm("هل أنت متأكد من رغبتك في حذف هذا الأصل من الجلسة؟")) {
+            this.assets = this.assets.filter(a => a.id !== id);
+            this.wizardSessionData[type] = this.wizardSessionData[type].filter(x => x !== id);
+            if (this.currentWizardAssetId === id) {
+                this.currentWizardAssetId = null;
+            }
+            this.saveAssets();
+            this.renderWizardStep();
+            this.updateWizardStepperUI();
         }
-
-        // Add event listeners to input fields to update the prompt in real-time
-        const inputs = this.wizardFormFields.querySelectorAll('input, select, textarea');
-        inputs.forEach(inp => {
-            inp.addEventListener('input', () => this.generateWizardPrompt());
-            inp.addEventListener('change', () => this.generateWizardPrompt());
-        });
-
-        this.generateWizardPrompt();
     }
 
     navigateWizard(offset) {
@@ -4997,6 +5064,7 @@ Show how style shaders swap dynamically.`
 
     navigateWizardDirect(step) {
         this.currentWizardStep = step;
+        this.currentWizardAssetId = null;
         this.renderWizardStep();
         this.updateWizardStepperUI();
     }
@@ -5019,96 +5087,51 @@ Show how style shaders swap dynamically.`
             const sourceType = valOf('sourceType', 'رواية كوكبية طويلة (Novel)');
             const sourceAuthor = valOf('sourceAuthor', 'الكاتب الكوني الأول');
             const sourceWordCount = valOf('sourceWordCount', '1500');
-            prompt = `اكتب فكرة عامة وحبكة وسينوبسيس مفصل لمصدر سردي في كون سكتشيك السينمائي.
-عنوان المصدر المقترح: [${wizTitle}].
-نوع المصدر: [${sourceType}].
-المؤلف الكوني: [${sourceAuthor}].
-الحجم المستهدف: [حدود ${sourceWordCount} كلمة].
-الوصف: ${wizDesc}
-يجب أن تركز القصة على الأبعاد المتوازية والصدام الفني البصري بين أبعاد الرسم المختلفة (الزيتي، الكارتون، الحبر، الغرافيت) وصراعات الفصائل الكونية في هذا الكون.`;
+            prompt = `اكتب فكرة عامة وحبكة وسينوبسيس مفصل لمصدر سردي في كون سكتشيك السينمائي.\nعنوان المصدر المقترح: [${wizTitle}].\nنوع المصدر: [${sourceType}].\nالمؤلف الكوني: [${sourceAuthor}].\nالحجم المستهدف: [حدود ${sourceWordCount} كلمة].\nالوصف: ${wizDesc}\nيجب أن تركز القصة على الأبعاد المتوازية والصدام الفني البصري بين أبعاد الرسم المختلفة (الزيتي، الكارتون، الحبر، الغرافيت) وصراعات الفصائل الكونية في هذا الكون.`;
         } else if (type === 'creator') {
             const artStyle = valOf('artStyle', 'لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)');
             const tool = valOf('tool', 'فرشاة شعر السنجاب الغليظة المشبعة بالزيت');
-            prompt = `اكتب ملفاً تعريفياً سردياً وأدبياً لرسام كوني في كون سكتشيك السينمائي يسمى [${wizTitle}].
-الأسلوب الفني الحاكم لرسوماته وعالمه: [${artStyle}].
-الأداة الكونية الخاصة التي يرسم بها: [${tool}].
-الوصف: ${wizDesc}
-اشرح صراعه الفلسفي وكيف تنعكس ضربات أداته وقوانينها الفيزيائية على رسوماته وعوالمه التي يرسمها.`;
+            prompt = `اكتب ملفاً تعريفياً سردياً وأدبياً لرسام كوني في كون سكتشيك السينمائي يسمى [${wizTitle}].\nالأسلوب الفني الحاكم لرسوماته وعالمه: [${artStyle}].\nالأداة الكونية الخاصة التي يرسم بها: [${tool}].\nالوصف: ${wizDesc}\nاشرح صراعه الفلسفي وكيف تنعكس ضربات أداته وقوانينها الفيزيائية على رسوماته وعوالمه التي يرسمها.`;
         } else if (type === 'scenario') {
             const genre = valOf('genre', 'خيال علمي (Sci-Fi)');
             const style = valOf('style', 'سرد تفصيلي بطيء ومكثف');
             const layer = valOf('parallelLayer', 'Layer 1 - الوجود المادي الفعلي');
             const fps = valOf('framerate', '24fps');
-            prompt = `بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لسيناريو [${wizTitle}].
-الوصف: ${wizDesc}
-التصنيف: [${genre}] وبأسلوب [${style}]. 
-يخضع لمعدل إطارات كوني قدره [${fps}] ويتمركز في الطبقة: [${layer}].
-يجب أن تركز القصة على صدام الأسلوب الفني في الكادر ووجود أبعاد مرسومة متداخلة دون اندماج، مع كتابة السيناريو بهيكل مشاهد سينمائية تفصيلية.`;
+            prompt = `بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لسيناريو [${wizTitle}].\nالوصف: ${wizDesc}\nالتصنيف: [${genre}] وبأسلوب [${style}]. \nيخضع لمعدل إطارات كوني قدره [${fps}] ويتمركز في الطبقة: [${layer}].\nيجب أن تركز القصة على صدام الأسلوب الفني في الكادر ووجود أبعاد مرسومة متداخلة دون اندماج، مع كتابة السيناريو بهيكل مشاهد سينمائية تفصيلية.`;
         } else if (type === 'written') {
             const writtenType = valOf('writtenType', 'حوار تفصيلي سينمائي');
             const writtenLanguage = valOf('writtenLanguage', 'العربية الفصحى');
             const writtenStyle = valOf('writtenStyle', 'ملحمي وجاد');
             const writtenText = valOf('writtenText', '');
-            prompt = `بصفتك كاتباً كوكيباً، قم بتحسين وصياغة النص التالي لكون سكتشيك:
-نوع المخطوط: [${writtenType}].
-اللغة المستهدفة: [${writtenLanguage}].
-الأسلوب البلاغي: [${writtenStyle}].
-النص الأصلي:
-"${writtenText || wizDesc}"`;
+            prompt = `بصفتك كاتباً كوكيباً، قم بتحسين وصياغة النص التالي لكون سكتشيك:\nنوع المخطوط: [${writtenType}].\nاللغة المستهدفة: [${writtenLanguage}].\nالأسلوب البلاغي: [${writtenStyle}].\nالنص الأصلي:\n"${writtenText || wizDesc}"`;
         } else if (type === 'character') {
             const charClass = valOf('charClass', 'شخصية مستيقظة تدرك أنها مرسومة (Awakened)');
             const faction = valOf('relatedFaction', 'awakened');
-            prompt = `توليد تصميم شخصية بصرية لكون سكتشيك السينمائي.
-اسم الشخصية: [${wizTitle}].
-الدور السردي: [${charClass}].
-الفصيل: [${faction}].
-الوصف والمظهر: ${wizDesc}`;
+            prompt = `توليد تصميم شخصية بصرية لكون سكتشيك السينمائي.\nاسم الشخصية: [${wizTitle}].\nالدور السردي: [${charClass}].\nالفصيل: [${faction}].\nالوصف والمظهر: 	ext${wizDesc}`;
         } else if (type === 'environment') {
             const envType = valOf('envType', 'داخل لوحة قماشية مائعة (Fluid Canvas Interior)');
             const clashDensity = valOf('clashDensity', 'متوسطة (تداخل الضوء والجاذبية)');
-            prompt = `لوحة تصميم بيئة سينمائية لموقع في عالم سكتشيك (Sketchic World).
-اسم الموقع: [${wizTitle}].
-طبيعة البيئة: [${envType}].
-كثافة التداخل الفني: [${clashDensity}].
-التفاصيل والمظهر: ${wizDesc}`;
+            prompt = `لوحة تصميم بيئة سينمائية لموقع في عالم سكتشيك (Sketchic World).\nاسم الموقع: [${wizTitle}].\nطبيعة البيئة: [${envType}].\nكثافة التداخل الفني: [${clashDensity}].\nالتفاصيل والمظهر: 	ext${wizDesc}`;
         } else if (type === 'voice') {
             const voiceEngine = valOf('voiceEngine', 'gemini-3.1-flash-tts-preview');
             const voiceSpeaker = valOf('voiceSpeaker', 'Charon (Calm, Deep voice)');
-            prompt = `توليد بصمة صوتية للشخصية [${wizTitle}] باستخدام محرك [${voiceEngine}].
-المتحدث: [${voiceSpeaker}].
-التعليمات الصوتية والوصف: ${wizDesc}`;
+            prompt = `توليد بصمة صوتية للشخصية [${wizTitle}] باستخدام محرك [${voiceEngine}].\nالمتحدث: [${voiceSpeaker}].\nالتعليمات الصوتية والوصف: 	ext${wizDesc}`;
         } else if (type === 'music') {
             const musicEngine = valOf('musicEngine', 'Suno AI (توليد كامل اللحن مع الكلمات)');
             const musicGenre = valOf('musicGenre', 'Epic Cosmic Orchestral (أوركسترا كونية ملحمية)');
-            prompt = `توليد موسيقى كوكبية تصويرية لكون سكتشيك.
-عنوان اللحن: [${wizTitle}].
-المحرك: [${musicEngine}].
-النمط: [${musicGenre}].
-الوصف والمزاج: ${wizDesc}`;
+            prompt = `توليد موسيقى كوكبية تصويرية لكون سكتشيك.\nعنوان اللحن: [${wizTitle}].\nالمحرك: [${musicEngine}].\nالنمط: [${musicGenre}].\nالوصف والمزاج: 	ext${wizDesc}`;
         } else if (type === 'comic') {
             const format = valOf('format', 'ويب تون طولي للموبايل (Vertical Webtoon)');
             const color = valOf('color', 'قص لوني متباين (ألوان زيتية متداخلة مع حبر مانجا)');
-            prompt = `توليد لوحة قصة مصورة (Comic/Storyboard) لكون سكتشيك.
-العنوان: [${wizTitle}].
-الصيغة: [${format}].
-الألوان والصدام البصري: [${color}].
-الوصف والمشهد: ${wizDesc}`;
+            prompt = `توليد لوحة قصة مصورة (Comic/Storyboard) لكون سكتشيك.\nالعنوان: [${wizTitle}].\nالصيغة: [${format}].\nالألوان والصدام البصري: [${color}].\nالوصف والممشهد: 	ext${wizDesc}`;
         } else if (type === 'video') {
             const tool = valOf('tool', 'Runway Gen-3 Alpha');
             const fps = valOf('fps', 'حركة سينمائية كلاسيكية (24 إطاراً في الثانية)');
-            prompt = `توليد لقطة سينمائية متحركة لكون سكتشيك.
-العنوان: [${wizTitle}].
-المحرك: [${tool}].
-الحركة والإطارات: [${fps}].
-الوصف والمؤثرات البصرية: ${wizDesc}`;
+            prompt = `توليد لقطة سينمائية متحركة لكون سكتشيك.\nالعنوان: [${wizTitle}].\nالمحرك: [${tool}].\nالحركة والإطارات: [${fps}].\nالوصف والمؤثرات البصرية: 	ext${wizDesc}`;
         } else if (type === 'game') {
             const gameGenre = valOf('gameGenre', 'لعبة منصات وألغاز ثنائية أبعاد (2D Platformer)');
             const mechanic = valOf('mechanic', 'بوابات تغيير أبعاد الرسم لحل الألغاز الكونية');
-            prompt = `تصميم لعبة تفاعلية مصغرة لكون سكتشيك.
-اسم اللعبة: [${wizTitle}].
-التصنيف: [${gameGenre}].
-الميكانيكية الرئيسية: [${mechanic}].
-الوصف العام: ${wizDesc}`;
+            prompt = `تصميم لعبة تفاعلية مصغرة لكون سكتشيك.\nاسم اللعبة: [${wizTitle}].\nالتصنيف: [${gameGenre}].\nالميكانيكية الرئيسية: [${mechanic}].\nالوصف العام: 	ext${wizDesc}`;
         }
 
         if (this.wizardPromptText) {
@@ -5124,120 +5147,254 @@ Show how style shaders swap dynamically.`
         const descEl = document.getElementById('wiz-desc');
         const driveUrlEl = document.getElementById('wiz-drive-url');
 
-        if (!titleEl || !titleEl.value.trim()) {
-            alert("⚠️ يرجى إدخال عنوان للأصل.");
-            if (titleEl) titleEl.focus();
-            return;
-        }
-        if (!descEl || !descEl.value.trim()) {
-            alert("⚠️ يرجى إدخال وصف للأصل.");
-            if (descEl) descEl.focus();
-            return;
-        }
-        if (!driveUrlEl || !driveUrlEl.value.trim()) {
-            alert("⚠️ يرجى إدخال رابط Google Drive.");
-            if (driveUrlEl) driveUrlEl.focus();
-            return;
-        }
-
-        // Validate type-specific options
-        const inputs = this.wizardFormFields.querySelectorAll('input[required], select[required], textarea[required]');
-        for (let inp of inputs) {
-            if (!inp.value.trim()) {
-                alert(`⚠️ يرجى إدخال القيمة المطلوبة في حقل: ${inp.previousElementSibling ? inp.previousElementSibling.textContent : 'الحقول المطلوبة'}`);
-                inp.focus();
+        if (titleEl && titleEl.value.trim().length > 0) {
+            if (!descEl || !descEl.value.trim()) {
+                alert("⚠️ يرجى إدخال وصف للأصل.");
+                if (descEl) descEl.focus();
                 return;
             }
-        }
-
-        // Extract subOptions
-        const subOptions = {};
-        const selects = this.wizardFormFields.querySelectorAll('select');
-        selects.forEach(sel => {
-            const key = sel.id.replace('wiz-opt-', '').replace('wiz-', '');
-            if (key !== 'relatedFaction') {
-                subOptions[key] = sel.value;
+            if (!driveUrlEl || !driveUrlEl.value.trim()) {
+                alert("⚠️ يرجى إدخال رابط Google Drive.");
+                if (driveUrlEl) driveUrlEl.focus();
+                return;
             }
-        });
-        const inputsText = this.wizardFormFields.querySelectorAll('input, textarea');
-        inputsText.forEach(inp => {
-            if (inp.id !== 'wiz-title' && inp.id !== 'wiz-desc' && inp.id !== 'wiz-drive-url') {
-                const key = inp.id.replace('wiz-opt-', '').replace('wiz-', '');
-                subOptions[key] = inp.value;
+
+            // Extract subOptions
+            const subOptions = {};
+            const selects = this.wizardFormFields.querySelectorAll('select');
+            selects.forEach(sel => {
+                const key = sel.id.replace('wiz-opt-', '').replace('wiz-', '');
+                if (key !== 'relatedFaction') {
+                    subOptions[key] = sel.value;
+                }
+            });
+            const inputsText = this.wizardFormFields.querySelectorAll('input, textarea');
+            inputsText.forEach(inp => {
+                if (inp.id !== 'wiz-title' && inp.id !== 'wiz-desc' && inp.id !== 'wiz-drive-url') {
+                    const key = inp.id.replace('wiz-opt-', '').replace('wiz-', '');
+                    subOptions[key] = inp.value;
+                }
+            });
+
+            let assetId = this.currentWizardAssetId;
+            if (!assetId) {
+                assetId = 'wiz-' + type + '-' + Date.now();
+                this.wizardSessionData[type].push(assetId);
             }
-        });
 
-        // 1. Determine or load asset ID
-        let assetId = this.wizardSessionData[type];
-        if (!assetId) {
-            assetId = 'wiz-' + type + '-' + Date.now();
-            this.wizardSessionData[type] = assetId;
+            let relatedSourceId = (this.wizardSessionData['source'] && this.wizardSessionData['source'][0]) || "";
+            let relatedScenarioId = (this.wizardSessionData['scenario'] && this.wizardSessionData['scenario'][0]) || "";
+            let relatedCreatorId = (this.wizardSessionData['creator'] && this.wizardSessionData['creator'][0]) || "";
+            let relatedChars = this.wizardSessionData['character'] || [];
+
+            const factionEl = document.getElementById('wiz-relatedFaction');
+            const relatedFactionVal = factionEl ? factionEl.value : "";
+
+            const assetObject = {
+                id: assetId,
+                type: type,
+                title: titleEl.value.trim(),
+                desc: descEl.value.trim(),
+                driveUrl: driveUrlEl.value.trim(),
+                status: 'finished',
+                relatedSource: relatedSourceId,
+                relatedScenario: relatedScenarioId,
+                relatedCreator: relatedCreatorId,
+                relatedFaction: relatedFactionVal,
+                relatedCharacters: relatedChars,
+                interfacePhysics: "",
+                directorChecklist: {
+                    noBlending: true,
+                    depthContrast: true,
+                    sonicDissonance: true
+                },
+                usedPrompt: this.wizardPromptText ? this.wizardPromptText.textContent : "",
+                subOptions: subOptions,
+                createdAt: new Date().toISOString()
+            };
+
+            const existingIndex = this.assets.findIndex(a => a.id === assetId);
+            if (existingIndex > -1) {
+                this.assets[existingIndex] = assetObject;
+            } else {
+                this.assets.push(assetObject);
+            }
+
+            this.saveAssets();
+            this.currentWizardAssetId = assetId;
         }
 
-        // 2. Perform Automatic Linkage in the background!
-        let relatedSourceId = this.wizardSessionData['source'] || "";
-        let relatedScenarioId = this.wizardSessionData['scenario'] || "";
-        let relatedCreatorId = this.wizardSessionData['creator'] || "";
-        
-        // Character links can auto-link the previously created character or creators
-        let relatedChars = [];
-        if (this.wizardSessionData['character']) {
-            relatedChars.push(this.wizardSessionData['character']);
+        if ((this.wizardSessionData[type] || []).length === 0) {
+            alert("⚠️ يرجى حفظ وتعبئة أصل واحد على الأقل للمتابعة.");
+            return;
         }
 
-        const factionEl = document.getElementById('wiz-relatedFaction');
-        const relatedFactionVal = factionEl ? factionEl.value : "";
-
-        // Build the asset object matching the exact model scheme
-        const assetObject = {
-            id: assetId,
-            type: type,
-            title: titleEl.value.trim(),
-            desc: descEl.value.trim(),
-            driveUrl: driveUrlEl.value.trim(),
-            status: 'finished', // Wizard marks assets as finished once moved forward
-            relatedSource: relatedSourceId,
-            relatedScenario: relatedScenarioId,
-            relatedCreator: relatedCreatorId,
-            relatedFaction: relatedFactionVal,
-            relatedCharacters: relatedChars,
-            interfacePhysics: "",
-            directorChecklist: {
-                noBlending: true,
-                depthContrast: true,
-                sonicDissonance: true
-            },
-            usedPrompt: this.wizardPromptText ? this.wizardPromptText.textContent : "",
-            subOptions: subOptions,
-            createdAt: new Date().toISOString()
-        };
-
-        // 3. Save or update inside this.assets
-        const existingIndex = this.assets.findIndex(a => a.id === assetId);
-        if (existingIndex > -1) {
-            this.assets[existingIndex] = assetObject;
-        } else {
-            this.assets.push(assetObject);
-        }
-
-        // Commit change to DB
-        this.saveAssets();
-
-        // 4. Advance
         if (step === 11) {
-            alert("🎉 تم إكمال معالج الإنتاج الكوني بالكامل! تم حفظ كافة الأصول وربطها تلقائياً بالخلفية.");
-            this.switchTab('dashboard');
+            this.showProjectSummary();
         } else {
             this.navigateWizard(1);
         }
+    }
+
+    showProjectSummary() {
+        const grid = document.querySelector('.wizard-container-grid');
+        if (grid) grid.style.display = 'none';
+        if (this.wizardSummaryView) this.wizardSummaryView.style.display = 'block';
+
+        if (this.wizardSummaryTableBody) {
+            this.wizardSummaryTableBody.innerHTML = "";
+            const typesList = ['source', 'scenario', 'written', 'creator', 'character', 'environment', 'voice', 'music', 'comic', 'video', 'game'];
+            const toolMap = {
+                source: "Gemini / ChatGPT",
+                scenario: "Gemini / ChatGPT",
+                written: "Gemini / ChatGPT",
+                creator: "Midjourney",
+                character: "Midjourney v6",
+                environment: "Midjourney v6",
+                voice: "Google TTS",
+                music: "Suno AI",
+                comic: "Midjourney",
+                video: "Runway Gen-3",
+                game: "Unity 2D"
+            };
+            const outputMap = {
+                source: "مستند قصة سردي",
+                scenario: "سيناريو تفصيلي",
+                written: "مخطوطة حوار",
+                creator: "دليل أسلوب فني",
+                character: "لوحة تصميم شخصية",
+                environment: "لوحة تصميم بيئة",
+                voice: "ملف صوتي تعبيري",
+                music: "ساوندتراك خلفي",
+                comic: "قصة مصورة",
+                video: "لقطة متحركة",
+                game: "لعبة مصغرة WebGL"
+            };
+            const formatMap = {
+                source: "MD (.md)",
+                scenario: "MD (.md)",
+                written: "MD (.md)",
+                creator: "PDF / MD",
+                character: "PNG (.png)",
+                environment: "PNG (.png)",
+                voice: "MP3 (.mp3)",
+                music: "MP3 (.mp3)",
+                comic: "PDF / PNG",
+                video: "MP4 (.mp4)",
+                game: "ZIP (.zip)"
+            };
+            const arabicTypes = {
+                source: "📖 مصدر سردي",
+                scenario: "📝 سيناريو",
+                written: "📜 مخطوطة",
+                creator: "🎨 رسام",
+                character: "👤 شخصية",
+                environment: "🌌 بيئة",
+                voice: "🎙️ صوت",
+                music: "🎵 موسيقى",
+                comic: "📚 قصة مصورة",
+                video: "🎬 فيديو",
+                game: "🎮 لعبة"
+            };
+
+            typesList.forEach(t => {
+                const ids = this.wizardSessionData[t] || [];
+                ids.forEach(id => {
+                    const asset = this.assets.find(a => a.id === id);
+                    if (asset) {
+                        const tr = document.createElement('tr');
+                        tr.style.borderBottom = "1px solid var(--border-color)";
+                        tr.innerHTML = `
+                            <td style="padding: 10px; border: 1px solid var(--border-color);">
+                                <strong>${arabicTypes[t]}</strong><br>
+                                <span style="font-size:0.75rem; color:var(--color-cyan);">	ext${asset.title}</span>
+                            </td>
+                            <td style="padding: 10px; border: 1px solid var(--border-color); max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${asset.usedPrompt || ''}">
+                                ${asset.usedPrompt || 'لا يوجد برومبت'}
+                            </td>
+                            <td style="padding: 10px; border: 1px solid var(--border-color);">${toolMap[t] || ''}</td>
+                            <td style="padding: 10px; border: 1px solid var(--border-color);">${outputMap[t] || ''}</td>
+                            <td style="padding: 10px; border: 1px solid var(--border-color); font-weight: bold; color: var(--color-green);">${formatMap[t] || ''}</td>
+                        `;
+                        this.wizardSummaryTableBody.appendChild(tr);
+                    }
+                });
+            });
+        }
+    }
+
+    downloadProjectSummaryMD() {
+        let md = `# 🌌 مشروع كون سكتشيك الإنتاجي المتكامل (Cosmic Production Project)\n\n`;
+        md += `تاريخ التصدير: ${new Date().toLocaleDateString('ar-EG')}\n\n---\n\n`;
+        const typesList = ['source', 'scenario', 'written', 'creator', 'character', 'environment', 'voice', 'music', 'comic', 'video', 'game'];
+        const arabicTypes = {
+            source: "📖 المصادر السردية",
+            scenario: "📝 السيناريوهات",
+            written: "📜 المخطوطات ونصوص العالم",
+            creator: "🎨 الرسامون الكونيون",
+            character: "👤 الشخصيات",
+            environment: "🌌 البيئات",
+            voice: "🎙️ الأصوات",
+            music: "🎵 الموسيقى",
+            comic: "📚 القصص المصورة",
+            video: "🎬 مقاطع الفيديو",
+            game: "🎮 الألعاب التفاعلية"
+        };
+
+        typesList.forEach(t => {
+            const ids = this.wizardSessionData[t] || [];
+            if (ids.length > 0) {
+                md += `## ${arabicTypes[t]}\n\n`;
+                ids.forEach(id => {
+                    const asset = this.assets.find(a => a.id === id);
+                    if (asset) {
+                        md += `### 🔹 أصل: 	ext${asset.title}\n`;
+                        md += `* **الوصف**: 	ext${asset.desc}\n`;
+                        md += `* **رابط Google Drive للملف**: 	ext${asset.driveUrl}\n`;
+                        if (asset.usedPrompt) md += `* **موجه التوليد (Prompt)**:\n\`\`\`text\n	ext${asset.usedPrompt}\n\`\`\`\n`;
+                        md += `\n`;
+                    }
+                });
+                md += `---\n\n`;
+            }
+        });
+
+        const blob = new Blob([md], { type: 'text/markdown;charset=utf-8;' });
+        const link = document.createElement("a");
+        link.setAttribute("href", URL.createObjectURL(blob));
+        link.setAttribute("download", `sketchic_project_${Date.now()}.md`);
+        link.click();
+    }
+
+    resetWizardSession() {
+        this.currentWizardStep = 1;
+        this.currentWizardAssetId = null;
+        this.wizardSessionData = {
+            source: [],
+            scenario: [],
+            creator: [],
+            character: [],
+            environment: [],
+            voice: [],
+            music: [],
+            comic: [],
+            video: [],
+            game: [],
+            written: []
+        };
+        this.assets = this.assets.filter(a => !a.id.startsWith('wiz-'));
+        this.saveAssets();
+        if (this.wizardSummaryView) this.wizardSummaryView.style.display = 'none';
+        const grid = document.querySelector('.wizard-container-grid');
+        if (grid) grid.style.display = 'grid';
+        this.navigateWizardDirect(1);
     }
 
     generateWizardStepWithAI() {
         const step = this.currentWizardStep;
         const type = this.getWizardStepType(step);
 
-        // Fetch parent data to keep context consistent
-        const parentSourceId = this.wizardSessionData['source'];
+        const parentSourceId = (this.wizardSessionData['source'] || [])[0];
         const parentSource = parentSourceId ? this.assets.find(a => a.id === parentSourceId) : null;
         const sourceTitle = parentSource ? parentSource.title : "";
         const sourceTheme = parentSource && parentSource.subOptions ? (parentSource.subOptions.theme || parentSource.subOptions.sourceTheme || "") : "";
@@ -5366,6 +5523,7 @@ Show how style shaders swap dynamically.`
         alert(`🤖 تم توليد وتعبئة تفاصيل الخطوة ${step} بنجاح! تم استخدام بيانات السياق المتوفرة لضمان اتساق الأصول.`);
     }
 }
+
 
 // Instantiate the App on window load
 window.addEventListener('DOMContentLoaded', () => {

@@ -388,6 +388,41 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Project Summary View (عرض ملخص المشروع) -->
+            <div id="wizard-summary-view" style="display: none; margin-top: 20px; background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 25px; border-radius: var(--radius-md);">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px;">
+                    <div>
+                        <h3 style="margin: 0; color: var(--color-cyan); font-size: 1.4rem;">📊 ملخص المشروع الإنتاجي المتكامل</h3>
+                        <p style="margin: 5px 0 0 0; font-size: 0.85rem; color: var(--text-secondary);">كافة الأصول والبرومبتات المولدة في هذه المرحلة مجمعة كحزمة مشروع واحدة.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" id="btn-wizard-download-project" class="btn" style="background: var(--color-accent); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold;">
+                            📥 تحميل مستند المشروع الكامل (MD)
+                        </button>
+                        <button type="button" id="btn-wizard-reset-project" class="btn" style="background: var(--color-danger); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold;">
+                            🔄 تفريغ البيانات والبدء من جديد
+                        </button>
+                    </div>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: right; font-size: 0.85rem;">
+                        <thead>
+                            <tr style="background-color: var(--bg-tertiary); border-bottom: 2px solid var(--border-color);">
+                                <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">نوع الأصل والاسم</th>
+                                <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">البرومبت المقترح للتوليد</th>
+                                <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">الأداة المستهدفة (Tool)</th>
+                                <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">الناتج المتوقع (Expected Output)</th>
+                                <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">صيغة الملف (Format)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wizard-summary-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </section>
 
         <!-- Tab 3: AI Production Guide -->
