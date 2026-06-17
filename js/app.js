@@ -149,6 +149,8 @@ class SketchicApp {
         this.wizardSummaryTableBody = document.getElementById('wizard-summary-table-body');
         this.btnWizardDownloadProject = document.getElementById('btn-wizard-download-project');
         this.btnWizardResetProject = document.getElementById('btn-wizard-reset-project');
+        this.btnWipeDatabase = document.getElementById('btn-wipe-database');
+        this.btnWipeGDrive = document.getElementById('btn-wipe-gdrive');
         this.wizardProjectTemplate = document.getElementById('wizard-project-template');
         this.wizardGlobalDriveUrl = document.getElementById('wizard-global-drive-url');
         this.btnWizardAutopilot = document.getElementById('btn-wizard-autopilot');
@@ -350,6 +352,12 @@ class SketchicApp {
         }
         if (this.btnWizardResetProject) {
             this.btnWizardResetProject.addEventListener('click', () => this.resetWizardSession());
+        }
+        if (this.btnWipeDatabase) {
+            this.btnWipeDatabase.addEventListener('click', () => this.wipeAllDatabaseData());
+        }
+        if (this.btnWipeGDrive) {
+            this.btnWipeGDrive.addEventListener('click', () => this.wipeGoogleDriveContents());
         }
         if (this.wizardProjectTemplate) {
             this.wizardProjectTemplate.addEventListener('change', () => {
@@ -5835,7 +5843,72 @@ Show how style shaders swap dynamically.`
         this.generateWizardPrompt();
         alert(`🤖 تم توليد وتعبئة تفاصيل الخطوة 	ext${step} بنجاح! تم استخدام بيانات السياق المتوفرة لضمان اتساق الأصول.`);
     }
+    wipeAllDatabaseData() {
+        if (!confirm("🚨 تحذير: هل أنت متأكد من رغبتك في تفريغ ومسح جميع بيانات الأصول والمشاهد والملفات من النظام؟ سيقوم هذا بإعادة تهيئة التطبيق بالكامل ومسح localStorage!")) {
+            return;
+        }
+        localStorage.clear();
+        alert("🧹 تم تفريغ ومسح جميع بيانات قاعدة البيانات وlocalStorage بالكامل! سيتم الآن إعادة تحميل الصفحة للبدء من جديد.");
+        window.location.reload();
+    }
+
+    async wipeGoogleDriveContents() {
+        if (!this.isGDriveConnected || !this.gdriveAccessToken) {
+            alert("⚠️ يجب ربط حساب Google Drive أولاً لمسح محتوياته!");
+            return;
+        }
+
+        if (!confirm("🚨 تحذير خطير: هل أنت متأكد من مسح جميع الملفات والمجلدات التي أنشأها هذا التطبيق في حساب Google Drive الخاص بك؟ لا يمكن التراجع عن هذا الإجراء!")) {
+            return;
+        }
+
+        try {
+            if (this.btnWipeGDrive) {
+                this.btnWipeGDrive.disabled = true;
+                this.btnWipeGDrive.textContent = "⏳ جاري مسح ملفات Google Drive...";
+            }
+
+            const listUrl = 'https://www.googleapis.com/drive/v3/files?spaces=drive&fields=files(id,name)';
+            const response = await fetch(listUrl, {
+                headers: {
+                    'Authorization': `Bearer ${this.gdriveAccessToken}`
+                }
+            });
+            const data = await response.json();
+            const files = data.files || [];
+
+            if (files.length === 0) {
+                alert("✨ لا توجد ملفات للتطبيق لحذفها في حساب Google Drive.");
+                return;
+            }
+
+            let deletedCount = 0;
+            for (let file of files) {
+                const deleteUrl = `https://www.googleapis.com/drive/v3/files/${file.id}`;
+                const delResp = await fetch(deleteUrl, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${this.gdriveAccessToken}`
+                    }
+                });
+                if (delResp.ok) {
+                    deletedCount++;
+                }
+            }
+
+            alert(`🧹 تم بنجاح مسح ${deletedCount} ملف/مجلد من حساب Google Drive الخاص بك!`);
+        } catch (err) {
+            console.error("Error wiping GDrive", err);
+            alert("⚠️ حدث خطأ أثناء مسح محتويات Google Drive: " + err.message);
+        } finally {
+            if (this.btnWipeGDrive) {
+                this.btnWipeGDrive.disabled = false;
+                this.btnWipeGDrive.textContent = "☁️ مسح وتفريغ جميع محتويات الجوجل درايف للمنشورة";
+            }
+        }
+    }
 }
+
 
 
 
