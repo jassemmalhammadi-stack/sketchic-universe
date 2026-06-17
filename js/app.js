@@ -5447,9 +5447,23 @@ Show how style shaders swap dynamically.`
     async runWizardAutopilot() {
         const steps = this.getTemplateSteps();
         
-        if (!confirm("🤖 هل ترغب في توليد وحفظ كافة أصول المشروع تلقائياً وبسرعة فائقة بالطيار الآلي؟")) {
+        if (!confirm("🤖 هل ترغب في توليد وحفظ كافة أصول المشروع تلقائياً وبسرعة فائقة بالطيار الآلي؟ (سيقوم بإنشاء شخصيات وبيئات متعددة ذكياً)")) {
             return;
         }
+
+        const getMultiplicity = (type) => {
+            const rules = {
+                character: [
+                    { title: "شخصية: البطل الرئيسي (Protagonist)", desc: "شخصية مستيقظة تدرك أنها مرسومة بحبر مانجا حاد وتتحكم بفرشاتها الخاصة." },
+                    { title: "شخصية: الخصم والشرير الرئيسي (Antagonist)", desc: "حارس البعد الكوني الذي يمثل الأسلوب الزيتي الكلاسيكي ويسعى لدمج الخطوط." }
+                ],
+                environment: [
+                    { title: "بيئة: مسرح البداية والتماس البصري", desc: "بقعة التداخل الأولى حيث تطفو الكوادر الحبرية فوق بحيرة من ألوان الزيت السائلة." },
+                    { title: "بيئة: ساحة الصدام الأخير", desc: "المركز الكوني لانهيار الأبعاد حيث تتمازج ضربات الفرشاة وتتلاشى الحدود الهندسية." }
+                ]
+            };
+            return rules[type] || [null]; // null means standard generation
+        };
 
         for (let step of steps) {
             this.currentWizardStep = step;
@@ -5457,64 +5471,76 @@ Show how style shaders swap dynamically.`
             
             const ids = this.wizardSessionData[type] || [];
             if (ids.length === 0) {
-                this.renderWizardStep();
-                this.generateWizardStepWithAI();
-                
-                const titleEl = document.getElementById('wiz-title');
-                const descEl = document.getElementById('wiz-desc');
-                const globalDriveUrl = document.getElementById('wizard-global-drive-url')?.value || 'https://drive.google.com/drive/folders/wizard-session';
-                
-                const subOptions = {};
-                const selects = this.wizardFormFields.querySelectorAll('select');
-                selects.forEach(sel => {
-                    const key = sel.id.replace('wiz-opt-', '').replace('wiz-', '');
-                    if (key !== 'relatedFaction') {
-                        subOptions[key] = sel.value;
-                    }
-                });
-                const inputsText = this.wizardFormFields.querySelectorAll('input, textarea');
-                inputsText.forEach(inp => {
-                    if (inp.id !== 'wiz-title' && inp.id !== 'wiz-desc' && inp.id !== 'wiz-drive-url') {
-                        const key = inp.id.replace('wiz-opt-', '').replace('wiz-', '');
-                        subOptions[key] = inp.value;
-                    }
-                });
+                const multiRules = getMultiplicity(type);
+                this.wizardSessionData[type] = [];
 
-                const assetId = 'wiz-' + type + '-' + Date.now() + '-' + Math.floor(Math.random()*1000);
-                this.wizardSessionData[type] = [assetId];
+                for (let i = 0; i < multiRules.length; i++) {
+                    const rule = multiRules[i];
+                    this.renderWizardStep();
+                    this.generateWizardStepWithAI();
+                    
+                    const titleEl = document.getElementById('wiz-title');
+                    const descEl = document.getElementById('wiz-desc');
+                    const globalDriveUrl = document.getElementById('wizard-global-drive-url')?.value || 'https://drive.google.com/drive/folders/wizard-session';
+                    
+                    if (rule && titleEl) titleEl.value = rule.title;
+                    if (rule && descEl) descEl.value = rule.desc;
 
-                let relatedSourceId = (this.wizardSessionData['source'] && this.wizardSessionData['source'][0]) || "";
-                let relatedScenarioId = (this.wizardSessionData['scenario'] && this.wizardSessionData['scenario'][0]) || "";
-                let relatedCreatorId = (this.wizardSessionData['creator'] && this.wizardSessionData['creator'][0]) || "";
-                let relatedChars = this.wizardSessionData['character'] || [];
+                    // Regenerate prompt to match custom title/desc
+                    this.generateWizardPrompt();
 
-                const factionEl = document.getElementById('wiz-relatedFaction');
-                const relatedFactionVal = factionEl ? factionEl.value : "";
+                    const subOptions = {};
+                    const selects = this.wizardFormFields.querySelectorAll('select');
+                    selects.forEach(sel => {
+                        const key = sel.id.replace('wiz-opt-', '').replace('wiz-', '');
+                        if (key !== 'relatedFaction') {
+                            subOptions[key] = sel.value;
+                        }
+                    });
+                    const inputsText = this.wizardFormFields.querySelectorAll('input, textarea');
+                    inputsText.forEach(inp => {
+                        if (inp.id !== 'wiz-title' && inp.id !== 'wiz-desc' && inp.id !== 'wiz-drive-url') {
+                            const key = inp.id.replace('wiz-opt-', '').replace('wiz-', '');
+                            subOptions[key] = inp.value;
+                        }
+                    });
 
-                const assetObject = {
-                    id: assetId,
-                    type: type,
-                    title: titleEl ? titleEl.value.trim() : "أصل تلقائي",
-                    desc: descEl ? descEl.value.trim() : "وصف تلقائي",
-                    driveUrl: globalDriveUrl,
-                    status: 'finished',
-                    relatedSource: relatedSourceId,
-                    relatedScenario: relatedScenarioId,
-                    relatedCreator: relatedCreatorId,
-                    relatedFaction: relatedFactionVal,
-                    relatedCharacters: relatedChars,
-                    interfacePhysics: "",
-                    directorChecklist: {
-                        noBlending: true,
-                        depthContrast: true,
-                        sonicDissonance: true
-                    },
-                    usedPrompt: this.wizardPromptText ? this.wizardPromptText.textContent : "",
-                    subOptions: subOptions,
-                    createdAt: new Date().toISOString()
-                };
+                    const assetId = 'wiz-' + type + '-' + Date.now() + '-' + i + '-' + Math.floor(Math.random()*1000);
+                    this.wizardSessionData[type].push(assetId);
 
-                this.assets.push(assetObject);
+                    let relatedSourceId = (this.wizardSessionData['source'] && this.wizardSessionData['source'][0]) || "";
+                    let relatedScenarioId = (this.wizardSessionData['scenario'] && this.wizardSessionData['scenario'][0]) || "";
+                    let relatedCreatorId = (this.wizardSessionData['creator'] && this.wizardSessionData['creator'][0]) || "";
+                    let relatedChars = this.wizardSessionData['character'] || [];
+
+                    const factionEl = document.getElementById('wiz-relatedFaction');
+                    const relatedFactionVal = factionEl ? factionEl.value : "";
+
+                    const assetObject = {
+                        id: assetId,
+                        type: type,
+                        title: titleEl ? titleEl.value.trim() : "أصل تلقائي",
+                        desc: descEl ? descEl.value.trim() : "وصف تلقائي",
+                        driveUrl: globalDriveUrl,
+                        status: 'finished',
+                        relatedSource: relatedSourceId,
+                        relatedScenario: relatedScenarioId,
+                        relatedCreator: relatedCreatorId,
+                        relatedFaction: relatedFactionVal,
+                        relatedCharacters: relatedChars,
+                        interfacePhysics: "",
+                        directorChecklist: {
+                            noBlending: true,
+                            depthContrast: true,
+                            sonicDissonance: true
+                        },
+                        usedPrompt: this.wizardPromptText ? this.wizardPromptText.textContent : "",
+                        subOptions: subOptions,
+                        createdAt: new Date().toISOString()
+                    };
+
+                    this.assets.push(assetObject);
+                }
             }
         }
         
