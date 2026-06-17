@@ -298,6 +298,12 @@
             </div>
             <!-- Wizard Custom Options (Templates & Auto-Pilot) -->
             <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 15px; border-radius: var(--radius-md); margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label style="font-weight: bold; color: var(--color-cyan); font-size: 0.82rem;">🔗 بناءً على مشروع سابق:</label>
+                    <select id="wizard-parent-project" style="padding: 6px 12px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.82rem; cursor: pointer;">
+                        <option value="">-- مشروع مستقل جديد --</option>
+                    </select>
+                </div>
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <label style="font-weight: bold; color: var(--color-cyan); font-size: 0.88rem;">🎯 قالب المشروع:</label>
                     <select id="wizard-project-template" style="padding: 6px 12px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.82rem; cursor: pointer;">
@@ -421,6 +427,8 @@
                         <button type="button" id="btn-wizard-download-project" class="btn" style="background: var(--color-accent); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold;">
                             📥 تحميل مستند المشروع الكامل (MD)
                         </button>
+                        <button type="button" id="btn-wizard-end-project" class="btn" style="background: var(--color-orange); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold;">🛑 إنهاء المشروع وحفظه كمنتهي</button>
+                        <button type="button" id="btn-wizard-extend-project" class="btn" style="background: var(--color-cyan); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold; display: none;">🚀 تمديد المشروع وجزء جديد</button>
                         <button type="button" id="btn-wizard-reset-project" class="btn" style="background: var(--color-danger); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold;">
                             🔄 تفريغ البيانات والبدء من جديد
                         </button>

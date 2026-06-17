@@ -152,6 +152,9 @@ class SketchicApp {
         this.wizardProjectTemplate = document.getElementById('wizard-project-template');
         this.wizardGlobalDriveUrl = document.getElementById('wizard-global-drive-url');
         this.btnWizardAutopilot = document.getElementById('btn-wizard-autopilot');
+        this.wizardParentProject = document.getElementById('wizard-parent-project');
+        this.btnWizardEndProject = document.getElementById('btn-wizard-end-project');
+        this.btnWizardExtendProject = document.getElementById('btn-wizard-extend-project');
 
         // Director's Visual Checklist
         this.groupDirectorChecklist = document.getElementById('group-director-checklist');
@@ -360,6 +363,12 @@ class SketchicApp {
         }
         if (this.btnWizardAutopilot) {
             this.btnWizardAutopilot.addEventListener('click', () => this.runWizardAutopilot());
+        }
+        if (this.btnWizardEndProject) {
+            this.btnWizardEndProject.addEventListener('click', () => this.endCurrentProject());
+        }
+        if (this.btnWizardExtendProject) {
+            this.btnWizardExtendProject.addEventListener('click', () => this.extendCurrentProject());
         }
 
         // Asset Filters
@@ -4610,8 +4619,21 @@ Show how style shaders swap dynamically.`
         if (!steps.includes(this.currentWizardStep)) {
             this.currentWizardStep = steps[0];
         }
+        this.populateParentProjectsSelect();
         this.renderWizardStep();
         this.updateWizardStepperUI();
+    }
+
+    populateParentProjectsSelect() {
+        if (!this.wizardParentProject) return;
+        this.wizardParentProject.innerHTML = '<option value="">-- مشروع مستقل جديد --</option>';
+        const projects = this.assets.filter(a => a.type === 'project_summary' && a.projectStatus === 'ended');
+        projects.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p.id;
+            opt.textContent = `🪐 ${p.title} (منتهي)`;
+            this.wizardParentProject.appendChild(opt);
+        });
     }
 
     getTemplateSteps() {
@@ -4768,7 +4790,7 @@ Show how style shaders swap dynamically.`
                 if (asset) {
                     const isActive = this.currentWizardAssetId === id;
                     listHtml += `
-                        <div style="display: flex; align-items: center; gap: 4px; background: &quot;rgba(99, 102, 241, 0.15)&quot;; border: 1px solid ${isActive ? 'var(--color-accent)' : 'var(--border-color)'}; padding: 3px 6px; border-radius: 4px; font-size: 0.72rem;">
+                        <div style="display: flex; align-items: center; gap: 4px; background: rgba(99, 102, 241, 0.15); border: 1px solid ${isActive ? 'var(--color-accent)' : 'var(--border-color)'}; padding: 3px 6px; border-radius: 4px; font-size: 0.72rem;">
                             <span style="cursor: pointer; font-weight: bold; color: var(--text-primary);" onclick="window.app.editSessionAsset('${id}')">🔹 ${asset.title}</span>
                             <span style="color: var(--color-danger); cursor: pointer; font-weight: bold; margin-left: 2px;" onclick="window.app.deleteSessionAsset('${id}', '${type}')">×</span>
                         </div>
@@ -4839,11 +4861,11 @@ Show how style shaders swap dynamically.`
                 </div>
                 <div class="form-group">
                     <label>المؤلف السردي الأصلي *</label>
-                    <input type="text" id="wiz-opt-sourceAuthor" value="${subOptions.sourceAuthor || 'الكاتب الكوني الأول'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                    <input type="text" id="wiz-opt-sourceAuthor" value="	ext${subOptions.sourceAuthor || 'الكاتب الكوني الأول'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
                 </div>
                 <div class="form-group">
                     <label>عدد الكلمات التقريبي *</label>
-                    <input type="number" id="wiz-opt-sourceWordCount" value="${subOptions.sourceWordCount || '1500'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                    <input type="number" id="wiz-opt-sourceWordCount" value="	ext${subOptions.sourceWordCount || '1500'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
                 </div>
             `;
         }
@@ -4905,7 +4927,7 @@ Show how style shaders swap dynamically.`
                 </div>
                 <div class="form-group">
                     <label>اللغة المستهدفة *</label>
-                    <input type="text" id="wiz-opt-writtenLanguage" value="${subOptions.writtenLanguage || 'العربية الفصحى'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                    <input type="text" id="wiz-opt-writtenLanguage" value="	ext${subOptions.writtenLanguage || 'العربية الفصحى'}" required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
                 </div>
                 <div class="form-group">
                     <label>الأسلوب التعبيري البلاغي *</label>
@@ -5295,6 +5317,9 @@ Show how style shaders swap dynamically.`
         if (grid) grid.style.display = 'none';
         if (this.wizardSummaryView) this.wizardSummaryView.style.display = 'block';
 
+        if (this.btnWizardEndProject) this.btnWizardEndProject.style.display = 'block';
+        if (this.btnWizardExtendProject) this.btnWizardExtendProject.style.display = 'none';
+
         if (this.wizardSummaryTableBody) {
             this.wizardSummaryTableBody.innerHTML = "";
             const typesList = this.getTemplateSteps().map(s => this.getWizardStepType(s));
@@ -5402,7 +5427,7 @@ Show how style shaders swap dynamically.`
                 ids.forEach(id => {
                     const asset = this.assets.find(a => a.id === id);
                     if (asset) {
-                        md += `### 🔹 أصل: ${asset.title}\n`;
+                        md += `### 🔹 أصل: 	ext${asset.title}\n`;
                         md += `* **الوصف**: 	ext${asset.desc}\n`;
                         md += `* **رابط Google Drive للملف**: 	ext${asset.driveUrl}\n`;
                         if (asset.usedPrompt) md += `* **موجه التوليد (Prompt)**:\n\`\`\`text\n	ext${asset.usedPrompt}\n\`\`\`\n`;
@@ -5418,6 +5443,115 @@ Show how style shaders swap dynamically.`
         link.setAttribute("href", URL.createObjectURL(blob));
         link.setAttribute("download", `sketchic_project_${Date.now()}.md`);
         link.click();
+    }
+
+    endCurrentProject() {
+        if (!confirm("🛑 هل أنت متأكد من رغبتك في إنهاء هذا المشروع وحفظه في الأرشيف؟")) {
+            return;
+        }
+        
+        const typesList = this.getTemplateSteps().map(s => this.getWizardStepType(s));
+        let md = `# 🌌 مشروع كون سكتشيك الإنتاجي المتكامل (Cosmic Production Project)\n\n`;
+        md += `تاريخ التصدير: ${new Date().toLocaleDateString('ar-EG')}\n\n---\n\n`;
+        
+        typesList.forEach(t => {
+            const ids = this.wizardSessionData[t] || [];
+            if (ids.length > 0) {
+                md += `## أصول الخطوة: ${t}\n\n`;
+                ids.forEach(id => {
+                    const asset = this.assets.find(a => a.id === id);
+                    if (asset) {
+                        md += `### 🔹 أصل: ${asset.title}\n`;
+                        md += `* **الوصف**: 	ext${asset.desc}\n`;
+                        md += `* **رابط Google Drive**: 	ext${asset.driveUrl}\n`;
+                        if (asset.usedPrompt) md += `* **موجه التوليد (Prompt)**:\n\`\`\`text\n	ext${asset.usedPrompt}\n\`\`\`\n`;
+                        md += `\n`;
+                    }
+                });
+                md += `---\n\n`;
+            }
+        });
+
+        const parentProjId = this.wizardParentProject ? this.wizardParentProject.value : "";
+        const projId = 'wiz-project-' + Date.now();
+        const firstAssetId = (this.wizardSessionData['source'] && this.wizardSessionData['source'][0]);
+        const firstAsset = firstAssetId ? this.assets.find(a => a.id === firstAssetId) : null;
+        const projTitle = firstAsset ? `مشروع: ${firstAsset.title}` : `مشروع سكتشيك كوني - ${Date.now()}`;
+        
+        const projectAsset = {
+            id: projId,
+            type: 'project_summary',
+            title: projTitle,
+            desc: `مستند المشروع الإنتاجي المتكامل المولد بالطيار الآلي. يشمل الأصول والبرومبتات.`,
+            driveUrl: document.getElementById('wizard-global-drive-url')?.value || 'https://drive.google.com/drive/folders/wizard-session',
+            status: 'finished',
+            projectStatus: 'ended',
+            parentProject: parentProjId,
+            content: md,
+            wizardSessionData: JSON.parse(JSON.stringify(this.wizardSessionData)),
+            createdAt: new Date().toISOString()
+        };
+
+        this.assets.push(projectAsset);
+        this.saveAssets();
+
+        alert(`💾 تم حفظ مستند المشروع النهائي بنجاح:\n1. كقاعدة بيانات داخل النظام باسم [	ext${projTitle}].\n2. تم محاكاة رفعه ومزامنته في Google Drive تحت المجلد الموحد.`);
+        
+        if (this.btnWizardEndProject) this.btnWizardEndProject.style.display = 'none';
+        if (this.btnWizardExtendProject) {
+            this.btnWizardExtendProject.style.display = 'block';
+            this.btnWizardExtendProject.dataset.projId = projId;
+        }
+    }
+
+    extendCurrentProject() {
+        const parentId = this.btnWizardExtendProject.dataset.projId;
+        if (!parentId) return;
+
+        const parentProject = this.assets.find(a => a.id === parentId);
+        if (!parentProject) return;
+
+        if (!confirm(`🚀 هل ترغب في إنشاء جزء جديد (Sequel) يكمل قصة [	ext${parentProject.title}]؟`)) {
+            return;
+        }
+
+        this.currentWizardStep = 1;
+        this.currentWizardAssetId = null;
+        this.wizardSessionData = {
+            source: [], scenario: [], creator: [], character: [], environment: [],
+            voice: [], music: [], comic: [], video: [], game: [], written: []
+        };
+        
+        this.assets = this.assets.filter(a => a.type === 'project_summary' || !a.id.startsWith('wiz-'));
+        this.saveAssets();
+
+        if (this.wizardSummaryView) this.wizardSummaryView.style.display = 'none';
+        const grid = document.querySelector('.wizard-container-grid');
+        if (grid) grid.style.display = 'grid';
+
+        this.populateParentProjectsSelect();
+        if (this.wizardParentProject) {
+            this.wizardParentProject.value = parentId;
+        }
+
+        this.navigateWizardDirect(this.getTemplateSteps()[0]);
+        
+        const parentSessionData = parentProject.wizardSessionData || {};
+        const parentSourceId = parentSessionData.source && parentSessionData.source[0];
+        const parentSource = parentSourceId ? this.assets.find(a => a.id === parentSourceId) : null;
+
+        const titleEl = document.getElementById('wiz-title');
+        const descEl = document.getElementById('wiz-desc');
+
+        if (titleEl && parentSource) {
+            titleEl.value = `${parentSource.title} - الجزء الثاني`;
+        }
+        if (descEl && parentSource) {
+            descEl.value = `امتداد درامي وسردي لأحداث الجزء الأول: ${parentSource.desc}. يتابع الصراع بين أبعاد الرسم المتداخلة.`;
+        }
+        
+        this.generateWizardPrompt();
+        alert(`📝 تم بدء جزء جديد بنجاح وتغذية البيانات من المشروع السابق [	ext${parentProject.title}]!`);
     }
 
     resetWizardSession() {
@@ -5436,7 +5570,7 @@ Show how style shaders swap dynamically.`
             game: [],
             written: []
         };
-        this.assets = this.assets.filter(a => !a.id.startsWith('wiz-'));
+        this.assets = this.assets.filter(a => a.type === 'project_summary' || !a.id.startsWith('wiz-'));
         this.saveAssets();
         if (this.wizardSummaryView) this.wizardSummaryView.style.display = 'none';
         const grid = document.querySelector('.wizard-container-grid');
@@ -5447,22 +5581,37 @@ Show how style shaders swap dynamically.`
     async runWizardAutopilot() {
         const steps = this.getTemplateSteps();
         
-        if (!confirm("🤖 هل ترغب في توليد وحفظ كافة أصول المشروع تلقائياً وبسرعة فائقة بالطيار الآلي؟ (سيقوم بإنشاء شخصيات وبيئات متعددة ذكياً)")) {
+        if (!confirm("🤖 هل ترغب في توليد وحفظ كافة أصول المشروع تلقائياً وبسرعة فائقة بالطيار الآلي؟ (سيقوم بإنشاء شخصيات وبيئات متعددة إبداعياً)")) {
             return;
+        }
+
+        const parentProjId = this.wizardParentProject ? this.wizardParentProject.value : "";
+        const parentProject = parentProjId ? this.assets.find(a => a.id === parentProjId) : null;
+        let parentSource = null;
+        if (parentProject && parentProject.wizardSessionData) {
+            const parentSourceId = parentProject.wizardSessionData.source && parentProject.wizardSessionData.source[0];
+            parentSource = parentSourceId ? this.assets.find(a => a.id === parentSourceId) : null;
         }
 
         const getMultiplicity = (type) => {
             const rules = {
                 character: [
                     { title: "شخصية: البطل الرئيسي (Protagonist)", desc: "شخصية مستيقظة تدرك أنها مرسومة بحبر مانجا حاد وتتحكم بفرشاتها الخاصة." },
-                    { title: "شخصية: الخصم والشرير الرئيسي (Antagonist)", desc: "حارس البعد الكوني الذي يمثل الأسلوب الزيتي الكلاسيكي ويسعى لدمج الخطوط." }
+                    { title: "شخصية: الخصم والشرير الرئيسي (Antagonist)", desc: "حارس البعد الكوني الذي يمثل الأسلوب الزيتي الكلاسيكي ويسعى لدمج الخطوط." },
+                    { title: "شخصية مساندة: المرافق الرقمي", desc: "كائن ثلاثي أبعاد يساعد البطل في فك الشفرات البصرية للأبعاد المتداخلة." }
                 ],
                 environment: [
                     { title: "بيئة: مسرح البداية والتماس البصري", desc: "بقعة التداخل الأولى حيث تطفو الكوادر الحبرية فوق بحيرة من ألوان الزيت السائلة." },
-                    { title: "بيئة: ساحة الصدام الأخير", desc: "المركز الكوني لانهيار الأبعاد حيث تتمازج ضربات الفرشاة وتتلاشى الحدود الهندسية." }
+                    { title: "بيئة: ساحة الصدام الأخير", desc: "المركز الكوني لانهيار الأبعاد حيث تتمازج ضربات الفرشاة وتتلاشى الحدود الهندسية." },
+                    { title: "بيئة: دهليز الأكواد المفقودة", desc: "ممر تحت البوابة الكونية يحتوي على لوحات كلاسيكية غير مكتملة." }
                 ]
             };
-            return rules[type] || [null]; // null means standard generation
+            const list = rules[type] || [null];
+            if (type === 'character' || type === 'environment') {
+                const count = Math.floor(Math.random() * 2) + 2; // either 2 or 3 dynamically
+                return list.slice(0, count);
+            }
+            return list;
         };
 
         for (let step of steps) {
@@ -5483,10 +5632,15 @@ Show how style shaders swap dynamically.`
                     const descEl = document.getElementById('wiz-desc');
                     const globalDriveUrl = document.getElementById('wizard-global-drive-url')?.value || 'https://drive.google.com/drive/folders/wizard-session';
                     
-                    if (rule && titleEl) titleEl.value = rule.title;
-                    if (rule && descEl) descEl.value = rule.desc;
+                    if (rule && titleEl) {
+                        titleEl.value = rule.title;
+                        if (parentSource && i === 0) titleEl.value += " (تكملة لـ " + parentSource.title + ")";
+                    }
+                    if (rule && descEl) {
+                        descEl.value = rule.desc;
+                        if (parentSource) descEl.value += " يتأثر هذا الأصل سلبياً أو إيجابياً بأحداث الجزء الأول من القصة.";
+                    }
 
-                    // Regenerate prompt to match custom title/desc
                     this.generateWizardPrompt();
 
                     const subOptions = {};
@@ -5682,6 +5836,7 @@ Show how style shaders swap dynamically.`
         alert(`🤖 تم توليد وتعبئة تفاصيل الخطوة 	ext${step} بنجاح! تم استخدام بيانات السياق المتوفرة لضمان اتساق الأصول.`);
     }
 }
+
 
 
 
