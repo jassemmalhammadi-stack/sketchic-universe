@@ -6200,6 +6200,9 @@ Show how style shaders swap dynamically.`
         const creators = this.assets.filter(a => a.type === 'creator');
         const characters = this.assets.filter(a => a.type === 'character');
         const environments = this.assets.filter(a => a.type === 'environment');
+        const scenarios = this.assets.filter(a => a.type === 'scenario');
+
+        const prevType = this.directorChatState ? this.directorChatState.type : null;
 
         if (creators.length === 0) {
             this.directorChatState = { type: 'CREATE_CREATOR' };
@@ -6238,40 +6241,71 @@ Show how style shaders swap dynamically.`
             ];
             this.renderDirectorOptions(options);
         } else {
-            const tasks = [
-                {
-                    type: 'CREATE_CREATOR_RAND',
-                    text: `🧠 ما رأيك في توسيع الكون بإضافة رسام كوني جديد؟ سيجلب هذا فصائل وخطوط رسم جديدة للصدام! ما هو الأسلوب الجديد المقترح؟`,
-                    options: [
-                        { text: "🎨 رسم زيتي مائي مائع (Watercolor)", val: "رسم مائي انسيابي بألوان الباستيل المائعة الشفافة", tool: "فرشاة مائية مشبعة بالماء الجاري" },
-                        { text: "🖌️ خطوط غرافيت رصاص جافة (Sketch)", val: "رسم تظليل قلم رصاص غرافيتي خشن مع طبقات تظليل ميكانيكية", tool: "قلم رصاص غرافيت جاف 4B" },
-                        { text: "أخرى...", isCustom: true }
-                    ]
-                },
-                {
-                    type: 'CREATE_CHARACTER_RAND',
-                    text: `👤 الرسامون يطالبون بالمزيد من الأبطال! لنبتكر شخصية جديدة تنتمي لأحد الأبعاد المتداخلة. ما هو دورها؟`,
-                    options: [
-                        { text: "⚔️ مقاتل فئة قوى المحو (Erasers)", val: "مقاتل غامض يحمل ممحاة فوضى عملاقة لمحو الخطوط الزائدة", role: "قوى المحو الكوني (The Eraser)" },
-                        { text: "🎭 مرافق ساخر ذو أبعاد هجينة", val: "كائن ثنائي الأبعاد مضحك يسخر من المشاهدين ويعلق على الأحداث", role: "مرافق ميتافيزيقي" },
-                        { text: "أخرى...", isCustom: true }
-                    ]
-                },
-                {
-                    type: 'CREATE_SCENARIO_RAND',
-                    text: `📝 لدينا شخصيات وبيئات! ما رأيك في نسج سيناريو قصة جديد يجمعهما في مغامرة؟ ما نوع المغامرة؟`,
-                    options: [
-                        { text: "💥 معركة الصدام البصري الأول", val: "سيناريو يوثق اللحظة الأولى لتصادم أسلوب الرسام الكلاسيكي بالمانجا الحديثة", category: "دراما الصدام المرئي" },
-                        { text: "🗝️ فك شفرة الخطوط المفقودة", val: "مغامرة لحل ألغاز في دهليز الأكواد المفقودة بمساعدة المشاهد", category: "غموض وفلسفة كوكبية" },
-                        { text: "أخرى...", isCustom: true }
-                    ]
-                }
-            ];
+            // Balanced rotation to prevent repeating the same type consecutively
+            const candidates = [];
+            if (characters.length < creators.length * 2) {
+                candidates.push('CREATE_CHARACTER_RAND');
+            }
+            if (environments.length < characters.length) {
+                candidates.push('CREATE_ENVIRONMENT_RAND');
+            }
+            if (scenarios.length < environments.length) {
+                candidates.push('CREATE_SCENARIO_RAND');
+            }
 
-            const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
-            this.directorChatState = { type: randomTask.type };
-            this.directorMessage.innerHTML = randomTask.text;
-            this.renderDirectorOptions(randomTask.options);
+            let chosenType = null;
+            if (candidates.length > 0) {
+                // Filter out the last category type to prevent immediate repetition
+                const filtered = candidates.filter(t => t !== prevType);
+                const finalPool = filtered.length > 0 ? filtered : candidates;
+                chosenType = finalPool[Math.floor(Math.random() * finalPool.length)];
+            } else {
+                chosenType = 'CREATE_CREATOR_RAND';
+            }
+
+            if (chosenType === 'CREATE_CREATOR_RAND') {
+                this.directorChatState = { type: 'CREATE_CREATOR_RAND' };
+                this.directorMessage.innerHTML = `🧠 ما رأيك في توسيع الكون بإضافة رسام كوني جديد؟ سيجلب هذا فصائل وخطوط رسم جديدة للصدام! ما هو الأسلوب الجديد المقترح؟`;
+                
+                const options = [
+                    { text: "🎨 رسم زيتي مائي مائع (Watercolor)", val: "رسم مائي انسيابي بألوان الباستيل المائعة الشفافة", tool: "فرشاة مائية مشبعة بالماء الجاري" },
+                    { text: "🖌️ خطوط غرافيت رصاص جافة (Sketch)", val: "رسم تظليل قلم رصاص غرافيتي خشن مع طبقات تظليل ميكانيكية", tool: "قلم رصاص غرافيت جاف 4B" },
+                    { text: "✨ أسلوب آخر...", isCustom: true }
+                ];
+                this.renderDirectorOptions(options);
+            } else if (chosenType === 'CREATE_CHARACTER_RAND') {
+                const creator = creators[Math.floor(Math.random() * creators.length)];
+                this.directorChatState = { type: 'CREATE_CHARACTER_RAND', creatorId: creator.id };
+                this.directorMessage.innerHTML = `👤 الرسام الكوني <strong>[${creator.title}]</strong> يبحث عن إلهام لتصميم بطل جديد في بعده الخاص!<br>ما هو الدور السردي الذي تقترحه؟`;
+                
+                const options = [
+                    { text: "⚔️ مقاتل فئة قوى المحو (Erasers)", val: "مقاتل غامض يحمل ممحاة فوضى عملاقة لمحو الخطوط الزائدة", role: "قوى المحو الكوني (The Eraser)" },
+                    { text: "🎭 مرافق ساخر ذو أبعاد هجينة", val: "كائن ثنائي الأبعاد مضحك يسخر من المشاهدين ويعلق على الأحداث", role: "مرافق ميتافيزيقي" },
+                    { text: "✨ اسم ودور آخر...", isCustom: true }
+                ];
+                this.renderDirectorOptions(options);
+            } else if (chosenType === 'CREATE_ENVIRONMENT_RAND') {
+                const creator = creators[Math.floor(Math.random() * creators.length)];
+                this.directorChatState = { type: 'CREATE_ENVIRONMENT_RAND', creatorId: creator.id };
+                this.directorMessage.innerHTML = `🌌 أبعاد الرسم تتمدد! نحتاج لتصميم بيئة جديدة تحت رعاية الرسام <strong>[${creator.title}]</strong>.<br>ما هي طبيعة هذا الموقع الجديد؟`;
+                
+                const options = [
+                    { text: "💧 لوحة مائعة عائمة", val: "موقع تماس الأبعاد الكونية حيث تتداخل اللوحات الزيتية المائعة", envType: "Fluid Canvas", clash: "متوسطة" },
+                    { text: "🏙️ مدينة الحبر المضيء (Neon Ink)", val: "مدينة ضخمة مرسومة بخطوط حبر النيون المضيء ذات الجاذبية المائلة", envType: "Neon Ink City", clash: "شديدة" },
+                    { text: "✨ بيئة أخرى...", isCustom: true }
+                ];
+                this.renderDirectorOptions(options);
+            } else if (chosenType === 'CREATE_SCENARIO_RAND') {
+                this.directorChatState = { type: 'CREATE_SCENARIO_RAND' };
+                this.directorMessage.innerHTML = `📝 لدينا شخصيات وبيئات! ما رأيك في نسج سيناريو قصة جديد يجمعهما في مغامرة؟ ما نوع المغامرة؟`;
+                
+                const options = [
+                    { text: "💥 معركة الصدام البصري الأول", val: "سيناريو يوثق اللحظة الأولى لتصادم أسلوب الرسام الكلاسيكي بالمانجا الحديثة", category: "دراما الصدام المرئي" },
+                    { text: "🗝️ فك شفرة الخطوط المفقودة", val: "مغامرة لحل ألغاز في دهليز الأكواد المفقودة بمساعدة المشاهد", category: "غموض وفلسفة كوكبية" },
+                    { text: "✨ حبكة أخرى...", isCustom: true }
+                ];
+                this.renderDirectorOptions(options);
+            }
         }
     }
 
@@ -6302,15 +6336,19 @@ Show how style shaders swap dynamically.`
         const state = this.directorChatState;
         
         if (state.type === 'CREATE_CREATOR' || state.type === 'CREATE_CREATOR_RAND') {
-            const title = choice.text.replace(/^[^\s]+\s+/, '');
             const style = choice.val;
             const tool = choice.tool;
             const assetId = 'wiz-creator-' + Date.now();
             
+            const creatorNames = ["غريغوري", "سيريوس", "أوريون", "تيتان", "ليوناردو", "رافايل", "كوبلت"];
+            const randomName = creatorNames[Math.floor(Math.random() * creatorNames.length)];
+            let cleanTitle = choice.isCustom ? choice.text : choice.text.replace(/^[^\s]+\s+/, '');
+            let title = choice.isCustom ? choice.text : `الرسام الكوني: ${randomName} (${cleanTitle})`;
+            
             const newCreator = {
                 id: assetId,
                 type: 'creator',
-                title: `الرسام: ${title}`,
+                title: title,
                 desc: `رسام كوني ولد بمقترح المرشد التفاعلي. أسلوبه: ${style}.`,
                 driveUrl: 'https://drive.google.com/drive/folders/wizard-session',
                 status: 'finished',
@@ -6325,11 +6363,15 @@ Show how style shaders swap dynamically.`
             alert(`🎨 تم إنشاء الرسام الكوني بنجاح: [${newCreator.title}]!`);
             this.updateDirectorChat();
         } else if (state.type === 'CREATE_CHARACTER' || state.type === 'CREATE_CHARACTER_RAND') {
-            const title = choice.text.replace(/^[^\s]+\s+/, '');
             const desc = choice.val;
             const role = choice.role;
             const assetId = 'wiz-character-' + Date.now();
             
+            const charNames = ["كورين", "أثير", "سديم", "شهاب", "ليرا", "سهيل", "طارق", "فجر", "برق", "سهم"];
+            const randomName = charNames[Math.floor(Math.random() * charNames.length)];
+            let cleanTitle = choice.isCustom ? choice.text : choice.text.replace(/^[^\s]+\s+/, '');
+            let title = choice.isCustom ? choice.text : `الشخصية: ${randomName} (${cleanTitle})`;
+
             const newChar = {
                 id: assetId,
                 type: 'character',
@@ -6347,13 +6389,17 @@ Show how style shaders swap dynamically.`
             this.saveAssets();
             alert(`👤 تم تصميم الشخصية وإضافتها للكون: [${newChar.title}]!`);
             this.updateDirectorChat();
-        } else if (state.type === 'CREATE_ENVIRONMENT') {
-            const title = choice.text.replace(/^[^\s]+\s+/, '');
+        } else if (state.type === 'CREATE_ENVIRONMENT' || state.type === 'CREATE_ENVIRONMENT_RAND') {
             const desc = choice.val;
-            const envType = choice.envType;
-            const clash = choice.clash;
+            const envType = choice.envType || "بيئة رسم كوني";
+            const clash = choice.clash || "متوسطة";
             const assetId = 'wiz-environment-' + Date.now();
             
+            const envNames = ["سديم", "أطلس", "بوابة التماس", "دهليز الفوضى", "ممر الضوء", "حافة الورقة"];
+            const randomName = envNames[Math.floor(Math.random() * envNames.length)];
+            let cleanTitle = choice.isCustom ? choice.text : choice.text.replace(/^[^\s]+\s+/, '');
+            let title = choice.isCustom ? choice.text : `البيئة: ${randomName} (${cleanTitle})`;
+
             const newEnv = {
                 id: assetId,
                 type: 'environment',
@@ -6373,11 +6419,12 @@ Show how style shaders swap dynamically.`
             alert(`🌌 تم تصميم البيئة وإضافتها للكون: [${newEnv.title}]!`);
             this.updateDirectorChat();
         } else if (state.type === 'CREATE_SCENARIO_RAND') {
-            const title = choice.text.replace(/^[^\s]+\s+/, '');
             const desc = choice.val;
-            const cat = choice.category;
+            const cat = choice.category || "دراما";
             const assetId = 'wiz-scenario-' + Date.now();
-            
+            let cleanTitle = choice.isCustom ? choice.text : choice.text.replace(/^[^\s]+\s+/, '');
+            let title = choice.isCustom ? choice.text : `السيناريو: ${cleanTitle}`;
+
             const newScen = {
                 id: assetId,
                 type: 'scenario',
@@ -6413,15 +6460,12 @@ Show how style shaders swap dynamically.`
             role: "دور مخصص",
             envType: "بيئة مخصصة",
             clash: "متوسطة",
-            category: "تصنيف مخصص"
+            category: "تصنيف مخصص",
+            isCustom: true
         };
         this.processDirectorAction(choice);
     }
 }
-
-
-
-
 
 // Instantiate the App on window load
 window.addEventListener('DOMContentLoaded', () => {
