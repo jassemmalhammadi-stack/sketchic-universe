@@ -198,6 +198,7 @@ class SketchicApp {
         this.sceneDialogueInput = document.getElementById('scene-dialogue');
         this.sceneAudioProfileSelect = document.getElementById('scene-audio-profile');
         this.btnAutoStoryboard = document.getElementById('btn-auto-storyboard');
+        this.btnGenerateEpisodePackage = document.getElementById('btn-generate-episode-package');
     }
 
     bindEvents() {
@@ -323,6 +324,10 @@ class SketchicApp {
 
         if (this.btnSaveToDrive) {
             this.btnSaveToDrive.addEventListener('click', () => this.saveAssetToDrive());
+        }
+
+        if (this.btnGenerateEpisodePackage) {
+            this.btnGenerateEpisodePackage.addEventListener('click', () => this.generateEpisodePackage());
         }
 
         // Form Submit
@@ -3330,6 +3335,19 @@ Show how style shaders swap dynamically.`
         const comics = this.assets.filter(a => a.type === 'comic');
         const videos = this.assets.filter(a => a.type === 'video');
 
+        // Populate Creators dropdown in Episode Planner
+        const planCreatorSelect = document.getElementById('plan-creator-select');
+        if (planCreatorSelect) {
+            const creators = this.assets.filter(a => a.type === 'creator');
+            planCreatorSelect.innerHTML = '<option value="">-- اختر رساماً --</option>';
+            creators.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = `✍️ ${c.title}`;
+                planCreatorSelect.appendChild(opt);
+            });
+        }
+
         // Populate Scenario selector
         this.sceneScenarioSelect.innerHTML = '<option value="" disabled selected>اختر السيناريو...</option>';
         scenarios.forEach(s => {
@@ -3384,6 +3402,69 @@ Show how style shaders swap dynamically.`
             opt.textContent = v.title;
             this.sceneVideoSelect.appendChild(opt);
         });
+    }
+
+    generateEpisodePackage() {
+        const creatorId = document.getElementById('plan-creator-select')?.value;
+        const stage = document.getElementById('plan-arc-stage')?.value;
+        
+        if (!creatorId) {
+            alert("⚠️ يرجى اختيار رسام كوني لتحديد النمط الفني الحاكم للحلقة.");
+            return;
+        }
+
+        const creator = this.assets.find(a => a.id === creatorId);
+        if (!creator) return;
+
+        const artStyle = creator.subOptions?.artStyle || "لوحة زيتية كلاسيكية";
+        const tool = creator.subOptions?.tool || "فرشاة زيتية";
+        
+        const characterList = this.assets.filter(a => a.type === 'character' && a.relatedCreator === creatorId);
+        const environmentList = this.assets.filter(a => a.type === 'environment' && a.relatedCreator === creatorId);
+        
+        let charName = characterList.length > 0 ? characterList[0].title : "بطل غامض";
+        let envName = environmentList.length > 0 ? environmentList[0].title : "البوابة البصرية المجهولة";
+
+        let synopsis = "";
+        let promptChar = "";
+        let promptEnv = "";
+        let voiceScript = "";
+        let promptVideo = "";
+
+        if (stage === 'intro') {
+            synopsis = `الحلقة 1 (المغامرة والتعايش): يعيش البطل [${charName}] مغامرة عادية في موطنه [${envName}] بأسلوب [${artStyle}] مع المشاهد، محاولاً حماية بوابته دون إدراك طبيعة العالم المرسومة.`;
+            promptChar = `A cinematic character design sheet of ${charName}, drawn strictly in the style of ${artStyle} using ${tool}. Full body view, high details, neutral background, Google Imagen 3 style.`;
+            promptEnv = `A wide angle cinematic landscape concept art of ${envName}, painted in the style of ${artStyle}. Visualizing a rich environment with warm lighting, detailed textures, 16:9 aspect ratio.`;
+            voiceScript = `[${charName}]: "هذا العالم يبدو هادئاً اليوم.. أشعر بانسجام غريب بين ضربات الضوء وظلال الجبال من حولنا."`;
+            promptVideo = `Cinematic slow panning video shot of ${charName} walking through ${envName}. Hand-drawn style of ${artStyle}, smooth physical motion, Google Veo, 24fps.`;
+        } else if (stage === 'glitch') {
+            synopsis = `الحلقة 2 (الشق البصري): يبدأ البطل [${charName}] بملاحظة عيوب بصرية غريبة في بيئة [${envName}]، مثل خطوط رسم متناثرة في الأفق أو أصباغ تسقط من السماء، مما يثير شكوكه حول طبيعة واقعه.`;
+            promptChar = `A cinematic character design sheet of ${charName} looking worried and puzzled, style of ${artStyle}, with subtle sketches and unfinished lines visible on the edges.`;
+            promptEnv = `A wide angle cinematic landscape of ${envName} in the style of ${artStyle}, but showing a visible visual glitch: a portion of the sky is tearing to reveal a blank white paper backing, pencil grid lines showing.`;
+            voiceScript = `[${charName}]: "انظر هناك!.. السماء لا تبدو حقيقية.. تلك ضربات فرشاة عملاقة وليست سحباً! ما هذا الجدار الذي يمنعنا من العبور؟"`;
+            promptVideo = `A slow tilt up camera movement video showing ${charName} pointing at the sky where paint is melting. Style of ${artStyle}, dramatic visual clash effect, Google Veo.`;
+        } else if (stage === 'journey') {
+            synopsis = `الحلقة 3 (السفر لحافة الكانفاس): يقرر [${charName}] السفر لـ [${envName}] للبحث عن حافة العالم (إطار اللوحة الكونية) وتحدي حراس الأبعاد الذين يمنعونه من الوصول لمعرفة الحقيقة.`;
+            promptChar = `Action shot of ${charName} running/fighting, determined look, style of ${artStyle}, outline glowing with raw graphite lines.`;
+            promptEnv = `A dramatic wide shot of a boundary clash at the edge of the canvas. The rich ${artStyle} landscape is colliding with blank white margins, showcasing pencil sketch guidelines and color palettes.`;
+            voiceScript = `[${charName}]: "سأصل إلى نهاية هذا العالم.. حتى لو كان ذلك يعني كسر الحدود التي تحبس خطوطي وألواني!"`;
+            promptVideo = `Cinematic tracking shot of ${charName} running towards a blinding white void where the style of ${artStyle} dissolves. High energy, Google Veo.`;
+        } else if (stage === 'encounter') {
+            synopsis = `الحلقة 4 (اللقاء بالرسام): البطل [${charName}] يخترق جدار الإطار تماماً ليجد نفسه أمام يد الرسام الضخمة التي تحرك الفرشاة، مواجهاً صانعه مباشرة في لحظة فلسفية مهيبة.`;
+            promptChar = `A character model sheet of ${charName} looking at a giant human hand holding a brush. Interaction between a 2D drawn character and real-world elements, style of ${artStyle}.`;
+            promptEnv = `An epic surreal space showing a giant canvas with the world of ${envName} drawn on it, surrounded by giant paint bottles, pencils and a giant wooden table.`;
+            voiceScript = `[${charName}]: "إذاً.. أنت صانعي؟ كل هذه المعارك.. كل هذه الآلام.. كانت مجرد حركة لفرشاتك على هذه اللوحة القماشية؟"`;
+            promptVideo = `Surreal shot of a giant hand brushing paint to recreate the arm of ${charName}. Perfect blend of 2D drawn style of ${artStyle} and realistic workspace background, Google Veo.`;
+        }
+
+        document.getElementById('episode-package-title').textContent = `📊 حزمة الحلقة المولدة: ${creator.title} - المرحلة ${stage === 'intro' ? '1' : stage === 'glitch' ? '2' : stage === 'journey' ? '3' : '4'}`;
+        document.getElementById('episode-package-desc').textContent = synopsis;
+        document.getElementById('episode-prompt-char').textContent = promptChar;
+        document.getElementById('episode-prompt-env').textContent = promptEnv;
+        document.getElementById('episode-prompt-voice').textContent = voiceScript;
+        document.getElementById('episode-prompt-video').textContent = promptVideo;
+        
+        document.getElementById('episode-package-result').style.display = 'block';
     }
 
     clearSceneForm() {
