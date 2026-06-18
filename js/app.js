@@ -52,6 +52,7 @@ class SketchicApp {
         this.updateStats();
         this.renderPipelineCounts();
         this.renderGuide('scenario');
+        this.initDirectorChat();
     }
 
     loadAssets() {
@@ -76,6 +77,9 @@ class SketchicApp {
             this.renderAssetsList();
         } else if (this.currentTab === 'simulator') {
             this.renderSimulator();
+        }
+        if (this.directorMessage) {
+            this.updateDirectorChat();
         }
     }
 
@@ -6171,6 +6175,247 @@ Show how style shaders swap dynamically.`
                 this.btnWipeGDrive.textContent = "☁️ مسح وتفريغ جميع محتويات الجوجل درايف للمنشورة";
             }
         }
+    }
+
+    initDirectorChat() {
+        this.directorMessage = document.getElementById('director-message-text');
+        this.directorOptions = document.getElementById('director-options-container');
+        this.directorCustomContainer = document.getElementById('director-custom-input-container');
+        this.directorCustomVal = document.getElementById('director-custom-val');
+        this.btnDirectorSubmitCustom = document.getElementById('btn-director-submit-custom');
+        
+        if (!this.directorMessage) return;
+
+        this.btnDirectorSubmitCustom.addEventListener('click', () => this.handleDirectorCustomSubmit());
+        
+        this.updateDirectorChat();
+    }
+
+    updateDirectorChat() {
+        if (!this.directorMessage) return;
+        this.directorCustomContainer.style.display = 'none';
+        this.directorCustomVal.value = '';
+        this.directorOptions.innerHTML = '';
+        
+        const creators = this.assets.filter(a => a.type === 'creator');
+        const characters = this.assets.filter(a => a.type === 'character');
+        const environments = this.assets.filter(a => a.type === 'environment');
+
+        if (creators.length === 0) {
+            this.directorChatState = { type: 'CREATE_CREATOR' };
+            this.directorMessage.innerHTML = `👋 أهلاً بك! ليس لديك أي <strong>رسام كوني (Creator)</strong> في النظام بعد. الرسامون هم من يحددون نمط الأبعاد والقوانين البصرية لكون سكتشيك.<br>لنبدأ بإنشاء أول رسام، ما هو الأسلوب الفني الذي يقترحه قلبك؟`;
+            
+            const options = [
+                { text: "🎨 لوحة زيتية كلاسيكية (عصر النهضة)", val: "لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)", tool: "فرشاة شعر السنجاب الغليظة المشبعة بالزيت" },
+                { text: "✏️ مانجا يابانية بالأبيض والأسود", val: "رسم مانجا ياباني تقليدي بالأبيض والأسود مع تأثير التظليل الخشن", tool: "ريشة رسم يابانية مخصصة للحبر الأسود النقي" },
+                { text: "🎬 كارتون كلاسيكي من التسعينات", val: "رسوم متحركة ثنائية أبعاد من كلاسيكيات التسعينات بتباين لوني جريء", tool: "أقلام تحبير فلوماستر وألوان غواش مشبعة" },
+                { text: "✨ أسلوب آخر خاص بك...", isCustom: true }
+            ];
+            this.renderDirectorOptions(options);
+        } else if (characters.length === 0) {
+            const creator = creators[0];
+            this.directorChatState = { type: 'CREATE_CHARACTER', creatorId: creator.id };
+            this.directorMessage.innerHTML = `✍️ الرسام الكوني <strong>[${creator.title}]</strong> جاهز ويريد رسم شخصيته الأولى في هذا البعد!<br>ما هو الدور السردي المقترح لهذه الشخصية؟`;
+
+            const options = [
+                { text: "👤 البطل المستيقظ (المتمرد)", val: "شخصية مستيقظة تدرك أنها مرسومة بحبر حاد وتتحكم بفرشاتها الخاصة", role: "شخصية مستيقظة تدرك أنها مرسومة (Awakened)" },
+                { text: "🛡️ حارس البعد الكوني (حامي النظام)", val: "حارس البعد الذي يمثل قوانين الألوان الثابتة ويسعى لمنع الاندماج", role: "حارس الأزمان واللوحات (Time Keeper)" },
+                { text: "🌌 كائن هجين غامض", val: "كائن غريب مصنوع من قصاصات ورق ورسومات غير مكتملة يساعد الأبطال", role: "مخلوق مساند غامض" },
+                { text: "✍️ دور آخر خاص بك...", isCustom: true }
+            ];
+            this.renderDirectorOptions(options);
+        } else if (environments.length === 0) {
+            const creator = creators[0];
+            const character = characters[0];
+            this.directorChatState = { type: 'CREATE_ENVIRONMENT', creatorId: creator.id, characterId: character.id };
+            this.directorMessage.innerHTML = `🌌 الشخصية <strong>[${character.title}]</strong> تائهة في الفراغ! لنصمم لها بيئتها الأولى لتبدأ قصتها.<br>أين تقع هذه البيئة المرجعية؟`;
+
+            const options = [
+                { text: "💧 لوحة مائعة عائمة", val: "موقع تماس الأبعاد الكونية حيث تتداخل اللوحات الزيتية المائعة مع الخطوط الحبرية الجافة", envType: "داخل لوحة قماشية مائعة (Fluid Canvas Interior)", clash: "متوسطة" },
+                { text: "📚 دهليز الأوراق وقصاصات الرصاص", val: "ممر تحت البوابة الكونية يحتوي على لوحات كلاسيكية غير مكتملة وقصاصات ورقية معلقة", envType: "دهليز قصاصات الورق والغرافيت (Graphite Debris)", clash: "خفيفة" },
+                { text: "🏙️ مدينة الحبر المضيء (Neon Ink)", val: "مدينة ضخمة مرسومة بخطوط حبر النيون المضيء ذات الجاذبية المائلة", envType: "أفق مدينة الحبر المضيء (Neon Ink City Skyline)", clash: "شديدة" },
+                { text: "✍️ بيئة أخرى خاصة بك...", isCustom: true }
+            ];
+            this.renderDirectorOptions(options);
+        } else {
+            const tasks = [
+                {
+                    type: 'CREATE_CREATOR_RAND',
+                    text: `🧠 ما رأيك في توسيع الكون بإضافة رسام كوني جديد؟ سيجلب هذا فصائل وخطوط رسم جديدة للصدام! ما هو الأسلوب الجديد المقترح؟`,
+                    options: [
+                        { text: "🎨 رسم زيتي مائي مائع (Watercolor)", val: "رسم مائي انسيابي بألوان الباستيل المائعة الشفافة", tool: "فرشاة مائية مشبعة بالماء الجاري" },
+                        { text: "🖌️ خطوط غرافيت رصاص جافة (Sketch)", val: "رسم تظليل قلم رصاص غرافيتي خشن مع طبقات تظليل ميكانيكية", tool: "قلم رصاص غرافيت جاف 4B" },
+                        { text: "أخرى...", isCustom: true }
+                    ]
+                },
+                {
+                    type: 'CREATE_CHARACTER_RAND',
+                    text: `👤 الرسامون يطالبون بالمزيد من الأبطال! لنبتكر شخصية جديدة تنتمي لأحد الأبعاد المتداخلة. ما هو دورها؟`,
+                    options: [
+                        { text: "⚔️ مقاتل فئة قوى المحو (Erasers)", val: "مقاتل غامض يحمل ممحاة فوضى عملاقة لمحو الخطوط الزائدة", role: "قوى المحو الكوني (The Eraser)" },
+                        { text: "🎭 مرافق ساخر ذو أبعاد هجينة", val: "كائن ثنائي الأبعاد مضحك يسخر من المشاهدين ويعلق على الأحداث", role: "مرافق ميتافيزيقي" },
+                        { text: "أخرى...", isCustom: true }
+                    ]
+                },
+                {
+                    type: 'CREATE_SCENARIO_RAND',
+                    text: `📝 لدينا شخصيات وبيئات! ما رأيك في نسج سيناريو قصة جديد يجمعهما في مغامرة؟ ما نوع المغامرة؟`,
+                    options: [
+                        { text: "💥 معركة الصدام البصري الأول", val: "سيناريو يوثق اللحظة الأولى لتصادم أسلوب الرسام الكلاسيكي بالمانجا الحديثة", category: "دراما الصدام المرئي" },
+                        { text: "🗝️ فك شفرة الخطوط المفقودة", val: "مغامرة لحل ألغاز في دهليز الأكواد المفقودة بمساعدة المشاهد", category: "غموض وفلسفة كوكبية" },
+                        { text: "أخرى...", isCustom: true }
+                    ]
+                }
+            ];
+
+            const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
+            this.directorChatState = { type: randomTask.type };
+            this.directorMessage.innerHTML = randomTask.text;
+            this.renderDirectorOptions(randomTask.options);
+        }
+    }
+
+    renderDirectorOptions(options) {
+        if (!this.directorOptions) return;
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-secondary';
+            btn.style.textAlign = 'right';
+            btn.style.fontSize = '0.85rem';
+            btn.style.padding = '8px 12px';
+            btn.innerHTML = opt.text;
+            
+            btn.addEventListener('click', () => {
+                if (opt.isCustom) {
+                    this.directorCustomContainer.style.display = 'flex';
+                    this.directorCustomVal.focus();
+                } else {
+                    this.processDirectorAction(opt);
+                }
+            });
+            this.directorOptions.appendChild(btn);
+        });
+    }
+
+    processDirectorAction(choice) {
+        const state = this.directorChatState;
+        
+        if (state.type === 'CREATE_CREATOR' || state.type === 'CREATE_CREATOR_RAND') {
+            const title = choice.text.replace(/^[^\s]+\s+/, '');
+            const style = choice.val;
+            const tool = choice.tool;
+            const assetId = 'wiz-creator-' + Date.now();
+            
+            const newCreator = {
+                id: assetId,
+                type: 'creator',
+                title: `الرسام: ${title}`,
+                desc: `رسام كوني ولد بمقترح المرشد التفاعلي. أسلوبه: ${style}.`,
+                driveUrl: 'https://drive.google.com/drive/folders/wizard-session',
+                status: 'finished',
+                subOptions: {
+                    artStyle: style,
+                    tool: tool
+                },
+                createdAt: new Date().toISOString()
+            };
+            this.assets.push(newCreator);
+            this.saveAssets();
+            alert(`🎨 تم إنشاء الرسام الكوني بنجاح: [${newCreator.title}]!`);
+            this.updateDirectorChat();
+        } else if (state.type === 'CREATE_CHARACTER' || state.type === 'CREATE_CHARACTER_RAND') {
+            const title = choice.text.replace(/^[^\s]+\s+/, '');
+            const desc = choice.val;
+            const role = choice.role;
+            const assetId = 'wiz-character-' + Date.now();
+            
+            const newChar = {
+                id: assetId,
+                type: 'character',
+                title: title,
+                desc: desc,
+                driveUrl: 'https://drive.google.com/drive/folders/wizard-session',
+                status: 'finished',
+                relatedCreator: state.creatorId || "",
+                subOptions: {
+                    charClass: role
+                },
+                createdAt: new Date().toISOString()
+            };
+            this.assets.push(newChar);
+            this.saveAssets();
+            alert(`👤 تم تصميم الشخصية وإضافتها للكون: [${newChar.title}]!`);
+            this.updateDirectorChat();
+        } else if (state.type === 'CREATE_ENVIRONMENT') {
+            const title = choice.text.replace(/^[^\s]+\s+/, '');
+            const desc = choice.val;
+            const envType = choice.envType;
+            const clash = choice.clash;
+            const assetId = 'wiz-environment-' + Date.now();
+            
+            const newEnv = {
+                id: assetId,
+                type: 'environment',
+                title: title,
+                desc: desc,
+                driveUrl: 'https://drive.google.com/drive/folders/wizard-session',
+                status: 'finished',
+                relatedCreator: state.creatorId || "",
+                subOptions: {
+                    envType: envType,
+                    clashDensity: clash
+                },
+                createdAt: new Date().toISOString()
+            };
+            this.assets.push(newEnv);
+            this.saveAssets();
+            alert(`🌌 تم تصميم البيئة وإضافتها للكون: [${newEnv.title}]!`);
+            this.updateDirectorChat();
+        } else if (state.type === 'CREATE_SCENARIO_RAND') {
+            const title = choice.text.replace(/^[^\s]+\s+/, '');
+            const desc = choice.val;
+            const cat = choice.category;
+            const assetId = 'wiz-scenario-' + Date.now();
+            
+            const newScen = {
+                id: assetId,
+                type: 'scenario',
+                title: title,
+                desc: desc,
+                driveUrl: 'https://drive.google.com/drive/folders/wizard-session',
+                status: 'finished',
+                subOptions: {
+                    genre: cat,
+                    style: "سرد تفصيلي"
+                },
+                createdAt: new Date().toISOString()
+            };
+            this.assets.push(newScen);
+            this.saveAssets();
+            alert(`📝 تم صياغة سيناريو المشهد بنجاح: [${newScen.title}]!`);
+            this.updateDirectorChat();
+        }
+    }
+
+    handleDirectorCustomSubmit() {
+        const val = this.directorCustomVal.value.trim();
+        if (!val) {
+            alert("يرجى كتابة اقتراح أولاً.");
+            return;
+        }
+
+        const state = this.directorChatState;
+        const choice = {
+            text: val,
+            val: `أصل مخصص تم تعبئته بواسطة الكاتب: ${val}`,
+            tool: "أداة مخصصة",
+            role: "دور مخصص",
+            envType: "بيئة مخصصة",
+            clash: "متوسطة",
+            category: "تصنيف مخصص"
+        };
+        this.processDirectorAction(choice);
     }
 }
 
