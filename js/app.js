@@ -2383,7 +2383,8 @@ ${wrText}
                 music: 'موسيقى كونيّة',
                 comic: 'قصة مصورة',
                 video: 'فيديو متحرك',
-                game: 'لعبة تحميل'
+                game: 'لعبة تحميل',
+                project_summary: 'مشروع متكامل'
             };
 
             const statusLabels = {
@@ -2485,6 +2486,18 @@ ${wrText}
                     <h3>${asset.title}</h3>
                     ${creatorDetailsHtml}
                     <p class="asset-card-desc">${asset.desc || 'لا يوجد وصف متاح.'}</p>
+                    
+                    ${asset.type === 'project_summary' && asset.content ? `
+                    <div style="margin-top: 10px; margin-bottom: 10px; display: flex; gap: 8px;">
+                        <button class="btn btn-secondary btn-download-md" style="flex: 1; font-size:0.75rem; padding: 6px 8px; display:inline-flex; justify-content:center; gap:4px; background-color: var(--color-accent-light); color: var(--color-accent); border: 1px solid rgba(99, 102, 241, 0.2); font-weight: bold; cursor: pointer;">
+                            📥 مستند الـ MD
+                        </button>
+                        <button class="btn btn-secondary btn-view-summary" style="flex: 1; font-size:0.75rem; padding: 6px 8px; display:inline-flex; justify-content:center; gap:4px; background-color: var(--color-cyan-light); color: var(--color-cyan); border: 1px solid rgba(6, 182, 212, 0.2); font-weight: bold; cursor: pointer;">
+                            📊 جدول الأصول
+                        </button>
+                    </div>
+                    ` : ''}
+
                     ${relationHtml ? `<div class="asset-relations">${relationHtml}</div>` : ''}
                     
                     ${asset.usedPrompt ? `
@@ -2516,8 +2529,145 @@ ${wrText}
             card.querySelector('.btn-edit').addEventListener('click', () => this.openEditModal(asset));
             card.querySelector('.btn-delete').addEventListener('click', () => this.deleteAsset(asset.id));
 
+            if (asset.type === 'project_summary') {
+                const btnDownload = card.querySelector('.btn-download-md');
+                if (btnDownload) {
+                    btnDownload.addEventListener('click', () => {
+                        const blob = new Blob([asset.content], { type: 'text/markdown;charset=utf-8;' });
+                        const link = document.createElement("a");
+                        link.setAttribute("href", URL.createObjectURL(blob));
+                        link.setAttribute("download", `${asset.title.replace(/[\/\\:*?"<>|]/g, '_')}.md`);
+                        link.click();
+                    });
+                }
+                const btnViewSummary = card.querySelector('.btn-view-summary');
+                if (btnViewSummary) {
+                    btnViewSummary.addEventListener('click', () => this.showProjectDetailsModal(asset));
+                }
+            }
+
             this.assetsGrid.appendChild(card);
         });
+    }
+
+    showProjectDetailsModal(asset) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay open';
+        modal.style.zIndex = '300';
+        
+        const sessionData = asset.wizardSessionData || {};
+        
+        let rowsHtml = '';
+        const toolMap = {
+            source: "Gemini / ChatGPT",
+            scenario: "Gemini / ChatGPT",
+            written: "Gemini / ChatGPT",
+            creator: "Midjourney",
+            character: "Midjourney v6",
+            environment: "Midjourney v6",
+            voice: "Google TTS",
+            music: "Suno AI",
+            comic: "Midjourney",
+            video: "Runway Gen-3",
+            game: "Unity 2D"
+        };
+        const outputMap = {
+            source: "مستند قصة سردي",
+            scenario: "سيناريو تفصيلي",
+            written: "مخطوطة حوار",
+            creator: "دليل أسلوب فني",
+            character: "لوحة تصميم شخصية",
+            environment: "لوحة تصميم بيئة",
+            voice: "ملف صوتي تعبيري",
+            music: "ساوندتراك خلفي",
+            comic: "قصة مصورة",
+            video: "لقطة متحركة",
+            game: "لعبة مصغرة WebGL"
+        };
+        const formatMap = {
+            source: "MD (.md)",
+            scenario: "MD (.md)",
+            written: "MD (.md)",
+            creator: "PDF / MD",
+            character: "PNG (.png)",
+            environment: "PNG (.png)",
+            voice: "MP3 (.mp3)",
+            music: "MP3 (.mp3)",
+            comic: "PDF / PNG",
+            video: "MP4 (.mp4)",
+            game: "ZIP (.zip)"
+        };
+        const arabicTypes = {
+            source: "📖 مصدر سردي",
+            scenario: "📝 سيناريو",
+            written: "📜 مخطوطة",
+            creator: "🎨 رسام",
+            character: "👤 شخصية",
+            environment: "🌌 بيئة",
+            voice: "🎙️ صوت",
+            music: "🎵 موسيقى",
+            comic: "📚 قصة مصورة",
+            video: "🎬 فيديو",
+            game: "🎮 لعبة"
+        };
+
+        Object.keys(sessionData).forEach(t => {
+            const ids = sessionData[t] || [];
+            ids.forEach(id => {
+                const subAsset = this.assets.find(a => a.id === id);
+                if (subAsset) {
+                    rowsHtml += `
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 10px; border: 1px solid var(--border-color);">
+                                <strong>${arabicTypes[t] || t}</strong><br>
+                                <span style="font-size:0.75rem; color:var(--color-cyan);">${subAsset.title}</span>
+                            </td>
+                            <td style="padding: 10px; border: 1px solid var(--border-color); max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${subAsset.usedPrompt || ''}">
+                                ${subAsset.usedPrompt || 'لا يوجد برومبت'}
+                            </td>
+                            <td style="padding: 10px; border: 1px solid var(--border-color);">${toolMap[t] || ''}</td>
+                            <td style="padding: 10px; border: 1px solid var(--border-color);">${outputMap[t] || ''}</td>
+                            <td style="padding: 10px; border: 1px solid var(--border-color); font-weight: bold; color: var(--color-green);">${formatMap[t] || ''}</td>
+                        </tr>
+                    `;
+                }
+            });
+        });
+
+        if (!rowsHtml) {
+            rowsHtml = `<tr><td colspan="5" style="text-align:center; padding:20px; color:var(--text-tertiary);">لا توجد أصول مرتبطة بهذا المشروع في الذاكرة المحلية حالياً.</td></tr>`;
+        }
+
+        modal.innerHTML = `
+            <div class="modal-card" style="max-width: 900px; width: 95%;">
+                <div class="modal-header">
+                    <h3>📊 ملخص أصول المشروع: ${asset.title}</h3>
+                    <button class="close-btn" onclick="this.closest('.modal-overlay').remove()">×</button>
+                </div>
+                <div style="padding: 20px; overflow-y: auto; max-height: 70vh;">
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: right; font-size: 0.85rem; background: var(--bg-primary);">
+                            <thead>
+                                <tr style="background-color: var(--bg-tertiary); border-bottom: 2px solid var(--border-color);">
+                                    <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">نوع الأصل والاسم</th>
+                                    <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">البرومبت المقترح للتوليد</th>
+                                    <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">الأداة المستهدفة (Tool)</th>
+                                    <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">الناتج المتوقع (Expected Output)</th>
+                                    <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">صيغة الملف (Format)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rowsHtml}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="padding: 15px; border-top:1px solid var(--border-color); display:flex; justify-content: flex-end; background:var(--bg-secondary);">
+                    <button class="btn btn-secondary" onclick="this.closest('.modal-overlay').remove()">إغلاق</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
     }
 
     // Tab 3: Render AI Production Guide Details
@@ -3772,7 +3922,8 @@ Show how style shaders swap dynamically.`
             'comic': '07_Comics_Storyboards',
             'video': '08_Videos_Cinematics',
             'game': '09_Downloadable_Games',
-            'written': '10_Written_Texts'
+            'written': '10_Written_Texts',
+            'project_summary': 'Sketchic_Projects'
         };
 
         const folderName = folderMapping[type] || 'General_Assets';
@@ -4369,11 +4520,7 @@ Show how style shaders swap dynamically.`
         }
     }
 
-    async saveFileToGDrive(folderName, safeTitle, mdContent) {
-        const originalText = this.btnSaveToDrive.innerHTML;
-        this.btnSaveToDrive.disabled = true;
-        this.btnSaveToDrive.innerHTML = `<span>⏳</span> <span>جاري الحفظ في Drive...</span>`;
-
+    async uploadFileToGDrive(folderName, safeTitle, mdContent) {
         try {
             const rootId = await this.getOrCreateFolder("Sketchic_Universe_Root");
             const subFolderId = await this.getOrCreateFolder(folderName, rootId);
@@ -4451,8 +4598,24 @@ Show how style shaders swap dynamically.`
             
             if (!detailsResponse.ok) throw new Error("Fetch webViewLink failed");
             const detailsData = await detailsResponse.json();
-            const webViewLink = detailsData.webViewLink;
-            
+            return detailsData.webViewLink;
+        } catch (err) {
+            console.error("Failed to upload to Google Drive", err);
+            return null;
+        }
+    }
+
+    async saveFileToGDrive(folderName, safeTitle, mdContent) {
+        if (!this.btnSaveToDrive) return;
+        const originalText = this.btnSaveToDrive.innerHTML;
+        this.btnSaveToDrive.disabled = true;
+        this.btnSaveToDrive.innerHTML = `<span>⏳</span> <span>جاري الحفظ في Drive...</span>`;
+
+        try {
+            const webViewLink = await this.uploadFileToGDrive(folderName, safeTitle, mdContent);
+            if (!webViewLink) {
+                throw new Error("Upload failed");
+            }
             this.assetDriveUrlInput.value = webViewLink;
             alert(`🎉 تم حفظ الملف بنجاح وتحديثه مباشرة على Google Drive! \n\nالرابط الفعلي للملف:\n${webViewLink}`);
         } catch (err) {
@@ -5453,7 +5616,7 @@ Show how style shaders swap dynamically.`
         link.click();
     }
 
-    endCurrentProject() {
+    async endCurrentProject() {
         if (!confirm("🛑 هل أنت متأكد من رغبتك في إنهاء هذا المشروع وحفظه في الأرشيف؟")) {
             return;
         }
@@ -5470,9 +5633,9 @@ Show how style shaders swap dynamically.`
                     const asset = this.assets.find(a => a.id === id);
                     if (asset) {
                         md += `### 🔹 أصل: ${asset.title}\n`;
-                        md += `* **الوصف**: 	ext${asset.desc}\n`;
-                        md += `* **رابط Google Drive**: 	ext${asset.driveUrl}\n`;
-                        if (asset.usedPrompt) md += `* **موجه التوليد (Prompt)**:\n\`\`\`text\n	ext${asset.usedPrompt}\n\`\`\`\n`;
+                        md += `* **الوصف**: ${asset.desc}\n`;
+                        md += `* **رابط Google Drive**: ${asset.driveUrl}\n`;
+                        if (asset.usedPrompt) md += `* **موجه التوليد (Prompt)**:\n\`\`\`text\n${asset.usedPrompt}\n\`\`\`\n`;
                         md += `\n`;
                     }
                 });
@@ -5485,13 +5648,34 @@ Show how style shaders swap dynamically.`
         const firstAssetId = (this.wizardSessionData['source'] && this.wizardSessionData['source'][0]);
         const firstAsset = firstAssetId ? this.assets.find(a => a.id === firstAssetId) : null;
         const projTitle = firstAsset ? `مشروع: ${firstAsset.title}` : `مشروع سكتشيك كوني - ${Date.now()}`;
+        const safeTitle = projTitle.replace(/[\/\\:*?"<>|]/g, '_');
+
+        let driveUrl = document.getElementById('wizard-global-drive-url')?.value || 'https://drive.google.com/drive/folders/wizard-session';
+        let alertMsg = `💾 تم حفظ مستند المشروع النهائي بنجاح:\n1. كقاعدة بيانات داخل النظام باسم [${projTitle}].\n`;
+
+        if (this.isGDriveConnected && this.gdriveAccessToken) {
+            try {
+                const uploadedUrl = await this.uploadFileToGDrive("Sketchic_Projects", safeTitle, md);
+                if (uploadedUrl) {
+                    driveUrl = uploadedUrl;
+                    alertMsg += `2. تم رفعه ومزامنته في Google Drive تحت المجلد [Sketchic_Projects] بنجاح.\nالرابط الفعلي للمستند:\n${driveUrl}`;
+                } else {
+                    alertMsg += `2. ⚠️ فشل الرفع الفعلي لـ Google Drive (سنستخدم المسار المحلي مؤقتاً).`;
+                }
+            } catch (err) {
+                console.error("GDrive project summary upload error", err);
+                alertMsg += `2. ⚠️ فشل الرفع لـ Google Drive بسبب خطأ في الشبكة أو الصلاحيات.`;
+            }
+        } else {
+            alertMsg += `2. تم محاكاة رفعه ومزامنته في Google Drive تحت المجلد الموحد (Drive غير متصل).`;
+        }
         
         const projectAsset = {
             id: projId,
             type: 'project_summary',
             title: projTitle,
             desc: `مستند المشروع الإنتاجي المتكامل المولد بالطيار الآلي. يشمل الأصول والبرومبتات.`,
-            driveUrl: document.getElementById('wizard-global-drive-url')?.value || 'https://drive.google.com/drive/folders/wizard-session',
+            driveUrl: driveUrl,
             status: 'finished',
             projectStatus: 'ended',
             parentProject: parentProjId,
@@ -5503,7 +5687,7 @@ Show how style shaders swap dynamically.`
         this.assets.push(projectAsset);
         this.saveAssets();
 
-        alert(`💾 تم حفظ مستند المشروع النهائي بنجاح:\n1. كقاعدة بيانات داخل النظام باسم [	ext${projTitle}].\n2. تم محاكاة رفعه ومزامنته في Google Drive تحت المجلد الموحد.`);
+        alert(alertMsg);
         
         if (this.btnWizardEndProject) this.btnWizardEndProject.style.display = 'none';
         if (this.btnWizardExtendProject) {
