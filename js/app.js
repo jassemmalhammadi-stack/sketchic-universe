@@ -222,6 +222,26 @@ class SketchicApp {
         document.getElementById('btn-close-modal').addEventListener('click', () => this.closeModal());
         document.getElementById('btn-cancel-modal').addEventListener('click', () => this.closeModal());
         
+        // Google Vids Exporter Modal Bindings
+        const btnCloseVids = document.getElementById('btn-close-vids-modal');
+        if (btnCloseVids) {
+            btnCloseVids.addEventListener('click', () => {
+                document.getElementById('vids-export-modal').style.display = 'none';
+            });
+        }
+        const btnCopyPrompts = document.getElementById('btn-copy-vids-prompts');
+        if (btnCopyPrompts) {
+            btnCopyPrompts.addEventListener('click', () => this.copyVidsText('prompts'));
+        }
+        const btnCopyVO = document.getElementById('btn-copy-vids-vo');
+        if (btnCopyVO) {
+            btnCopyVO.addEventListener('click', () => this.copyVidsText('vo'));
+        }
+        const btnDownloadCSV = document.getElementById('btn-download-vids-csv');
+        if (btnDownloadCSV) {
+            btnDownloadCSV.addEventListener('click', () => this.downloadVidsCSV());
+        }
+
         // Form asset type change (Prerequisite triggers)
         this.assetTypeSelect.addEventListener('change', () => this.handleAssetTypeChange());
         this.relatedScenarioSelect.addEventListener('change', () => {
@@ -2496,13 +2516,18 @@ ${wrText}
                     ${creatorDetailsHtml}
                     <p class="asset-card-desc">${asset.desc || 'لا يوجد وصف متاح.'}</p>
                     
-                    ${asset.type === 'project_summary' && asset.content ? `
+                    ${(asset.type === 'project_summary' || asset.type === 'scenario') ? `
                     <div style="margin-top: 10px; margin-bottom: 10px; display: flex; gap: 8px;">
+                        ${asset.type === 'project_summary' && asset.content ? `
                         <button class="btn btn-secondary btn-download-md" style="flex: 1; font-size:0.75rem; padding: 6px 8px; display:inline-flex; justify-content:center; gap:4px; background-color: var(--color-accent-light); color: var(--color-accent); border: 1px solid rgba(99, 102, 241, 0.2); font-weight: bold; cursor: pointer;">
                             📥 مستند الـ MD
                         </button>
                         <button class="btn btn-secondary btn-view-summary" style="flex: 1; font-size:0.75rem; padding: 6px 8px; display:inline-flex; justify-content:center; gap:4px; background-color: var(--color-cyan-light); color: var(--color-cyan); border: 1px solid rgba(6, 182, 212, 0.2); font-weight: bold; cursor: pointer;">
                             📊 جدول الأصول
+                        </button>
+                        ` : ''}
+                        <button class="btn btn-secondary btn-export-vids" style="flex: 1; font-size:0.75rem; padding: 6px 8px; display:inline-flex; justify-content:center; gap:4px; background-color: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); font-weight: bold; cursor: pointer;">
+                            🎬 لـ Google Vids
                         </button>
                     </div>
                     ` : ''}
@@ -2537,6 +2562,11 @@ ${wrText}
             // Card Button Listeners
             card.querySelector('.btn-edit').addEventListener('click', () => this.openEditModal(asset));
             card.querySelector('.btn-delete').addEventListener('click', () => this.deleteAsset(asset.id));
+
+            const btnVids = card.querySelector('.btn-export-vids');
+            if (btnVids) {
+                btnVids.addEventListener('click', () => this.openVidsExportModal(asset.id));
+            }
 
             if (asset.type === 'project_summary') {
                 const btnDownload = card.querySelector('.btn-download-md');
@@ -6465,6 +6495,118 @@ Show how style shaders swap dynamically.`
         };
         this.processDirectorAction(choice);
     }
+    openVidsExportModal(assetId) {
+        const asset = this.assets.find(a => a.id === assetId);
+        if (!asset) return;
+
+        // Determine title, setting, and description
+        let title = asset.title;
+        let desc = asset.desc || "";
+        
+        let creatorStyle = "لوحة زيتية كلاسيكية مع حبر مانجا";
+        if (asset.relatedCreator) {
+            const creator = this.assets.find(a => a.id === asset.relatedCreator);
+            if (creator && creator.subOptions) {
+                creatorStyle = creator.subOptions.artStyle || creatorStyle;
+            }
+        }
+
+        let charName = "البطل المستيقظ";
+        if (asset.relatedCharacters && asset.relatedCharacters.length > 0) {
+            const char = this.assets.find(a => a.id === asset.relatedCharacters[0]);
+            if (char) charName = char.title;
+        }
+
+        // Generate 4 narrative shots for Google Vids
+        this.currentVidsShots = [
+            {
+                shot: "1",
+                visual: `لقطة تأسيسية واسعة (Establishing Wide Shot) للبيئة الكونية: [${title}]. الأسلوب الفني: [${creatorStyle}]. تداخل الألوان بدون اندماج، تفاصيل حية وعميقة.`,
+                vo: `أهلاً بكم في هذا البعد الفني الجديد من عوالم سكتشيك، حيث يتشكل الواقع من ضربات الفرشاة وقصاصات الورق.`,
+                audio: "موسيقى تصويرية غامضة وهادئة (Cosmic Ambient Pad)"
+            },
+            {
+                shot: "2",
+                visual: `لقطة متوسطة (Medium Shot) تظهر الشخصية [${charName}] وهي تكتشف أبعاد هذا العالم. أسلوب الرسم متباين بوضوح مع الخلفية.`,
+                vo: `هنا يستيقظ البطل ليجد نفسه مرسوماً بحبر حاد، متحدياً قوانين اللوحة والخطوط التي رسمتها فرشاة المخرج.`,
+                audio: "إضافة صوت إيقاعي بطيء متصاعد (Slow synth build-up)"
+            },
+            {
+                shot: "3",
+                visual: `لقطة قريبة سريعة (Close-up dynamic shot) توثق اللحظة الدرامية وتصادم الأساليب البصرية عند حافة الألوان.`,
+                vo: `عند التماس المباشر للخطوط المائعة، يرتفع التباين ليعلن عن ولادة قصة جديدة تعبر عن صراع الأشكال والجاذبية.`,
+                audio: "إيقاع أوركسترالي متصاعد حاد لقمة الإثارة"
+            },
+            {
+                shot: "4",
+                visual: `لقطة سينمائية نهائية واسعة للكون وهو يستقر في مجلد سكتشيك الموحد في السحاب.`,
+                vo: `وهكذا ينتهي المشهد الأول، ليبقى هذا البعد محفوظاً كأثر كوني متكامل في سجلات المخرج البصري.`,
+                audio: "نهاية ناعمة مع نغمات بيانو منفردة تتلاشى تدريجياً"
+            }
+        ];
+
+        // Render in Table
+        const tbody = document.getElementById('vids-export-table-body');
+        if (tbody) {
+            tbody.innerHTML = "";
+            this.currentVidsShots.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = "1px solid var(--border-color)";
+                tr.innerHTML = `
+                    <td style="padding: 10px; border-left: 1px solid var(--border-color); text-align: center; font-weight: bold; color: var(--color-cyan);">${s.shot}</td>
+                    <td style="padding: 10px; border-left: 1px solid var(--border-color); color: var(--text-primary);">${s.visual}</td>
+                    <td style="padding: 10px; border-left: 1px solid var(--border-color); color: var(--text-secondary);">${s.vo}</td>
+                    <td style="padding: 10px; color: var(--text-secondary);">${s.audio}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Show Modal
+        const modal = document.getElementById('vids-export-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+        }
+        this.currentExportAsset = asset;
+    }
+
+    copyVidsText(type) {
+        if (!this.currentVidsShots) return;
+        let text = "";
+        if (type === 'prompts') {
+            text = this.currentVidsShots.map(s => `Shot ${s.shot} Visual: ${s.visual}`).join('\n\n');
+        } else {
+            text = this.currentVidsShots.map(s => `Shot ${s.shot} Voiceover: ${s.vo}`).join('\n\n');
+        }
+        navigator.clipboard.writeText(text).then(() => {
+            alert("📋 تم نسخ النصوص إلى الحافظة بنجاح!");
+        }).catch(err => {
+            console.error("Failed to copy:", err);
+        });
+    }
+
+    downloadVidsCSV() {
+        if (!this.currentVidsShots || !this.currentExportAsset) return;
+        
+        // CSV Content with BOM for Arabic support
+        let csvContent = "\ufeff";
+        csvContent += "اللقطة,الوصف البصري (Imagen 3),التعليق الصوتي (Voiceover),المؤثرات الصوتية والموسيقى\n";
+        
+        this.currentVidsShots.forEach(s => {
+            const visual = s.visual.replace(/"/g, '""');
+            const vo = s.vo.replace(/"/g, '""');
+            const audio = s.audio.replace(/"/g, '""');
+            csvContent += `"${s.shot}","${visual}","${vo}","${audio}"\n`;
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const safeTitle = this.currentExportAsset.title.replace(/[\/\\:*?"<>|]/g, '_');
+        link.setAttribute("href", URL.createObjectURL(blob));
+        link.setAttribute("download", `Vids_Storyboard_${safeTitle}.csv`);
+        link.click();
+    }
+
 }
 
 // Instantiate the App on window load

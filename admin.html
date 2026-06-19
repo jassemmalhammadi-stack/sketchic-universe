@@ -1542,6 +1542,51 @@
         </div>
     </div>
 
+    <!-- Modal: Google Vids Exporter -->
+    <div class="modal-overlay" id="vids-export-modal" style="display: none;">
+        <div class="modal-card" style="max-width: 950px; width: 95%;">
+            <div class="modal-header" style="border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;">
+                <h3 style="display: flex; align-items: center; gap: 8px; margin: 0; color: var(--color-cyan);">
+                    🎬 تجهيز لـ Google Vids (تصدير اللقطات والسيناريو)
+                </h3>
+                <button class="close-btn" id="btn-close-vids-modal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+            </div>
+            
+            <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 15px;">
+                💡 يقسم هذا المصدر السيناريو إلى لقطات متتالية جاهزة للإدخال كبطاقات مشهد في <strong>Google Vids</strong>. يمكنك نسخ الموجهات البصرية والنصوص مباشرة أو تحميل الملف بالكامل.
+            </div>
+
+            <div style="max-height: 400px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 15px; background: var(--bg-secondary);">
+                <table style="width: 100%; border-collapse: collapse; text-align: right; font-size: 0.85rem;" id="vids-export-table">
+                    <thead>
+                        <tr style="background-color: var(--bg-tertiary); border-bottom: 1px solid var(--border-color);">
+                            <th style="padding: 10px; border-left: 1px solid var(--border-color); width: 60px;">اللقطة</th>
+                            <th style="padding: 10px; border-left: 1px solid var(--border-color); width: 320px;">الوصف البصري (للتوليد)</th>
+                            <th style="padding: 10px; border-left: 1px solid var(--border-color); width: 280px;">التعليق الصوتي (Voiceover)</th>
+                            <th style="padding: 10px;">المؤثرات الصوتية والموسيقى</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vids-export-table-body">
+                        <!-- Dynamic Rows here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-actions" style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-prompts">📋 نسخ الموجهات البصرية</button>
+                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-vo">🎙️ نسخ الحوارات والصوت</button>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="btn btn-primary" id="btn-download-vids-csv" style="background-color: #10b981;">📥 تحميل CSV كجدول</button>
+                    <a href="https://workspace.google.com/products/vids/" target="_blank" class="btn btn-primary" style="background-color: #4f46e5; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                        🚀 فتح Google Vids 🔗
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Google APIs -->
     <script src="https://apis.google.com/js/api.js" async defer></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
