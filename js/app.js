@@ -226,7 +226,7 @@ class SketchicApp {
         const btnCloseVids = document.getElementById('btn-close-vids-modal');
         if (btnCloseVids) {
             btnCloseVids.addEventListener('click', () => {
-                document.getElementById('vids-export-modal').style.display = 'none';
+                document.getElementById('vids-export-modal').classList.remove('open');
             });
         }
         const btnCopyPrompts = document.getElementById('btn-copy-vids-prompts');
@@ -6565,7 +6565,7 @@ Show how style shaders swap dynamically.`
         // Show Modal
         const modal = document.getElementById('vids-export-modal');
         if (modal) {
-            modal.style.display = 'flex';
+            modal.classList.add('open');
         }
         this.currentExportAsset = asset;
     }
