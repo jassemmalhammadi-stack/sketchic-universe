@@ -199,10 +199,13 @@ class SketchicApp {
         this.btnCopyScenePrompt = document.getElementById('btn-copy-scene-prompt');
         this.clashPreviewStage = document.getElementById('clash-preview-stage');
         this.btnClearScene = document.getElementById('btn-clear-scene');
-        this.sceneDialogueInput = document.getElementById('scene-dialogue');
         this.sceneAudioProfileSelect = document.getElementById('scene-audio-profile');
         this.btnAutoStoryboard = document.getElementById('btn-auto-storyboard');
         this.btnGenerateEpisodePackage = document.getElementById('btn-generate-episode-package');
+
+        // Dynamic Scene Frames Builder
+        this.btnAddSceneFrame = document.getElementById('btn-add-scene-frame');
+        this.sceneFramesContainer = document.getElementById('scene-frames-container');
     }
 
     bindEvents() {
@@ -469,11 +472,15 @@ class SketchicApp {
         if (this.sceneScenarioSelect) {
             this.sceneScenarioSelect.addEventListener('change', () => this.updateSceneConsistencyPrompt());
         }
-        if (this.sceneDialogueInput) {
-            this.sceneDialogueInput.addEventListener('input', () => this.updateClashPreview());
+        if (this.btnAddSceneFrame) {
+            this.btnAddSceneFrame.addEventListener('click', () => this.addSceneFrameRow());
         }
-        if (this.sceneAudioProfileSelect) {
-            this.sceneAudioProfileSelect.addEventListener('change', () => {
+        if (this.sceneFramesContainer) {
+            this.sceneFramesContainer.addEventListener('input', () => {
+                this.updateSceneConsistencyPrompt();
+                this.updateClashPreview();
+            });
+            this.sceneFramesContainer.addEventListener('change', () => {
                 this.updateSceneConsistencyPrompt();
                 this.updateClashPreview();
             });
@@ -3557,6 +3564,78 @@ Show how style shaders swap dynamically.`
             opt.textContent = v.title;
             this.sceneVideoSelect.appendChild(opt);
         });
+
+        // Initialize frames container with one default frame if empty
+        if (this.sceneFramesContainer && this.sceneFramesContainer.children.length === 0) {
+            this.addSceneFrameRow();
+        }
+    }
+
+    addSceneFrameRow(desc = "", dialogue = "", refAssetIds = []) {
+        if (!this.sceneFramesContainer) return;
+        const index = this.sceneFramesContainer.children.length + 1;
+        
+        const row = document.createElement('div');
+        row.className = "scene-frame-row";
+        row.style.cssText = "border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; background: var(--bg-secondary); margin-bottom: 5px; position: relative;";
+        
+        // Populate options with all assets
+        let optionsHtml = "";
+        const typeLabels = {
+            character: "👤 شخصية",
+            environment: "🌌 بيئة",
+            prop: "🛡️ أداة ومقتنى"
+        };
+        const filterTypes = ['character', 'environment', 'prop'];
+        this.assets.forEach(asset => {
+            if (filterTypes.includes(asset.type)) {
+                const label = typeLabels[asset.type] || asset.type;
+                const isSelected = refAssetIds.includes(asset.id) ? "selected" : "";
+                optionsHtml += `<option value="${asset.id}" ${isSelected}>[${label}] ${asset.title}</option>`;
+            }
+        });
+
+        row.innerHTML = `
+            <button type="button" class="btn-remove-frame" style="position: absolute; left: 8px; top: 8px; background: transparent; border: none; color: var(--color-danger); cursor: pointer; font-size: 0.9rem; font-weight: bold;">✕</button>
+            <div style="font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; color: var(--color-cyan);">الإطار #<span class="frame-idx">${index}</span></div>
+            
+            <div class="form-group" style="margin-bottom: 8px;">
+                <input type="text" class="frame-desc" placeholder="وصف الإطار البصري للقطة (Frame Description)..." value="${desc}" style="width:100%; font-size:0.8rem; padding:6px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; box-sizing:border-box;" required>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 8px;">
+                <input type="text" class="frame-dialogue" placeholder="الحوار والترجمة (Dialogue & Subtitles)..." value="${dialogue}" style="width:100%; font-size:0.8rem; padding:6px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; box-sizing:border-box;">
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 0.72rem; display: block; margin-bottom: 2px; color: var(--text-secondary); font-weight:bold;">الأصول المرجعية للإطار (Reference Assets):</label>
+                <select class="frame-assets" multiple style="width:100%; font-size:0.75rem; padding:3px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; height: 60px; box-sizing:border-box;">
+                    ${optionsHtml}
+                </select>
+            </div>
+        `;
+
+        // Bind remove button
+        const removeBtn = row.querySelector('.btn-remove-frame');
+        removeBtn.addEventListener('click', () => {
+            row.remove();
+            this.updateFrameIndices();
+            this.updateSceneConsistencyPrompt();
+            this.updateClashPreview();
+        });
+
+        this.sceneFramesContainer.appendChild(row);
+        this.updateSceneConsistencyPrompt();
+        this.updateClashPreview();
+    }
+
+    updateFrameIndices() {
+        if (!this.sceneFramesContainer) return;
+        const rows = this.sceneFramesContainer.querySelectorAll('.scene-frame-row');
+        rows.forEach((row, i) => {
+            const idxSpan = row.querySelector('.frame-idx');
+            if (idxSpan) idxSpan.textContent = i + 1;
+        });
     }
 
     generateEpisodePackage() {
@@ -3625,7 +3704,10 @@ Show how style shaders swap dynamically.`
     clearSceneForm() {
         this.sceneForm.reset();
         this.sceneIdInput.value = "";
-        if (this.sceneDialogueInput) this.sceneDialogueInput.value = "";
+        if (this.sceneFramesContainer) {
+            this.sceneFramesContainer.innerHTML = "";
+            this.addSceneFrameRow();
+        }
         if (this.sceneAudioProfileSelect) this.sceneAudioProfileSelect.value = "default";
         const saveBtn = document.getElementById('btn-save-scene');
         if (saveBtn) saveBtn.textContent = "حفظ المشهد";
@@ -3648,11 +3730,25 @@ Show how style shaders swap dynamically.`
             return;
         }
 
-        const dialogue = this.sceneDialogueInput ? this.sceneDialogueInput.value : "";
-        const audioProfile = this.sceneAudioProfileSelect ? this.sceneAudioProfileSelect.value : "default";
-
-        const comicId = this.sceneComicSelect.value;
-        const videoId = this.sceneVideoSelect.value;
+        // Harvest frames
+        let frames = [];
+        if (this.sceneFramesContainer) {
+            const frameRows = this.sceneFramesContainer.querySelectorAll('.scene-frame-row');
+            frames = Array.from(frameRows).map(row => {
+                const desc = row.querySelector('.frame-desc').value.trim();
+                const dialogue = row.querySelector('.frame-dialogue').value.trim();
+                const assetsSelect = row.querySelector('.frame-assets');
+                const refAssetIds = Array.from(assetsSelect.selectedOptions).map(opt => opt.value);
+                return { desc, dialogue, refAssetIds };
+            });
+        }
+        if (frames.length === 0) {
+            frames.push({
+                desc: "مشهد عام لكون سكتشيك",
+                dialogue: dialogue,
+                refAssetIds: characterIds
+            });
+        }
 
         const sceneData = {
             id,
@@ -3663,6 +3759,7 @@ Show how style shaders swap dynamically.`
             audioProfile,
             comicId,
             videoId,
+            frames,
             createdAt: new Date().toISOString()
         };
 
@@ -3692,6 +3789,32 @@ Show how style shaders swap dynamically.`
             const comic = this.assets.find(a => a.id === s.comicId);
             const video = this.assets.find(a => a.id === s.videoId);
             
+            let framesHtml = "";
+            if (s.frames && s.frames.length > 0) {
+                framesHtml += `
+                    <div style="margin-top:8px; border-top:1px dashed var(--border-color); padding-top:8px;">
+                        <span class="scene-track-label" style="font-weight:bold; color:var(--color-cyan);">🖼️ لقطات وإطارات المشهد (${s.frames.length}):</span>
+                        <div style="display:flex; flex-direction:column; gap:6px; margin-top:5px;">
+                `;
+                s.frames.forEach((f, fIdx) => {
+                    const frameAssets = (f.refAssetIds || []).map(aid => this.assets.find(a => a.id === aid)).filter(Boolean);
+                    const assetsStr = frameAssets.map(a => `${a.type === 'character' ? '👤' : (a.type === 'environment' ? '🌌' : '🛡️')} ${a.title}`).join('، ');
+                    
+                    framesHtml += `
+                        <div style="font-size:0.75rem; background:var(--bg-primary); border:1px solid var(--border-color); border-radius:4px; padding:6px;">
+                            <div style="font-weight:bold; color:var(--color-accent);">اللقطة #${fIdx + 1}</div>
+                            <div style="margin-top:2px;"><strong>الوصف البصري:</strong> ${f.desc}</div>
+                            ${f.dialogue ? `<div style="margin-top:2px; color:var(--text-secondary);"><strong>الحوار والترجمة:</strong> ${f.dialogue}</div>` : ''}
+                            ${assetsStr ? `<div style="margin-top:2px; font-size:0.7rem; color:var(--color-cyan);"><strong>الأصول المشاركة:</strong> ${assetsStr}</div>` : ''}
+                        </div>
+                    `;
+                });
+                framesHtml += `
+                        </div>
+                    </div>
+                `;
+            }
+
             const card = document.createElement('div');
             card.className = "scene-timeline-card";
             card.innerHTML = `
@@ -3706,17 +3829,18 @@ Show how style shaders swap dynamically.`
                 </div>
                 <div class="scene-tracks-display">
                     <div class="scene-track-row">
-                        <span class="scene-track-label">🖼️ البصريات:</span>
-                        <span class="scene-track-value">${video ? '🎬 ' + video.title : (comic ? '📚 ' + comic.title : 'لا يوجد أصل بصري مرتبط')}</span>
+                        <span class="scene-track-label">🎬 لوحة العمل (Storyboard):</span>
+                        <span class="scene-track-value">${comic ? '📚 ' + comic.title : 'غير مرتبط بلوحة عمل'}</span>
                     </div>
                     <div class="scene-track-row">
-                        <span class="scene-track-label">💬 الحوار:</span>
-                        <span class="scene-track-value">${s.dialogue || 'بدون حوار مكتوب'}</span>
+                        <span class="scene-track-label">🎞️ فيديو اللقطة:</span>
+                        <span class="scene-track-value">${video ? '🎬 ' + video.title : 'لا يوجد فيديو مرتبط'}</span>
                     </div>
                     <div class="scene-track-row">
                         <span class="scene-track-label">🔊 الصوتيات:</span>
                         <span class="scene-track-value">${this.getAudioProfileLabel(s.audioProfile)}</span>
                     </div>
+                    ${framesHtml}
                 </div>
             `;
 
@@ -3750,7 +3874,17 @@ Show how style shaders swap dynamically.`
             cb.checked = scene.characterIds.includes(cb.value);
         });
 
-        if (this.sceneDialogueInput) this.sceneDialogueInput.value = scene.dialogue || "";
+        // Clear and load frames
+        if (this.sceneFramesContainer) {
+            this.sceneFramesContainer.innerHTML = "";
+            if (scene.frames && scene.frames.length > 0) {
+                scene.frames.forEach(f => {
+                    this.addSceneFrameRow(f.desc, f.dialogue, f.refAssetIds || []);
+                });
+            } else {
+                this.addSceneFrameRow("مشهد كوني عام", scene.dialogue || "", scene.characterIds || []);
+            }
+        }
         if (this.sceneAudioProfileSelect) this.sceneAudioProfileSelect.value = scene.audioProfile || "default";
 
         this.sceneComicSelect.value = scene.comicId || "";
@@ -3785,6 +3919,19 @@ Show how style shaders swap dynamically.`
         const scenario = this.assets.find(a => a.id === this.sceneScenarioSelect.value);
         const audioProfile = this.sceneAudioProfileSelect ? this.sceneAudioProfileSelect.value : "default";
 
+        // Harvest frames list
+        let frames = [];
+        if (this.sceneFramesContainer) {
+            const frameRows = this.sceneFramesContainer.querySelectorAll('.scene-frame-row');
+            frames = Array.from(frameRows).map((row, i) => {
+                const desc = row.querySelector('.frame-desc').value.trim();
+                const dialogue = row.querySelector('.frame-dialogue').value.trim();
+                const assetsSelect = row.querySelector('.frame-assets');
+                const refAssetIds = Array.from(assetsSelect.selectedOptions).map(opt => opt.value);
+                return { idx: i + 1, desc, dialogue, refAssetIds };
+            });
+        }
+
         let promptText = `[Google Flow Scene Prompt - Dynamic Consistency]\n`;
         promptText += `Create a high-fidelity cinematic scene based on the scenario: "${scenario ? scenario.title : 'Generic Sketchic Scene'}"\n\n`;
         promptText += `CHARACTER CONSISTENCY GUIDELINES:\n`;
@@ -3794,6 +3941,16 @@ Show how style shaders swap dynamically.`
             const style = creator && creator.subOptions ? creator.subOptions.artStyle : 'Distinct Art Style';
             promptText += `- Character Name: ${char.title}\n  Description: ${char.desc}\n  Visual Style: Rendered strictly in: ${style}. Do not blend this character's aesthetic with other styles.\n\n`;
         });
+
+        if (frames.length > 0) {
+            promptText += `STORYBOARD FRAMES SEQUENCE:\n`;
+            frames.forEach(f => {
+                const frameAssets = f.refAssetIds.map(aid => this.assets.find(a => a.id === aid)).filter(Boolean);
+                const assetsStr = frameAssets.map(a => a.title).join(', ');
+                promptText += `- Frame #${f.idx}: [Visual Description: ${f.desc}] | [Dialogue: ${f.dialogue || 'None'}] ${assetsStr ? `| [Featured Assets: ${assetsStr}]` : ''}\n`;
+            });
+            promptText += `\n`;
+        }
 
         promptText += `VISUAL CLASH & CONTRAST (No-Blending Principle):\n`;
         promptText += `This scene features a direct interaction at the visual clash boundary. Each character must retain 100% of their unique medium, line quality, frame rate, and shading style. Do not blend the backgrounds or filters. Maintain chromatic shear at the point of contact.\n\n`;
@@ -3820,7 +3977,11 @@ Show how style shaders swap dynamically.`
         }
 
         const chars = selectedCharIds.map(cid => this.assets.find(a => a.id === cid)).filter(Boolean);
-        const userDialogue = this.sceneDialogueInput ? this.sceneDialogueInput.value : "";
+        let userDialogue = "";
+        if (this.sceneFramesContainer) {
+            const firstDialogueInput = this.sceneFramesContainer.querySelector('.frame-dialogue');
+            if (firstDialogueInput) userDialogue = firstDialogueInput.value.trim();
+        }
         const audioProfile = this.sceneAudioProfileSelect ? this.sceneAudioProfileSelect.value : "default";
         
         let html = `<div class="clash-stage-grid"></div>`;
@@ -3911,6 +4072,13 @@ Show how style shaders swap dynamically.`
                 audioProfile: 'retro-tape',
                 comicId: "",
                 videoId: "",
+                frames: [
+                    {
+                        desc: "شخصيتان تقتربان من بعضهما عند شق بعدي غامض يظهر ملامح أساليبهما الفنية المختلفة بوضوح",
+                        dialogue: "من أنت وكيف تملك هذه الحدود الحادة؟",
+                        refAssetIds: [charIds[0], charIds[1]]
+                    }
+                ],
                 createdAt: new Date().toISOString()
             },
             {
@@ -3922,6 +4090,13 @@ Show how style shaders swap dynamically.`
                 audioProfile: 'digital-glitch',
                 comicId: "",
                 videoId: "",
+                frames: [
+                    {
+                        desc: "تداخل بصري مباشر عند الحواف، ضربات فرشاة زيتية تتنافر مع خطوط قلم جافة وحبر مانجا حاد",
+                        dialogue: "الخطوط تتداخل والضوء ينقسم!",
+                        refAssetIds: [charIds[0], charIds[1]]
+                    }
+                ],
                 createdAt: new Date().toISOString()
             },
             {
@@ -3933,6 +4108,13 @@ Show how style shaders swap dynamically.`
                 audioProfile: 'orchestral-renaissance',
                 comicId: "",
                 videoId: "",
+                frames: [
+                    {
+                        desc: "استقرار المشهد على كادر يجمعهما جنباً إلى جنب دون دمج للنمطين، مما يخلق توازناً فنياً متناغماً ومتنافراً بالوقت ذاته",
+                        dialogue: "لن نندمج، بل سنعيش معاً في هذا التناقض.",
+                        refAssetIds: [charIds[0], charIds[1]]
+                    }
+                ],
                 createdAt: new Date().toISOString()
             }
         ];

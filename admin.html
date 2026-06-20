@@ -672,8 +672,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="scene-dialogue">حوار اللقطة والترجمة (Dialogue & Subtitles) *</label>
-                            <input type="text" id="scene-dialogue" placeholder="اكتب حوار المشهد الذي يظهر بالفقاعات العائمة..." required style="width: 100%; box-sizing: border-box; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                            <label style="font-weight: bold; color: var(--color-cyan); display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                <span>🖼️ إطارات لقطات المشهد (Scene Frames)</span>
+                                <button type="button" id="btn-add-scene-frame" class="btn" style="padding: 2px 8px; font-size: 0.75rem; background: var(--color-accent-light); color: var(--color-accent); font-weight: bold; border: none; cursor: pointer; border-radius: 4px;">➕ إضافة إطار</button>
+                            </label>
+                            <div id="scene-frames-container" style="display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; background-color: var(--bg-primary); max-height: 200px; overflow-y: auto;">
+                                <!-- Dynamic frames list -->
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="scene-audio-profile">المسار الصوتي للمشهد (Audio & SFX Track) *</label>
@@ -688,7 +693,7 @@
                             <label>ربط الأصول المرئية والمتحركة بهذا المشهد</label>
                             <div style="display: flex; gap: 10px;">
                                 <div style="flex: 1;">
-                                    <label for="scene-comic" style="font-size: 0.8rem; color: var(--text-secondary);">لوحة القصة (Comic)</label>
+                                    <label for="scene-comic" style="font-size: 0.8rem; color: var(--text-secondary);">لوحة العمل الحاكمة (Storyboard)</label>
                                     <select id="scene-comic" style="width: 100%; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
                                         <option value="">(اختياري)</option>
                                     </select>
