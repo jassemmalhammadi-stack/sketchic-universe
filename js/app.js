@@ -481,6 +481,7 @@ class SketchicApp {
         if (this.btnAutoStoryboard) {
             this.btnAutoStoryboard.addEventListener('click', () => this.autoGenerateStoryboard());
         }
+        this.initDrawingTab();
     }
 
     switchTab(tabId) {
@@ -1654,6 +1655,34 @@ class SketchicApp {
                         <option value="ممحاة مطاطية لمضاد المادة (Cosmic Eraser)">ممحاة مطاطية لمضاد المادة (Cosmic Eraser)</option>
                     </select>
                 </div>
+                <!-- Hybrid Creator Settings -->
+                <div class="form-group" style="background: rgba(99, 102, 241, 0.05); padding: 10px; border-radius: 6px; border: 1px dashed var(--border-color); margin-top: 10px;">
+                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: bold; color: var(--color-accent);">
+                        <input type="checkbox" id="opt-isHybrid" onchange="document.getElementById('hybrid-creator-fields').style.display = this.checked ? 'block' : 'none';" style="width: auto;">
+                        <span>🧬 رسام مهجن (Hybrid Creator)</span>
+                    </label>
+                    <div id="hybrid-creator-fields" style="display: none; margin-top: 10px;">
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label for="opt-secondaryStyle">الأسلوب الفني المهجن الثاني *</label>
+                            <select id="opt-secondaryStyle">
+                                <option value="لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)">لوحة زيتية كلاسيكية من عصر النهضة (Renaissance)</option>
+                                <option value="مانجا يابانية تقليدية بحبر أسود حاد" selected>مانجا يابانية تقليدية بحبر أسود حاد</option>
+                                <option value="رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)">رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)</option>
+                                <option value="رسم تخطيطي خفيف بقلم الرصاص (Graphite Sketch)">رسم تخطيطي خفيف بقلم الرصاص (Graphite Sketch)</option>
+                                <option value="رسوم رقمية حديثة ذات متجهات هندسية (Vectors)">رسوم رقمية حديثة ذات متجهات هندسية (Vectors)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="opt-blendRatio">نسبة الدمج والتهجين *</label>
+                            <input type="range" id="opt-blendRatio" min="10" max="90" step="10" value="50" oninput="document.getElementById('blendRatio-val').textContent = this.value + '% / ' + (100 - this.value) + '%';">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: bold; margin-top: 4px; color: var(--text-secondary);">
+                                <span>الأسلوب الأساسي</span>
+                                <span id="blendRatio-val">50% / 50%</span>
+                                <span>الأسلوب المهجن الثاني</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `;
         } else if (type === 'scenario') {
             optionsHtml += `
@@ -1926,7 +1955,14 @@ class SketchicApp {
         if (editData && editData.subOptions) {
             Object.keys(editData.subOptions).forEach(key => {
                 const sel = this.dynamicOptionsContainer.querySelector(`#opt-${key}`);
-                if (sel) sel.value = editData.subOptions[key];
+                if (sel) {
+                    if (sel.type === 'checkbox') {
+                        sel.checked = !!editData.subOptions[key];
+                        if (sel.onchange) sel.onchange();
+                    } else {
+                        sel.value = editData.subOptions[key];
+                    }
+                }
             });
         }
 
@@ -2207,7 +2243,7 @@ ${wrText}
         const inputs = this.dynamicOptionsContainer.querySelectorAll('input');
         inputs.forEach(inp => {
             const key = inp.id.replace('opt-', '');
-            subOptions[key] = inp.value;
+            subOptions[key] = inp.type === 'checkbox' ? inp.checked : inp.value;
         });
         const textareas = this.dynamicOptionsContainer.querySelectorAll('textarea');
         textareas.forEach(ta => {
@@ -2480,10 +2516,18 @@ ${wrText}
                     </div>
                 `;
             } else if (asset.type === 'creator' && asset.subOptions) {
+                const isHybrid = asset.subOptions.isHybrid;
+                const secStyle = asset.subOptions.secondaryStyle || "";
+                const blend = asset.subOptions.blendRatio || 50;
                 creatorDetailsHtml = `
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>🎨 <strong>الأسلوب:</strong> ${asset.subOptions.artStyle}</div>
                         <div style="margin-top:4px;">✍️ <strong>الأداة:</strong> ${asset.subOptions.tool}</div>
+                        ${isHybrid ? `
+                            <div style="margin-top:4px; color: var(--color-accent); font-weight: bold; border-top: 1px dashed var(--border-color); padding-top:4px; font-size: 0.72rem;">
+                                🧬 <strong>أسلوب هجين:</strong> ${blend}% أساسي / ${100 - blend}% ${secStyle.split(' (')[0]}
+                            </div>
+                        ` : ''}
                     </div>
                 `;
             } else if (asset.type === 'environment' && asset.subOptions) {
@@ -6649,6 +6693,89 @@ Show how style shaders swap dynamically.`
         }).catch(err => {
             console.error("Failed to copy:", err);
         });
+    }
+
+    initDrawingTab() {
+        this.btnGenerateHybridStyle = document.getElementById('btn-generate-hybrid-style');
+        this.btnCopyHybridPrompt = document.getElementById('btn-copy-hybrid-prompt');
+        this.hybridStyle1 = document.getElementById('hybrid-style-1');
+        this.hybridStyle2 = document.getElementById('hybrid-style-2');
+        this.hybridRatio = document.getElementById('hybrid-ratio');
+        this.hybridRatioLabel = document.getElementById('hybrid-ratio-label');
+        this.hybridSubject = document.getElementById('hybrid-subject');
+        this.hybridModifiers = document.getElementById('hybrid-modifiers');
+        this.hybridPromptResult = document.getElementById('hybrid-prompt-result');
+        this.hybridPreviewCanvas = document.getElementById('hybrid-preview-canvas');
+        this.hybridPreviewVisual = document.getElementById('hybrid-preview-visual');
+        this.hybridPreviewText = document.getElementById('hybrid-preview-text');
+
+        if (this.hybridRatio) {
+            this.hybridRatio.addEventListener('input', () => {
+                const ratio = this.hybridRatio.value;
+                if (this.hybridRatioLabel) {
+                    this.hybridRatioLabel.textContent = `${ratio}% / ${100 - ratio}%`;
+                }
+            });
+        }
+
+        if (this.btnGenerateHybridStyle) {
+            this.btnGenerateHybridStyle.addEventListener('click', () => {
+                const style1 = this.hybridStyle1 ? this.hybridStyle1.value : "";
+                const style2 = this.hybridStyle2 ? this.hybridStyle2.value : "";
+                const ratio = this.hybridRatio ? this.hybridRatio.value : 50;
+                const subject = this.hybridSubject ? this.hybridSubject.value.trim() : "";
+                const modifiers = this.hybridModifiers ? this.hybridModifiers.value.trim() : "";
+
+                if (!subject) {
+                    alert("يرجى إدخال الموضوع أو عنصر الرسم أولاً.");
+                    return;
+                }
+
+                // Generate Prompt
+                const prompt = `A cinematic visual clash artwork of [${subject}], stylized in a hybrid fusion of ${ratio}% (${style1}) and ${100 - ratio}% (${style2}).\n${modifiers ? `Visual modifiers: ${modifiers}. ` : ''}Maintain sharp collision borders, stylized textures, and dramatic contrast, Google Imagen 3 style.`;
+
+                if (this.hybridPromptResult) {
+                    this.hybridPromptResult.textContent = prompt;
+                }
+
+                // Update UI Mock Preview
+                if (this.hybridPreviewCanvas) {
+                    this.hybridPreviewCanvas.style.background = `linear-gradient(${ratio}deg, #1e1e2e, #313244)`;
+                    
+                    // Apply visual effect based on styles
+                    let visualEmoji = "🎨";
+                    if (style1.includes("Manga") || style2.includes("Manga")) visualEmoji = "🖋️";
+                    else if (style1.includes("Oil") || style2.includes("Oil")) visualEmoji = "🖌️";
+                    else if (style1.includes("Graphite") || style2.includes("Graphite")) visualEmoji = "✏️";
+                    else if (style1.includes("Vector") || style2.includes("Vector")) visualEmoji = "📐";
+                    
+                    if (this.hybridPreviewVisual) {
+                        this.hybridPreviewVisual.textContent = visualEmoji;
+                        this.hybridPreviewVisual.style.transform = `scale(${1 + ratio / 100}) rotate(${ratio}deg)`;
+                    }
+                    if (this.hybridPreviewText) {
+                        this.hybridPreviewText.innerHTML = `معاينة التهجين: <strong>دمج فني بين ${ratio}% أسلوب أساسي و ${100 - ratio}% أسلوب ثانوي</strong>.<br>البرومبت جاهز للنسخ والتوليد!`;
+                    }
+                }
+            });
+        }
+
+        if (this.btnCopyHybridPrompt) {
+            this.btnCopyHybridPrompt.addEventListener('click', () => {
+                const text = this.hybridPromptResult ? this.hybridPromptResult.textContent : "";
+                if (!text) {
+                    alert("يرجى توليد الأسلوب الهجين أولاً قبل النسخ.");
+                    return;
+                }
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = this.btnCopyHybridPrompt.textContent;
+                    this.btnCopyHybridPrompt.textContent = "تم النسخ! ✓";
+                    setTimeout(() => {
+                        this.btnCopyHybridPrompt.textContent = originalText;
+                    }, 2000);
+                });
+            });
+        }
     }
 
     downloadVidsCSV() {

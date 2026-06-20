@@ -40,6 +40,10 @@
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                     <span>باني المشاهد المتسقة</span>
                 </button>
+                <button class="nav-btn" id="btn-drawing" data-tab="drawing">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path><path d="M12 6V12L16 14"></path></svg>
+                    <span>مرسم الأساليب والتهجين</span>
+                </button>
                 <button class="nav-btn" id="btn-simulator" data-tab="simulator">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
                     <span>محاكي الموقع العام</span>
@@ -734,6 +738,95 @@
                             <div class="clash-empty-state" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--text-tertiary); font-size: 0.9rem; text-align: center; padding: 1rem;">
                                 حدد شخصيات المشهد لبدء محاكاة التصادم البصري ثنائي الأبعاد/ثلاثي الأبعاد...
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab: Drawing Room & Style Hybridizer -->
+        <section id="tab-drawing" class="tab-pane">
+            <div class="section-header">
+                <div>
+                    <h2>مرسم الأساليب الكونية والتهجين الفني 🎨🧬</h2>
+                    <p>امزج وهجن أساليب الرسم المختلفة للرسامين، وولد موجهات بصرية متكاملة للتوليد بالذكاء الاصطناعي (Imagen 3 & Midjourney).</p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- Column 1: Configurator -->
+                <div class="card-box">
+                    <div class="card-header-icon">
+                        <span class="icon-big">🧬</span>
+                        <h3>مختبر دمج الأنماط والتهجين</h3>
+                    </div>
+                    <form id="style-hybridizer-form" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                        <div class="form-group">
+                            <label>الأسلوب الفني الأول (الأساسي) *</label>
+                            <select id="hybrid-style-1" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;">
+                                <option value="لوحة زيتية كلاسيكية من عصر النهضة (Renaissance Oil Painting)">لوحة زيتية كلاسيكية من عصر النهضة</option>
+                                <option value="مانجا يابانية تقليدية بحبر أسود حاد (Sharp Black Ink Manga)">مانجا يابانية تقليدية بحبر أسود حاد</option>
+                                <option value="رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose Cartoon)">رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)</option>
+                                <option value="رسم تخطيطي خفيف بقلم الرصاص (Soft Graphite Pencil Sketch)">رسم تخطيطي خفيف بقلم الرصاص</option>
+                                <option value="رسوم رقمية ذات متجهات هندسية حادة (Sharp Geometric Vector Graphics)">رسوم رقمية حديثة ذات متجهات هندسية</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>الأسلوب الفني الثاني (الفرعي للدمج) *</label>
+                            <select id="hybrid-style-2" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;">
+                                <option value="مانجا يابانية تقليدية بحبر أسود حاد (Sharp Black Ink Manga)" selected>مانجا يابانية تقليدية بحبر أسود حاد</option>
+                                <option value="لوحة زيتية كلاسيكية من عصر النهضة (Renaissance Oil Painting)">لوحة زيتية كلاسيكية من عصر النهضة</option>
+                                <option value="رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose Cartoon)">رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)</option>
+                                <option value="رسم تخطيطي خفيف بقلم الرصاص (Soft Graphite Pencil Sketch)">رسم تخطيطي خفيف بقلم الرصاص</option>
+                                <option value="رسوم رقمية ذات متجهات هندسية حادة (Sharp Geometric Vector Graphics)">رسوم رقمية حديثة ذات متجهات هندسية</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>نسبة الدمج الجيني للأسلوبين *</label>
+                            <input type="range" id="hybrid-ratio" min="10" max="90" step="5" value="50" style="width: 100%;">
+                            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-top:5px; font-weight:bold;">
+                                <span>الأسلوب الأول</span>
+                                <span id="hybrid-ratio-label">50% / 50%</span>
+                                <span>الأسلوب الثاني</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>عنصر أو غرض الرسم (الموضوع) *</label>
+                            <input type="text" id="hybrid-subject" placeholder="مثال: فارس كوني يطير في حقل نجوم..." value="فارس دروع كوني مهيب يطير وسط سديم النجوم" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>إضافات ومعدلات بصرية مخصصة (Custom Modifiers)</label>
+                            <input type="text" id="hybrid-modifiers" placeholder="مثال: إضاءة نيون سايبربانك، ألوان متوهجة، ضربات فرشاة خشنة..." value="خط تماس متوهج، تباين لوني مائي، إضاءة درامية حادة" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;">
+                        </div>
+
+                        <button type="button" id="btn-generate-hybrid-style" class="btn btn-primary" style="font-weight: bold; padding: 10px; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <span>🤖✨</span> <span>توليد ومعاينة الأسلوب الهجين</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Column 2: Result & Mock Preview -->
+                <div class="card-box" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div class="card-header-icon">
+                            <span class="icon-big">🖼️</span>
+                            <h3>لوحة المعاينة التفاعلية والبرومبت الناتج</h3>
+                        </div>
+                        <div id="hybrid-preview-canvas" style="width:100%; height:200px; background:#1e1e2e; border-radius:8px; margin-top:15px; display:flex; align-items:center; justify-content:center; flex-direction:column; border:1px solid var(--border-color); position:relative; overflow:hidden;">
+                            <div id="hybrid-preview-visual" style="font-size:3rem; transition: all 0.5s ease;">🎨</div>
+                            <div id="hybrid-preview-text" style="color:#a6adc8; font-size:0.85rem; text-align:center; padding:10px; font-weight:bold;">قم بتوليد الأسلوب لمعاينة الدمج الكوني للفرشاة والألوان</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px;">
+                        <label style="font-weight: bold; font-size: 0.85rem; display: block; margin-bottom: 5px;">موجه التوليد الهجين المقترح لـ Midjourney/Imagen 3:</label>
+                        <div class="prompt-copy-box">
+                            <button type="button" class="btn-copy-prompt" id="btn-copy-hybrid-prompt" style="padding: 6px 12px; font-size: 0.75rem; position: absolute; right: 5px; top: 5px;">نسخ</button>
+                            <pre id="hybrid-prompt-result" style="font-size:0.78rem; font-family:monospace; line-height:1.5; white-space:pre-wrap; word-break:break-all; padding: 10px 10px 10px 50px; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border-color); min-height:80px; margin:0; position:relative;"></pre>
                         </div>
                     </div>
                 </div>
