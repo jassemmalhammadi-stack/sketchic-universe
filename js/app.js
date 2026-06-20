@@ -1764,6 +1764,14 @@ class SketchicApp {
                         <option value="حارس زمن يحمي طبقات اللوحة (Time Keeper)">حارس زمن يحمي طبقات اللوحة (Time Keeper)</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="opt-charVisual">الوصف البصري والملامح الجسدية (Visual Description) *</label>
+                    <textarea id="opt-charVisual" rows="2" placeholder="أدخل الملامح الجسدية، لون العيون والشعر، الطول، تعابير الوجه..." required>شعر فضي قصير منسدل، عيون زرقاء متوهجة، قامة ممشوقة بملامح حادة</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="opt-charClothing">الملابس والإكسسوارات المرافقة (Clothing & Accessories) *</label>
+                    <textarea id="opt-charClothing" rows="2" placeholder="أدخل تفاصيل الملابس، الدروع، الأوشحة، أو الخواتم المميزة..." required>سترة جلدية سوداء طويلة ذات أطراف كربونية، وشاح أحمر ممزق، وخاتم فضي قديم</textarea>
+                </div>
             `;
         } else if (type === 'prop') {
             optionsHtml += `
@@ -2098,10 +2106,15 @@ class SketchicApp {
                 }
             }
 
+            const charVisual = valOf('opt-charVisual', 'ملامح حادة مميزة');
+            const charClothing = valOf('opt-charClothing', 'زي قتالي متناسق');
+
             prompt = `ورقة تصميم شخصية بصرية احترافية لشخصية في كون سكتشيك السينمائي.
 الدور السردي للشخصية: [${charClass}].
 الفصيل الكوني: [${factionText}].
 السلاح الكوني المميز: [${weaponText}].
+الملامح والوصف الجسدي: [${charVisual}].
+الملابس والإكسسوارات المميزة: [${charClothing}].
 قوانين الأسلوب الموروثة من الرسام: مرسومة بأسلوب [${styleText}] باستخدام [${toolText}].
 التفاصيل: يجب أن تعرض ورقة تصميم الشخصية مظهراً نظيفاً وواضحاً للشخصية على خلفية محايدة، مع إبراز الخطوط والملامس وقوام ضربات الأداة الفنية الخاصة بهذا الرسام. قم بتوضيح شعار فصيلهم وسلاحهم المميز.`;
         } else if (type === 'prop') {
