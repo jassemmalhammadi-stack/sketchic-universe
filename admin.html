@@ -1547,13 +1547,13 @@
         <div class="modal-card" style="max-width: 950px; width: 95%;">
             <div class="modal-header" style="border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;">
                 <h3 style="display: flex; align-items: center; gap: 8px; margin: 0; color: var(--color-cyan);">
-                    🎬 تجهيز لـ Google Vids (تصدير اللقطات والسيناريو)
+                    🎬 تجهيز لـ Google Vids & Flow Storyboard Studio
                 </h3>
                 <button class="close-btn" id="btn-close-vids-modal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">&times;</button>
             </div>
             
             <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 15px;">
-                💡 يقسم هذا المصدر السيناريو إلى لقطات متتالية جاهزة للإدخال كبطاقات مشهد في <strong>Google Vids</strong>. يمكنك نسخ الموجهات البصرية والنصوص مباشرة أو تحميل الملف بالكامل.
+                💡 يقسم هذا المصدر السيناريو إلى لقطات متتالية سينمائية جاهزة للإدخال في **Google Vids** أو **Google Labs Flow (Storyboard Studio)**. يمكنك نسخ الموجهات المصاغة لنموذج **Veo للفيديو** أو استيراد جدول اللقطات.
             </div>
 
             <div style="max-height: 400px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 15px; background: var(--bg-secondary);">
@@ -1561,8 +1561,8 @@
                     <thead>
                         <tr style="background-color: var(--bg-tertiary); border-bottom: 1px solid var(--border-color);">
                             <th style="padding: 10px; border-left: 1px solid var(--border-color); width: 60px;">اللقطة</th>
-                            <th style="padding: 10px; border-left: 1px solid var(--border-color); width: 320px;">الوصف البصري (للتوليد)</th>
-                            <th style="padding: 10px; border-left: 1px solid var(--border-color); width: 280px;">التعليق الصوتي (Voiceover)</th>
+                            <th style="padding: 10px; border-left: 1px solid var(--border-color); width: 340px;">موجه فيديو Veo (Google Labs Flow)</th>
+                            <th style="padding: 10px; border-left: 1px solid var(--border-color); width: 260px;">التعليق الصوتي (Voiceover)</th>
                             <th style="padding: 10px;">المؤثرات الصوتية والموسيقى</th>
                         </tr>
                     </thead>
@@ -1573,14 +1573,19 @@
             </div>
 
             <div class="form-actions" style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
-                <div style="display: flex; gap: 8px;">
-                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-prompts">📋 نسخ الموجهات البصرية</button>
-                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-vo">🎙️ نسخ الحوارات والصوت</button>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-prompts">📋 نسخ موجهات الصور</button>
+                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-veo" style="border-color: rgba(6, 182, 212, 0.3); color: var(--color-cyan);">🎥 نسخ موجهات Veo (فيديو)</button>
+                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-flow-script">📝 نسخ مخطط Flow Scenebuilder</button>
+                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-vo">🎙️ نسخ التعليق الصوتي</button>
                 </div>
                 <div style="display: flex; gap: 8px;">
-                    <button type="button" class="btn btn-primary" id="btn-download-vids-csv" style="background-color: #10b981;">📥 تحميل CSV كجدول</button>
-                    <a href="https://workspace.google.com/products/vids/" target="_blank" class="btn btn-primary" style="background-color: #4f46e5; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
-                        🚀 فتح Google Vids 🔗
+                    <button type="button" class="btn btn-primary" id="btn-download-vids-csv" style="background-color: #10b981;">📥 تحميل CSV</button>
+                    <a href="https://workspace.google.com/products/vids/" target="_blank" class="btn btn-primary" style="background-color: #4f46e5; text-decoration: none; display: inline-flex; align-items: center; gap: 3px; font-size: 0.8rem;" title="فتح Google Vids">
+                        🎬 Vids 🔗
+                    </a>
+                    <a href="https://labs.google/fx/tools/flow" target="_blank" class="btn btn-primary" style="background-color: #db2777; text-decoration: none; display: inline-flex; align-items: center; gap: 3px; font-size: 0.8rem;" title="فتح Google Labs Flow">
+                        ✨ Flow 🔗
                     </a>
                 </div>
             </div>

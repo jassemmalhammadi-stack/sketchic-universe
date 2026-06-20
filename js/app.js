@@ -241,6 +241,14 @@ class SketchicApp {
         if (btnDownloadCSV) {
             btnDownloadCSV.addEventListener('click', () => this.downloadVidsCSV());
         }
+        const btnCopyVeo = document.getElementById('btn-copy-vids-veo');
+        if (btnCopyVeo) {
+            btnCopyVeo.addEventListener('click', () => this.copyVidsText('veo'));
+        }
+        const btnCopyFlowScript = document.getElementById('btn-copy-vids-flow-script');
+        if (btnCopyFlowScript) {
+            btnCopyFlowScript.addEventListener('click', () => this.copyVidsText('flow_script'));
+        }
 
         // Form asset type change (Prerequisite triggers)
         this.assetTypeSelect.addEventListener('change', () => this.handleAssetTypeChange());
@@ -6517,29 +6525,33 @@ Show how style shaders swap dynamically.`
             if (char) charName = char.title;
         }
 
-        // Generate 4 narrative shots for Google Vids
+        // Generate 4 narrative shots optimized for Google Veo / Google Labs Flow
         this.currentVidsShots = [
             {
                 shot: "1",
-                visual: `لقطة تأسيسية واسعة (Establishing Wide Shot) للبيئة الكونية: [${title}]. الأسلوب الفني: [${creatorStyle}]. تداخل الألوان بدون اندماج، تفاصيل حية وعميقة.`,
+                visual: `لقطة تأسيسية واسعة للبيئة الكونية: [${title}]. الأسلوب الفني: [${creatorStyle}].`,
+                veoVisual: `Establishing wide shot of cosmic environment [${title}], style is [${creatorStyle}], slow camera panning left to right, volumetric lighting, shallow depth of field, vivid details, photorealistic details, Google Veo style.`,
                 vo: `أهلاً بكم في هذا البعد الفني الجديد من عوالم سكتشيك، حيث يتشكل الواقع من ضربات الفرشاة وقصاصات الورق.`,
                 audio: "موسيقى تصويرية غامضة وهادئة (Cosmic Ambient Pad)"
             },
             {
                 shot: "2",
-                visual: `لقطة متوسطة (Medium Shot) تظهر الشخصية [${charName}] وهي تكتشف أبعاد هذا العالم. أسلوب الرسم متباين بوضوح مع الخلفية.`,
+                visual: `لقطة متوسطة تظهر الشخصية [${charName}] وهي تكتشف أبعاد هذا العالم.`,
+                veoVisual: `Medium shot of character [${charName}] exploring [${title}], stylized rendering, camera tracking slowly behind character, warm dramatic lighting, high contrast, Google Veo style.`,
                 vo: `هنا يستيقظ البطل ليجد نفسه مرسوماً بحبر حاد، متحدياً قوانين اللوحة والخطوط التي رسمتها فرشاة المخرج.`,
                 audio: "إضافة صوت إيقاعي بطيء متصاعد (Slow synth build-up)"
             },
             {
                 shot: "3",
-                visual: `لقطة قريبة سريعة (Close-up dynamic shot) توثق اللحظة الدرامية وتصادم الأساليب البصرية عند حافة الألوان.`,
+                visual: `لقطة قريبة سريعة توثق اللحظة الدرامية وتصادم الأساليب البصرية عند حافة الألوان.`,
+                veoVisual: `Dynamic extreme close-up of color intersection lines, sharp ink textures clashing with fluid oil paint strokes, camera tilting up rapidly, high speed motion, neon contrast lighting, Google Veo style.`,
                 vo: `عند التماس المباشر للخطوط المائعة، يرتفع التباين ليعلن عن ولادة قصة جديدة تعبر عن صراع الأشكال والجاذبية.`,
                 audio: "إيقاع أوركسترالي متصاعد حاد لقمة الإثارة"
             },
             {
                 shot: "4",
                 visual: `لقطة سينمائية نهائية واسعة للكون وهو يستقر في مجلد سكتشيك الموحد في السحاب.`,
+                veoVisual: `Cinematic extreme wide shot of cosmic canvas settling, slow drone zoom-out, magical starry particles floating, soft sunset lighting, ultra realistic render, 8k resolution, Google Veo style.`,
                 vo: `وهكذا ينتهي المشهد الأول، ليبقى هذا البعد محفوظاً كأثر كوني متكامل في سجلات المخرج البصري.`,
                 audio: "نهاية ناعمة مع نغمات بيانو منفردة تتلاشى تدريجياً"
             }
@@ -6554,7 +6566,12 @@ Show how style shaders swap dynamically.`
                 tr.style.borderBottom = "1px solid var(--border-color)";
                 tr.innerHTML = `
                     <td style="padding: 10px; border-left: 1px solid var(--border-color); text-align: center; font-weight: bold; color: var(--color-cyan);">${s.shot}</td>
-                    <td style="padding: 10px; border-left: 1px solid var(--border-color); color: var(--text-primary);">${s.visual}</td>
+                    <td style="padding: 10px; border-left: 1px solid var(--border-color); color: var(--text-primary);">
+                        <strong>${s.visual}</strong>
+                        <div style="font-size:0.75rem; color:var(--color-cyan); margin-top:5px; font-family:monospace; direction:ltr; text-align:left; background:var(--bg-tertiary); padding:5px; border-radius:4px; overflow-x:auto;">
+                            ${s.veoVisual}
+                        </div>
+                    </td>
                     <td style="padding: 10px; border-left: 1px solid var(--border-color); color: var(--text-secondary);">${s.vo}</td>
                     <td style="padding: 10px; color: var(--text-secondary);">${s.audio}</td>
                 `;
@@ -6575,6 +6592,18 @@ Show how style shaders swap dynamically.`
         let text = "";
         if (type === 'prompts') {
             text = this.currentVidsShots.map(s => `Shot ${s.shot} Visual: ${s.visual}`).join('\n\n');
+        } else if (type === 'veo') {
+            text = this.currentVidsShots.map(s => `Shot ${s.shot} Veo Prompt: ${s.veoVisual}`).join('\n\n');
+        } else if (type === 'flow_script') {
+            // Generate full Google Flow Scenebuilder storyboard template outline
+            text = "=== GOOGLE FLOW SCENEBUILDER STORYBOARD OUTLINE ===\n\n";
+            this.currentVidsShots.forEach(s => {
+                text += `CLIP ID: ${s.shot}\n`;
+                text += `VIDEO GENERATION PROMPT (Veo): ${s.veoVisual}\n`;
+                text += `VOICEOVER / SCRIPT LAYER: ${s.vo}\n`;
+                text += `AUDIO / SFX LAYER: ${s.audio}\n`;
+                text += `--------------------------------------------------\n\n`;
+            });
         } else {
             text = this.currentVidsShots.map(s => `Shot ${s.shot} Voiceover: ${s.vo}`).join('\n\n');
         }
@@ -6590,23 +6619,23 @@ Show how style shaders swap dynamically.`
         
         // CSV Content with BOM for Arabic support
         let csvContent = "\ufeff";
-        csvContent += "اللقطة,الوصف البصري (Imagen 3),التعليق الصوتي (Voiceover),المؤثرات الصوتية والموسيقى\n";
+        csvContent += "اللقطة,الوصف الإرشادي,موجه Veo (Google Flow),التعليق الصوتي (Voiceover),المؤثرات الصوتية والموسيقى\n";
         
         this.currentVidsShots.forEach(s => {
             const visual = s.visual.replace(/"/g, '""');
+            const veoVisual = s.veoVisual.replace(/"/g, '""');
             const vo = s.vo.replace(/"/g, '""');
             const audio = s.audio.replace(/"/g, '""');
-            csvContent += `"${s.shot}","${visual}","${vo}","${audio}"\n`;
+            csvContent += `"${s.shot}","${visual}","${veoVisual}","${vo}","${audio}"\n`;
         });
 
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement("a");
         const safeTitle = this.currentExportAsset.title.replace(/[\/\\:*?"<>|]/g, '_');
         link.setAttribute("href", URL.createObjectURL(blob));
-        link.setAttribute("download", `Vids_Storyboard_${safeTitle}.csv`);
+        link.setAttribute("download", `Flow_Storyboard_${safeTitle}.csv`);
         link.click();
     }
-
 }
 
 // Instantiate the App on window load
