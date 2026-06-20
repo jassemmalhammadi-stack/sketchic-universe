@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const creators = finishedAssets.filter(a => a.type === 'creator');
         const scenarios = finishedAssets.filter(a => a.type === 'scenario');
         const characters = finishedAssets.filter(a => a.type === 'character');
+        const props = finishedAssets.filter(a => a.type === 'prop');
         const voices = finishedAssets.filter(a => a.type === 'voice');
         const musics = finishedAssets.filter(a => a.type === 'music');
         const comics = finishedAssets.filter(a => a.type === 'comic');
@@ -148,6 +149,30 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } else {
             charsHtml = `<p class="portal-empty-state" style="padding:1rem;width:100%;">لم يتم إضافة أي شخصيات منتهية لعرضها بعد.</p>`;
+        }
+
+        // Generate Props Profiles HTML
+        let propsHtml = "";
+        if (props.length > 0) {
+            props.forEach(p => {
+                let drawnByText = "";
+                if (p.relatedCreator) {
+                    const cr = finishedAssets.find(a => a.id === p.relatedCreator) || assets.find(a => a.id === p.relatedCreator);
+                    if (cr) {
+                        drawnByText = `بريشة الرسام: ${cr.title}`;
+                    }
+                }
+                const propType = p.subOptions ? (p.subOptions.propType || "أداة كوزمية") : "أداة كوزمية";
+                propsHtml += `
+                    <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                        <div style="font-size: 1.5rem; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #ecfdf5; border-radius: 50%; color: #059669;">🛡️</div>
+                        <h4 style="margin: 0; font-size: 1rem; color: var(--text-primary);">${p.title}</h4>
+                        <span style="font-size: 0.72rem; padding: 2px 6px; border-radius: 3px; background: #e6fffa; color: #0d9488; font-weight: bold; width: max-content;">${propType}</span>
+                        ${drawnByText ? `<span style="font-size:0.75rem; color:#b45309; font-weight:700;">✍️ ${drawnByText}</span>` : ''}
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">${p.desc}</p>
+                    </div>
+                `;
+            });
         }
 
         // Generate Voices Profiles HTML
@@ -453,6 +478,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${charsHtml}
                     </div>
                 </div>
+
+                <!-- Props Section -->
+                ${props.length > 0 ? `
+                <div class="portal-section">
+                    <div class="portal-section-header">
+                        <h3>الأدوات والمقتنيات الكونية</h3>
+                        <span class="section-tag" style="background-color:#059669; color:#fff;">أدوات ومقتنيات</span>
+                    </div>
+                    <div class="portal-grid">
+                        ${propsHtml}
+                    </div>
+                </div>
+                ` : ''}
 
                 <!-- Finished Cosmic Voices -->
                 ${voices.length > 0 ? `

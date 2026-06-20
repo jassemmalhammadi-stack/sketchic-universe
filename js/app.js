@@ -269,6 +269,7 @@ class SketchicApp {
                         const typeLabels = {
                             'written': 'نص حوار لـ',
                             'character': 'شخصية لـ',
+                            'prop': 'أداة لـ',
                             'environment': 'بيئة لـ',
                             'voice': 'صوت لـ',
                             'music': 'ساوندتراك لـ',
@@ -1734,6 +1735,22 @@ class SketchicApp {
                     </select>
                 </div>
             `;
+        } else if (type === 'prop') {
+            optionsHtml += `
+                <div class="form-group">
+                    <label for="opt-propType">نوع الأداة/المقتنى الكوني *</label>
+                    <select id="opt-propType" required>
+                        <option value="سلاح أبعادي (Dimensional Weapon)">سلاح أبعادي (Dimensional Weapon)</option>
+                        <option value="تميمة سحرية/أثرية (Cosmic Relic/Amulet)">تميمة سحرية/أثرية (Cosmic Relic/Amulet)</option>
+                        <option value="أداة فنية متحولة (Transformative Art Tool)">أداة فنية متحولة (Transformative Art Tool)</option>
+                        <option value="جهاز رصد وتنقيب (Sensor/Detector)">جهاز رصد وتنقيب (Sensor/Detector)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-propUsage">متطلبات وطريقة الاستخدام السردي *</label>
+                    <textarea id="opt-propUsage" rows="2" placeholder="صف كيفية عمل الأداة وقواعد فيزيائها المتنافرة عند خط التماس البصري..." required>تتطلب تركيزاً ذهنياً عالياً وتقوم بقص النسيج الضوئي بين طبقتين فنيتين عند التلويح بها</textarea>
+                </div>
+            `;
         } else if (type === 'voice') {
             optionsHtml += `
                 <div class="form-group">
@@ -2050,6 +2067,23 @@ class SketchicApp {
 السلاح الكوني المميز: [${weaponText}].
 قوانين الأسلوب الموروثة من الرسام: مرسومة بأسلوب [${styleText}] باستخدام [${toolText}].
 التفاصيل: يجب أن تعرض ورقة تصميم الشخصية مظهراً نظيفاً وواضحاً للشخصية على خلفية محايدة، مع إبراز الخطوط والملامس وقوام ضربات الأداة الفنية الخاصة بهذا الرسام. قم بتوضيح شعار فصيلهم وسلاحهم المميز.`;
+        } else if (type === 'prop') {
+            const propType = valOf('opt-propType', 'سلاح أبعادي (Dimensional Weapon)');
+            const propUsage = valOf('opt-propUsage', 'تتطلب تركيزاً ذهنياً عالياً');
+            
+            let styleText = "أسلوب رسم فني متباين";
+            if (this.relatedCreatorSelect.value) {
+                const creator = this.assets.find(a => a.id === this.relatedCreatorSelect.value);
+                if (creator && creator.subOptions) {
+                    styleText = creator.subOptions.artStyle || styleText;
+                }
+            }
+            
+            prompt = `ورقة تصميم أصل فني بصرية (Prop Design Sheet) لأداة كوكبية في كون سكتشيك.
+نوع الأداة: [${propType}].
+قواعد الاستخدام والفيزياء: [${propUsage}].
+قوانين الأسلوب الموروثة من الرسام: مرسومة بأسلوب [${styleText}].
+التفاصيل: يجب أن تُظهر الورقة تصميماً دقيقاً للمقتنى مع عدة زوايا، وإيضاح قوام المادة وملمس ضربات الفرشاة أو خطوط الحبر المكونة له مع خلفية محايدة.`;
         } else if (type === 'voice') {
             const voiceEngine = valOf('opt-voiceEngine', 'gemini-3.1-flash-tts-preview');
             prompt = `موجه توليد ملف صوت تعبيري كوني مخصص لـ Google AI Studio (gemini-3.1-flash-tts-preview).
@@ -2205,7 +2239,8 @@ ${wrText}
                 'comic': '07_Comics_Storyboards',
                 'video': '08_Videos_Cinematics',
                 'game': '09_Downloadable_Games',
-                'written': '10_Written_Texts'
+                'written': '10_Written_Texts',
+                'prop': '11_Props_Assets'
             };
             const folderName = folderMapping[type] || 'General_Assets';
             const safeTitle = title.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
@@ -2225,7 +2260,7 @@ ${wrText}
         }
 
         // Strict Workflow Rule: No Sub-assets without Scenario
-        if (['character', 'environment', 'voice', 'music'].includes(type) && !relatedScenario) {
+        if (['character', 'environment', 'voice', 'music', 'prop'].includes(type) && !relatedScenario) {
             const proceed = confirm(`تنبيه: لم تقم بربط هذا الأصل (${type}) بسيناريو مفعّل بعد. هل ترغب في حفظه كمسودة بدون ربط مؤقتاً؟`);
             if (!proceed) return;
         }
@@ -2416,6 +2451,7 @@ ${wrText}
                 written: 'نصوص ومخطوطات',
                 environment: 'عالم وبيئة',
                 character: 'تصميم شخصية',
+                prop: 'أداة ومقتنى كوني',
                 voice: 'صوت كوني',
                 music: 'موسيقى كونيّة',
                 comic: 'قصة مصورة',

@@ -614,6 +614,7 @@ h1, h2, h3, h4, h5, h6 {
 .tag-written { background-color: #faf5ff; color: #9333ea; }
 .tag-environment { background-color: var(--color-cyan-light); color: var(--color-cyan); }
 .tag-character { background-color: var(--color-cyan-light); color: var(--color-cyan); }
+.tag-prop { background-color: #ecfdf5; color: #059669; }
 .tag-voice { background-color: #f0fdfa; color: #0d9488; }
 .tag-music { background-color: #fdf2f8; color: #db2777; }
 .tag-comic { background-color: var(--color-orange-light); color: var(--color-orange); }
