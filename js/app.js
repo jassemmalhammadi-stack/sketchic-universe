@@ -1793,6 +1793,10 @@ class SketchicApp {
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="opt-propVisual">الوصف البصري والملامح المادية للـ Prop (Visual Description) *</label>
+                    <textarea id="opt-propVisual" rows="2" placeholder="صف مظهر المقتنى، لونه، خاماته وقوامه البصري..." required>درع بلوري متوهج ذو نقوش فيروزية تشع بنبضات خافتة، مع حواف مكسورة تظهر كمسودة رصاص</textarea>
+                </div>
+                <div class="form-group">
                     <label for="opt-propUsage">متطلبات وطريقة الاستخدام السردي *</label>
                     <textarea id="opt-propUsage" rows="2" placeholder="صف كيفية عمل الأداة وقواعد فيزيائها المتنافرة عند خط التماس البصري..." required>تتطلب تركيزاً ذهنياً عالياً وتقوم بقص النسيج الضوئي بين طبقتين فنيتين عند التلويح بها</textarea>
                 </div>
@@ -2132,6 +2136,7 @@ class SketchicApp {
 التفاصيل: يجب أن تعرض ورقة تصميم الشخصية مظهراً نظيفاً وواضحاً للشخصية على خلفية محايدة، مع إبراز الخطوط والملامس وقوام ضربات الأداة الفنية الخاصة بهذا الرسام. قم بتوضيح شعار فصيلهم وسلاحهم المميز.`;
         } else if (type === 'prop') {
             const propType = valOf('opt-propType', 'سلاح أبعادي (Dimensional Weapon)');
+            const propVisual = valOf('opt-propVisual', 'درع بلوري متوهج');
             const propUsage = valOf('opt-propUsage', 'تتطلب تركيزاً ذهنياً عالياً');
             
             let styleText = "أسلوب رسم فني متباين";
@@ -2144,6 +2149,7 @@ class SketchicApp {
             
             prompt = `ورقة تصميم أصل فني بصرية (Prop Design Sheet) لأداة كوكبية في كون سكتشيك.
 نوع الأداة: [${propType}].
+الوصف البصري والملامح: [${propVisual}].
 قواعد الاستخدام والفيزياء: [${propUsage}].
 قوانين الأسلوب الموروثة من الرسام: مرسومة بأسلوب [${styleText}].
 التفاصيل: يجب أن تُظهر الورقة تصميماً دقيقاً للمقتنى مع عدة زوايا، وإيضاح قوام المادة وملمس ضربات الفرشاة أو خطوط الحبر المكونة له مع خلفية محايدة.`;
