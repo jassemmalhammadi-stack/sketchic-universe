@@ -576,6 +576,7 @@ class SketchicApp {
             written: 0,
             environment: 0,
             character: 0,
+            prop: 0,
             voice: 0,
             music: 0,
             comic: 0,
