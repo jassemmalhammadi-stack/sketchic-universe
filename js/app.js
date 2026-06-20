@@ -1752,6 +1752,14 @@ class SketchicApp {
                          <option value="عالية (تداخل الأبنية والأرضيات دون اندماج)">عالية (تداخل الأبنية والأرضيات دون اندماج)</option>
                      </select>
                 </div>
+                <div class="form-group">
+                     <label for="opt-envVisual">الوصف البصري والمعالم الجغرافية (Visual Description) *</label>
+                     <textarea id="opt-envVisual" rows="2" placeholder="صف الجبال الملونة، الأبنية، التضاريس والخطوط الفنية..." required>هياكل صخرية هندسية تطفو وتذوب في سماء كحلية، مع خطوط تلامس مشعة باللون الفيروزي</textarea>
+                </div>
+                <div class="form-group">
+                     <label for="opt-envTimeOfDay">الوقت والطقس الكوني (Time of Day & Cosmic Weather) *</label>
+                     <input type="text" id="opt-envTimeOfDay" placeholder="مثال: غسق قرمزي، شفق كوني لانهائي، ليل فضي..." value="شفق قرمزي دائم يتداخل مع سديم سائل متساقط كالأمطار الزيتية" required>
+                </div>
             `;
         } else if (type === 'character') {
             optionsHtml += `
@@ -2072,8 +2080,13 @@ class SketchicApp {
                 }
             }
 
+            const envVisual = valOf('opt-envVisual', 'هياكل صخرية هندسية تطفو وتذوب');
+            const envTimeOfDay = valOf('opt-envTimeOfDay', 'شفق قرمزي دائم');
+
             prompt = `لوحة تصميم بيئة سينمائية لموقع في عالم سكتشيك (Sketchic World).
-طبيعة البيئة: [${envType}].
+طبيعة البيئة الكونية: [${envType}].
+الوصف البصري والملامح: [${envVisual}].
+الوقت والطقس الكوني: [${envTimeOfDay}].
 قواعد الأسلوب الموروثة من الرسام: مرسومة بدقة بأسلوب [${creatorStyle}].
 كثافة التداخل الفني: [${clashDensity}].
 التفاصيل: يجب أن تظهر المناظر الطبيعية والتضاريس والخصائص المعمارية مبنية بوضوح بملامس وقوام هذا الأسلوب الفني. إبراز حدود الصدام والتلامس البصري مع الأبعاد الأخرى. لقطة بزاوية واسعة.`;
