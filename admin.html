@@ -760,7 +760,14 @@
                         <span class="icon-big">🧬</span>
                         <h3>مختبر دمج الأنماط والتهجين</h3>
                     </div>
-                    <form id="style-hybridizer-form" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                        <div class="form-group">
+                            <label>نوع نمط الرسم *</label>
+                            <select id="hybrid-mode" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;">
+                                <option value="hybrid">🧬 أسلوب فني مهجن (Hybrid Style)</option>
+                                <option value="single">🎨 أسلوب فني أحادي (Single Style)</option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label>الأسلوب الفني الأول (الأساسي) *</label>
                             <select id="hybrid-style-1" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;">
@@ -772,24 +779,26 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label>الأسلوب الفني الثاني (الفرعي للدمج) *</label>
-                            <select id="hybrid-style-2" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;">
-                                <option value="مانجا يابانية تقليدية بحبر أسود حاد (Sharp Black Ink Manga)" selected>مانجا يابانية تقليدية بحبر أسود حاد</option>
-                                <option value="لوحة زيتية كلاسيكية من عصر النهضة (Renaissance Oil Painting)">لوحة زيتية كلاسيكية من عصر النهضة</option>
-                                <option value="رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose Cartoon)">رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)</option>
-                                <option value="رسم تخطيطي خفيف بقلم الرصاص (Soft Graphite Pencil Sketch)">رسم تخطيطي خفيف بقلم الرصاص</option>
-                                <option value="رسوم رقمية ذات متجهات هندسية حادة (Sharp Geometric Vector Graphics)">رسوم رقمية حديثة ذات متجهات هندسية</option>
-                            </select>
-                        </div>
+                        <div id="hybrid-only-fields">
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <label>الأسلوب الفني الثاني (الفرعي للدمج) *</label>
+                                <select id="hybrid-style-2" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;">
+                                    <option value="مانجا يابانية تقليدية بحبر أسود حاد (Sharp Black Ink Manga)" selected>مانجا يابانية تقليدية بحبر أسود حاد</option>
+                                    <option value="لوحة زيتية كلاسيكية من عصر النهضة (Renaissance Oil Painting)">لوحة زيتية كلاسيكية من عصر النهضة</option>
+                                    <option value="رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose Cartoon)">رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)</option>
+                                    <option value="رسم تخطيطي خفيف بقلم الرصاص (Soft Graphite Pencil Sketch)">رسم تخطيطي خفيف بقلم الرصاص</option>
+                                    <option value="رسوم رقمية ذات متجهات هندسية حادة (Sharp Geometric Vector Graphics)">رسوم رقمية حديثة ذات متجهات هندسية</option>
+                                </select>
+                            </div>
 
-                        <div class="form-group">
-                            <label>نسبة الدمج الجيني للأسلوبين *</label>
-                            <input type="range" id="hybrid-ratio" min="10" max="90" step="5" value="50" style="width: 100%;">
-                            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-top:5px; font-weight:bold;">
-                                <span>الأسلوب الأول</span>
-                                <span id="hybrid-ratio-label">50% / 50%</span>
-                                <span>الأسلوب الثاني</span>
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <label>نسبة الدمج الجيني للأسلوبين *</label>
+                                <input type="range" id="hybrid-ratio" min="10" max="90" step="5" value="50" style="width: 100%;">
+                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-top:5px; font-weight:bold;">
+                                    <span>الأسلوب الأول</span>
+                                    <span id="hybrid-ratio-label">50% / 50%</span>
+                                    <span>الأسلوب الثاني</span>
+                                </div>
                             </div>
                         </div>
 

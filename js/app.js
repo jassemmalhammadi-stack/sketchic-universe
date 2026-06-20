@@ -6709,6 +6709,16 @@ Show how style shaders swap dynamically.`
         this.hybridPreviewVisual = document.getElementById('hybrid-preview-visual');
         this.hybridPreviewText = document.getElementById('hybrid-preview-text');
 
+        this.hybridMode = document.getElementById('hybrid-mode');
+
+        if (this.hybridMode) {
+            this.hybridMode.addEventListener('change', () => {
+                const isSingle = this.hybridMode.value === 'single';
+                const container = document.getElementById('hybrid-only-fields');
+                if (container) container.style.display = isSingle ? 'none' : 'block';
+            });
+        }
+
         if (this.hybridRatio) {
             this.hybridRatio.addEventListener('input', () => {
                 const ratio = this.hybridRatio.value;
@@ -6720,6 +6730,7 @@ Show how style shaders swap dynamically.`
 
         if (this.btnGenerateHybridStyle) {
             this.btnGenerateHybridStyle.addEventListener('click', () => {
+                const mode = this.hybridMode ? this.hybridMode.value : "hybrid";
                 const style1 = this.hybridStyle1 ? this.hybridStyle1.value : "";
                 const style2 = this.hybridStyle2 ? this.hybridStyle2.value : "";
                 const ratio = this.hybridRatio ? this.hybridRatio.value : 50;
@@ -6732,7 +6743,12 @@ Show how style shaders swap dynamically.`
                 }
 
                 // Generate Prompt
-                const prompt = `A cinematic visual clash artwork of [${subject}], stylized in a hybrid fusion of ${ratio}% (${style1}) and ${100 - ratio}% (${style2}).\n${modifiers ? `Visual modifiers: ${modifiers}. ` : ''}Maintain sharp collision borders, stylized textures, and dramatic contrast, Google Imagen 3 style.`;
+                let prompt = "";
+                if (mode === 'single') {
+                    prompt = `A cinematic visual clash artwork of [${subject}], stylized in the pure style of (${style1}).\n${modifiers ? `Visual modifiers: ${modifiers}. ` : ''}Maintain sharp borders, stylized textures, and dramatic contrast, Google Imagen 3 style.`;
+                } else {
+                    prompt = `A cinematic visual clash artwork of [${subject}], stylized in a hybrid fusion of ${ratio}% (${style1}) and ${100 - ratio}% (${style2}).\n${modifiers ? `Visual modifiers: ${modifiers}. ` : ''}Maintain sharp collision borders, stylized textures, and dramatic contrast, Google Imagen 3 style.`;
+                }
 
                 if (this.hybridPromptResult) {
                     this.hybridPromptResult.textContent = prompt;
@@ -6740,7 +6756,11 @@ Show how style shaders swap dynamically.`
 
                 // Update UI Mock Preview
                 if (this.hybridPreviewCanvas) {
-                    this.hybridPreviewCanvas.style.background = `linear-gradient(${ratio}deg, #1e1e2e, #313244)`;
+                    if (mode === 'single') {
+                        this.hybridPreviewCanvas.style.background = "#1e1e2e";
+                    } else {
+                        this.hybridPreviewCanvas.style.background = `linear-gradient(${ratio}deg, #1e1e2e, #313244)`;
+                    }
                     
                     // Apply visual effect based on styles
                     let visualEmoji = "🎨";
@@ -6754,7 +6774,11 @@ Show how style shaders swap dynamically.`
                         this.hybridPreviewVisual.style.transform = `scale(${1 + ratio / 100}) rotate(${ratio}deg)`;
                     }
                     if (this.hybridPreviewText) {
-                        this.hybridPreviewText.innerHTML = `معاينة التهجين: <strong>دمج فني بين ${ratio}% أسلوب أساسي و ${100 - ratio}% أسلوب ثانوي</strong>.<br>البرومبت جاهز للنسخ والتوليد!`;
+                        if (mode === 'single') {
+                            this.hybridPreviewText.innerHTML = `معاينة الأسلوب: <strong>نمط أحادي نقي للأسلوب الأول (${style1.split(' (')[0]})</strong>.<br>البرومبت جاهز للنسخ والتوليد!`;
+                        } else {
+                            this.hybridPreviewText.innerHTML = `معاينة التهجين: <strong>دمج فني بين ${ratio}% أسلوب أساسي و ${100 - ratio}% أسلوب ثانوي</strong>.<br>البرومبت جاهز للنسخ والتوليد!`;
+                        }
                     }
                 }
             });
