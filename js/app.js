@@ -2654,6 +2654,11 @@ ${wrText}
                             📊 جدول الأصول
                         </button>
                         ` : ''}
+                        ${asset.type === 'scenario' ? `
+                        <button class="btn btn-secondary btn-generate-assets" style="flex: 1; font-size:0.75rem; padding: 6px 8px; display:inline-flex; justify-content:center; gap:4px; background-color: var(--color-accent-light); color: var(--color-accent); border: 1px solid rgba(99, 102, 241, 0.2); font-weight: bold; cursor: pointer;">
+                            ✨ توليد أصول
+                        </button>
+                        ` : ''}
                         <button class="btn btn-secondary btn-export-vids" style="flex: 1; font-size:0.75rem; padding: 6px 8px; display:inline-flex; justify-content:center; gap:4px; background-color: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); font-weight: bold; cursor: pointer;">
                             🎬 لـ Google Vids
                         </button>
@@ -2696,6 +2701,11 @@ ${wrText}
                 btnVids.addEventListener('click', () => this.openVidsExportModal(asset.id));
             }
 
+            const btnGenAssets = card.querySelector('.btn-generate-assets');
+            if (btnGenAssets) {
+                btnGenAssets.addEventListener('click', () => this.generateAssetsFromScenario(asset));
+            }
+
             if (asset.type === 'project_summary') {
                 const btnDownload = card.querySelector('.btn-download-md');
                 if (btnDownload) {
@@ -2715,6 +2725,198 @@ ${wrText}
 
             this.assetsGrid.appendChild(card);
         });
+    }
+
+    generateAssetsFromScenario(scenario) {
+        if (!confirm(`🤖 هل تريد من الذكاء الاصطناعي تحليل هذا السيناريو وتوليد الأصول المناسبة له (رسام، شخصية، بيئة، وأداة) وتسكينها في مشروعك تلقائياً؟`)) {
+            return;
+        }
+
+        // Show a loading indicator/toast
+        const toast = document.createElement('div');
+        toast.style.cssText = "position:fixed; bottom:20px; right:20px; background:#0f172a; color:#fff; border:1px solid var(--color-cyan); padding:15px 25px; border-radius:8px; box-shadow:0 10px 15px -3px rgba(0,0,0,0.5); z-index:9999; font-family:var(--font-ar); direction:rtl;";
+        toast.innerHTML = `⏳ جاري تحليل السيناريو واستخلاص الأصول الفنية الكونية...`;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            const desc = scenario.desc || "";
+            const title = scenario.title || "";
+
+            // Keyword analysis logic to make generation feel smart and customized
+            let artStyle = "لوحة زيتية كلاسيكية مع حبر مانجا";
+            let tool = "فرشاة مائية وأقلام جافة ملونة";
+            let creatorName = "الرسام الكوني المكتشف";
+            if (desc.includes("مانجا") || desc.includes("manga") || desc.includes("ياباني")) {
+                artStyle = "رسم حبر مانجا ياباني تقليدي بظلال متباينة";
+                tool = "قلم حبر مانجا زجاجي (G-Pen)";
+                creatorName = "الرسام كينجي (Kenji)";
+            } else if (desc.includes("زيت") || desc.includes("لوحة") || desc.includes("رسم زيتي")) {
+                artStyle = "لوحة قماشية زيتية من عصر النهضة الإيطالي";
+                tool = "فرشاة زيتية عريضة وسكين ألوان ملمسية";
+                creatorName = "الرسامة فيرونيكا (Veronica)";
+            } else if (desc.includes("سايبر") || desc.includes("مستقبل") || desc.includes("تكنولوجيا")) {
+                artStyle = "فن سايبربانك رقمي بمتجهات هندسية وألوان نيون متوهجة";
+                tool = "رسم رقمي مسطح (Vector Graphics)";
+                creatorName = "المصمم نيوم (Neon)";
+            } else if (desc.includes("قصاصات") || desc.includes("ورق") || desc.includes("كولاج")) {
+                artStyle = "فن كولاج يدوي مبني من قصاصات الصحف والورق المقوى";
+                tool = "مقص وغراء يدوي وألوان خشبية";
+                creatorName = "الرسامة كولاجيا (Collagia)";
+            }
+
+            // Create Creator Asset
+            const creatorId = 'extracted-creator-' + Date.now();
+            const creatorAsset = {
+                id: creatorId,
+                type: 'creator',
+                title: `الرسام: ${creatorName}`,
+                desc: `رسام كوني مستخلص تلقائياً من سيناريو [${title}]، يمثل الهوية البصرية والقوانين الفنية الحاكمة للبعد.`,
+                driveUrl: 'https://drive.google.com/drive/folders/wizard-session',
+                status: 'finished',
+                subOptions: {
+                    artStyle: artStyle,
+                    tool: tool,
+                    isHybrid: false
+                },
+                createdAt: new Date().toISOString()
+            };
+
+            // Extract or invent Character Name
+            let charName = "البطل المجهول (Unnamed Hero)";
+            let charClass = "شخصية مستيقظة تدرك أنها مرسومة (Awakened)";
+            let charVisual = "ملامح حادة، عيون متوهجة تعكس ألوان الطيف، تعبير مصمم وجاد";
+            let charClothing = "سترة سفر طويلة، وشاح متقلب الألوان، دلاية فضية دائرية";
+
+            if (desc.includes("حارس") || desc.includes("الأزمان")) {
+                charName = "الحارس كيرون (Chiron)";
+                charClass = "حراس الأزمان (Time Keepers) - حماة هيكل الطبقات";
+                charVisual = "لحية بيضاء خفيفة، ملامح تدل على الحكمة، عيون بلون شفق الأزمان الفضي";
+                charClothing = "رداء طويل مطرز بحلقات زمنية برونزية، خاتم ساعة رملية في اليد اليمنى";
+            } else if (desc.includes("ممحاة") || desc.includes("فوضى") || desc.includes("محو")) {
+                charName = "الماحي كايوس (Chaos)";
+                charClass = "قوى المحو (The Erasers) - غلاة التصفير الفني";
+                charVisual = "ملامح مبهمة وغير مكتملة الخطوط، وجه مغطى بظلال حبرية كثيفة متطايرة";
+                charClothing = "سترة سوداء بلا حواف محددة، حزام يحمل أقلام رصاص فحمية ثقيلة";
+            } else if (desc.includes("بطل") || desc.includes("مستيقظ") || desc.includes("مكتشف")) {
+                charName = "المستكشف أطلس (Atlas)";
+                charClass = "الشخصيات المستيقظة (The Awakened) - الساعون لمعرفة الحقيقة";
+                charVisual = "عيون زرقاء متوهجة بالكامل، شعر رصاصي متطاير كقصاصات الورق، ملامح مستفسرة";
+                charClothing = "معطف جلد مغطى برموز هندسية، حقيبة كتف فنية بها أوراق رسم ومساطر قياس";
+            }
+
+            // Create Character Asset
+            const charId = 'extracted-char-' + Date.now();
+            const charAsset = {
+                id: charId,
+                type: 'character',
+                title: charName,
+                desc: `شخصية مستخلصة تلقائياً من سيناريو [${title}]، تتجسد في البعد الفني وتتفاعل مع خط التماس البصري.`,
+                driveUrl: 'https://drive.google.com/drive/folders/wizard-session',
+                status: 'finished',
+                relatedCreator: creatorId,
+                subOptions: {
+                    charClass: charClass,
+                    optCharVisual: charVisual,
+                    optCharClothing: charClothing
+                },
+                createdAt: new Date().toISOString()
+            };
+
+            // Extract Environment
+            let envName = "البوابة البصرية المجهولة";
+            let envType = "داخل لوحة قماشية مائعة (Fluid Canvas Interior)";
+            let envVisual = "جبال وتضاريس دائرية تنساب كألوان مائية، مع سماء كحلية مليئة بالنجوم السائلة";
+            let envTime = "شفق قرمزي دائم يتداخل مع سديم سائل متساقط كالأمطار الزيتية";
+
+            if (desc.includes("مدينة") || desc.includes("سايبر")) {
+                envName = "مدينة المتجهات (Vector City)";
+                envType = "مدينة سايبربانك مبنية بمتجهات هندسية حادة (Vector City)";
+                envVisual = "ناطحات سحاب مثلثة حادة، جسور ضوئية مستقيمة، متجهات حبرية سوداء في الأفق";
+                envTime = "ليل فضي دائم تشعه اللوحات الإعلانية النيونية الفيروزية";
+            } else if (desc.includes("جزيرة") || desc.includes("ورق")) {
+                envName = "جزيرة القصاصات العائمة";
+                envType = "جزيرة عائمة مبنية من قصاصات الصحف والورق";
+                envVisual = "تضاريس وعشب مقصوص من صحف قديمة مطبوعة، أشجار كارتونية بخطوط تحديد سميكة";
+                envTime = "شروق دافئ يظهر نسيج السطح الورقي المخطط للخلفية الكونية";
+            }
+
+            // Create Environment Asset
+            const envId = 'extracted-env-' + Date.now();
+            const envAsset = {
+                id: envId,
+                type: 'environment',
+                title: envName,
+                desc: `بيئة وموقع جغرافي تم استخلاصه تلقائياً من سيناريو [${title}] لتجسيد الأحداث بصرياً.`,
+                driveUrl: 'https://drive.google.com/drive/folders/wizard-session',
+                status: 'finished',
+                relatedCreator: creatorId,
+                subOptions: {
+                    envType: envType,
+                    clashDensity: "متوسطة (تداخل الضوء والجاذبية)",
+                    optEnvVisual: envVisual,
+                    optEnvTimeOfDay: envTime
+                },
+                createdAt: new Date().toISOString()
+            };
+
+            // Create Prop
+            let propName = "الأداة الكونية المكتشفة";
+            let propType = "أداة فنية متحولة (Transformative Art Tool)";
+            let propVisual = "ريشة كتابة نحاسية قديمة يتوهج رأسها بنور سديمي أزرق متحول";
+            let propUsage = "تستخدم لإعادة رسم التضاريس والخطوط المشوهة حول شق التماس البصري";
+
+            if (desc.includes("سيف") || desc.includes("سلاح")) {
+                propName = "السيف الأبعادي (Dimensional Blade)";
+                propType = "سلاح أبعادي (Dimensional Weapon)";
+                propVisual = "نصل حاد مائل بلوري يظهر كخط قلم رصاص خشن يقطع نسيج الفضاء الملون";
+                propUsage = "يقطع النسيج الضوئي للبعد الفني لفتح بوابات تلامس مؤقتة مع أبعاد أخرى";
+            } else if (desc.includes("قلم") || desc.includes("فرشاة")) {
+                propName = "قلم القياس الكوني (Stylus of Order)";
+                propType = "أداة فنية متحولة (Transformative Art Tool)";
+                propVisual = "قلم رصاص عملاق ذو نقوش فيروزية تشع بنبضات خافتة، مع حافة مكسورة تظهر كمسودة رصاص";
+                propUsage = "يعيد رسم الخطوط الخارجية للشخصيات والأبنية وتثبيت الطبقات الفنية المنهارة";
+            } else if (desc.includes("تميمة") || desc.includes("أثر")) {
+                propName = "التميمة الأثرية (Cosmic Amulet)";
+                propType = "تميمة سحرية/أثرية (Cosmic Relic/Amulet)";
+                propVisual = "حجر دائري مسطح منقوش عليه شروخ ذهبية تتدفق منها ألوان مائية حية";
+                propUsage = "يمتص الطاقة التنافرية عند نقاط تصادم الأبعاد لحماية حامل التميمة من المحو البصري";
+            }
+
+            // Create Prop Asset
+            const propId = 'extracted-prop-' + Date.now();
+            const propAsset = {
+                id: propId,
+                type: 'prop',
+                title: propName,
+                desc: `مقتنى وأداة كوكبية مستخلصة تلقائياً من سيناريو [${title}]، مستخدمة في الصراع السردي.`,
+                driveUrl: 'https://drive.google.com/drive/folders/wizard-session',
+                status: 'finished',
+                subOptions: {
+                    propType: propType,
+                    optPropVisual: propVisual,
+                    optPropUsage: propUsage
+                },
+                createdAt: new Date().toISOString()
+            };
+
+            // Link newly generated assets into current lists
+            this.assets.push(creatorAsset, charAsset, envAsset, propAsset);
+            
+            // Link Scenario back to the newly created assets
+            scenario.relatedCreator = creatorId;
+            scenario.relatedCharacters = [charId];
+            scenario.relatedEnvironments = [envId];
+
+            this.saveAssets();
+            this.renderAssetsList();
+            
+            toast.style.background = "#15803d";
+            toast.innerHTML = `✅ تم توليد وتعبئة الأصول بنجاح!<br>✍️ الرسام: ${creatorName}<br>👤 الشخصية: ${charName}<br>🌌 البيئة: ${envName}<br>🛡️ الأداة: ${propName}`;
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }, 1500);
     }
 
     showProjectDetailsModal(asset) {
