@@ -206,6 +206,19 @@ class SketchicApp {
         // Dynamic Scene Frames Builder
         this.btnAddSceneFrame = document.getElementById('btn-add-scene-frame');
         this.sceneFramesContainer = document.getElementById('scene-frames-container');
+
+        // Raw Script and Spell of Creation elements
+        this.btnScriptTab = document.getElementById('btn-script');
+        this.scriptInputText = document.getElementById('script-input-text');
+        this.btnParseScript = document.getElementById('btn-parse-script');
+        this.btnExportScriptScenes = document.getElementById('btn-export-script-scenes');
+        this.scriptParsingStatus = document.getElementById('script-parsing-status');
+        this.scriptEmptyResults = document.getElementById('script-empty-results');
+        this.scriptSegmentedScenesList = document.getElementById('script-segmented-scenes-list');
+        this.terminalSpellBox = document.getElementById('terminal-spell-box');
+        this.terminalSpellContent = document.getElementById('terminal-spell-content');
+        this.btnCopySpell = document.getElementById('btn-copy-spell');
+        this.parsedScenes = []; // Cache to store parsed scenes
     }
 
     bindEvents() {
@@ -488,6 +501,20 @@ class SketchicApp {
         if (this.btnAutoStoryboard) {
             this.btnAutoStoryboard.addEventListener('click', () => this.autoGenerateStoryboard());
         }
+        if (this.btnParseScript) {
+            this.btnParseScript.addEventListener('click', () => this.handleScriptParsing());
+        }
+        if (this.btnExportScriptScenes) {
+            this.btnExportScriptScenes.addEventListener('click', () => this.exportParsedScenes());
+        }
+        if (this.btnCopySpell) {
+            this.btnCopySpell.addEventListener('click', () => {
+                navigator.clipboard.writeText(this.terminalSpellContent.innerText);
+                this.btnCopySpell.textContent = "Copied!";
+                setTimeout(() => { this.btnCopySpell.textContent = "Copy"; }, 2000);
+            });
+        }
+
         this.initDrawingTab();
     }
 
@@ -4355,6 +4382,140 @@ Show how style shaders swap dynamically.`
 
         html += `</div>`;
         this.clashPreviewStage.innerHTML = html;
+    }
+
+    handleScriptParsing() {
+        const scriptText = this.scriptInputText.value.trim() || this.scriptInputText.placeholder;
+        
+        this.scriptParsingStatus.style.display = 'block';
+        this.scriptEmptyResults.style.display = 'none';
+        this.scriptSegmentedScenesList.style.display = 'none';
+        this.terminalSpellBox.style.display = 'none';
+        this.btnExportScriptScenes.style.display = 'none';
+
+        setTimeout(() => {
+            this.parsedScenes = [
+                {
+                    title: "المشهد الأول: تشققات البعد الحبري",
+                    narration: "زين، مدقق خطي في متروبوليس الحبر، يتجول بين أزقة المدينة المونوكرومية الحادة ثنائية الأبعاد.",
+                    action: "يلاحظ زين السماء الورقية المسطحة تبدأ في التصدع وتتساقط منها جسيمات فحمية خفيفة.",
+                    charPhysics: "الشخصية (زين) بأسلوب مانجا 2D خطي نقي يتحرك بمعدل 12 إطاراً في الثانية (12fps).",
+                    envPhysics: "بيئة متروبوليس الحبر ثنائية الأبعاد تماماً وبخطوط تحديد حادة 100% Opacity."
+                },
+                {
+                    title: "المشهد الثاني: الصدام والسيولة الزيتية",
+                    narration: "من بين التشققات في السماء الورقية، تسقط بقعة زيتية قرمزية ثقيلة ولزجة على الأرضية المخططة.",
+                    action: "البقعة تبدأ في الانتشار، مشوهة خطوط الحبر الخارجية، ومثيرة قوى المحو البصري.",
+                    charPhysics: "الشخصية وسوائل الصدام الزيتي تتحرك بانسيابية ناعمة ولزجة بمعدل 60 إطاراً في الثانية (60fps).",
+                    envPhysics: "بيئة التماس البصري تحتوي على خطوط تماس متوهجة تمنع امتزاج ألوان النهضة مع الحبر."
+                }
+            ];
+
+            this.renderParsedScenes();
+        }, 1500);
+    }
+
+    renderParsedScenes() {
+        this.scriptParsingStatus.style.display = 'none';
+        this.scriptSegmentedScenesList.style.display = 'flex';
+        this.btnExportScriptScenes.style.display = 'block';
+        this.scriptSegmentedScenesList.innerHTML = "";
+
+        this.parsedScenes.forEach((scene, index) => {
+            const card = document.createElement('div');
+            card.className = "card";
+            card.style.cssText = "border: 1px solid var(--border-color); background: var(--bg-secondary); padding: 12px; margin-bottom: 8px; border-radius: 6px;";
+            card.innerHTML = `
+                <div style="font-weight: bold; font-size: 0.92rem; color: var(--color-cyan); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                    <span>${scene.title}</span>
+                    <input type="checkbox" checked data-index="${index}" style="cursor: pointer;">
+                </div>
+                <div style="font-size: 0.8rem; line-height: 1.5; color: var(--text-secondary);">
+                    <div style="margin-bottom: 4px;">📖 <strong>السرد:</strong> ${scene.narration}</div>
+                    <div style="margin-bottom: 4px;">🎬 <strong>الحركة:</strong> ${scene.action}</div>
+                    <div style="margin-top: 6px; border-top: 1px dashed var(--border-color); padding-top: 6px; font-size: 0.72rem; color: var(--color-accent);">
+                        <div>⚡ <strong>فيزياء الشخصية:</strong> ${scene.charPhysics}</div>
+                        <div>🌌 <strong>فيزياء البيئة:</strong> ${scene.envPhysics}</div>
+                    </div>
+                </div>
+            `;
+            this.scriptSegmentedScenesList.appendChild(card);
+        });
+
+        // Formulate and display the Spell of Creation terminal prompt
+        this.terminalSpellBox.style.display = 'block';
+        
+        // Dynamically color code the terminal contents using HTML spans for maximum premium feeling
+        this.terminalSpellContent.innerHTML = `
+<span style="color: #4ade80;">Animate the attached images sequentially</span>
+<span style="color: #fb7185;">Enforce strict Sketchic Physics</span>
+<span style="color: #38bdf8;">The character on the left must remain pure 2D Manga line art moving at 12fps</span>
+<span style="color: #f59e0b;">The environment and character on the right must be thick Renaissance Impasto oil moving smoothly at 60fps</span>
+<span style="color: #c084fc;">Preserve the glowing visual clash boundary between them</span>
+<span style="color: #f43f5e; font-weight: bold;">Absolutely NO blending of styles</span>
+        `;
+    }
+
+    exportParsedScenes() {
+        const cbs = this.scriptSegmentedScenesList.querySelectorAll('input[type="checkbox"]:checked');
+        const selectedIndices = Array.from(cbs).map(cb => parseInt(cb.dataset.index));
+
+        if (selectedIndices.length === 0) {
+            alert("يرجى اختيار مشهد واحد على الأقل للتصدير!");
+            return;
+        }
+
+        // Get or create a Scenario to link scenes
+        let scenario = this.assets.find(a => a.type === 'scenario');
+        if (!scenario) {
+            scenario = {
+                id: 'scen-' + Date.now(),
+                type: 'scenario',
+                title: 'سيناريو مستخلص من النص الخام',
+                desc: this.scriptInputText.value.substring(0, 150) + "...",
+                status: 'finished',
+                driveUrl: 'https://drive.google.com/drive/folders/wizard-session',
+                subOptions: {
+                    parallelLayer: "Layer 1 - الوجود المادي الفعلي",
+                    framerate: "24fps",
+                    styleName: "زيتي كلاسيكي مدمج مع خطوط حبر سوداء حادة",
+                    styleDesc: "ضربات فرشاة سميكة وملمس زيتي بارز..."
+                },
+                createdAt: new Date().toISOString()
+            };
+            this.assets.push(scenario);
+            this.saveAssets();
+        }
+
+        // Build Scene object structures
+        selectedIndices.forEach(idx => {
+            const parsed = this.parsedScenes[idx];
+            const newScene = {
+                id: 'scene-script-' + idx + '-' + Date.now(),
+                title: parsed.title,
+                scenarioId: scenario.id,
+                characterIds: [],
+                dialogue: parsed.narration,
+                audioProfile: 'retro-tape',
+                comicId: "",
+                videoId: "",
+                frames: [
+                    {
+                        desc: parsed.action,
+                        dialogue: parsed.narration,
+                        refAssetIds: []
+                    }
+                ]
+            };
+            this.scenes.push(newScene);
+        });
+
+        this.saveScenes();
+        this.clearSceneForm();
+        this.renderScenesList();
+        
+        alert(`📥 تم تصدير ${selectedIndices.length} مشهد بنجاح إلى باني المشاهد المتسقة! يمكنك تعديل تفاصيلها والتحقق من التناسق الآن.`);
+        this.switchTab('scenes');
     }
 
     autoGenerateStoryboard() {

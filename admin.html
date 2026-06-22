@@ -40,6 +40,10 @@
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                     <span>باني المشاهد المتسقة</span>
                 </button>
+                <button class="nav-btn" id="btn-script" data-tab="script">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span>📜 السيناريو الخام</span>
+                </button>
                 <button class="nav-btn" id="btn-drawing" data-tab="drawing">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path><path d="M12 6V12L16 14"></path></svg>
                     <span>مرسم الأساليب والتهجين</span>
@@ -743,6 +747,69 @@
                             <div class="clash-empty-state" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--text-tertiary); font-size: 0.9rem; text-align: center; padding: 1rem;">
                                 حدد شخصيات المشهد لبدء محاكاة التصادم البصري ثنائي الأبعاد/ثلاثي الأبعاد...
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab: Raw Script Segmenter & Spell of Creation -->
+        <section id="tab-script" class="tab-pane">
+            <div class="section-header">
+                <div>
+                    <h2>📜 تفكيك السيناريو وتعويذة الخلق (The Spark & Breathing Life) ⚡</h2>
+                    <p>ألصق قصتك أو فكرتك الخام هنا ليقوم المساعد الكوني بتحليلها وتقسيمها إلى مشاهد وإطارات مصنفة فيزيائياً، وصياغة موجهات التحريك للعميل.</p>
+                </div>
+            </div>
+            
+            <div class="scenes-layout-grid" style="display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 1.5rem; height: calc(100vh - 220px); min-height: 500px;">
+                <!-- Right column: Script input -->
+                <div class="card" style="display: flex; flex-direction: column; height: 100%; box-sizing: border-box;">
+                    <div style="font-weight: 700; margin-bottom: 12px; font-size: 1.1rem; display: flex; align-items: center; gap: 6px;">
+                        <span>📜</span> <span>السيناريو الخام (Raw Narrative Script)</span>
+                    </div>
+                    <textarea id="script-input-text" style="flex: 1; width: 100%; box-sizing: border-box; background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-md); font-family: var(--font-ar); font-size: 0.9rem; line-height: 1.6; resize: none;" placeholder="زين، مدقق خطي في متروبوليس الحبر، يلاحظ السماء الورقية تتشقق لتسقط منها بقعة زيتية قرمزية..."></textarea>
+                    
+                    <button type="button" id="btn-parse-script" class="btn btn-primary" style="margin-top: 15px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px;">
+                        <span>✨</span> <span>تحليل وتفكيك السيناريو تلقائياً (Autofill Scenes)</span>
+                    </button>
+                </div>
+                
+                <!-- Left column: Segmented scenes & terminal -->
+                <div style="display: flex; flex-direction: column; gap: 1.2rem; height: 100%; overflow-y: auto; padding-right: 5px;">
+                    <!-- Segmented scenes container -->
+                    <div class="card" style="flex: 1; display: flex; flex-direction: column; min-height: 250px;">
+                        <div style="font-weight: 700; margin-bottom: 12px; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span>📋</span> <span>المشاهد والإطارات المستخلصة</span>
+                            </div>
+                            <button type="button" id="btn-export-script-scenes" class="btn" style="background-color: var(--color-accent-light); color: var(--color-accent); font-size: 0.78rem; padding: 4px 10px; font-weight: bold; border: 1px solid rgba(99,102,241,0.2); cursor: pointer; display: none;">
+                                📥 تصدير لخط العمل الكوني
+                            </button>
+                        </div>
+                        
+                        <div id="script-parsing-status" style="display:none; text-align:center; padding: 2rem; color: var(--text-secondary);">
+                            <div class="spinner" style="margin: 0 auto 10px auto; width: 24px; height: 24px; border: 3px solid rgba(34,211,238,0.2); border-top-color: var(--color-cyan); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                            <span>جاري معالجة وتفكيك النص سردياً...</span>
+                        </div>
+                        
+                        <div id="script-empty-results" style="text-align: center; color: var(--text-tertiary); font-size: 0.88rem; padding: 3rem 1rem; flex: 1; display: flex; align-items: center; justify-content: center;">
+                            أدخل النص والسيناريو في الحقل الأيمن ثم اضغط زر التحليل لتفصيل المشاهد فيزيائياً وإخراجياً...
+                        </div>
+                        
+                        <div id="script-segmented-scenes-list" style="display: none; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1; padding: 5px;">
+                            <!-- Filled dynamically by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Command Terminal: Spell of Creation -->
+                    <div class="card" id="terminal-spell-box" style="display: none; background: #0b0f19; border: 1px solid #1e293b; border-radius: var(--radius-md); padding: 15px; color: #f8fafc; font-family: 'Courier New', Courier, monospace; direction: ltr; text-align: left; box-shadow: inset 0 0 10px rgba(0,0,0,0.8);">
+                        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 12px; direction: rtl;">
+                            <span style="font-size: 0.8rem; font-weight: 700; color: #38bdf8; font-family: var(--font-ar);">💻 تعويذة التحريك الكونية (Breathing Life Terminal)</span>
+                            <button type="button" id="btn-copy-spell" style="background: none; border: 1px solid #334155; color: #94a3b8; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; cursor: pointer;">Copy</button>
+                        </div>
+                        <div style="font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; word-break: break-all;" id="terminal-spell-content">
+                            <!-- Filled dynamically -->
                         </div>
                     </div>
                 </div>
