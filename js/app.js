@@ -1724,6 +1724,14 @@ class SketchicApp {
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="opt-styleName">اسم الأسلوب الفني للسيناريو (Style Name) *</label>
+                    <input type="text" id="opt-styleName" placeholder="أدخل اسم الأسلوب الفني المميز (مثال: نيون سايبربانك الهجين)..." style="font-size: 0.8rem; width: 100%; box-sizing: border-box; padding: 6px; border-radius:4px; border:1px solid var(--border-color);" value="زيتي كلاسيكي مدمج مع خطوط حبر سوداء حادة" required>
+                </div>
+                <div class="form-group">
+                    <label for="opt-styleDesc">وصف وتفاصيل الأسلوب الفني للسيناريو (Style Description) *</label>
+                    <textarea id="opt-styleDesc" rows="2" placeholder="صف العناصر الجمالية والقواعد البصرية التي تميز هذا الأسلوب الفني للسيناريو..." required>ضربات فرشاة سميكة وملمس زيتي بارز في الخلفيات والظلال، مع خطوط تحديد رفيعة وحادة للشخصيات تظهر كأنها مرسومة بقلم G-Pen ياباني</textarea>
+                </div>
+                <div class="form-group">
                     <label for="opt-parallelLayer">الطبقة الزمنية المتوازية (Parallel Layer) *</label>
                     <select id="opt-parallelLayer" required>
                         <option value="Layer 1 - الوجود المادي الفعلي">الطبقة الأولى - الوجود المادي الفعلي</option>
@@ -2588,11 +2596,15 @@ ${wrText}
                         sourceText = `<a href="${sourceAsset.driveUrl}" target="_blank" style="color:var(--color-cyan); text-decoration:underline; font-weight:bold;">${sourceAsset.title} 🔗</a>`;
                     }
                 }
+                const styleName = asset.subOptions.styleName || "زيتي كلاسيكي مدمج مع خطوط حبر سوداء حادة";
+                const styleDesc = asset.subOptions.styleDesc || "ضربات فرشاة سميكة وملمس زيتي بارز في الخلفيات والظلال، مع خطوط تحديد رفيعة وحادة للشخصيات تظهر كأنها مرسومة بقلم G-Pen ياباني";
                 creatorDetailsHtml = `
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>📂 <strong>الطبقة الزمنية:</strong> ${layer}</div>
                         <div style="margin-top:4px;">⏱️ <strong>معدل الإطارات:</strong> ${fps}</div>
                         <div style="margin-top:4px;">📖 <strong>المصدر السردي:</strong> ${sourceText}</div>
+                        <div style="margin-top:4px; border-top:1px dashed var(--border-color); padding-top:4px; margin-top:4px;">🎨 <strong>الأسلوب الفني:</strong> ${styleName}</div>
+                        <div style="margin-top:4px; font-size:0.75rem; color:var(--text-secondary); line-height:1.4;">📝 <strong>وصف الأسلوب:</strong> ${styleDesc}</div>
                     </div>
                 `;
             } else if (asset.type === 'character' && asset.subOptions) {
