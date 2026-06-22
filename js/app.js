@@ -1792,6 +1792,23 @@ class SketchicApp {
                     <textarea id="opt-charVisual" rows="2" placeholder="أدخل الملامح الجسدية، لون العيون والشعر، الطول، تعابير الوجه..." required>شعر فضي قصير منسدل، عيون زرقاء متوهجة، قامة ممشوقة بملامح حادة</textarea>
                 </div>
                 <div class="form-group">
+                    <label for="opt-charKingdom">المملكة الكونية ومصفوفة الفيزياء (Cosmic Matrix Realm) *</label>
+                    <select id="opt-charKingdom" required>
+                        <option value="Ink Metropolis (متروبوليس الحبر - Manga)">متروبوليس الحبر (خطوط حادة، حركة 12fps، مونوكروم)</option>
+                        <option value="Canvas Empire (إمبراطورية القماش - Classical Oil)">إمبراطورية القماش (خطوط منعدمة، حركة 60fps لزجة، تشياروسكورو)</option>
+                        <option value="Graphite Kingdom (مملكة الغرافيت - Charcoal/Pencil)">مملكة الغرافيت (خطوط هشة مرنة، تتطاير بالريح، رمادي شاحب)</option>
+                        <option value="Digital Expanse (المدى الرقمي - Pixel/Neon)">المدى الرقمي (متجهات رياضية، انتقال آني، ألوان مسطحة)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-charGravity">الجاذبية الجمالية والكتلة الوجودية (Aesthetic Gravity & Mass) *</label>
+                    <select id="opt-charGravity" required>
+                        <option value="هشة وخفيفة للغاية (تتأثر بالرياح وسريعة المحو - Graphite/Charcoal)">هشة وخفيفة للغاية (تتأثر بالرياح وسريعة المحو)</option>
+                        <option value="ثقيلة وكثيفة للغاية (تمتلك عطالة وتفرض عمقاً ثلاثياً - Classical Oil/Impasto)">ثقيلة وكثيفة للغاية (تمتلك عطالة وتفرض عمقاً ثلاثياً)</option>
+                        <option value="رقمية متزنة ثابتة (محكومة بإحداثيات رياضية - Digital Vectors)">رقمية متزنة ثابتة (محكومة بإحداثيات رياضية)</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="opt-charClothing">الملابس والإكسسوارات المرافقة (Clothing & Accessories) *</label>
                     <textarea id="opt-charClothing" rows="2" placeholder="أدخل تفاصيل الملابس، الدروع، الأوشحة، أو الخواتم المميزة..." required>سترة جلدية سوداء طويلة ذات أطراف كربونية، وشاح أحمر ممزق، وخاتم فضي قديم</textarea>
                 </div>
@@ -1810,6 +1827,23 @@ class SketchicApp {
                 <div class="form-group">
                     <label for="opt-propVisual">الوصف البصري والملامح المادية للـ Prop (Visual Description) *</label>
                     <textarea id="opt-propVisual" rows="2" placeholder="صف مظهر المقتنى، لونه، خاماته وقوامه البصري..." required>درع بلوري متوهج ذو نقوش فيروزية تشع بنبضات خافتة، مع حواف مكسورة تظهر كمسودة رصاص</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="opt-propKingdom">المملكة الكونية ومصفوفة الفيزياء (Cosmic Matrix Realm) *</label>
+                    <select id="opt-propKingdom" required>
+                        <option value="Ink Metropolis (متروبوليس الحبر - Manga)">متروبوليس الحبر (خطوط حادة، حركة 12fps، مونوكروم)</option>
+                        <option value="Canvas Empire (إمبراطورية القماش - Classical Oil)">إمبراطورية القماش (خطوط منعدمة، حركة 60fps لزجة، تشياروسكورو)</option>
+                        <option value="Graphite Kingdom (مملكة الغرافيت - Charcoal/Pencil)">مملكة الغرافيت (خطوط هشة مرنة، تتطاير بالريح، رمادي شاحب)</option>
+                        <option value="Digital Expanse (المدى الرقمي - Pixel/Neon)">المدى الرقمي (متجهات رياضية، انتقال آني، ألوان مسطحة)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-propGravity">الجاذبية الجمالية والكتلة الوجودية (Aesthetic Gravity & Mass) *</label>
+                    <select id="opt-propGravity" required>
+                        <option value="هشة وخفيفة للغاية (تتأثر بالرياح وسريعة المحو - Graphite/Charcoal)">هشة وخفيفة للغاية (تتأثر بالرياح وسريعة المحو)</option>
+                        <option value="ثقيلة وكثيفة للغاية (تمتلك عطالة وتفرض عمقاً ثلاثياً - Classical Oil/Impasto)">ثقيلة وكثيفة للغاية (تمتلك عطالة وتفرض عمقاً ثلاثياً)</option>
+                        <option value="رقمية متزنة ثابتة (محكومة بإحداثيات رياضية - Digital Vectors)">رقمية متزنة ثابتة (محكومة بإحداثيات رياضية)</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="opt-propUsage">متطلبات وطريقة الاستخدام السردي *</label>
@@ -2060,6 +2094,8 @@ class SketchicApp {
         } else if (type === 'scenario') {
             const genre = valOf('opt-genre', 'خيال علمي (Sci-Fi)');
             const style = valOf('opt-style', 'سرد تفصيلي بطيء ومكثف');
+            const styleName = valOf('opt-styleName', 'زيتي كلاسيكي مدمج مع خطوط حبر سوداء حادة');
+            const styleDesc = valOf('opt-styleDesc', 'ضربات فرشاة سميكة وملمس زيتي بارز...');
             const layer = valOf('opt-parallelLayer', 'Layer 1 - الوجود المادي الفعلي');
             const fps = valOf('opt-framerate', '24fps');
             
@@ -2084,9 +2120,10 @@ class SketchicApp {
             }
 
             prompt = `بصفتك خبيراً سردياً لكون سكتشيك (Sketchic World)، قم بكتابة سيناريو سينمائي تفصيلي لقصة مشتقة من: [${sourceInfo}]، ومن تصنيف [${genre}] وبأسلوب [${style}]. 
-يخضع هذا السيناريو لرؤية الرسام الكوني المرتبط ذي الأسلوب [${creatorStyle}] مستخدماً الأداة الكونية [${creatorTool}].
+يخضع هذا السيناريو لأسلوب فني حاكم مميز: [${styleName}] مع القواعد والوصف الجمالي: [${styleDesc}].
+يخضع هذا السيناريو أيضاً لرؤية الرسام الكوني ذي الأسلوب [${creatorStyle}] مستخدماً الأداة الكونية [${creatorTool}].
 يتموضع هذا السيناريو في [${layer}] ويخضع لمعدل إطارات كوني قدره [${fps}].
-يجب أن تركز القصة على صدام الأسلوب الفني في الكادر ووجود أبعاد مرسومة متداخلة دون اندماج، مع كتابة السيناريو بهيكل مشاهد سينمائية تفصيلية.`;
+يجب الحفاظ بشكل صارم على مبدأ ممنوع الدمج الفني (No Blending) والقص اللوني والتنافر الضوئي (Chromatic Shear) بحيث تحتفظ كل شخصية وكل عنصر بهويته الفنية بنسبة 100% دون امتزاج عند خط التماس البصري.`;
         } else if (type === 'environment') {
             const envType = valOf('opt-envType', 'داخل لوحة قماشية مائعة (Fluid Canvas Interior)');
             const clashDensity = valOf('opt-clashDensity', 'متوسطة (تداخل الضوء والجاذبية)');
@@ -2140,19 +2177,25 @@ class SketchicApp {
 
             const charVisual = valOf('opt-charVisual', 'ملامح حادة مميزة');
             const charClothing = valOf('opt-charClothing', 'زي قتالي متناسق');
+            const charKingdom = valOf('opt-charKingdom', 'Ink Metropolis (متروبوليس الحبر - Manga)');
+            const charGravity = valOf('opt-charGravity', 'غير محدد');
 
             prompt = `ورقة تصميم شخصية بصرية احترافية لشخصية في كون سكتشيك السينمائي.
 الدور السردي للشخصية: [${charClass}].
 الفصيل الكوني: [${factionText}].
+المملكة ومصفوفة الفيزياء: [${charKingdom}].
+الجاذبية الجمالية والكتلة الوجودية: [${charGravity}].
 السلاح الكوني المميز: [${weaponText}].
 الملامح والوصف الجسدي: [${charVisual}].
 الملابس والإكسسوارات المميزة: [${charClothing}].
 قوانين الأسلوب الموروثة من الرسام: مرسومة بأسلوب [${styleText}] باستخدام [${toolText}].
-التفاصيل: يجب أن تعرض ورقة تصميم الشخصية مظهراً نظيفاً وواضحاً للشخصية على خلفية محايدة، مع إبراز الخطوط والملامس وقوام ضربات الأداة الفنية الخاصة بهذا الرسام. قم بتوضيح شعار فصيلهم وسلاحهم المميز.`;
+التفاصيل: يجب أن تعكس الشخصية خصائص كتلتها وجاذبيتها الجمالية ونمط حركتها (مثال: 12fps لشخصيات الحبر مقابل 60fps لزج لشخصيات الزيت) وتلتزم بقاعدة ممنوع الدمج الفني (No Blending) عند التماس.`;
         } else if (type === 'prop') {
             const propType = valOf('opt-propType', 'سلاح أبعادي (Dimensional Weapon)');
             const propVisual = valOf('opt-propVisual', 'درع بلوري متوهج');
             const propUsage = valOf('opt-propUsage', 'تتطلب تركيزاً ذهنياً عالياً');
+            const propKingdom = valOf('opt-propKingdom', 'Ink Metropolis (متروبوليس الحبر - Manga)');
+            const propGravity = valOf('opt-propGravity', 'غير محدد');
             
             let styleText = "أسلوب رسم فني متباين";
             if (this.relatedCreatorSelect.value) {
@@ -2164,10 +2207,12 @@ class SketchicApp {
             
             prompt = `ورقة تصميم أصل فني بصرية (Prop Design Sheet) لأداة كوكبية في كون سكتشيك.
 نوع الأداة: [${propType}].
+المملكة ومصفوفة الفيزياء للـ Prop: [${propKingdom}].
+الجاذبية الجمالية والكتلة الوجودية: [${propGravity}].
 الوصف البصري والملامح: [${propVisual}].
 قواعد الاستخدام والفيزياء: [${propUsage}].
 قوانين الأسلوب الموروثة من الرسام: مرسومة بأسلوب [${styleText}].
-التفاصيل: يجب أن تُظهر الورقة تصميماً دقيقاً للمقتنى مع عدة زوايا، وإيضاح قوام المادة وملمس ضربات الفرشاة أو خطوط الحبر المكونة له مع خلفية محايدة.`;
+التفاصيل: يجب توضيح كيف تؤثر الكتلة الوجودية والجاذبية الجمالية للـ Prop على شكلها وحركتها السردية، مع الحفاظ على خط تماس متوهج (Clash Boundary) غير مدموج.`;
         } else if (type === 'voice') {
             const voiceEngine = valOf('opt-voiceEngine', 'gemini-3.1-flash-tts-preview');
             prompt = `موجه توليد ملف صوت تعبيري كوني مخصص لـ Google AI Studio (gemini-3.1-flash-tts-preview).
@@ -2609,9 +2654,13 @@ ${wrText}
                 `;
             } else if (asset.type === 'character' && asset.subOptions) {
                 const charClass = asset.subOptions.charClass || "دور غير محدد";
+                const charKingdom = asset.subOptions.charKingdom || "متروبوليس الحبر (Manga)";
+                const charGravity = asset.subOptions.charGravity || "غير محدد";
                 creatorDetailsHtml = `
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>👤 <strong>الدور السردي:</strong> ${charClass}</div>
+                        <div style="margin-top:4px;">🪐 <strong>المملكة ومصفوفة الفيزياء:</strong> ${charKingdom}</div>
+                        <div style="margin-top:4px;">⚖️ <strong>الجاذبية والكتلة:</strong> ${charGravity}</div>
                     </div>
                 `;
             } else if (asset.type === 'voice' && asset.subOptions) {
@@ -2641,6 +2690,17 @@ ${wrText}
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>📜 <strong>نوع النص:</strong> ${wrType}</div>
                         <div style="margin-top:4px;">🌐 <strong>اللغة:</strong> ${wrLang} (${wrStyle})</div>
+                    </div>
+                `;
+            } else if (asset.type === 'prop' && asset.subOptions) {
+                const propType = asset.subOptions.propType || "أداة ومقتنى كوني";
+                const propKingdom = asset.subOptions.propKingdom || "متروبوليس الحبر (Manga)";
+                const propGravity = asset.subOptions.propGravity || "غير محدد";
+                creatorDetailsHtml = `
+                    <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
+                        <div>🛡️ <strong>نوع المقتنى:</strong> ${propType}</div>
+                        <div style="margin-top:4px;">🪐 <strong>المملكة ومصفوفة الفيزياء:</strong> ${propKingdom}</div>
+                        <div style="margin-top:4px;">⚖️ <strong>الجاذبية والكتلة:</strong> ${propGravity}</div>
                     </div>
                 `;
             }
@@ -4240,12 +4300,15 @@ Show how style shaders swap dynamically.`
                 }
             }
 
-            if (styleName.includes("مانجا") || styleName.includes("Manga") || styleName.includes("حبر")) {
+            const charKingdom = char.subOptions ? char.subOptions.charKingdom || "" : "";
+            if (styleName.includes("مانجا") || styleName.includes("Manga") || styleName.includes("حبر") || charKingdom.includes("Manga") || charKingdom.includes("Ink")) {
                 spriteStyleClass = "clash-sprite-manga";
-            } else if (styleName.includes("زيتية") || styleName.includes("Renaissance") || styleName.includes("زيت")) {
+            } else if (styleName.includes("زيتية") || styleName.includes("Renaissance") || styleName.includes("زيت") || charKingdom.includes("Oil") || charKingdom.includes("Canvas")) {
                 spriteStyleClass = "clash-sprite-oil";
-            } else if (styleName.includes("رصاص") || styleName.includes("Sketch") || styleName.includes("فحم")) {
+            } else if (styleName.includes("رصاص") || styleName.includes("Sketch") || styleName.includes("فحم") || charKingdom.includes("Pencil") || charKingdom.includes("Graphite")) {
                 spriteStyleClass = "clash-sprite-sketch";
+            } else if (styleName.includes("رقمي") || styleName.includes("Digital") || styleName.includes("نيون") || styleName.includes("Vector") || charKingdom.includes("Digital") || charKingdom.includes("Expanse")) {
+                spriteStyleClass = "clash-sprite-digital";
             }
 
             html += `
@@ -4255,6 +4318,40 @@ Show how style shaders swap dynamically.`
                 </div>
             `;
         });
+
+        if (chars.length >= 2) {
+            // Render the glowing boundary separator line from the Playbook
+            html += `
+                <div class="clash-boundary-glow" style="
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 50%;
+                    width: 4px;
+                    background: linear-gradient(180deg, #22d3ee, #ec4899, #f59e0b);
+                    box-shadow: 0 0 15px #22d3ee, 0 0 30px #ec4899;
+                    z-index: 5;
+                    transform: translateX(-50%);
+                    animation: boundaryPulse 2s infinite ease-in-out;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background: #0f172a;
+                        border: 1px solid var(--border-color);
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                        font-size: 0.6rem;
+                        color: #fff;
+                        font-weight: bold;
+                        white-space: nowrap;
+                        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+                    ">⚡ غشاء التماس الكوني</div>
+                </div>
+            `;
+        }
 
         html += `</div>`;
         this.clashPreviewStage.innerHTML = html;
