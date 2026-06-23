@@ -78,6 +78,7 @@ class SketchicApp {
         } else if (this.currentTab === 'simulator') {
             this.renderSimulator();
         }
+        this.autoSyncDatabase();
         if (this.directorMessage) {
             this.updateDirectorChat();
         }
@@ -3789,6 +3790,7 @@ Show how style shaders swap dynamically.`
     saveScenes() {
         localStorage.setItem('sketchic_scenes', JSON.stringify(this.scenes));
         this.renderScenesList();
+        this.autoSyncDatabase();
     }
 
     initSceneTabOptions() {
@@ -5236,6 +5238,11 @@ Show how style shaders swap dynamically.`
             this.btnGDriveDisconnect.addEventListener('click', () => this.disconnectGoogleDrive());
         }
 
+        this.btnGDriveSyncDb = document.getElementById('btn-gdrive-sync-db');
+        if (this.btnGDriveSyncDb) {
+            this.btnGDriveSyncDb.addEventListener('click', () => this.syncDatabaseWithGDrive(true));
+        }
+
         // Try load libraries on start if config exists
         if (this.gdriveClientIdVal && this.gdriveApiKeyVal) {
             setTimeout(() => this.loadGoogleAPILibraries(), 1000);
@@ -5333,10 +5340,12 @@ Show how style shaders swap dynamically.`
             }
             if (this.btnGDriveConnect) this.btnGDriveConnect.style.display = "none";
             if (this.btnGDriveDisconnect) this.btnGDriveDisconnect.style.display = "block";
+            if (this.btnGDriveSyncDb) this.btnGDriveSyncDb.style.display = "flex";
             if (this.gdriveRootIndicator) {
                 this.gdriveRootIndicator.textContent = "متصل بالدرايف الفعلي 🟢";
                 this.gdriveRootIndicator.style.color = "var(--color-success)";
             }
+            this.checkAndLoadGDriveDatabase();
         } else {
             if (this.gdriveStatusBadge) {
                 this.gdriveStatusBadge.textContent = "غير متصل";
@@ -5347,10 +5356,157 @@ Show how style shaders swap dynamically.`
                 this.btnGDriveConnect.innerHTML = `<span>🔗</span> <span>تسجيل الدخول والربط</span>`;
             }
             if (this.btnGDriveDisconnect) this.btnGDriveDisconnect.style.display = "none";
+            if (this.btnGDriveSyncDb) this.btnGDriveSyncDb.style.display = "none";
             if (this.gdriveRootIndicator) {
                 this.gdriveRootIndicator.textContent = "مجلد افتراضي (Offline)";
                 this.gdriveRootIndicator.style.color = "var(--text-tertiary)";
             }
+        }
+    }
+
+    async autoSyncDatabase() {
+        if (this.isGDriveConnected) {
+            console.log("Auto-syncing database backup to Google Drive...");
+            await this.syncDatabaseWithGDrive(false);
+        }
+    }
+
+    async syncDatabaseWithGDrive(isManual = false) {
+        if (!this.isGDriveConnected) {
+            if (isManual) alert("يرجى ربط حساب Google Drive أولاً.");
+            return;
+        }
+
+        if (isManual) {
+            this.btnGDriveSyncDb.innerHTML = `<span>⏳</span> <span>جاري رفع البيانات...</span>`;
+            this.btnGDriveSyncDb.disabled = true;
+        }
+
+        try {
+            const rootId = await this.getOrCreateFolder("Sketchic_Universe_Root");
+            const dbFolderId = await this.getOrCreateFolder("Database_Backups", rootId);
+            
+            const dbData = {
+                assets: this.assets || [],
+                scenes: this.scenes || []
+            };
+
+            const fileName = "sketchic_universe_db.json";
+            const fileQuery = `name = '${fileName}' and '${dbFolderId}' in parents and trashed = false`;
+            const listUrl = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(fileQuery)}&fields=files(id)&spaces=drive`;
+            
+            const searchResponse = await fetch(listUrl, {
+                headers: { 'Authorization': `Bearer ${this.gdriveAccessToken}` }
+            });
+            if (!searchResponse.ok) throw new Error("Search file failed");
+            const searchData = await searchResponse.json();
+            const existingFiles = searchData.files;
+
+            const boundary = 'db_sync_boundary_marker';
+            const delimiter = "\r\n--" + boundary + "\r\n";
+            const close_delim = "\r\n--" + boundary + "--";
+            
+            const contentType = 'application/json';
+            const metadata = {
+                'name': fileName,
+                'mimeType': contentType
+            };
+            if (!existingFiles || existingFiles.length === 0) {
+                metadata.parents = [dbFolderId];
+            }
+
+            const multipartRequestBody =
+                delimiter +
+                'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
+                JSON.stringify(metadata) +
+                delimiter +
+                'Content-Type: ' + contentType + '\r\n\r\n' +
+                JSON.stringify(dbData, null, 2) +
+                close_delim;
+
+            let uploadUrl;
+            let method;
+            if (existingFiles && existingFiles.length > 0) {
+                const fileId = existingFiles[0].id;
+                uploadUrl = `https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=multipart`;
+                method = 'PATCH';
+            } else {
+                uploadUrl = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
+                method = 'POST';
+            }
+
+            const uploadResponse = await fetch(uploadUrl, {
+                method: method,
+                headers: {
+                    'Authorization': `Bearer ${this.gdriveAccessToken}`,
+                    'Content-Type': `multipart/related; boundary=${boundary}`
+                },
+                body: multipartRequestBody
+            });
+
+            if (!uploadResponse.ok) {
+                const errBody = await uploadResponse.text();
+                throw new Error(`Database file upload failed: ${uploadResponse.status} - ${errBody}`);
+            }
+
+            if (isManual) {
+                alert("🎉 تم حفظ ونسخ قاعدة البيانات الكونية كاملة إلى حسابك على Google Drive بنجاح!");
+            }
+        } catch (err) {
+            console.error("Database backup sync failed", err);
+            if (isManual) alert("⚠️ فشل حفظ قاعدة البيانات سحابياً: " + err.message);
+        } finally {
+            if (isManual) {
+                this.btnGDriveSyncDb.innerHTML = `<span>🔄</span> <span>مزامنة قاعدة البيانات سحابياً</span>`;
+                this.btnGDriveSyncDb.disabled = false;
+            }
+        }
+    }
+
+    async checkAndLoadGDriveDatabase() {
+        if (!this.isGDriveConnected) return;
+
+        try {
+            const rootId = await this.getOrCreateFolder("Sketchic_Universe_Root");
+            const dbFolderId = await this.getOrCreateFolder("Database_Backups", rootId);
+            
+            const fileName = "sketchic_universe_db.json";
+            const fileQuery = `name = '${fileName}' and '${dbFolderId}' in parents and trashed = false`;
+            const listUrl = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(fileQuery)}&fields=files(id)&spaces=drive`;
+            
+            const searchResponse = await fetch(listUrl, {
+                headers: { 'Authorization': `Bearer ${this.gdriveAccessToken}` }
+            });
+            if (!searchResponse.ok) return;
+            const searchData = await searchResponse.json();
+            const existingFiles = searchData.files;
+
+            if (existingFiles && existingFiles.length > 0) {
+                const fileId = existingFiles[0].id;
+                if (confirm("🤖 تم العثور على نسخة احتياطية لقاعدة البيانات على Google Drive. هل تريد تحميلها لمزامنة وتحديث أصولك المحلية؟")) {
+                    const downloadUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
+                    const fileResponse = await fetch(downloadUrl, {
+                        headers: { 'Authorization': `Bearer ${this.gdriveAccessToken}` }
+                    });
+                    if (fileResponse.ok) {
+                        const dbData = await fileResponse.json();
+                        if (dbData.assets) {
+                            this.assets = dbData.assets;
+                            localStorage.setItem('sketchic_assets', JSON.stringify(this.assets));
+                        }
+                        if (dbData.scenes) {
+                            this.scenes = dbData.scenes;
+                            localStorage.setItem('sketchic_scenes', JSON.stringify(this.scenes));
+                        }
+                        this.renderAssetsList();
+                        this.renderScenesList();
+                        this.updateStats();
+                        alert("✅ تم تحميل وتحديث قاعدة البيانات بنجاح من السحابة!");
+                    }
+                }
+            }
+        } catch (err) {
+            console.error("Failed to check or load GDrive DB", err);
         }
     }
 
