@@ -202,6 +202,13 @@ class SketchicApp {
         this.btnClearScene = document.getElementById('btn-clear-scene');
         this.sceneAudioProfileSelect = document.getElementById('scene-audio-profile');
         this.btnAutoStoryboard = document.getElementById('btn-auto-storyboard');
+        this.btnAutofillChars = document.getElementById('btn-autofill-chars');
+        this.btnAutofillLocs = document.getElementById('btn-autofill-locs');
+        this.btnAutofillProps = document.getElementById('btn-autofill-props');
+        
+        this.sceneRefMethodSelect = document.getElementById('scene-ref-method');
+        this.sceneMotionEngineSelect = document.getElementById('scene-motion-engine');
+        
         this.btnGenerateEpisodePackage = document.getElementById('btn-generate-episode-package');
 
         // Dynamic Scene Frames Builder
@@ -486,6 +493,12 @@ class SketchicApp {
         if (this.sceneScenarioSelect) {
             this.sceneScenarioSelect.addEventListener('change', () => this.updateSceneConsistencyPrompt());
         }
+        if (this.sceneRefMethodSelect) {
+            this.sceneRefMethodSelect.addEventListener('change', () => this.updateSceneConsistencyPrompt());
+        }
+        if (this.sceneMotionEngineSelect) {
+            this.sceneMotionEngineSelect.addEventListener('change', () => this.updateSceneConsistencyPrompt());
+        }
         if (this.btnAddSceneFrame) {
             this.btnAddSceneFrame.addEventListener('click', () => this.addSceneFrameRow());
         }
@@ -501,6 +514,15 @@ class SketchicApp {
         }
         if (this.btnAutoStoryboard) {
             this.btnAutoStoryboard.addEventListener('click', () => this.autoGenerateStoryboard());
+        }
+        if (this.btnAutofillChars) {
+            this.btnAutofillChars.addEventListener('click', () => this.handleAutofill('character'));
+        }
+        if (this.btnAutofillLocs) {
+            this.btnAutofillLocs.addEventListener('click', () => this.handleAutofill('environment'));
+        }
+        if (this.btnAutofillProps) {
+            this.btnAutofillProps.addEventListener('click', () => this.handleAutofill('prop'));
         }
         if (this.btnParseScript) {
             this.btnParseScript.addEventListener('click', () => this.handleScriptParsing());
@@ -1806,6 +1828,12 @@ class SketchicApp {
             `;
         } else if (type === 'character') {
             optionsHtml += `
+                <div style="margin-bottom: 12px; padding: 10px; background: rgba(34, 211, 238, 0.1); border: 1px solid rgba(34, 211, 238, 0.2); border-radius: 6px;">
+                    <span style="font-weight: bold; font-size: 0.8rem; color: var(--color-cyan); display: block; margin-bottom: 6px;">🧬 هندسة الكائنات الهجينة (Hybrid Being):</span>
+                    <button type="button" id="btn-hybrid-preset" class="btn" style="background: var(--color-cyan); color: #fff; font-size: 0.72rem; padding: 4px 8px; border: none; font-weight: bold; width: 100%; cursor: pointer;">
+                        🧬 تطبيق قالب آرا الهجينة (Hybrid Ara Preset)
+                    </button>
+                </div>
                 <div class="form-group">
                     <label for="opt-charClass">الدور السردي للشخصية *</label>
                     <select id="opt-charClass" required>
@@ -1814,6 +1842,14 @@ class SketchicApp {
                         <option value="شخصية مستيقظة تدرك أنها مرسومة (Awakened)">شخصية مستيقظة تدرك أنها مرسومة (Awakened)</option>
                         <option value="حارس زمن يحمي طبقات اللوحة (Time Keeper)">حارس زمن يحمي طبقات اللوحة (Time Keeper)</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="opt-charInfo">نواة [Character Info] - البرمجة السيكولوجية الفنية *</label>
+                    <textarea id="opt-charInfo" rows="2" placeholder="البرمجة السيكولوجية الفنية التي تحمي وجود الشخصية في المشاهد..." required>آرا الهجينة: شخصية مستيقظة تعيش في قلق وجودي، قلبها من الفحم وجسدها مغلف بالزيت لمنع المحو.</textarea>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                    <input type="checkbox" id="opt-charSheet" checked style="cursor: pointer; width: auto;">
+                    <label for="opt-charSheet" style="margin-bottom: 0; cursor: pointer; font-weight: bold; color: var(--color-green); font-size: 0.8rem;">🛡️ توليد درع [Character Sheet] (ضمان الهوية عبر 50 مشهداً)</label>
                 </div>
                 <div class="form-group">
                     <label for="opt-charVisual">الوصف البصري والملامح الجسدية (Visual Description) *</label>
@@ -1914,6 +1950,31 @@ class SketchicApp {
                     <div class="form-group" style="margin-bottom: 0;">
                         <label style="font-size: 0.75rem;">مثال لأداء النص بالوسوم التعبيرية (Text with Expressive Tags) *</label>
                         <input type="text" id="opt-voiceTags" placeholder="مثال: [amused] That's a great idea! [laughs]" style="font-size: 0.8rem; width: 100%; box-sizing: border-box; padding: 6px; border-radius:4px; border:1px solid var(--border-color);" value="[thoughtful] Wait, are you saying... [sighs] we are all just drawing lines? [laughs]">
+                    </div>
+                    
+                    <!-- Sonic Dissonance Visualizer Widget -->
+                    <div style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 12px;">
+                        <span style="font-weight: bold; font-size: 0.76rem; color: var(--color-cyan); display: block; margin-bottom: 8px;">🔊 مخطط التنافر الصوتي (Sonic Dissonance Visualizer):</span>
+                        <div id="sonic-visualizer-wave" style="height: 60px; background: #0b0f19; border: 1px solid #1e293b; border-radius: 4px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center;">
+                            <!-- CSS Simulated Waveforms clashing -->
+                            <div class="sonic-wave-charcoal" style="position: absolute; left: 0; width: 50%; height: 100%; display: flex; align-items: center; justify-content: space-around; padding: 0 10px; box-sizing: border-box;">
+                                <div style="width: 2px; height: 10px; background: #94a3b8; animation: voiceSpike 0.4s infinite alternate;"></div>
+                                <div style="width: 2px; height: 35px; background: #cbd5e1; animation: voiceSpike 0.3s infinite alternate 0.1s;"></div>
+                                <div style="width: 2px; height: 15px; background: #94a3b8; animation: voiceSpike 0.5s infinite alternate 0.2s;"></div>
+                                <div style="width: 2px; height: 45px; background: #cbd5e1; animation: voiceSpike 0.4s infinite alternate 0.05s;"></div>
+                            </div>
+                            <div class="sonic-wave-oil" style="position: absolute; right: 0; width: 50%; height: 100%; display: flex; align-items: center; justify-content: space-around; padding: 0 10px; box-sizing: border-box; background: rgba(245, 158, 11, 0.05);">
+                                <div style="width: 4px; height: 8px; background: #f59e0b; border-radius: 2px; animation: voiceSpikeSmooth 1.2s infinite ease-in-out;"></div>
+                                <div style="width: 4px; height: 20px; background: #d97706; border-radius: 2px; animation: voiceSpikeSmooth 1s infinite ease-in-out 0.2s;"></div>
+                                <div style="width: 4px; height: 12px; background: #f59e0b; border-radius: 2px; animation: voiceSpikeSmooth 1.4s infinite ease-in-out 0.4s;"></div>
+                            </div>
+                            <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #ec4899; box-shadow: 0 0 8px #ec4899; z-index: 5;"></div>
+                        </div>
+                        <div style="display: flex; gap: 6px; margin-top: 8px;">
+                            <button type="button" class="btn btn-tag" data-tag="[thoughtful]" style="font-size: 0.68rem; padding: 2px 6px; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 4px; cursor: pointer;">+ [thoughtful] (تردد بطيء)</button>
+                            <button type="button" class="btn btn-tag" data-tag="[sighs]" style="font-size: 0.68rem; padding: 2px 6px; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 4px; cursor: pointer;">+ [sighs] (تنهيدة وجودية)</button>
+                            <button type="button" class="btn btn-tag" data-tag="[laughs]" style="font-size: 0.68rem; padding: 2px 6px; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 4px; cursor: pointer;">+ [laughs] (ضحكة تهكمية)</button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -2063,6 +2124,39 @@ class SketchicApp {
             });
         }
 
+        // Hybrid Preset click listener
+        const btnHybridPreset = this.dynamicOptionsContainer.querySelector('#btn-hybrid-preset');
+        if (btnHybridPreset) {
+            btnHybridPreset.addEventListener('click', () => {
+                this.assetTitleInput.value = "آرا الهجينة (Hybrid Ara)";
+                this.assetDescTextarea.value = "كائن هجين مستيقظ يدمج بين قلب الحبر ودفاعات الزيت السميكة للبقاء أمام قوى المحو.";
+                
+                const charClass = this.dynamicOptionsContainer.querySelector('#opt-charClass');
+                if (charClass) charClass.value = "شخصية مستيقظة تدرك أنها مرسومة (Awakened)";
+                
+                const charInfo = this.dynamicOptionsContainer.querySelector('#opt-charInfo');
+                if (charInfo) charInfo.value = "آرا الهجينة: شخصية مستيقظة تعيش في قلق وجودي، قلبها من الفحم وجسدها مغلف بالزيت لمنع المحو.";
+                
+                const charSheet = this.dynamicOptionsContainer.querySelector('#opt-charSheet');
+                if (charSheet) charSheet.checked = true;
+                
+                const charVisual = this.dynamicOptionsContainer.querySelector('#opt-charVisual');
+                if (charVisual) charVisual.value = "قلب من الفحم الرمادي الهش مغلف ببريق زيتي كثيف، ودرع زيتي أحمر لامع.";
+                
+                const charKingdom = this.dynamicOptionsContainer.querySelector('#opt-charKingdom');
+                if (charKingdom) charKingdom.value = "Graphite Kingdom (مملكة الغرافيت - Charcoal/Pencil)";
+                
+                const charGravity = this.dynamicOptionsContainer.querySelector('#opt-charGravity');
+                if (charGravity) charGravity.value = "ثقيلة وكثيفة للغاية (تمتلك عطالة وتفرض عمقاً ثلاثياً - Classical Oil/Impasto)";
+                
+                const charClothing = this.dynamicOptionsContainer.querySelector('#opt-charClothing');
+                if (charClothing) charClothing.value = "وشاح كربوني ممزق ودرع مغلف بطلاء الزيت الكلاسيكي اللامع.";
+                
+                this.updateSuggestedPrompt();
+                alert("🧬 تم تطبيق قالب آرا الهجينة (Hybrid Ara) بنجاح!");
+            });
+        }
+
         // Toggle voice settings fields if voice engine is gemini-3.1-flash-tts-preview
         const voiceSelect = this.dynamicOptionsContainer.querySelector('#opt-voiceEngine');
         if (voiceSelect) {
@@ -2073,6 +2167,31 @@ class SketchicApp {
             };
             voiceSelect.addEventListener('change', toggleFields);
             toggleFields();
+        }
+
+        // Voice tags click listener
+        const tagButtons = this.dynamicOptionsContainer.querySelectorAll('.btn-tag');
+        const voiceTagsInput = this.dynamicOptionsContainer.querySelector('#opt-voiceTags');
+        if (tagButtons && voiceTagsInput) {
+            tagButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tag = btn.dataset.tag;
+                    const start = voiceTagsInput.selectionStart;
+                    const end = voiceTagsInput.selectionEnd;
+                    const text = voiceTagsInput.value;
+                    voiceTagsInput.value = text.substring(0, start) + tag + " " + text.substring(end);
+                    voiceTagsInput.focus();
+                    this.updateSuggestedPrompt();
+                    
+                    // Animate the visualizer bars randomly to show visual feedback
+                    const bars = this.dynamicOptionsContainer.querySelectorAll('#sonic-visualizer-wave div');
+                    bars.forEach(bar => {
+                        const originalAnim = bar.style.animation;
+                        bar.style.animation = 'voiceSpike 0.1s infinite alternate';
+                        setTimeout(() => { bar.style.animation = originalAnim; }, 1200);
+                    });
+                });
+            });
         }
 
         // Attach event listeners to update suggested prompt in real-time
@@ -2684,11 +2803,15 @@ ${wrText}
                 const charClass = asset.subOptions.charClass || "دور غير محدد";
                 const charKingdom = asset.subOptions.charKingdom || "متروبوليس الحبر (Manga)";
                 const charGravity = asset.subOptions.charGravity || "غير محدد";
+                const charInfo = asset.subOptions.charInfo || "غير محدد";
+                const charSheet = asset.subOptions.charSheet ? "مفعّل 🛡️ (درع الحماية)" : "غير مفعّل ❌";
                 creatorDetailsHtml = `
                     <div style="font-size:0.8rem; background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:8px; margin-bottom:10px;">
                         <div>👤 <strong>الدور السردي:</strong> ${charClass}</div>
                         <div style="margin-top:4px;">🪐 <strong>المملكة ومصفوفة الفيزياء:</strong> ${charKingdom}</div>
                         <div style="margin-top:4px;">⚖️ <strong>الجاذبية والكتلة:</strong> ${charGravity}</div>
+                        <div style="margin-top:4px;">🧬 <strong>نواة [Character Info]:</strong> <span style="font-size:0.75rem; color:var(--text-secondary); font-style:italic;">${charInfo}</span></div>
+                        <div style="margin-top:4px;">🛡️ <strong>درع [Character Sheet]:</strong> ${charSheet}</div>
                     </div>
                 `;
             } else if (asset.type === 'voice' && asset.subOptions) {
@@ -4221,6 +4344,9 @@ Show how style shaders swap dynamically.`
         const chars = selectedCharIds.map(cid => this.assets.find(a => a.id === cid)).filter(Boolean);
         const scenario = this.assets.find(a => a.id === this.sceneScenarioSelect.value);
         const audioProfile = this.sceneAudioProfileSelect ? this.sceneAudioProfileSelect.value : "default";
+        
+        const refMethod = this.sceneRefMethodSelect ? this.sceneRefMethodSelect.value : "Frames";
+        const motionEngine = this.sceneMotionEngineSelect ? this.sceneMotionEngineSelect.value : "VO 3.1 Light";
 
         // Harvest frames list
         let frames = [];
@@ -4236,13 +4362,16 @@ Show how style shaders swap dynamically.`
         }
 
         let promptText = `[Google Flow Scene Prompt - Dynamic Consistency]\n`;
+        promptText += `Reference Method: [${refMethod}] (Strict adherence to initial frame boundary)\n`;
+        promptText += `Motion Engine: [${motionEngine}] (${motionEngine === 'VO 3.1 Light' ? '12fps' : '60fps'} Flow)\n\n`;
         promptText += `Create a high-fidelity cinematic scene based on the scenario: "${scenario ? scenario.title : 'Generic Sketchic Scene'}"\n\n`;
         promptText += `CHARACTER CONSISTENCY GUIDELINES:\n`;
         
         chars.forEach(char => {
             const creator = this.assets.find(a => a.id === char.relatedCreator);
             const style = creator && creator.subOptions ? creator.subOptions.artStyle : 'Distinct Art Style';
-            promptText += `- Character Name: ${char.title}\n  Description: ${char.desc}\n  Visual Style: Rendered strictly in: ${style}. Do not blend this character's aesthetic with other styles.\n\n`;
+            const charInfo = char.subOptions ? char.subOptions.charInfo || '' : '';
+            promptText += `- Character Name: ${char.title}\n  Description: ${char.desc}\n  Psychology [Character Info]: ${charInfo}\n  Visual Style: Rendered strictly in: ${style}. Do not blend this character's aesthetic with other styles.\n\n`;
         });
 
         if (frames.length > 0) {
@@ -4262,6 +4391,104 @@ Show how style shaders swap dynamically.`
         promptText += `The background ambiance and audio track should align with the chosen profile: "${this.getAudioProfileLabel(audioProfile)}". The sounds generated for character interactions must audibly reflect their artistic medium (e.g. paper scraping for manga/pencil vs rich acoustic strings for oil paintings).`;
 
         this.sceneConsistencyPromptText.textContent = promptText;
+    }
+
+    handleAutofill(type) {
+        const scenarioId = this.sceneScenarioSelect.value;
+        if (!scenarioId) {
+            alert("يرجى اختيار سيناريو أولاً لتشغيل الباني التلقائي للأصول!");
+            return;
+        }
+
+        const scenario = this.assets.find(a => a.id === scenarioId);
+        const scenarioTitle = scenario ? scenario.title : "سيناريو عشوائي";
+        const scenarioDesc = scenario ? scenario.desc : "";
+
+        if (type === 'character') {
+            const hasOil = (scenarioTitle + scenarioDesc).includes("زيت") || (scenarioTitle + scenarioDesc).includes("لوحة");
+            const newChar = {
+                id: 'char-autofill-' + Date.now(),
+                type: 'character',
+                title: hasOil ? "آرا الهجينة (Hybrid Ara)" : "زين (Ink Zen)",
+                desc: hasOil ? "كائن هجين ذو قلب من الفحم ودرع من الزيت الكثيف." : "مدقق خطي في متروبوليس الحبر يحمي حدود الخطوط الخارجية.",
+                driveUrl: "",
+                status: 'draft',
+                relatedScenario: scenarioId,
+                relatedCreator: "",
+                relatedSource: scenario.relatedSource || "",
+                relatedFaction: hasOil ? "awakened" : "keepers",
+                relatedCharacters: [],
+                interfacePhysics: "default",
+                directorChecklist: { noBlending: true, depthContrast: true, sonicDissonance: true },
+                subOptions: {
+                    charClass: hasOil ? "شخصية مستيقظة تدرك أنها مرسومة (Awakened)" : "بطل القصة الرئيسي (Protagonist)",
+                    charInfo: hasOil ? "آرا الهجينة: شخصية مستيقظة تعيش في قلق وجودي، قلبها من الفحم وجسدها مغلف بالزيت لمنع المحو." : "زين: مدقق خطوط يحمي الفضاء الحبري النقي.",
+                    charSheet: true,
+                    charVisual: hasOil ? "قلب من الفحم الرمادي الهش مغلف ببريق زيتي كثيف، ودرع زيتي أحمر لامع." : "عيون حادة متوهجة، ملابس بخطوط مانجا سوداء ناصعة.",
+                    charKingdom: hasOil ? "Graphite Kingdom (مملكة الغرافيت - Charcoal/Pencil)" : "Ink Metropolis (متروبوليس الحبر - Manga)",
+                    charGravity: hasOil ? "ثقيلة وكثيفة للغاية (تمتلك عطالة وتفرض عمقاً ثلاثياً - Classical Oil/Impasto)" : "هشة وخفيفة للغاية (تتأثر بالرياح وسريعة المحو - Graphite/Charcoal)",
+                    charClothing: hasOil ? "وشاح كربوني ممزق ودرع مغلف بطلاء الزيت الكلاسيكي اللامع." : "سترة سوداء مخططة بـ G-Pen."
+                },
+                createdAt: new Date().toISOString()
+            };
+            this.assets.push(newChar);
+            alert(`👤 تم بنجاح توليد الشخصية [${newChar.title}] وربطها بالسيناريو وتثبيت مرساتها الوجودية!`);
+        } else if (type === 'environment') {
+            const newEnv = {
+                id: 'env-autofill-' + Date.now(),
+                type: 'environment',
+                title: "أرخبيل القصاصات العائم (Paper Scrap Archipelago)",
+                desc: "بيئة معمارية معقدة تتكون من قصاصات ورقية ممزقة تطفو في سديم زيتي لزج.",
+                driveUrl: "",
+                status: 'draft',
+                relatedScenario: scenarioId,
+                relatedCreator: "",
+                relatedSource: scenario.relatedSource || "",
+                relatedFaction: "awakened",
+                relatedCharacters: [],
+                interfacePhysics: "default",
+                directorChecklist: { noBlending: true, depthContrast: true, sonicDissonance: true },
+                subOptions: {
+                    envType: "بيئة هجينة متداخلة الأسلوب",
+                    envVisual: "أرصفة ورقية مخططة بالرصاص تطفو وتصطدم بكتل زيتية حمراء تتساقط من سديم علوي.",
+                    envTimeOfDay: "شفق قرمزي دائم يتداخل مع سديم سائل متساقط كالأمطار الزيتية"
+                },
+                createdAt: new Date().toISOString()
+            };
+            this.assets.push(newEnv);
+            alert(`🗺️ تم بنجاح بناء الطبوغرافيا الجمالية وتوليد البيئة [${newEnv.title}]!`);
+        } else if (type === 'prop') {
+            const newProp = {
+                id: 'prop-autofill-' + Date.now(),
+                type: 'prop',
+                title: "شفرة التماس المرئي (Clash Blade)",
+                desc: "أداة كونية حادة تقص النسيج البصري دون خلط الأساليب الفنية.",
+                driveUrl: "",
+                status: 'draft',
+                relatedScenario: scenarioId,
+                relatedCreator: "",
+                relatedSource: scenario.relatedSource || "",
+                relatedFaction: "keepers",
+                relatedCharacters: [],
+                interfacePhysics: "default",
+                directorChecklist: { noBlending: true, depthContrast: true, sonicDissonance: true },
+                subOptions: {
+                    propType: "سلاح أبعادي (Dimensional Weapon)",
+                    propVisual: "نصل بلوري ذو حواف حادة يشع بتوهج أزرق ناصع ويفصل الأبعاد.",
+                    propKingdom: "Ink Metropolis (متروبوليس الحبر - Manga)",
+                    propGravity: "رقمية متزنة ثابتة (محكومة بإحداثيات رياضية - Digital Vectors)",
+                    propUsage: "تقوم بقص النسيج الضوئي لمنع الاندماج الفني وخلط الألوان."
+                },
+                createdAt: new Date().toISOString()
+            };
+            this.assets.push(newProp);
+            alert(`🛡️ تم بنجاح توليد الأداة الكونية المتنافرة [${newProp.title}] وإدراجها بالأرشيف!`);
+        }
+
+        this.saveAssets();
+        this.renderAssetsList();
+        this.initSceneTabOptions();
+        this.updateSceneConsistencyPrompt();
     }
 
     updateClashPreview() {

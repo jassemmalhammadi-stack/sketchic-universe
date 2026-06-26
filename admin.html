@@ -669,9 +669,16 @@
                                 <select id="scene-scenario" required style="flex: 1; box-sizing: border-box; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
                                     <option value="" disabled selected>اختر السيناريو...</option>
                                 </select>
-                                <button type="button" class="btn" id="btn-auto-storyboard" style="background-color: var(--color-accent-light); color: var(--color-accent); border: 1px solid rgba(99, 102, 241, 0.2); font-weight: 700; cursor: pointer; white-space: nowrap; height: 38px;">
-                                    ✨ لوحة عمل ذكية
-                                </button>
+                                <div style="display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 250px;">
+                                    <button type="button" class="btn" id="btn-auto-storyboard" style="background-color: var(--color-accent-light); color: var(--color-accent); border: 1px solid rgba(99, 102, 241, 0.2); font-weight: 700; cursor: pointer; white-space: nowrap; height: 32px; font-size: 0.72rem;">
+                                        ✨ لوحة عمل ذكية كاملة
+                                    </button>
+                                    <div style="display: flex; gap: 4px;">
+                                        <button type="button" class="btn btn-autofill" id="btn-autofill-chars" style="flex:1; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; font-size: 0.65rem; height: 26px; padding: 0 4px; white-space: nowrap;" title="توليد الكيانات المتصادمة آلياً">👤 Characters</button>
+                                        <button type="button" class="btn btn-autofill" id="btn-autofill-locs" style="flex:1; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; font-size: 0.65rem; height: 26px; padding: 0 4px; white-space: nowrap;" title="توليد البيئات المعمارية">🗺️ Locations</button>
+                                        <button type="button" class="btn btn-autofill" id="btn-autofill-props" style="flex:1; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; font-size: 0.65rem; height: 26px; padding: 0 4px; white-space: nowrap;" title="توليد الأدوات المتنافرة">🛡️ Props</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -698,6 +705,26 @@
                                 <option value="orchestral-renaissance">كمان كلاسيكي ووقار أوركسترالي (Orchestral Renaissance)</option>
                             </select>
                         </div>
+                        <div class="form-group" style="border: 1px solid rgba(34, 211, 238, 0.2); background: rgba(34, 211, 238, 0.05); padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+                            <span style="font-weight: bold; font-size: 0.82rem; color: var(--color-cyan); display: block; margin-bottom: 8px;">🎬 مصفوفة التوليد وحماية الصدام (Physics & Reference Matrix):</span>
+                            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                <div style="flex: 1;">
+                                    <label for="scene-ref-method" style="font-size: 0.72rem; display: block; margin-bottom: 2px;">المنهجية المرجعية *</label>
+                                    <select id="scene-ref-method" style="font-size: 0.75rem; width: 100%; padding: 4px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+                                        <option value="Frames">Frames (حماية مطلقة لحجم التماس ✅)</option>
+                                        <option value="Ingredients">Ingredients (غير موصى به - خطر تليين الخطوط ❌)</option>
+                                    </select>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="scene-motion-engine" style="font-size: 0.72rem; display: block; margin-bottom: 2px;">نموذج التحريك والزمن *</label>
+                                    <select id="scene-motion-engine" style="font-size: 0.75rem; width: 100%; padding: 4px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+                                        <option value="VO 3.1 Light">VO 3.1 Light (12fps - فيزياء مانجا/حبر)</option>
+                                        <option value="Omniflash">Omniflash (60fps - فيزياء زيت وكثافة)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label>ربط الأصول المرئية والمتحركة بهذا المشهد</label>
                             <div style="display: flex; gap: 10px;">
