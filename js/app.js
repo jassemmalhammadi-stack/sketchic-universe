@@ -471,6 +471,7 @@ class DoubleDatabaseApp {
                         </div>
                         <div class="item-actions">
                             <button class="btn-action btn-edit" onclick="window.app.editScenario('${scen.id}')">تعديل</button>
+                            <button class="btn-action btn-edit" style="color: #10b981;" onclick="window.app.downloadScenarioJSON('${scen.id}')">JSON 💾</button>
                             <button class="btn-action btn-delete" onclick="window.app.deleteScenario('${scen.id}')">حذف</button>
                         </div>
                     `;
@@ -744,6 +745,69 @@ class DoubleDatabaseApp {
             navigator.clipboard.writeText(textElement.textContent).then(() => {
                 alert("📋 تم نسخ النص بنجاح! يمكنك الآن لصقه مباشرة في الخانة المطلوبة بـ Google Flow.");
             });
+        }
+    }
+
+    downloadScenarioJSON(id) {
+        try {
+            const scen = this.scenarios.find(s => s.id === id);
+            if (!scen) {
+                alert("السيناريو غير موجود!");
+                return;
+            }
+
+            // Find linked art school
+            const school = this.schools.find(s => s.id === scen.schoolId);
+            const schoolData = school ? { name: school.name, desc: school.desc } : null;
+
+            // Find selected characters
+            const linkedCharacters = (scen.charIds || []).map(cid => {
+                const char = this.characters.find(c => c.id === cid);
+                return char ? {
+                    name: char.name,
+                    voiceSpec: char.voiceSpec,
+                    psychologyPreset: char.psychologyPreset,
+                    charInfo: char.charInfo
+                } : null;
+            }).filter(c => c !== null);
+
+            // Generate Prompt Spell for reference
+            let countText = scen.charCount === "auto" ? `${linkedCharacters.length} characters` : `${scen.charCount} characters`;
+            let promptSpell = `[Google Flow Prompt Spell]\nStyle: ${school ? school.name : 'None'} (${school ? school.desc : ''})\nFrame Count: ${countText}\nScript:\n${scen.script}`;
+
+            const exportData = {
+                exportedAt: new Date().toISOString(),
+                scenario: {
+                    title: scen.title,
+                    act: scen.act,
+                    order: scen.order,
+                    script: scen.script,
+                    characterCountOption: scen.charCount
+                },
+                artSchool: schoolData,
+                cast: linkedCharacters,
+                encounterSettings: {
+                    enabled: !!scen.encounterToggle,
+                    newCharactersCount: scen.newCharsNum || '1',
+                    newCharactersStyle: scen.newCharsStyle || 'random'
+                },
+                promptSpell: promptSpell
+            };
+
+            const jsonStr = JSON.stringify(exportData, null, 4);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${scen.title.replace(/[^\w\s\u0600-\u06FF]/gi, '_')}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } catch (e) {
+            console.error("Error exporting scenario JSON: ", e);
+            alert("حدث خطأ أثناء محاولة تصدير السيناريو!");
         }
     }
 }
