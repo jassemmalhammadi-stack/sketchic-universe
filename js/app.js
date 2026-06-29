@@ -50,6 +50,7 @@ class DoubleDatabaseApp {
                 schoolId: 'school-1',
                 act: 'act1',
                 order: 1,
+                charCount: 'auto',
                 charIds: ['char-1'],
                 script: 'المشهد الأول: كينجي يراقب ولادة الحدود الحبرية على صفحة ورقية بيضاء لانهائية.'
             },
@@ -59,6 +60,7 @@ class DoubleDatabaseApp {
                 schoolId: 'school-1',
                 act: 'act2',
                 order: 1,
+                charCount: 'auto',
                 charIds: ['char-1', 'char-2'],
                 script: 'المشهد الثاني: كينجي يواجه آرا الهجينة عند خط التماس المشتعل. السماء تبدأ في التصدع وتتساقط منها رقاقات كرتونية.'
             }
@@ -452,6 +454,7 @@ class DoubleDatabaseApp {
         const schoolId = this.scenarioSchoolSelect.value;
         const act = this.scenarioActSelect.value;
         const order = parseInt(this.scenarioOrderInput.value) || 1;
+        const charCount = document.getElementById('scenario-char-count').value;
         const script = this.scenarioScript.value.trim();
 
         // Gather checked character IDs
@@ -463,7 +466,7 @@ class DoubleDatabaseApp {
             return;
         }
 
-        const newScenario = { id: id || 'scenario-' + Date.now(), title, schoolId, act, order, charIds, script };
+        const newScenario = { id: id || 'scenario-' + Date.now(), title, schoolId, act, order, charCount, charIds, script };
 
         if (id) {
             this.scenarios = this.scenarios.map(s => s.id === id ? newScenario : s);
@@ -486,6 +489,7 @@ class DoubleDatabaseApp {
         this.scenarioSchoolSelect.value = scen.schoolId;
         this.scenarioActSelect.value = scen.act || 'act1';
         this.scenarioOrderInput.value = scen.order || 1;
+        document.getElementById('scenario-char-count').value = scen.charCount || 'auto';
         this.scenarioScript.value = scen.script;
 
         // Reset and check matching character checkboxes
@@ -512,6 +516,7 @@ class DoubleDatabaseApp {
         this.scenarioSchoolSelect.value = "";
         this.scenarioActSelect.value = "act1";
         this.scenarioOrderInput.value = "1";
+        document.getElementById('scenario-char-count').value = "auto";
         this.scenarioScript.value = "";
         const checkboxes = this.scenarioCharsContainer.querySelectorAll('input[name="scenario-char-checkbox"]');
         checkboxes.forEach(cb => cb.checked = false);
@@ -546,13 +551,13 @@ class DoubleDatabaseApp {
         selectedCharIds.forEach(cid => {
             const char = this.characters.find(c => c.id === cid);
             if (char) {
-                // Extract English name if exists, e.g. "Kenji" from "كينجي (Kenji)"
+                // Extract English name if exists
                 let engName = char.name;
                 const match = char.name.match(/\(([^)]+)\)/);
                 if (match && match[1]) {
                     engName = match[1].trim();
                 } else {
-                    engName = char.name.replace(/[^\w]/g, ''); // strip non-alphanumeric if no English parenthesized name
+                    engName = char.name.replace(/[^\w]/g, '');
                 }
                 if (!engName) engName = 'Char' + char.id.replace(/[^\d]/g, '');
 
@@ -571,10 +576,22 @@ class DoubleDatabaseApp {
             }
         });
 
+        // Determine prompt-level character count description
+        const countSelect = document.getElementById('scenario-char-count').value;
+        let countText = "";
+        if (countSelect === "auto") {
+            countText = `${selectedCharIds.length} characters (${tagNames.join(', ') || 'none'})`;
+        } else if (countSelect === "0") {
+            countText = "0 characters (Background Landscape Scene Only)";
+        } else {
+            countText = `${countSelect} characters (${tagNames.join(', ') || 'none'})`;
+        }
+
         // Generate Script Prompt Spell
         let prompt = `[Google Flow Prompt Spell - Story Studio Planner]\n`;
         prompt += `Project Title: ${title}\n`;
         prompt += `Style & Medium Rules: ${schoolName} (${schoolDesc})\n`;
+        prompt += `Frame Character Count: Exactly ${countText}\n`;
         if (tagNames.length > 0) {
             prompt += `Active Characters Linked: ${tagNames.join(', ')}\n`;
         }
