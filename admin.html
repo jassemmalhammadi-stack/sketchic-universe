@@ -470,7 +470,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label>الشخصيات المشاركة في السيناريو *</label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                        <label>الشخصيات المشاركة في السيناريو *</label>
+                        <a href="#" onclick="window.app.switchTab('characters'); return false;" style="font-size: 0.72rem; color: var(--color-cyan); text-decoration: none; font-weight: bold;">➕ إضافة شخصية جديدة سريعة</a>
+                    </div>
                     <div class="checkbox-group-container" id="scenario-chars-container" onchange="window.app.updateScenarioPreview()">
                         <!-- Dynamic checkboxes -->
                     </div>
