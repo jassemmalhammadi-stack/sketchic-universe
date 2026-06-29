@@ -524,7 +524,7 @@ class DoubleDatabaseApp {
 
         const title = this.scenarioTitle.value.trim() || 'سيناريو غير مسمى';
         const schoolId = this.scenarioSchoolSelect.value;
-        const script = this.scenarioScript.value.trim();
+        let script = this.scenarioScript.value.trim();
 
         if (!schoolId || !script) {
             this.scenarioPromptOutput.textContent = "قم بتعبئة نص السيناريو واختيار المدرسة الفنية لتركيب الموجه...";
@@ -536,11 +536,54 @@ class DoubleDatabaseApp {
         const schoolName = school ? school.name : 'أصل غير محدد';
         const schoolDesc = school ? school.desc : '';
 
+        // Extract selected characters and compile tags
+        const checkedCbs = this.scenarioCharsContainer.querySelectorAll('input[name="scenario-char-checkbox"]:checked');
+        const selectedCharIds = Array.from(checkedCbs).map(cb => cb.value);
+        
+        let characterDirectives = [];
+        let tagNames = [];
+
+        selectedCharIds.forEach(cid => {
+            const char = this.characters.find(c => c.id === cid);
+            if (char) {
+                // Extract English name if exists, e.g. "Kenji" from "كينجي (Kenji)"
+                let engName = char.name;
+                const match = char.name.match(/\(([^)]+)\)/);
+                if (match && match[1]) {
+                    engName = match[1].trim();
+                } else {
+                    engName = char.name.replace(/[^\w]/g, ''); // strip non-alphanumeric if no English parenthesized name
+                }
+                if (!engName) engName = 'Char' + char.id.replace(/[^\d]/g, '');
+
+                const tag = `@${engName}`;
+                tagNames.push(tag);
+
+                // Replace in script text
+                const arabicName = char.name.split('(')[0].trim();
+                const escArabic = arabicName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                const escEng = engName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                
+                script = script.replace(new RegExp(escArabic, 'gi'), tag);
+                script = script.replace(new RegExp(escEng, 'gi'), tag);
+
+                characterDirectives.push(`- Bind @${engName} to the custom character model configured with the Character Info: "${char.name}".`);
+            }
+        });
+
         // Generate Script Prompt Spell
         let prompt = `[Google Flow Prompt Spell - Story Studio Planner]\n`;
         prompt += `Project Title: ${title}\n`;
-        prompt += `Style & Medium Rules: ${schoolName} (${schoolDesc})\n\n`;
-        prompt += `Script Story / Action Plan:\n${script}\n\n`;
+        prompt += `Style & Medium Rules: ${schoolName} (${schoolDesc})\n`;
+        if (tagNames.length > 0) {
+            prompt += `Active Characters Linked: ${tagNames.join(', ')}\n`;
+        }
+        prompt += `\nScript Story / Action Plan:\n${script}\n\n`;
+        
+        if (characterDirectives.length > 0) {
+            prompt += `Flow Model Binding Directives:\n${characterDirectives.join('\n')}\n`;
+            prompt += `Important: Render these tagged figures using their pre-trained features. Do NOT generate generic random characters.\n\n`;
+        }
         prompt += `Visual Clash Boundary Directive: Zero color bleeding. Preserve precise outlines or brushstrokes.`;
 
         this.scenarioPromptOutput.textContent = prompt;
@@ -549,9 +592,6 @@ class DoubleDatabaseApp {
         if (this.dynamicCharactersOutputContainer) {
             this.dynamicCharactersOutputContainer.innerHTML = "";
             
-            const checkedCbs = this.scenarioCharsContainer.querySelectorAll('input[name="scenario-char-checkbox"]:checked');
-            const selectedCharIds = Array.from(checkedCbs).map(cb => cb.value);
-
             selectedCharIds.forEach(cid => {
                 const char = this.characters.find(c => c.id === cid);
                 if (char) {
