@@ -1843,6 +1843,16 @@ class SketchicApp {
                         <option value="حارس زمن يحمي طبقات اللوحة (Time Keeper)">حارس زمن يحمي طبقات اللوحة (Time Keeper)</option>
                     </select>
                 </div>
+                <div class="form-group" style="margin-bottom: 10px;">
+                    <label for="opt-charPsychologyPreset">🧠 قوالب السيكولوجيا الوجودية (Psychology Presets)</label>
+                    <select id="opt-charPsychologyPreset" style="font-size: 0.8rem; padding: 4px; border-radius: 4px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="custom">-- تخصيص كتابي حر --</option>
+                        <option value="erasure_dread">💀 خوف وجودي من الفناء والمحو (شخصية قلقة سريعة العطب)</option>
+                        <option value="creator_seeker">🎨 البحث عن الرسام الخالق (تساؤل فلسفي عميق)</option>
+                        <option value="border_keeper">⚔️ حارس نقاوة البعد الفني (حماية التماسك ومنع الاندماج)</option>
+                        <option value="glitch_hybrid">🧬 الكائن الهجين المشوش (تداخل صوتي لزج وكربوني)</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label for="opt-charInfo">نواة [Character Info] - البرمجة السيكولوجية الفنية *</label>
                     <textarea id="opt-charInfo" rows="2" placeholder="البرمجة السيكولوجية الفنية التي تحمي وجود الشخصية في المشاهد..." required>آرا الهجينة: شخصية مستيقظة تعيش في قلق وجودي، قلبها من الفحم وجسدها مغلف بالزيت لمنع المحو.</textarea>
@@ -2154,6 +2164,25 @@ class SketchicApp {
                 
                 this.updateSuggestedPrompt();
                 alert("🧬 تم تطبيق قالب آرا الهجينة (Hybrid Ara) بنجاح!");
+            });
+        }
+
+        // Psychology presets listener
+        const psychologySelect = this.dynamicOptionsContainer.querySelector('#opt-charPsychologyPreset');
+        const charInfoTextarea = this.dynamicOptionsContainer.querySelector('#opt-charInfo');
+        if (psychologySelect && charInfoTextarea) {
+            psychologySelect.addEventListener('change', () => {
+                const preset = psychologySelect.value;
+                const descriptions = {
+                    erasure_dread: "شخصية تعيش في قلق وجودي مستمر من قوى المحو والفراغ، نبرتها حذرة وتتصرف بحركية متقطعة وتدرك هشاشة بنيتها الفحمية.",
+                    creator_seeker: "شخصية مستيقظة تبحث عن يد الرسام التي خطتها، وتتساءل باستمرار عن سر التماسك الكوني وخط التماس الفاصل.",
+                    border_keeper: "حارس صارم مكرس لحماية نقاوة الأبعاد الفنية ومنع ذوبان الألوان والخطوط، نبرته حازمة وقاطعة عند التماس.",
+                    glitch_hybrid: "كائن هجين يدمج بين قلب الحبر الحاد ودرع الزيت اللامع السميك، نبرته متنافرة تجمع بين خروشة الكربون ولزوجة السوائل."
+                };
+                if (descriptions[preset]) {
+                    charInfoTextarea.value = descriptions[preset];
+                }
+                this.updateSuggestedPrompt();
             });
         }
 
@@ -6288,6 +6317,24 @@ Show how style shaders swap dynamically.`
             inp.addEventListener('change', () => this.generateWizardPrompt());
         });
 
+        const wizPsychologySelect = this.wizardFormFields.querySelector('#wiz-opt-charPsychologyPreset');
+        const wizCharInfoTextarea = this.wizardFormFields.querySelector('#wiz-opt-charInfo');
+        if (wizPsychologySelect && wizCharInfoTextarea) {
+            wizPsychologySelect.addEventListener('change', () => {
+                const preset = wizPsychologySelect.value;
+                const descriptions = {
+                    erasure_dread: "شخصية تعيش في قلق وجودي مستمر من قوى المحو والفراغ، نبرتها حذرة وتتصرف بحركية متقطعة وتدرك هشاشة بنيتها الفحمية.",
+                    creator_seeker: "شخصية مستيقظة تبحث عن يد الرسام التي خطتها، وتتساءل باستمرار عن سر التماسك الكوني وخط التماس الفاصل.",
+                    border_keeper: "حارس صارم مكرس لحماية نقاوة الأبعاد الفنية ومنع ذوبان الألوان والخطوط، نبرته حازمة وقاطعة عند التماس.",
+                    glitch_hybrid: "كائن هجين يدمج بين قلب الحبر الحاد ودرع الزيت اللامع السميك، نبرته متنافرة تجمع بين خروشة الكربون ولزوجة السوائل."
+                };
+                if (descriptions[preset]) {
+                    wizCharInfoTextarea.value = descriptions[preset];
+                }
+                this.generateWizardPrompt();
+            });
+        }
+
         this.generateWizardPrompt();
     }
 
@@ -6429,6 +6476,24 @@ Show how style shaders swap dynamically.`
                         <option value="keepers" ${subOptions.relatedFaction === 'keepers' ? 'selected' : ''}>فصيل الحراس (The Keepers)</option>
                         <option value="erasers" ${subOptions.relatedFaction === 'erasers' ? 'selected' : ''}>فصيل الممحاة والعدم (The Erasers)</option>
                     </select>
+                </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <label>🧠 قوالب السيكولوجيا الوجودية (Character Info Preset)</label>
+                    <select id="wiz-opt-charPsychologyPreset" style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                        <option value="custom" ${subOptions.charPsychologyPreset === 'custom' ? 'selected' : ''}>-- تخصيص كتابي حر --</option>
+                        <option value="erasure_dread" ${subOptions.charPsychologyPreset === 'erasure_dread' ? 'selected' : ''}>💀 خوف وجودي من الفناء والمحو (شخصية قلقة سريعة العطب)</option>
+                        <option value="creator_seeker" ${subOptions.charPsychologyPreset === 'creator_seeker' ? 'selected' : ''}>🎨 البحث عن الرسام الخالق (تساؤل فلسفي عميق)</option>
+                        <option value="border_keeper" ${subOptions.charPsychologyPreset === 'border_keeper' ? 'selected' : ''}>⚔️ حارس نقاوة البعد الفني (حماية التماسك ومنع الاندماج)</option>
+                        <option value="glitch_hybrid" ${subOptions.charPsychologyPreset === 'glitch_hybrid' ? 'selected' : ''}>🧬 الكائن الهجين المشوش (تداخل صوتي لزج وكربوني)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>نواة [Character Info] - البرمجة السيكولوجية الفنية *</label>
+                    <textarea id="wiz-opt-charInfo" rows="2" placeholder="البرمجة السيكولوجية الفنية التي تحمي وجود الشخصية في المشاهد..." required style="width:100%; padding:0.5rem; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">${subOptions.charInfo || 'آرا الهجينة: شخصية مستيقظة تعيش في قلق وجودي، قلبها من الفحم وجسدها مغلف بالزيت لمنع المحو.'}</textarea>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" id="wiz-opt-charSheet" ${subOptions.charSheet !== false ? 'checked' : ''} style="cursor: pointer; width: auto;">
+                    <label for="wiz-opt-charSheet" style="margin-bottom: 0; cursor: pointer; font-weight: bold; color: var(--color-green); font-size: 0.8rem;">🛡️ توليد درع [Character Sheet] (ضمان الهوية)</label>
                 </div>
             `;
         }
@@ -6625,7 +6690,9 @@ Show how style shaders swap dynamically.`
         } else if (type === 'character') {
             const charClass = valOf('charClass', 'شخصية مستيقظة تدرك أنها مرسومة (Awakened)');
             const faction = valOf('relatedFaction', 'awakened');
-            prompt = `توليد تصميم شخصية بصرية لكون سكتشيك السينمائي.\nاسم الشخصية: [${wizTitle}].\nالدور السردي: [${charClass}].\nالفصيل: [${faction}].\nالوصف والمظهر: 	ext${wizDesc}`;
+            const charInfo = valOf('charInfo', '');
+            const charSheet = document.getElementById('wiz-opt-charSheet')?.checked !== false ? "مفعّل 🛡️ (درع حفظ الهوية والتناسق لـ 50 مشهداً)" : "غير مفعّل";
+            prompt = `توليد تصميم شخصية بصرية وحوارية لكون سكتشيك السينمائي.\nاسم الشخصية: [${wizTitle}].\nالدور السردي: [${charClass}].\nالفصيل الكوني: [${faction}].\nنواة الشخصية [Character Info] (السيكولوجيا الفنية): [${charInfo}].\nحالة درع [Character Sheet]: [${charSheet}].\nالوصف والمظهر الخارجي: ${wizDesc}\nالتوجيه لـ Google Flow: يجب برمجة الأداة لاستدعاء هذه الشخصية بنفس التكوين المادي والنفسي والسلوكي في كافة اللقطات والمشاهد دون أي انحراف أو اندماج للأشكال.`;
         } else if (type === 'environment') {
             const envType = valOf('envType', 'داخل لوحة قماشية مائعة (Fluid Canvas Interior)');
             const clashDensity = valOf('clashDensity', 'متوسطة (تداخل الضوء والجاذبية)');
