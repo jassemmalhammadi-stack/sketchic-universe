@@ -38,7 +38,7 @@
 
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             background: var(--bg-main);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-md);
@@ -57,7 +57,7 @@
 
         header h1 {
             margin: 0;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
         }
 
@@ -77,10 +77,10 @@
             background: transparent;
             border: none;
             color: var(--text-secondary);
-            padding: 8px 18px;
+            padding: 8px 16px;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 600;
             font-family: inherit;
             transition: var(--transition-smooth);
@@ -208,7 +208,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            max-height: 400px;
+            max-height: 450px;
             overflow-y: auto;
         }
 
@@ -288,6 +288,30 @@
             direction: ltr;
             text-align: left;
         }
+
+        .checkbox-group-container {
+            border: 1px solid var(--border-light);
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            background-color: var(--bg-input);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -297,6 +321,7 @@
         <h1>مخطط الأرشيف الكوني <span>سكتشيك & Google Flow</span></h1>
         <div class="tab-nav">
             <button class="tab-btn active" data-tab="schools" onclick="window.app.switchTab('schools')">🎨 المدارس الفنية</button>
+            <button class="tab-btn" data-tab="characters" onclick="window.app.switchTab('characters')">👤 الشخصيات والأصوات</button>
             <button class="tab-btn" data-tab="scenarios" onclick="window.app.switchTab('scenarios')">🎬 السيناريوهات</button>
         </div>
     </header>
@@ -304,7 +329,6 @@
     <!-- Tab 1: Art Schools DB -->
     <div class="tab-pane active" id="tab-schools">
         <div class="db-grid">
-            <!-- Left: Add/Edit School Form -->
             <div class="card-box">
                 <h3 id="school-form-title">إضافة مدرسة فنية جديدة</h3>
                 <input type="hidden" id="school-edit-id">
@@ -317,7 +341,7 @@
                 <div class="form-group" style="position: relative;">
                     <button type="button" class="btn-autofill" onclick="window.app.autofillSchoolSpecs()">✨ Autofill Specifications</button>
                     <label for="school-desc">الوصف البصري والملمس والإضاءة *</label>
-                    <textarea id="school-desc" rows="6" placeholder="صف الخواص البصرية ومستوى الكثافة والإضاءة الخاصة بالأسلوب الفني..."></textarea>
+                    <textarea id="school-desc" rows="6" placeholder="صف الخواص البصرية ومستوى الكثافة والإضاءة..."></textarea>
                 </div>
 
                 <div style="display: flex; gap: 10px;">
@@ -326,20 +350,73 @@
                 </div>
             </div>
 
-            <!-- Right: List of Art Schools -->
             <div class="card-box">
                 <h3>أرشيف المدارس الفنية</h3>
                 <div class="items-list" id="schools-list">
-                    <!-- Dynamic schools list -->
+                    <!-- Dynamic list -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Tab 2: Scenarios DB -->
+    <!-- Tab 2: Characters & Voices DB -->
+    <div class="tab-pane" id="tab-characters">
+        <div class="db-grid">
+            <div class="card-box">
+                <h3 id="character-form-title">إضافة شخصية جديدة</h3>
+                <input type="hidden" id="character-edit-id">
+
+                <div class="form-group">
+                    <label for="char-name">اسم الشخصية *</label>
+                    <input type="text" id="char-name" placeholder="مثال: كينجي (Kenji), آرا (Ara)...">
+                </div>
+
+                <div class="form-group">
+                    <label for="char-school">المدرسة الفنية الافتراضية *</label>
+                    <select id="char-school">
+                        <option value="">-- اختر مدرسة فنية --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="char-voice-spec">الصوت المخصص (Custom Voice) *</label>
+                    <input type="text" id="char-voice-spec" placeholder="مثال: صوت رجولي عميق وحاد بنبرة بطل انمي جاد" value="صوت رجولي عميق وحاد بنبرة بطل انمي جاد">
+                </div>
+
+                <div class="form-group" style="position: relative;">
+                    <button type="button" class="btn-autofill" onclick="window.app.autofillCharacterInfo()">✨ Autofill Character Info</button>
+                    <label for="char-psychology-preset">قالب السيكولوجيا (Psychology Preset)</label>
+                    <select id="char-psychology-preset">
+                        <option value="stoic">Stoic & observant (هادئ ومراقب حذر)</option>
+                        <option value="dread">Existential dread (قلق وجودي من التلاشي والمحو)</option>
+                        <option value="keeper">Fierce protector of style (حامي شرس لنقاوة الرسم)</option>
+                        <option value="hybrid">Volatile glitch hybrid (كائن هجين مشوش وقلق)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="char-info-text">وصف الشخصية الوجودي [Character Info (optional)] *</label>
+                    <textarea id="char-info-text" rows="5" placeholder="English psychological description used by Google Flow agent..."></textarea>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-primary" onclick="window.app.saveCharacter()">حفظ الشخصية ✅</button>
+                    <button type="button" class="btn" onclick="window.app.clearCharacterForm()">تفريغ</button>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>أرشيف طاقم الشخصيات</h3>
+                <div class="items-list" id="characters-list">
+                    <!-- Dynamic list -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 3: Scenarios DB -->
     <div class="tab-pane" id="tab-scenarios">
         <div class="db-grid">
-            <!-- Left: Add/Edit Scenario Form -->
             <div class="card-box">
                 <h3 id="scenario-form-title">إضافة سيناريو جديد</h3>
                 <input type="hidden" id="scenario-edit-id">
@@ -350,35 +427,50 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="scenario-school">المدرسة الفنية المرتبطة *</label>
+                    <label for="scenario-school">المدرسة الفنية الحاكمة *</label>
                     <select id="scenario-school" onchange="window.app.updateScenarioPreview()">
                         <option value="">-- اختر مدرسة فنية --</option>
                     </select>
                 </div>
 
                 <div class="form-group">
+                    <label>الشخصيات المشاركة في السيناريو *</label>
+                    <div class="checkbox-group-container" id="scenario-chars-container" onchange="window.app.updateScenarioPreview()">
+                        <!-- Dynamic checkboxes -->
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="scenario-script">نص السيناريو والأفكار الحركية *</label>
-                    <textarea id="scenario-script" rows="6" oninput="window.app.updateScenarioPreview()" placeholder="اكتب الأحداث والحوارات واللقطات بالتسلسل هنا..."></textarea>
+                    <textarea id="scenario-script" rows="5" oninput="window.app.updateScenarioPreview()" placeholder="اكتب الأحداث والحوارات واللقطات بالتسلسل هنا..."></textarea>
                 </div>
 
-                <div class="output-box">
-                    <div class="output-title">مخرج التوليد النهائي لـ Google Flow (Prompt Spell)</div>
-                    <div class="output-text" id="scenario-prompt-output">قم بتعبئة السيناريو واختيار المدرسة الفنية لتركيب الموجه...</div>
-                    <button type="button" class="btn btn-primary" style="width: 100%; font-size: 0.8rem; padding: 6px;" onclick="window.app.copyScenarioPrompt()">نسخ الموجه لـ Google Flow 📋</button>
-                </div>
-
-                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                     <button type="button" class="btn btn-primary" onclick="window.app.saveScenario()">حفظ السيناريو ✅</button>
                     <button type="button" class="btn" onclick="window.app.clearScenarioForm()">تفريغ</button>
                 </div>
             </div>
 
-            <!-- Right: List of Scenarios -->
-            <div class="card-box">
-                <h3>أرشيف السيناريوهات</h3>
-                <div class="items-list" id="scenarios-list">
-                    <!-- Dynamic scenarios list -->
+            <!-- Dynamic Prompts output panel for Copying -->
+            <div class="card-box" style="display: flex; flex-direction: column; gap: 15px;">
+                <h3>مركز نسخ الأصول لـ Google Flow</h3>
+                
+                <div class="output-box">
+                    <div class="output-title">1. موجه السيناريو بـ Google Flow (Script Prompt)</div>
+                    <div class="output-text" id="scenario-prompt-output">قم بتعبئة البيانات للتركيب...</div>
+                    <button type="button" class="btn btn-primary" style="width: 100%; font-size: 0.75rem; padding: 4px;" onclick="window.app.copyText('scenario-prompt-output')">نسخ موجه السيناريو 📋</button>
                 </div>
+
+                <div id="dynamic-characters-output-container">
+                    <!-- Automatically filled with Character Info and Voice Specs blocks ready to copy -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-box" style="margin-top: 20px;">
+            <h3>أرشيف السيناريوهات</h3>
+            <div class="items-list" id="scenarios-list">
+                <!-- Dynamic scenarios list -->
             </div>
         </div>
     </div>

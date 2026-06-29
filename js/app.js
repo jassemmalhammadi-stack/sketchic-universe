@@ -22,18 +22,40 @@ class DoubleDatabaseApp {
             }
         ];
 
+        // Initial Characters Database presets (including Kenji from screenshot)
+        const defaultCharacters = [
+            {
+                id: 'char-1',
+                name: 'كينجي (Kenji)',
+                schoolId: 'school-1',
+                voiceSpec: 'صوت رجولي عميق وحاد بنبرة بطل انمي جاد',
+                psychologyPreset: 'stoic',
+                charInfo: 'He possesses a stoic, observant nature that masks a volatile reflex for combat. Kenji rarely speaks, preferring to analyze his surroundings with a calculated, cold detachment. He is driven by a rigid sense of personal debt and a quiet ferocity that only surfaces when his autonomy is threatened.'
+            },
+            {
+                id: 'char-2',
+                name: 'آرا الهجينة (Ara)',
+                schoolId: 'school-2',
+                voiceSpec: 'صوت نسائي وقور وناعم ذو بريق عميق كلاسيكي',
+                psychologyPreset: 'dread',
+                charInfo: 'She experiences continuous existential dread, knowing she is a drawn being in a fragile world. She speaks with a soft, lingering tone and moves deliberately to preserve her thick impasto oil coat from being erased.'
+            }
+        ];
+
         // Initial Scenarios Database presets
         const defaultScenarios = [
             {
                 id: 'scenario-1',
                 title: 'تصدعات البعد الحبري (Manga Ink Fracture)',
                 schoolId: 'school-1',
-                script: 'المشهد الأول: زين يقف عند حافة المدينة ممسكاً بريشته المعدنية. السماء المسطحة تبدأ في التصدع وتتساقط منها رقاقات كرتونية مهتزة.'
+                charIds: ['char-1'],
+                script: 'المشهد الأول: كينجي يقف عند حافة المدينة ممسكاً بريشته المعدنية. السماء المسطحة تبدأ في التصدع وتتساقط منها رقاقات كرتونية مهتزة.'
             }
         ];
 
         // Load databases from localStorage or defaults
         this.schools = JSON.parse(localStorage.getItem('sketchic_schools')) || defaultSchools;
+        this.characters = JSON.parse(localStorage.getItem('sketchic_characters')) || defaultCharacters;
         this.scenarios = JSON.parse(localStorage.getItem('sketchic_scenarios')) || defaultScenarios;
 
         this.initElements();
@@ -52,18 +74,30 @@ class DoubleDatabaseApp {
         this.schoolsList = document.getElementById('schools-list');
         this.schoolFormTitle = document.getElementById('school-form-title');
 
+        // Character inputs
+        this.characterEditId = document.getElementById('character-edit-id');
+        this.charName = document.getElementById('char-name');
+        this.charSchoolSelect = document.getElementById('char-school');
+        this.charVoiceSpec = document.getElementById('char-voice-spec');
+        this.charPsychologyPreset = document.getElementById('char-psychology-preset');
+        this.charInfoText = document.getElementById('char-info-text');
+        this.charactersList = document.getElementById('characters-list');
+        this.characterFormTitle = document.getElementById('character-form-title');
+
         // Scenario inputs
         this.scenarioEditId = document.getElementById('scenario-edit-id');
         this.scenarioTitle = document.getElementById('scenario-title');
         this.scenarioSchoolSelect = document.getElementById('scenario-school');
+        this.scenarioCharsContainer = document.getElementById('scenario-chars-container');
         this.scenarioScript = document.getElementById('scenario-script');
         this.scenariosList = document.getElementById('scenarios-list');
         this.scenarioFormTitle = document.getElementById('scenario-form-title');
         this.scenarioPromptOutput = document.getElementById('scenario-prompt-output');
+        this.dynamicCharactersOutputContainer = document.getElementById('dynamic-characters-output-container');
     }
 
     bindEvents() {
-        // Nothing complex, all tied to global helper methods
+        // Nothing complex, all bound to global window app
     }
 
     // Tab switcher
@@ -89,14 +123,17 @@ class DoubleDatabaseApp {
     // Save databases
     saveToStorage() {
         localStorage.setItem('sketchic_schools', JSON.stringify(this.schools));
+        localStorage.setItem('sketchic_characters', JSON.stringify(this.characters));
         localStorage.setItem('sketchic_scenarios', JSON.stringify(this.scenarios));
     }
 
     // Render databases lists & select menus
     renderAll() {
         this.renderSchoolsList();
+        this.renderCharactersList();
         this.renderScenariosList();
-        this.populateSchoolsDropdown();
+        this.populateSchoolsDropdowns();
+        this.populateScenarioCharactersCheckboxes();
         this.updateScenarioPreview();
     }
 
@@ -196,20 +233,150 @@ class DoubleDatabaseApp {
         this.schoolDesc.value = "";
     }
 
-    // Scenarios Actions
-    populateSchoolsDropdown() {
-        if (!this.scenarioSchoolSelect) return;
-        const currentVal = this.scenarioSchoolSelect.value;
-        this.scenarioSchoolSelect.innerHTML = '<option value="">-- اختر مدرسة فنية --</option>';
+    // Populate dropdowns
+    populateSchoolsDropdowns() {
+        const dropdowns = [this.charSchoolSelect, this.scenarioSchoolSelect];
+        dropdowns.forEach(dropdown => {
+            if (!dropdown) return;
+            const currentVal = dropdown.value;
+            dropdown.innerHTML = '<option value="">-- اختر مدرسة فنية --</option>';
 
-        this.schools.forEach(school => {
-            const opt = document.createElement('option');
-            opt.value = school.id;
-            opt.textContent = school.name;
-            this.scenarioSchoolSelect.appendChild(opt);
+            this.schools.forEach(school => {
+                const opt = document.createElement('option');
+                opt.value = school.id;
+                opt.textContent = school.name;
+                dropdown.appendChild(opt);
+            });
+
+            dropdown.value = currentVal;
         });
+    }
 
-        this.scenarioSchoolSelect.value = currentVal;
+    // Characters Actions
+    renderCharactersList() {
+        if (!this.charactersList) return;
+        this.charactersList.innerHTML = "";
+
+        if (this.characters.length === 0) {
+            this.charactersList.innerHTML = `<div style="text-align: center; color: var(--text-secondary); padding: 15px; font-size: 0.8rem;">لا توجد شخصيات مسجلة حالياً.</div>`;
+            return;
+        }
+
+        this.characters.forEach(char => {
+            const school = this.schools.find(s => s.id === char.schoolId);
+            const schoolName = school ? school.name : "أسلوب غير محدد";
+            const row = document.createElement('div');
+            row.className = 'item-row';
+            row.innerHTML = `
+                <div class="item-info">
+                    <h4>${char.name}</h4>
+                    <p style="color: var(--color-cyan); font-weight: bold; margin-top: 2px;">المدرسة: ${schoolName}</p>
+                    <p>صوت: ${char.voiceSpec}</p>
+                    <p style="font-style: italic; color: var(--text-secondary);">${char.charInfo.substring(0, 100)}...</p>
+                </div>
+                <div class="item-actions">
+                    <button class="btn-action btn-edit" onclick="window.app.editCharacter('${char.id}')">تعديل</button>
+                    <button class="btn-action btn-delete" onclick="window.app.deleteCharacter('${char.id}')">حذف</button>
+                </div>
+            `;
+            this.charactersList.appendChild(row);
+        });
+    }
+
+    autofillCharacterInfo() {
+        const name = this.charName.value.trim() || 'Kenji';
+        const preset = this.charPsychologyPreset.value;
+        let info = "";
+
+        if (preset === 'stoic') {
+            info = `He possesses a stoic, observant nature that masks a volatile reflex for combat. ${name} rarely speaks, preferring to analyze his surroundings with a calculated, cold detachment. He is driven by a rigid sense of personal debt and a quiet ferocity that only surfaces when his autonomy is threatened.`;
+        } else if (preset === 'dread') {
+            info = `Highly emotional and experiences continuous existential dread. ${name} feels a lingering sadness, knowing they are a transient graphite drawing that can be easily erased by the cosmic eraser. Speaks in a soft, trembling whisper.`;
+        } else if (preset === 'keeper') {
+            info = `A fierce and stubborn protector of visual purity. ${name} hates the blending of colors or the touch of foreign brushstrokes. Stands firmly with sharp G-pen outlines and demands physical distance at style boundaries.`;
+        } else if (preset === 'hybrid') {
+            info = `A volatile glitch hybrid character composed of fragmented vector lines and heavy classical canvas paint layers. Speaks with a double-layered voice, constantly shifting between 12fps and 60fps motions.`;
+        }
+
+        if (this.charInfoText) this.charInfoText.value = info;
+    }
+
+    saveCharacter() {
+        const id = this.characterEditId.value;
+        const name = this.charName.value.trim();
+        const schoolId = this.charSchoolSelect.value;
+        const voiceSpec = this.charVoiceSpec.value.trim();
+        const psychologyPreset = this.charPsychologyPreset.value;
+        const charInfo = this.charInfoText.value.trim();
+
+        if (!name || !schoolId || !voiceSpec || !charInfo) {
+            alert("يرجى تعبئة جميع الحقول المطلوبة للشخصية!");
+            return;
+        }
+
+        const newChar = { id: id || 'char-' + Date.now(), name, schoolId, voiceSpec, psychologyPreset, charInfo };
+
+        if (id) {
+            this.characters = this.characters.map(c => c.id === id ? newChar : c);
+        } else {
+            this.characters.push(newChar);
+        }
+
+        this.saveToStorage();
+        this.clearCharacterForm();
+        this.renderAll();
+    }
+
+    editCharacter(id) {
+        const char = this.characters.find(c => c.id === id);
+        if (!char) return;
+
+        this.characterFormTitle.textContent = "تعديل الشخصية";
+        this.characterEditId.value = char.id;
+        this.charName.value = char.name;
+        this.charSchoolSelect.value = char.schoolId;
+        this.charVoiceSpec.value = char.voiceSpec;
+        this.charPsychologyPreset.value = char.psychologyPreset || 'stoic';
+        this.charInfoText.value = char.charInfo;
+    }
+
+    deleteCharacter(id) {
+        if (confirm("هل أنت متأكد من حذف هذه الشخصية؟")) {
+            this.characters = this.characters.filter(c => c.id !== id);
+            this.saveToStorage();
+            this.renderAll();
+        }
+    }
+
+    clearCharacterForm() {
+        this.characterFormTitle.textContent = "إضافة شخصية جديدة";
+        this.characterEditId.value = "";
+        this.charName.value = "";
+        this.charSchoolSelect.value = "";
+        this.charVoiceSpec.value = "صوت رجولي عميق وحاد بنبرة بطل انمي جاد";
+        this.charPsychologyPreset.value = "stoic";
+        this.charInfoText.value = "";
+    }
+
+    // Scenarios Actions
+    populateScenarioCharactersCheckboxes() {
+        if (!this.scenarioCharsContainer) return;
+        this.scenarioCharsContainer.innerHTML = "";
+
+        if (this.characters.length === 0) {
+            this.scenarioCharsContainer.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.75rem;">قم بإضافة شخصيات أولاً في علامة التبويب المخصصة.</div>';
+            return;
+        }
+
+        this.characters.forEach(char => {
+            const label = document.createElement('label');
+            label.className = 'checkbox-item';
+            label.innerHTML = `
+                <input type="checkbox" name="scenario-char-checkbox" value="${char.id}">
+                <span>${char.name}</span>
+            `;
+            this.scenarioCharsContainer.appendChild(label);
+        });
     }
 
     renderScenariosList() {
@@ -247,12 +414,16 @@ class DoubleDatabaseApp {
         const schoolId = this.scenarioSchoolSelect.value;
         const script = this.scenarioScript.value.trim();
 
+        // Gather checked character IDs
+        const checkboxes = this.scenarioCharsContainer.querySelectorAll('input[name="scenario-char-checkbox"]:checked');
+        const charIds = Array.from(checkboxes).map(cb => cb.value);
+
         if (!title || !schoolId || !script) {
-            alert("يرجى تعبئة جميع الحقول المطلوبة!");
+            alert("يرجى تعبئة جميع الحقول المطلوبة السيناريو!");
             return;
         }
 
-        const newScenario = { id: id || 'scenario-' + Date.now(), title, schoolId, script };
+        const newScenario = { id: id || 'scenario-' + Date.now(), title, schoolId, charIds, script };
 
         if (id) {
             this.scenarios = this.scenarios.map(s => s.id === id ? newScenario : s);
@@ -275,6 +446,12 @@ class DoubleDatabaseApp {
         this.scenarioSchoolSelect.value = scen.schoolId;
         this.scenarioScript.value = scen.script;
 
+        // Reset and check matching character checkboxes
+        const checkboxes = this.scenarioCharsContainer.querySelectorAll('input[name="scenario-char-checkbox"]');
+        checkboxes.forEach(cb => {
+            cb.checked = Array.isArray(scen.charIds) && scen.charIds.includes(cb.value);
+        });
+
         this.updateScenarioPreview();
     }
 
@@ -292,10 +469,12 @@ class DoubleDatabaseApp {
         this.scenarioTitle.value = "";
         this.scenarioSchoolSelect.value = "";
         this.scenarioScript.value = "";
+        const checkboxes = this.scenarioCharsContainer.querySelectorAll('input[name="scenario-char-checkbox"]');
+        checkboxes.forEach(cb => cb.checked = false);
         this.updateScenarioPreview();
     }
 
-    // Real-time generator of prompt spell for Google Flow
+    // Real-time generator of prompt spells and copying blocks
     updateScenarioPreview() {
         if (!this.scenarioPromptOutput) return;
 
@@ -305,26 +484,63 @@ class DoubleDatabaseApp {
 
         if (!schoolId || !script) {
             this.scenarioPromptOutput.textContent = "قم بتعبئة نص السيناريو واختيار المدرسة الفنية لتركيب الموجه...";
+            if (this.dynamicCharactersOutputContainer) this.dynamicCharactersOutputContainer.innerHTML = "";
             return;
         }
 
         const school = this.schools.find(s => s.id === schoolId);
-        const schoolName = school ? school.name : 'أصل غير محدد';
+        const schoolName = school ? school.name : 'أصل غير حدد';
         const schoolDesc = school ? school.desc : '';
 
+        // Generate Script Prompt Spell
         let prompt = `[Google Flow Prompt Spell - Story Studio Planner]\n`;
         prompt += `Project Title: ${title}\n`;
         prompt += `Style & Medium Rules: ${schoolName} (${schoolDesc})\n\n`;
         prompt += `Script Story / Action Plan:\n${script}\n\n`;
-        prompt += `Visual Clash Boundary Directive: Zero color bleeding. Preserve precise G-pen outlines or thick classical oil brushstrokes on contacts.`;
+        prompt += `Visual Clash Boundary Directive: Zero color bleeding. Preserve precise outlines or brushstrokes.`;
 
         this.scenarioPromptOutput.textContent = prompt;
+
+        // Generate Character Info & Voice Specs output cards
+        if (this.dynamicCharactersOutputContainer) {
+            this.dynamicCharactersOutputContainer.innerHTML = "";
+            
+            const checkedCbs = this.scenarioCharsContainer.querySelectorAll('input[name="scenario-char-checkbox"]:checked');
+            const selectedCharIds = Array.from(checkedCbs).map(cb => cb.value);
+
+            selectedCharIds.forEach(cid => {
+                const char = this.characters.find(c => c.id === cid);
+                if (char) {
+                    const block = document.createElement('div');
+                    block.className = 'output-box';
+                    block.style.marginTop = '10px';
+                    block.style.border = '1px dashed rgba(6, 182, 212, 0.4)';
+                    
+                    const charInfoId = `char-info-out-${char.id}`;
+                    const charVoiceId = `char-voice-out-${char.id}`;
+
+                    block.innerHTML = `
+                        <div style="font-weight: bold; font-size: 0.82rem; color: var(--color-cyan); margin-bottom: 8px;">👤 الشخصية: ${char.name}</div>
+                        
+                        <div class="output-title">أ. بصمة الصوت المخصصة (Custom Voice Specification)</div>
+                        <div class="output-text" id="${charVoiceId}">${char.name} - ${char.voiceSpec}</div>
+                        <button type="button" class="btn" style="width: 100%; font-size: 0.72rem; padding: 4px; margin-bottom: 10px;" onclick="window.app.copyText('${charVoiceId}')">نسخ مواصفات الصوت 📋</button>
+                        
+                        <div class="output-title">ب. نواة الشخصية [Character Info (optional)]</div>
+                        <div class="output-text" id="${charInfoId}">${char.charInfo}</div>
+                        <button type="button" class="btn btn-primary" style="width: 100%; font-size: 0.72rem; padding: 4px;" onclick="window.app.copyText('${charInfoId}')">نسخ Character Info لـ Google Flow 📋</button>
+                    `;
+                    this.dynamicCharactersOutputContainer.appendChild(block);
+                }
+            });
+        }
     }
 
-    copyScenarioPrompt() {
-        if (this.scenarioPromptOutput) {
-            navigator.clipboard.writeText(this.scenarioPromptOutput.textContent).then(() => {
-                alert("📋 تم نسخ موجه التوليد لـ Google Flow بنجاح! الصقه مباشرة في Story Studio.");
+    copyText(elementId) {
+        const textElement = document.getElementById(elementId);
+        if (textElement) {
+            navigator.clipboard.writeText(textElement.textContent).then(() => {
+                alert("📋 تم نسخ النص بنجاح! يمكنك الآن لصقه مباشرة في الخانة المطلوبة بـ Google Flow.");
             });
         }
     }
