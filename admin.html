@@ -208,7 +208,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            max-height: 450px;
+            max-height: 480px;
             overflow-y: auto;
         }
 
@@ -312,6 +312,28 @@
         .checkbox-item input {
             cursor: pointer;
         }
+
+        /* Act Blocks */
+        .act-group-block {
+            margin-bottom: 25px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .act-group-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .act-title-1 { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .act-title-2 { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+        .act-title-3 { background: rgba(139, 92, 246, 0.15); color: #c084fc; }
     </style>
 </head>
 <body>
@@ -426,11 +448,25 @@
                     <input type="text" id="scenario-title" placeholder="أدخل اسم السيناريو الحركي...">
                 </div>
 
-                <div class="form-group">
-                    <label for="scenario-school">المدرسة الفنية الحاكمة *</label>
-                    <select id="scenario-school" onchange="window.app.updateScenarioPreview()">
-                        <option value="">-- اختر مدرسة فنية --</option>
-                    </select>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1.2;">
+                        <label for="scenario-school">المدرسة الفنية الحاكمة *</label>
+                        <select id="scenario-school" onchange="window.app.updateScenarioPreview()">
+                            <option value="">-- اختر مدرسة فنية --</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 0.8;">
+                        <label for="scenario-act">المرحلة / الفصل السردي *</label>
+                        <select id="scenario-act" onchange="window.app.updateScenarioPreview()">
+                            <option value="act1">الفصل الأول (Genesis)</option>
+                            <option value="act2">الفصل الثاني (Clash)</option>
+                            <option value="act3">الفصل الثالث (Resolution)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="width: 80px;">
+                        <label for="scenario-order">الترتيب *</label>
+                        <input type="number" id="scenario-order" value="1" min="1" style="text-align: center;" oninput="window.app.updateScenarioPreview()">
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -462,15 +498,15 @@
                 </div>
 
                 <div id="dynamic-characters-output-container">
-                    <!-- Automatically filled with Character Info and Voice Specs blocks ready to copy -->
+                    <!-- Dynamic Character blocks -->
                 </div>
             </div>
         </div>
         
         <div class="card-box" style="margin-top: 20px;">
-            <h3>أرشيف السيناريوهات</h3>
+            <h3>أرشيف السيناريوهات المرحلي</h3>
             <div class="items-list" id="scenarios-list">
-                <!-- Dynamic scenarios list -->
+                <!-- Grouped by Act dynamically -->
             </div>
         </div>
     </div>

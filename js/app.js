@@ -22,7 +22,7 @@ class DoubleDatabaseApp {
             }
         ];
 
-        // Initial Characters Database presets (including Kenji from screenshot)
+        // Initial Characters Database presets
         const defaultCharacters = [
             {
                 id: 'char-1',
@@ -38,7 +38,7 @@ class DoubleDatabaseApp {
                 schoolId: 'school-2',
                 voiceSpec: 'صوت نسائي وقور وناعم ذو بريق عميق كلاسيكي',
                 psychologyPreset: 'dread',
-                charInfo: 'She experiences continuous existential dread, knowing she is a drawn being in a fragile world. She speaks with a soft, lingering tone and moves deliberately to preserve her thick impasto oil coat from being erased.'
+                charInfo: 'She experiences continuous existential dread, knowing she is a drawn being in a fragile world. She speaks with a soft, trembling whisper and moves deliberately to preserve her thick impasto oil coat from being erased.'
             }
         ];
 
@@ -46,10 +46,21 @@ class DoubleDatabaseApp {
         const defaultScenarios = [
             {
                 id: 'scenario-1',
+                title: 'نشوء الحدود الحبرية (Genesis of Ink)',
+                schoolId: 'school-1',
+                act: 'act1',
+                order: 1,
+                charIds: ['char-1'],
+                script: 'المشهد الأول: كينجي يراقب ولادة الحدود الحبرية على صفحة ورقية بيضاء لانهائية.'
+            },
+            {
+                id: 'scenario-2',
                 title: 'تصدعات البعد الحبري (Manga Ink Fracture)',
                 schoolId: 'school-1',
-                charIds: ['char-1'],
-                script: 'المشهد الأول: كينجي يقف عند حافة المدينة ممسكاً بريشته المعدنية. السماء المسطحة تبدأ في التصدع وتتساقط منها رقاقات كرتونية مهتزة.'
+                act: 'act2',
+                order: 1,
+                charIds: ['char-1', 'char-2'],
+                script: 'المشهد الثاني: كينجي يواجه آرا الهجينة عند خط التماس المشتعل. السماء تبدأ في التصدع وتتساقط منها رقاقات كرتونية.'
             }
         ];
 
@@ -88,6 +99,8 @@ class DoubleDatabaseApp {
         this.scenarioEditId = document.getElementById('scenario-edit-id');
         this.scenarioTitle = document.getElementById('scenario-title');
         this.scenarioSchoolSelect = document.getElementById('scenario-school');
+        this.scenarioActSelect = document.getElementById('scenario-act');
+        this.scenarioOrderInput = document.getElementById('scenario-order');
         this.scenarioCharsContainer = document.getElementById('scenario-chars-container');
         this.scenarioScript = document.getElementById('scenario-script');
         this.scenariosList = document.getElementById('scenarios-list');
@@ -97,7 +110,7 @@ class DoubleDatabaseApp {
     }
 
     bindEvents() {
-        // Nothing complex, all bound to global window app
+        // Tied to global app
     }
 
     // Tab switcher
@@ -383,35 +396,62 @@ class DoubleDatabaseApp {
         if (!this.scenariosList) return;
         this.scenariosList.innerHTML = "";
 
-        if (this.scenarios.length === 0) {
-            this.scenariosList.innerHTML = `<div style="text-align: center; color: var(--text-secondary); padding: 15px; font-size: 0.8rem;">لا توجد سيناريوهات مسجلة حالياً.</div>`;
-            return;
-        }
+        const acts = {
+            act1: { title: "الفصل الأول: التمهيد ونشوء الخطوط (Act I)", class: "act-title-1" },
+            act2: { title: "الفصل الثاني: تداخل الأنماط والصدام (Act II)", class: "act-title-2" },
+            act3: { title: "الفصل الثالث: المحو المطلق والوفاق (Act III)", class: "act-title-3" }
+        };
 
-        this.scenarios.forEach(scen => {
-            const school = this.schools.find(s => s.id === scen.schoolId);
-            const schoolName = school ? school.name : "أسلوب غير محدد";
-            const row = document.createElement('div');
-            row.className = 'item-row';
-            row.innerHTML = `
-                <div class="item-info">
-                    <h4>${scen.title}</h4>
-                    <p style="color: var(--color-cyan); font-weight: bold; margin-top: 2px;">المدرسة: ${schoolName}</p>
-                    <p>${scen.script.substring(0, 100)}...</p>
-                </div>
-                <div class="item-actions">
-                    <button class="btn-action btn-edit" onclick="window.app.editScenario('${scen.id}')">تعديل</button>
-                    <button class="btn-action btn-delete" onclick="window.app.deleteScenario('${scen.id}')">حذف</button>
-                </div>
-            `;
-            this.scenariosList.appendChild(row);
+        Object.keys(acts).forEach(actKey => {
+            // Filter and sort scenarios inside this act
+            const actScenarios = this.scenarios
+                .filter(s => s.act === actKey)
+                .sort((a, b) => (a.order || 1) - (b.order || 1));
+
+            if (actScenarios.length > 0) {
+                const block = document.createElement('div');
+                block.className = 'act-group-block';
+                block.innerHTML = `<span class="act-group-title ${acts[actKey].class}">${acts[actKey].title}</span>`;
+
+                const listContainer = document.createElement('div');
+                listContainer.className = 'items-list';
+
+                actScenarios.forEach(scen => {
+                    const school = this.schools.find(s => s.id === scen.schoolId);
+                    const schoolName = school ? school.name : "أسلوب غير محدد";
+                    const row = document.createElement('div');
+                    row.className = 'item-row';
+                    row.innerHTML = `
+                        <div class="item-info">
+                            <h4>[#${scen.order || 1}] ${scen.title}</h4>
+                            <p style="color: var(--color-cyan); font-weight: bold; margin-top: 2px;">الأسلوب: ${schoolName}</p>
+                            <p>${scen.script.substring(0, 80)}...</p>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-action btn-edit" onclick="window.app.editScenario('${scen.id}')">تعديل</button>
+                            <button class="btn-action btn-delete" onclick="window.app.deleteScenario('${scen.id}')">حذف</button>
+                        </div>
+                    `;
+                    listContainer.appendChild(row);
+                });
+
+                block.appendChild(listContainer);
+                this.scenariosList.appendChild(block);
+            }
         });
+
+        const totalScenarios = this.scenarios.length;
+        if (totalScenarios === 0) {
+            this.scenariosList.innerHTML = `<div style="text-align: center; color: var(--text-secondary); padding: 15px; font-size: 0.8rem;">لا توجد سيناريوهات مسجلة حالياً.</div>`;
+        }
     }
 
     saveScenario() {
         const id = this.scenarioEditId.value;
         const title = this.scenarioTitle.value.trim();
         const schoolId = this.scenarioSchoolSelect.value;
+        const act = this.scenarioActSelect.value;
+        const order = parseInt(this.scenarioOrderInput.value) || 1;
         const script = this.scenarioScript.value.trim();
 
         // Gather checked character IDs
@@ -419,11 +459,11 @@ class DoubleDatabaseApp {
         const charIds = Array.from(checkboxes).map(cb => cb.value);
 
         if (!title || !schoolId || !script) {
-            alert("يرجى تعبئة جميع الحقول المطلوبة السيناريو!");
+            alert("يرجى تعبئة جميع الحقول المطلوبة للسيناريو!");
             return;
         }
 
-        const newScenario = { id: id || 'scenario-' + Date.now(), title, schoolId, charIds, script };
+        const newScenario = { id: id || 'scenario-' + Date.now(), title, schoolId, act, order, charIds, script };
 
         if (id) {
             this.scenarios = this.scenarios.map(s => s.id === id ? newScenario : s);
@@ -444,6 +484,8 @@ class DoubleDatabaseApp {
         this.scenarioEditId.value = scen.id;
         this.scenarioTitle.value = scen.title;
         this.scenarioSchoolSelect.value = scen.schoolId;
+        this.scenarioActSelect.value = scen.act || 'act1';
+        this.scenarioOrderInput.value = scen.order || 1;
         this.scenarioScript.value = scen.script;
 
         // Reset and check matching character checkboxes
@@ -468,6 +510,8 @@ class DoubleDatabaseApp {
         this.scenarioEditId.value = "";
         this.scenarioTitle.value = "";
         this.scenarioSchoolSelect.value = "";
+        this.scenarioActSelect.value = "act1";
+        this.scenarioOrderInput.value = "1";
         this.scenarioScript.value = "";
         const checkboxes = this.scenarioCharsContainer.querySelectorAll('input[name="scenario-char-checkbox"]');
         checkboxes.forEach(cb => cb.checked = false);
@@ -489,7 +533,7 @@ class DoubleDatabaseApp {
         }
 
         const school = this.schools.find(s => s.id === schoolId);
-        const schoolName = school ? school.name : 'أصل غير حدد';
+        const schoolName = school ? school.name : 'أصل غير محدد';
         const schoolDesc = school ? school.desc : '';
 
         // Generate Script Prompt Spell
