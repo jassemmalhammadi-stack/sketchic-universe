@@ -112,7 +112,27 @@ class DoubleDatabaseApp {
     }
 
     bindEvents() {
-        // Tied to global app
+        // Add robust real-time update event listeners to prevent freeze and ensure updates
+        const inputs = [
+            this.scenarioTitle,
+            this.scenarioSchoolSelect,
+            this.scenarioActSelect,
+            this.scenarioOrderInput,
+            this.scenarioScript
+        ];
+
+        inputs.forEach(el => {
+            if (el) {
+                el.addEventListener('input', () => this.updateScenarioPreview());
+                el.addEventListener('change', () => this.updateScenarioPreview());
+            }
+        });
+
+        // Also watch character count select if it exists
+        const countSelect = document.getElementById('scenario-char-count');
+        if (countSelect) {
+            countSelect.addEventListener('change', () => this.updateScenarioPreview());
+        }
     }
 
     // Tab switcher
@@ -387,7 +407,7 @@ class DoubleDatabaseApp {
             const label = document.createElement('label');
             label.className = 'checkbox-item';
             label.innerHTML = `
-                <input type="checkbox" name="scenario-char-checkbox" value="${char.id}">
+                <input type="checkbox" name="scenario-char-checkbox" value="${char.id}" onchange="window.app.updateScenarioPreview()">
                 <span>${char.name}</span>
             `;
             this.scenarioCharsContainer.appendChild(label);
@@ -525,115 +545,123 @@ class DoubleDatabaseApp {
 
     // Real-time generator of prompt spells and copying blocks
     updateScenarioPreview() {
-        if (!this.scenarioPromptOutput) return;
+        try {
+            if (!this.scenarioPromptOutput) return;
 
-        const title = this.scenarioTitle.value.trim() || 'سيناريو غير مسمى';
-        const schoolId = this.scenarioSchoolSelect.value;
-        let script = this.scenarioScript.value.trim();
+            const title = this.scenarioTitle.value.trim() || 'سيناريو غير مسمى';
+            const schoolId = this.scenarioSchoolSelect.value;
+            let script = this.scenarioScript.value.trim();
 
-        if (!schoolId || !script) {
-            this.scenarioPromptOutput.textContent = "قم بتعبئة نص السيناريو واختيار المدرسة الفنية لتركيب الموجه...";
-            if (this.dynamicCharactersOutputContainer) this.dynamicCharactersOutputContainer.innerHTML = "";
-            return;
-        }
-
-        const school = this.schools.find(s => s.id === schoolId);
-        const schoolName = school ? school.name : 'أصل غير محدد';
-        const schoolDesc = school ? school.desc : '';
-
-        // Extract selected characters and compile tags
-        const checkedCbs = this.scenarioCharsContainer.querySelectorAll('input[name="scenario-char-checkbox"]:checked');
-        const selectedCharIds = Array.from(checkedCbs).map(cb => cb.value);
-        
-        let characterDirectives = [];
-        let tagNames = [];
-
-        selectedCharIds.forEach(cid => {
-            const char = this.characters.find(c => c.id === cid);
-            if (char) {
-                // Extract English name if exists
-                let engName = char.name;
-                const match = char.name.match(/\(([^)]+)\)/);
-                if (match && match[1]) {
-                    engName = match[1].trim();
-                } else {
-                    engName = char.name.replace(/[^\w]/g, '');
-                }
-                if (!engName) engName = 'Char' + char.id.replace(/[^\d]/g, '');
-
-                const tag = `@${engName}`;
-                tagNames.push(tag);
-
-                // Replace in script text
-                const arabicName = char.name.split('(')[0].trim();
-                const escArabic = arabicName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-                const escEng = engName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-                
-                script = script.replace(new RegExp(escArabic, 'gi'), tag);
-                script = script.replace(new RegExp(escEng, 'gi'), tag);
-
-                characterDirectives.push(`- Bind @${engName} to the custom character model configured with the Character Info: "${char.name}".`);
+            if (!schoolId || !script) {
+                this.scenarioPromptOutput.textContent = "قم بتعبئة نص السيناريو واختيار المدرسة الفنية لتركيب الموجه...";
+                if (this.dynamicCharactersOutputContainer) this.dynamicCharactersOutputContainer.innerHTML = "";
+                return;
             }
-        });
 
-        // Determine prompt-level character count description
-        const countSelect = document.getElementById('scenario-char-count').value;
-        let countText = "";
-        if (countSelect === "auto") {
-            countText = `${selectedCharIds.length} characters (${tagNames.join(', ') || 'none'})`;
-        } else if (countSelect === "0") {
-            countText = "0 characters (Background Landscape Scene Only)";
-        } else {
-            countText = `${countSelect} characters (${tagNames.join(', ') || 'none'})`;
-        }
+            const school = this.schools.find(s => s.id === schoolId);
+            const schoolName = school ? school.name : 'أصل غير حدد';
+            const schoolDesc = school ? school.desc : '';
 
-        // Generate Script Prompt Spell
-        let prompt = `[Google Flow Prompt Spell - Story Studio Planner]\n`;
-        prompt += `Project Title: ${title}\n`;
-        prompt += `Style & Medium Rules: ${schoolName} (${schoolDesc})\n`;
-        prompt += `Frame Character Count: Exactly ${countText}\n`;
-        if (tagNames.length > 0) {
-            prompt += `Active Characters Linked: ${tagNames.join(', ')}\n`;
-        }
-        prompt += `\nScript Story / Action Plan:\n${script}\n\n`;
-        
-        if (characterDirectives.length > 0) {
-            prompt += `Flow Model Binding Directives:\n${characterDirectives.join('\n')}\n`;
-            prompt += `Important: Render these tagged figures using their pre-trained features. Do NOT generate generic random characters.\n\n`;
-        }
-        prompt += `Visual Clash Boundary Directive: Zero color bleeding. Preserve precise outlines or brushstrokes.`;
-
-        this.scenarioPromptOutput.textContent = prompt;
-
-        // Generate Character Info & Voice Specs output cards
-        if (this.dynamicCharactersOutputContainer) {
-            this.dynamicCharactersOutputContainer.innerHTML = "";
+            // Extract selected characters and compile tags
+            const checkedCbs = this.scenarioCharsContainer.querySelectorAll('input[name="scenario-char-checkbox"]:checked');
+            const selectedCharIds = Array.from(checkedCbs).map(cb => cb.value);
             
+            let characterDirectives = [];
+            let tagNames = [];
+
             selectedCharIds.forEach(cid => {
                 const char = this.characters.find(c => c.id === cid);
                 if (char) {
-                    const block = document.createElement('div');
-                    block.className = 'output-box';
-                    block.style.marginTop = '10px';
-                    block.style.border = '1px dashed rgba(6, 182, 212, 0.4)';
-                    
-                    const charInfoId = `char-info-out-${char.id}`;
-                    const charVoiceId = `char-voice-out-${char.id}`;
+                    // Extract English name if exists
+                    let engName = char.name;
+                    const match = char.name.match(/\(([^)]+)\)/);
+                    if (match && match[1]) {
+                        engName = match[1].trim();
+                    } else {
+                        engName = char.name.replace(/[^\w]/g, '');
+                    }
+                    if (!engName) engName = 'Char' + char.id.replace(/[^\d]/g, '');
 
-                    block.innerHTML = `
-                        <div style="font-weight: bold; font-size: 0.82rem; color: var(--color-cyan); margin-bottom: 8px;">👤 الشخصية: ${char.name}</div>
-                        
-                        <div class="output-title">أ. بصمة الصوت المخصصة (Custom Voice Specification)</div>
-                        <div class="output-text" id="${charVoiceId}">${char.name} - ${char.voiceSpec}</div>
-                        <button type="button" class="btn" style="width: 100%; font-size: 0.72rem; padding: 4px; margin-bottom: 10px;" onclick="window.app.copyText('${charVoiceId}')">نسخ مواصفات الصوت 📋</button>
-                        
-                        <div class="output-title">ب. نواة الشخصية [Character Info (optional)]</div>
-                        <div class="output-text" id="${charInfoId}">${char.charInfo}</div>
-                        <button type="button" class="btn btn-primary" style="width: 100%; font-size: 0.72rem; padding: 4px;" onclick="window.app.copyText('${charInfoId}')">نسخ Character Info لـ Google Flow 📋</button>
-                    `;
-                    this.dynamicCharactersOutputContainer.appendChild(block);
+                    const tag = `@${engName}`;
+                    tagNames.push(tag);
+
+                    // Replace in script text
+                    const arabicName = char.name.split('(')[0].trim();
+                    if (arabicName) {
+                        const escArabic = arabicName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                        script = script.replace(new RegExp(escArabic, 'gi'), tag);
+                    }
+                    if (engName) {
+                        const escEng = engName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                        script = script.replace(new RegExp(escEng, 'gi'), tag);
+                    }
+
+                    characterDirectives.push(`- Bind @${engName} to the custom character model configured with the Character Info: "${char.name}".`);
                 }
             });
+
+            // Determine prompt-level character count description
+            const countSelectEl = document.getElementById('scenario-char-count');
+            const countSelect = countSelectEl ? countSelectEl.value : 'auto';
+            let countText = "";
+            if (countSelect === "auto") {
+                countText = `${selectedCharIds.length} characters (${tagNames.join(', ') || 'none'})`;
+            } else if (countSelect === "0") {
+                countText = "0 characters (Background Landscape Scene Only)";
+            } else {
+                countText = `${countSelect} characters (${tagNames.join(', ') || 'none'})`;
+            }
+
+            // Generate Script Prompt Spell
+            let prompt = `[Google Flow Prompt Spell - Story Studio Planner]\n`;
+            prompt += `Project Title: ${title}\n`;
+            prompt += `Style & Medium Rules: ${schoolName} (${schoolDesc})\n`;
+            prompt += `Frame Character Count: Exactly ${countText}\n`;
+            if (tagNames.length > 0) {
+                prompt += `Active Characters Linked: ${tagNames.join(', ')}\n`;
+            }
+            prompt += `\nScript Story / Action Plan:\n${script}\n\n`;
+            
+            if (characterDirectives.length > 0) {
+                prompt += `Flow Model Binding Directives:\n${characterDirectives.join('\n')}\n`;
+                prompt += `Important: Render these tagged figures using their pre-trained features. Do NOT generate generic random characters.\n\n`;
+            }
+            prompt += `Visual Clash Boundary Directive: Zero color bleeding. Preserve precise outlines or brushstrokes.`;
+
+            this.scenarioPromptOutput.textContent = prompt;
+
+            // Generate Character Info & Voice Specs output cards
+            if (this.dynamicCharactersOutputContainer) {
+                this.dynamicCharactersOutputContainer.innerHTML = "";
+                
+                selectedCharIds.forEach(cid => {
+                    const char = this.characters.find(c => c.id === cid);
+                    if (char) {
+                        const block = document.createElement('div');
+                        block.className = 'output-box';
+                        block.style.marginTop = '10px';
+                        block.style.border = '1px dashed rgba(6, 182, 212, 0.4)';
+                        
+                        const charInfoId = `char-info-out-${char.id}`;
+                        const charVoiceId = `char-voice-out-${char.id}`;
+
+                        block.innerHTML = `
+                            <div style="font-weight: bold; font-size: 0.82rem; color: var(--color-cyan); margin-bottom: 8px;">👤 الشخصية: ${char.name}</div>
+                            
+                            <div class="output-title">أ. بصمة الصوت المخصصة (Custom Voice Specification)</div>
+                            <div class="output-text" id="${charVoiceId}">${char.name} - ${char.voiceSpec}</div>
+                            <button type="button" class="btn" style="width: 100%; font-size: 0.72rem; padding: 4px; margin-bottom: 10px;" onclick="window.app.copyText('${charVoiceId}')">نسخ مواصفات الصوت 📋</button>
+                            
+                            <div class="output-title">ب. نواة الشخصية [Character Info (optional)]</div>
+                            <div class="output-text" id="${charInfoId}">${char.charInfo}</div>
+                            <button type="button" class="btn btn-primary" style="width: 100%; font-size: 0.72rem; padding: 4px;" onclick="window.app.copyText('${charInfoId}')">نسخ Character Info لـ Google Flow 📋</button>
+                        `;
+                        this.dynamicCharactersOutputContainer.appendChild(block);
+                    }
+                });
+            }
+        } catch (e) {
+            console.error("Error updating preview: ", e);
         }
     }
 
