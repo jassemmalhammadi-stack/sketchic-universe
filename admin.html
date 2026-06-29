@@ -3,1820 +3,472 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="منصة إنتاج وإدارة أصول كون سكتشيك السينمائي - نظام إدارة وتتبع الأصول المتكامل مع Google Drive.">
-    <title>Sketchic Production Hub - لوحة تحكم الأصول الكونية</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>مساعد الإنتاج الكوني - سكتشيك & Google Flow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-secondary: rgba(20, 27, 45, 0.7);
+            --bg-tertiary: #172033;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-tertiary: #64748b;
+            --color-accent: #6366f1;
+            --color-accent-light: rgba(99, 102, 241, 0.15);
+            --color-cyan: #06b6d4;
+            --color-green: #10b981;
+            --color-orange: #f59e0b;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --radius-md: 16px;
+            --radius-sm: 8px;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Cairo', 'Outfit', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 95vh;
+            background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 400px),
+                              radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.1), transparent 400px);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        header h1 span {
+            color: var(--color-cyan);
+        }
+
+        header p {
+            margin: 8px 0 0 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Progress Steps */
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .progress-line-active {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-cyan), var(--color-accent));
+            z-index: 2;
+            transform: translateY(-50%);
+            transition: var(--transition-smooth);
+            width: 0%;
+        }
+
+        .step-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 3;
+            transition: var(--transition-smooth);
+        }
+
+        .step-indicator.active {
+            border-color: var(--color-cyan);
+            background: var(--bg-primary);
+            color: var(--color-cyan);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        }
+
+        .step-indicator.completed {
+            border-color: var(--color-green);
+            background: var(--color-green);
+            color: white;
+        }
+
+        /* Card Steps */
+        .step-card {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .step-card.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-title-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .step-badge {
+            background: var(--color-accent-light);
+            color: var(--color-accent);
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .step-title-row h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--text-primary);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--color-cyan);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+        }
+
+        /* Instructions Info Box */
+        .instruction-box {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .instruction-box h4 {
+            margin: 0;
+            color: var(--color-cyan);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .instruction-box p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Prompt Copy Panel */
+        .prompt-panel {
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .prompt-text {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin: 0 0 10px 0;
+            max-height: 150px;
+            overflow-y: auto;
+            direction: ltr;
+            text-align: left;
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: var(--border-color);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-cyan), var(--color-accent));
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-copy {
+            background: var(--color-accent-light);
+            color: var(--color-accent);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .actions-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header / Navigation -->
-    <header class="app-header" id="app-header">
-        <div class="header-container">
-            <div class="app-logo">
-                <img src="assets/logo.jpg" alt="Sketchic Logo" class="logo-img" style="height: 42px; border-radius: var(--radius-sm); margin-left: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
-                <div class="logo-text">
-                    <h1>سكتشيك</h1>
-                    <span class="sub-text">منصة الإنتاج وإدارة الأصول</span>
-                </div>
-            </div>
-            <nav class="app-nav" id="app-nav">
-                <button class="nav-btn active" id="btn-dashboard" data-tab="dashboard">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                    <span>لوحة المتابعة</span>
-                </button>
-                <button class="nav-btn" id="btn-assets" data-tab="assets">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                    <span>مستودع الأصول</span>
-                </button>
-                <button class="nav-btn" id="btn-wizard" data-tab="wizard">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                    <span>المعالج الإنتاجي</span>
-                </button>
-                <button class="nav-btn" id="btn-guide" data-tab="guide">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                    <span>مرشد الإنتاج الذكي</span>
-                </button>
-                <button class="nav-btn" id="btn-scenes" data-tab="scenes">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                    <span>باني المشاهد المتسقة</span>
-                </button>
-                <button class="nav-btn" id="btn-script" data-tab="script">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                    <span>📜 السيناريو الخام</span>
-                </button>
-                <button class="nav-btn" id="btn-drawing" data-tab="drawing">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path><path d="M12 6V12L16 14"></path></svg>
-                    <span>مرسم الأساليب والتهجين</span>
-                </button>
-                <button class="nav-btn" id="btn-simulator" data-tab="simulator">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-                    <span>محاكي الموقع العام</span>
-                </button>
-                <button class="nav-btn" id="btn-manuals" data-tab="manuals">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                    <span>مركز المعرفة والأدلة</span>
-                </button>
-            </nav>
-            <div style="display: flex; align-items: center;">
-                <button class="btn" id="btn-publish-github" style="background-color: var(--color-green); color: white; margin-left: 12px; border-radius: var(--radius-md); font-weight: 700; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2); border: none; height: 42px; padding: 0 1rem; display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                    <span>تصدير للموقع العام</span>
-                </button>
-                <div class="user-badge" id="user-badge">
-                    <div class="badge-icon">☁️</div>
-                    <div class="badge-text">
-                        <span class="user-tier">Google AI Pro</span>
-                        <span class="storage-info">5 TB مشترك</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container">
+    <header>
+        <h1>مساعد الإنتاج الكوني <span>سكتشيك & Google Flow</span></h1>
+        <p>مسار بسيط ومباشر خطوة بخطوة لتصميم وإنشاء شخصياتك ودمجها بين المنصات</p>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="main-content" id="main-content">
+    <!-- Progress Indicator -->
+    <div class="progress-bar">
+        <div class="progress-line-active" id="progress-line"></div>
+        <div class="step-indicator active" data-step="1">1</div>
+        <div class="step-indicator" data-step="2">2</div>
+        <div class="step-indicator" data-step="3">3</div>
+        <div class="step-indicator" data-step="4">4</div>
+    </div>
+
+    <!-- Step 1: Character Identity -->
+    <div class="step-card active" id="step-1-card">
+        <div class="step-title-row">
+            <span class="step-badge">المرحلة 1</span>
+            <h2>الهوية الكونية والمدرسة الفنية الحاكمة</h2>
+        </div>
         
-        <!-- Tab 1: Dashboard -->
-        <section id="tab-dashboard" class="tab-pane active">
-            <div class="welcome-banner">
-                <div class="banner-content">
-                    <h2>أهلاً بك في مرحلة الإنتاج الفعلي لكون "سكتشيك" 🚀</h2>
-                    <p>هنا يمكنك إدارة ورصد تقدم أصولك السردية والمرئية، وتتبع تسلسل إنتاجها من الفكرة المكتوبة إلى الموقع الإلكتروني التفاعلي.</p>
-                </div>
-                <button class="btn btn-primary" id="btn-add-asset-quick">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    <span>أصل جديد</span>
-                </button>
-            </div>
-
-            <!-- Cosmic Director Chatbot -->
-            <div class="card-box" style="border: 2px solid var(--color-cyan); border-radius: var(--radius-lg); margin-bottom: 2rem; background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(6, 182, 212, 0.05) 100%);">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
-                    <span style="font-size: 2rem;">🧠</span>
-                    <div>
-                        <h3 style="margin: 0; color: var(--color-cyan); font-family: var(--font-ar);">المرشد الكوني التفاعلي (Cosmic AI Conductor)</h3>
-                        <p style="margin: 3px 0 0 0; font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-ar);">مساعد تفاعلي ذكي يحاورك خطوة بخطوة لبناء وتشكيل أصول عالمك بشكل مشوق وعشوائي.</p>
-                    </div>
-                </div>
-
-                <!-- Chat message / question -->
-                <div id="director-chat-bubble" style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 15px; min-height: 80px; position: relative;">
-                    <div id="director-message-text" style="font-size: 0.9rem; line-height: 1.5; color: var(--text-primary); font-family: var(--font-ar);">
-                        جاري تهيئة المساعد الكوني...
-                    </div>
-                </div>
-
-                <!-- Multiple choice options + Custom input -->
-                <div id="director-options-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 15px;">
-                    <!-- Options buttons populated via JS -->
-                </div>
-
-                <!-- Custom Input Container (Hidden by default, shown if "Other" option is selected) -->
-                <div id="director-custom-input-container" style="display: none; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin-bottom: 15px; gap: 10px; align-items: center;">
-                    <input type="text" id="director-custom-val" placeholder="اكتب اقتراحك الخاص هنا..." style="flex: 1; padding: 8px; background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; font-family: var(--font-ar); outline: none;">
-                    <button type="button" id="btn-director-submit-custom" class="btn" style="background: var(--color-green); color: white; padding: 8px 16px; font-family: var(--font-ar); border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">حفظ واقتراح</button>
-                </div>
-            </div>
-
-            <!-- Global Pipeline View -->
-            <div class="pipeline-section card-box">
-                <h3 class="card-title">مخطط تدفق الأصول الكوني (Visual Production Pipeline)</h3>
-                <p class="card-subtitle">الترتيب الأمثل لبناء كون سكتشيك السينمائي وعلاقة الأصول بين المراحل</p>
-                
-                <div class="visual-pipeline" id="visual-pipeline" style="grid-template-columns: repeat(9, 1fr);">
-                    <!-- Stage 1: Scenarios -->
-                    <div class="pipeline-node" data-stage="scenario">
-                        <div class="node-icon">📝</div>
-                        <h4>1. السيناريوهات</h4>
-                        <span class="node-count" id="count-scenario">0 أصل</span>
-                        <div class="node-connector"></div>
-                    </div>
-                    <!-- Stage 2: Written Texts -->
-                    <div class="pipeline-node" data-stage="written">
-                        <div class="node-icon">📜</div>
-                        <h4>2. النصوص والمخطوطات</h4>
-                        <span class="node-count" id="count-written">0 أصل</span>
-                        <div class="node-connector"></div>
-                    </div>
-                    <!-- Stage 3: Environments -->
-                    <div class="pipeline-node" data-stage="environment">
-                        <div class="node-icon">🌌</div>
-                        <h4>3. العوالم والبيئات</h4>
-                        <span class="node-count" id="count-environment">0 أصل</span>
-                        <div class="node-connector"></div>
-                    </div>
-                    <!-- Stage 4: Characters -->
-                    <div class="pipeline-node" data-stage="character">
-                        <div class="node-icon">🎨</div>
-                        <h4>4. الشخصيات</h4>
-                        <span class="node-count" id="count-character">0 أصل</span>
-                        <div class="node-connector"></div>
-                    </div>
-                    <!-- Stage 4.5: Props -->
-                    <div class="pipeline-node" data-stage="prop">
-                        <div class="node-icon">🛡️</div>
-                        <h4>5. الأدوات والمقتنيات</h4>
-                        <span class="node-count" id="count-prop">0 أصل</span>
-                        <div class="node-connector"></div>
-                    </div>
-                    <!-- Stage 5: Cosmic Voices -->
-                    <div class="pipeline-node" data-stage="voice">
-                        <div class="node-icon">🎙️</div>
-                        <h4>6. الأصوات الكونية</h4>
-                        <span class="node-count" id="count-voice">0 أصل</span>
-                        <div class="node-connector"></div>
-                    </div>
-                    <!-- Stage 6: Cosmic Music -->
-                    <div class="pipeline-node" data-stage="music">
-                        <div class="node-icon">🎵</div>
-                        <h4>7. الموسيقى الكونية</h4>
-                        <span class="node-count" id="count-music">0 أصل</span>
-                        <div class="node-connector"></div>
-                    </div>
-                    <!-- Stage 7: Comics -->
-                    <div class="pipeline-node" data-stage="comic">
-                        <div class="node-icon">📚</div>
-                        <h4>8. القصص المصورة</h4>
-                        <span class="node-count" id="count-comic">0 أصل</span>
-                        <div class="node-connector"></div>
-                    </div>
-                    <!-- Stage 8: Videos -->
-                    <div class="pipeline-node" data-stage="video">
-                        <div class="node-icon">🎬</div>
-                        <h4>9. الفيديوهات</h4>
-                        <span class="node-count" id="count-video">0 أصل</span>
-                        <div class="node-connector"></div>
-                    </div>
-                    <!-- Stage 9: Games -->
-                    <div class="pipeline-node" data-stage="game">
-                        <div class="node-icon">🎮</div>
-                        <h4>10. الألعاب</h4>
-                        <span class="node-count" id="count-game">0 أصل</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats & Quick Actions Grid -->
-            <div class="dashboard-grid">
-                <!-- Google Drive Integration Guide & API Connection -->
-                <div class="card-box drive-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:10px; margin-bottom:12px;">
-                        <div class="card-header-icon" style="margin-bottom:0;">
-                            <span class="icon-big">☁️</span>
-                            <h3 style="margin:0;">ربط Google Drive الفعلي</h3>
-                        </div>
-                        <span id="gdrive-status-badge" style="background-color: var(--color-danger); color: white; padding: 2px 8px; border-radius: 20px; font-size: 0.72rem; font-weight: bold;">غير متصل</span>
-                    </div>
-                    
-                    <p style="font-size:0.8rem; margin-bottom:12px;">قم بتهيئة الاتصال لحفظ وقراءة الأصول مباشرة من حساب Google Drive الخاص بك.</p>
-                    
-                    <!-- Settings Button & Auth buttons -->
-                    <div style="display:flex; gap:8px; margin-bottom:12px;">
-                        <button type="button" id="btn-gdrive-connect" class="btn btn-primary" style="flex:1; font-size:0.8rem; padding:6px 12px; font-weight:bold; height:36px; display:flex; align-items:center; justify-content:center; gap:6px;">
-                            <span>🔗</span> <span>تسجيل الدخول والربط</span>
-                        </button>
-                        <button type="button" id="btn-gdrive-disconnect" class="btn btn-secondary" style="font-size:0.8rem; padding:6px 12px; font-weight:bold; height:36px; display:none;">
-                            قطع الاتصال
-                        </button>
-                        <button type="button" id="btn-toggle-gdrive-settings" class="btn" style="background:#e2e8f0; color:#475569; font-size:0.8rem; padding:6px 12px; font-weight:bold; height:36px;">
-                            ⚙️ الإعدادات
-                        </button>
-                    </div>
-                    
-                    <!-- DB Sync Button -->
-                    <button type="button" id="btn-gdrive-sync-db" class="btn" style="background:var(--color-cyan); color:white; font-size:0.8rem; padding:6px 12px; font-weight:bold; height:36px; width:100%; border:none; border-radius:var(--radius-sm); margin-bottom:12px; display:none; align-items:center; justify-content:center; gap:6px; cursor:pointer;">
-                        <span>🔄</span> <span>مزامنة قاعدة البيانات سحابياً</span>
-                    </button>
-
-                    <!-- Config Input Fields (Hidden by default) -->
-                    <div id="gdrive-config-panel" style="display:none; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:6px; padding:10px; margin-bottom:12px;">
-                        <h4 style="font-size:0.8rem; margin-top:0; margin-bottom:8px; color:var(--color-accent);">مفاتيح واجهة جوجل (Local Config):</h4>
-                        <div class="form-group" style="margin-bottom:8px;">
-                            <label style="font-size:0.7rem; margin-bottom:2px; display:block;">OAuth 2.0 Client ID *</label>
-                            <input type="text" id="gdrive-client-id" placeholder="أدخل Client ID المستخرج من Google Cloud..." style="width:100%; font-size:0.75rem; padding:5px; border:1px solid var(--border-color); border-radius:4px;">
-                        </div>
-                        <div class="form-group" style="margin-bottom:8px;">
-                            <label style="font-size:0.7rem; margin-bottom:2px; display:block;">Developer API Key *</label>
-                            <input type="password" id="gdrive-api-key" placeholder="أدخل API Key المستخرج من Google Cloud..." style="width:100%; font-size:0.75rem; padding:5px; border:1px solid var(--border-color); border-radius:4px;">
-                        </div>
-                        <button type="button" id="btn-save-gdrive-config" class="btn" style="background:var(--color-green); color:white; font-size:0.75rem; padding:4px 8px; border:none; border-radius:4px; cursor:pointer; font-weight:bold; width:100%;">
-                            حفظ الإعدادات محلياً
-                        </button>
-                    </div>
-
-                    <div class="drive-folder-structure">
-                        <h4 style="font-size:0.8rem; margin-bottom:6px; display:flex; justify-content:space-between;">
-                            <span>مجلدات المشروع النشطة:</span>
-                            <span id="gdrive-root-indicator" style="font-size:0.72rem; color:var(--text-tertiary);">مجلد افتراضي (Offline)</span>
-                        </h4>
-                        <pre id="drive-structure-display" style="font-size:0.75rem; margin:0; line-height:1.4;">
-📁 Sketchic_Universe_Root/
-├── 📁 00_Source_Materials/
-├── 📁 01_Scenarios/
-├── 📁 02_Creators_Paintings/
-├── 📁 03_Characters_Assets/
-├── 📁 04_Environments_Assets/
-├── 📁 05_Voices_Audios/
-├── 📁 06_Cosmic_Soundtracks/
-├── 📁 07_Comics_Storyboards/
-├── 📁 08_Videos_Cinematics/
-├── 📁 09_Downloadable_Games/
-└── 📁 10_Written_Texts/
-                        </pre>
-
-                    <!-- Data Wiping Actions -->
-                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
-                        <button type="button" id="btn-wipe-database" class="btn" style="background: var(--color-danger); color: white; font-size: 0.8rem; padding: 6px 12px; font-weight: bold; width: 100%; border: none; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
-                            🧹 تفريغ جميع بيانات النظام ومسح localStorage
-                        </button>
-                        <button type="button" id="btn-wipe-gdrive" class="btn" style="background: #991b1b; color: white; font-size: 0.8rem; padding: 6px 12px; font-weight: bold; width: 100%; border: none; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
-                            ☁️ مسح وتفريغ جميع محتويات الجوجل درايف للمنشورة
-                        </button>
-                    </div>
-                    </div>
-                </div>
-
-                <!-- Active Projects Summary -->
-                <div class="card-box summary-card">
-                    <h3>ملخص حالة الأصول الكونية</h3>
-                    <div class="stats-row">
-                        <div class="stat-item">
-                            <span class="stat-num" id="stat-total-assets">0</span>
-                            <span class="stat-label">مجموع الأصول</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-num text-orange" id="stat-draft-assets">0</span>
-                            <span class="stat-label">قيد العمل</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-num text-green" id="stat-finished-assets">0</span>
-                            <span class="stat-label">منتهي/جاهز للموقع</span>
-                        </div>
-                    </div>
-                    
-                    <div class="quick-recommendations" id="quick-recommendations">
-                        <h4>التوصية التالية للإنتاج:</h4>
-                        <div class="recommendation-box" id="rec-box">
-                            جاري فحص الأصول الحالية لتحديد خطوتك الإنتاجية القادمة...
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tab 2: Asset Manager -->
-        <section id="tab-assets" class="tab-pane">
-            <div class="section-header">
-                <div>
-                    <h2>مستودع الأصول وإدارة الإنتاج</h2>
-                    <p>قم بإضافة، تعديل، وحفظ كافة الأصول الخاصة بكون سكتشيك وربطها بروابط Google Drive.</p>
-                </div>
-                <button class="btn btn-primary" id="btn-add-asset">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    <span>إضافة أصل جديد</span>
-                </button>
-            </div>
-
-            <!-- Filter Tabs by Asset Type -->
-            <div class="filter-tabs-container">
-                <div class="filter-tabs" id="asset-filters">
-                    <button class="filter-btn active" data-filter="all">الكل</button>
-                    <button class="filter-btn" data-filter="creator">✍️ الرسامون</button>
-                    <button class="filter-btn" data-filter="source">📖 مصادر سردية</button>
-                    <button class="filter-btn" data-filter="scenario">📝 سيناريوهات</button>
-                    <button class="filter-btn" data-filter="written">📜 نصوص ومخطوطات</button>
-                    <button class="filter-btn" data-filter="environment">🌌 عوالم وبيئات</button>
-                    <button class="filter-btn" data-filter="character">🎨 شخصيات</button>
-                    <button class="filter-btn" data-filter="prop">🛡️ أدوات ومقتنيات</button>
-                    <button class="filter-btn" data-filter="voice">🎙️ أصوات</button>
-                    <button class="filter-btn" data-filter="music">🎵 موسيقى</button>
-                    <button class="filter-btn" data-filter="comic">📚 قصص مصورة</button>
-                    <button class="filter-btn" data-filter="video">🎬 فيديوهات</button>
-                    <button class="filter-btn" data-filter="game">🎮 ألعاب</button>
-                    <button class="filter-btn" data-filter="project_summary">📊 مشاريع</button>
-                </div>
-            </div>
-
-            <!-- Assets Grid -->
-            <div class="assets-grid" id="assets-grid-container">
-                <!-- Dynamically populated -->
-            </div>
-            <div class="no-assets-state" id="no-assets-state">
-                <span class="no-assets-icon">🗂️</span>
-                <h3>لا يوجد أصول مضافة في هذا القسم بعد</h3>
-                <p>ابدأ بإضافة أول أصل لتنشيط لوحة الإنتاج.</p>
-                <button class="btn btn-secondary" id="btn-add-asset-empty">إضافة أصل الآن</button>
-            </div>
-        </section>
-
-        <!-- Tab 2.5: Cosmic Wizard Tab -->
-        <section id="tab-wizard" class="tab-pane">
-            <div class="section-header">
-                <div>
-                    <h2>المعالج الإنتاجي الكوني (Cosmic Production Wizard)</h2>
-                    <p>أداة إرشادية متسلسلة لإنشاء أصول كون سكتشيك بشكل متكامل مع ربط التبعيات تلقائياً.</p>
-                </div>
-            </div>
-            <!-- Wizard Custom Options (Templates & Auto-Pilot) -->
-            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 15px; border-radius: var(--radius-md); margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <label style="font-weight: bold; color: var(--color-cyan); font-size: 0.82rem;">🔗 بناءً على مشروع سابق:</label>
-                    <select id="wizard-parent-project" style="padding: 6px 12px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.82rem; cursor: pointer;">
-                        <option value="">-- مشروع مستقل جديد --</option>
-                    </select>
-                </div>
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <label style="font-weight: bold; color: var(--color-cyan); font-size: 0.88rem;">🎯 قالب المشروع:</label>
-                    <select id="wizard-project-template" style="padding: 6px 12px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.82rem; cursor: pointer;">
-                        <option value="full">🌌 إنتاج كوني متكامل شامل (11 خطوة)</option>
-                        <option value="film">🎬 فيلم سينمائي قصير (5 خطوات)</option>
-                        <option value="music">🎵 أغنية كونية مصورة (5 خطوات)</option>
-                        <option value="comic">📚 قصة مصورة تفاعلية (5 خطوات)</option>
-                    </select>
-                </div>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <label style="font-weight: bold; color: var(--text-secondary); font-size: 0.82rem;">📁 مجلد التخزين الموحد:</label>
-                    <input type="text" id="wizard-global-drive-url" placeholder="رابط مجلد Google Drive للمشروع..." value="https://drive.google.com/drive/folders/wizard-session" style="width: 250px; padding: 6px 10px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.8rem;">
-                </div>
-                <div>
-                    <button type="button" id="btn-wizard-autopilot" class="btn" style="background: linear-gradient(135deg, var(--color-cyan), var(--color-accent)); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold; border: none; box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);">
-                        🤖 تشغيل الطيار الآلي الكوني (Autopilot)
-                    </button>
-                </div>
-            </div>
-
-            <!-- Stepper Indicator -->
-            <div class="wizard-stepper" id="wizard-stepper">
-                <div class="step-node active" data-step="1">
-                    <span class="node-icon">📖</span>
-                    <span class="node-label">المصدر</span>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-node" data-step="2">
-                    <span class="node-icon">📝</span>
-                    <span class="node-label">السيناريو</span>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-node" data-step="3">
-                    <span class="node-icon">📜</span>
-                    <span class="node-label">المخطوط</span>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-node" data-step="4">
-                    <span class="node-icon">✍️</span>
-                    <span class="node-label">الرسام</span>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-node" data-step="5">
-                    <span class="node-icon">👤</span>
-                    <span class="node-label">الشخصية</span>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-node" data-step="6">
-                    <span class="node-icon">🌌</span>
-                    <span class="node-label">البيئة</span>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-node" data-step="7">
-                    <span class="node-icon">🎙️</span>
-                    <span class="node-label">الصوت</span>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-node" data-step="8">
-                    <span class="node-icon">🎵</span>
-                    <span class="node-label">الموسيقى</span>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-node" data-step="9">
-                    <span class="node-icon">📚</span>
-                    <span class="node-label">القصة</span>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-node" data-step="10">
-                    <span class="node-icon">🎬</span>
-                    <span class="node-label">الفيديو</span>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-node" data-step="11">
-                    <span class="node-icon">🎮</span>
-                    <span class="node-label">اللعبة</span>
-                </div>
-            </div>
-
-            <div class="wizard-container-grid" style="display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 20px; margin-top: 20px;">
-                <!-- Left: Form Box -->
-                <div class="card-box" style="padding: 20px;">
-                    <h3 id="wizard-step-title" style="margin-top: 0; color: var(--color-cyan);">الخطوة 1: المصدر السردي الأصلي</h3>
-                    <p id="wizard-step-guidance" style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 15px;">قم بصياغة الفكرة وحبكة القصة الكونية لكون سكتشيك كقاعدة انطلاق لبقية الأصول.</p>
-                    
-                    <div id="wizard-form-fields">
-                        <!-- Fields populated dynamically based on current step -->
-                    </div>
-
-                    <div class="wizard-actions" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 15px;">
-                        <button type="button" id="btn-wizard-prev" class="btn" style="background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); display: none;">الخطوة السابقة</button>
-                        <button type="button" id="btn-wizard-ai" class="btn" style="background: var(--color-accent); color: white; display: flex; align-items: center; gap: 6px;">🤖 توليد اقتراحات ذكية</button>
-                        <button type="button" id="btn-wizard-next" class="btn" style="background: var(--color-green); color: white;">حفظ والانتقال للخطوة التالية ➡️</button>
-                    </div>
-                </div>
-
-                <!-- Right: Prompt Box & Status -->
-                <div class="card-box" style="padding: 20px; display: flex; flex-direction: column; gap: 15px; background: var(--bg-secondary); border: 1px solid var(--border-color);">
-                    <h3 style="margin-top: 0; font-size: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">🤖 موجه التوليد المقترح بالذكاء الاصطناعي</h3>
-                    
-                    <div class="suggested-prompt-container" style="flex: 1; min-height: 250px; display: flex; flex-direction: column; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; font-size: 0.8rem; line-height: 1.5; color: var(--text-primary); position: relative;">
-                        <div id="wizard-prompt-text" style="white-space: pre-wrap; word-break: break-all; flex: 1;">
-                            سيظهر هنا البرومبت المخصص للتوليد فور قيامك بتعبئة الحقول...
-                        </div>
-                        <button type="button" id="btn-wizard-copy-prompt" class="btn" style="position: absolute; bottom: 8px; left: 8px; font-size: 0.72rem; padding: 3px 8px; background: var(--color-cyan); color: white; border: none; border-radius: 4px; cursor: pointer;">نسخ البرومبت</button>
-                    </div>
-
-                    <div style="font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.4;">
-                        💡 <strong>نصيحة كوكبية:</strong> انسخ هذا البرومبت المولد تلقائياً واستخدمه في محرك التوليد المخصص للخطوة الحالية (مثل Midjourney للشخصيات أو Suno للموسيقى) للحصول على نتيجة مثالية ومتسقة!
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project Summary View (عرض ملخص المشروع) -->
-            <div id="wizard-summary-view" style="display: none; margin-top: 20px; background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 25px; border-radius: var(--radius-md);">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px;">
-                    <div>
-                        <h3 style="margin: 0; color: var(--color-cyan); font-size: 1.4rem;">📊 ملخص المشروع الإنتاجي المتكامل</h3>
-                        <p style="margin: 5px 0 0 0; font-size: 0.85rem; color: var(--text-secondary);">كافة الأصول والبرومبتات المولدة في هذه المرحلة مجمعة كحزمة مشروع واحدة.</p>
-                    </div>
-                    <div style="display: flex; gap: 10px;">
-                        <button type="button" id="btn-wizard-download-project" class="btn" style="background: var(--color-accent); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold;">
-                            📥 تحميل مستند المشروع الكامل (MD)
-                        </button>
-                        <button type="button" id="btn-wizard-end-project" class="btn" style="background: var(--color-orange); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold;">🛑 إنهاء المشروع وحفظه كمنتهي</button>
-                        <button type="button" id="btn-wizard-extend-project" class="btn" style="background: var(--color-cyan); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold; display: none;">🚀 تمديد المشروع وجزء جديد</button>
-                        <button type="button" id="btn-wizard-reset-project" class="btn" style="background: var(--color-danger); color: white; display: flex; align-items: center; gap: 6px; font-weight: bold;">
-                            🔄 تفريغ البيانات والبدء من جديد
-                        </button>
-                    </div>
-                </div>
-
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse; text-align: right; font-size: 0.85rem;">
-                        <thead>
-                            <tr style="background-color: var(--bg-tertiary); border-bottom: 2px solid var(--border-color);">
-                                <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">نوع الأصل والاسم</th>
-                                <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">البرومبت المقترح للتوليد</th>
-                                <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">الأداة المستهدفة (Tool)</th>
-                                <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">الناتج المتوقع (Expected Output)</th>
-                                <th style="padding: 12px; border: 1px solid var(--border-color); color: var(--color-cyan); text-align: right;">صيغة الملف (Format)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="wizard-summary-table-body">
-                            <!-- Populated dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tab 3: AI Production Guide -->
-        <section id="tab-guide" class="tab-pane">
-            <div class="section-header">
-                <div>
-                    <h2>مرشد الإنتاج الذكي (AI Production Assistant)</h2>
-                    <p>دليلك التفاعلي لإنشاء أصول كون سكتشيك باستخدام الذكاء الاصطناعي (Gemini / Google AI Pro).</p>
-                </div>
-            </div>
-
-            <div class="guide-grid">
-                <!-- Select Stage for Guide -->
-                <div class="card-box guide-sidebar">
-                    <h3>اختر الأصل الذي تريد إنتاجه:</h3>
-                    <div class="guide-stages-list" id="guide-stages-list">
-                        <button class="guide-stage-btn active" data-guide="scenario">
-                            <span class="btn-icon">📝</span>
-                            <div class="btn-info">
-                                <strong>1. السيناريو والقصة</strong>
-                                <span>صياغة الحبكة والفيزياء الأساسية</span>
-                            </div>
-                        </button>
-                        <button class="guide-stage-btn" data-guide="environment">
-                            <span class="btn-icon">🌌</span>
-                            <div class="btn-info">
-                                <strong>2. العوالم والبيئات</strong>
-                                <span>صياغة الطبيعة وتداخل الأنماط الجمالية</span>
-                            </div>
-                        </button>
-                        <button class="guide-stage-btn" data-guide="character">
-                            <span class="btn-icon">🎨</span>
-                            <div class="btn-info">
-                                <strong>3. الشخصيات والأساليب</strong>
-                                <span>تجسيد أسلوب الصدام المرئي</span>
-                            </div>
-                        </button>
-                        <button class="guide-stage-btn" data-guide="comic">
-                            <span class="btn-icon">📚</span>
-                            <div class="btn-info">
-                                <strong>4. القصص المصورة</strong>
-                                <span>بناء الكوادر ورسم التناقض الجمالي</span>
-                            </div>
-                        </button>
-                        <button class="guide-stage-btn" data-guide="video">
-                            <span class="btn-icon">🎬</span>
-                            <div class="btn-info">
-                                <strong>5. الفيديوهات والتحريك</strong>
-                                <span>دمج الحركة والأصوات المتنافرة</span>
-                            </div>
-                        </button>
-                        <button class="guide-stage-btn" data-guide="game">
-                            <span class="btn-icon">🎮</span>
-                            <div class="btn-info">
-                                <strong>6. الألعاب للتحميل</strong>
-                                <span>بناء بيئة تفاعلية لكون سكتشيك</span>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Guide Content Display -->
-                <div class="card-box guide-content-body" id="guide-content-body">
-                    <!-- Dynamically populated via JS -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Tab: Scene Builder -->
-        <section id="tab-scenes" class="tab-pane">
-            <div class="section-header">
-                <div>
-                    <h2>باني المشاهد وتخطيط الحلقات (Scenes & Episode Builder)</h2>
-                    <p>قم ببناء وتجميع مشاهد كون سكتشيك، وتخطيط الحلقات والمواسم درامياً وبصرياً بشكل متكامل وسهل.</p>
-                </div>
-            </div>
-
-            <!-- Episode & World Planner -->
-            <div class="card-box" style="border-top: 4px solid var(--color-cyan); margin-bottom: 2rem;">
-                <h3 class="card-title">🎬 مخطط الحلقات والعوالم الذكي (Smart Episode Planner)</h3>
-                <p class="card-subtitle">قم بصياغة هيكل حلقة كاملة وتوليد حزمة البرومبتات المتناسقة لها بضغطة زر واحدة</p>
-                
-                <div style="display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end; margin-bottom: 15px;">
-                    <div style="flex: 1; min-width: 200px;">
-                        <label style="font-weight: bold; font-size: 0.82rem; color: var(--color-cyan); display: block; margin-bottom: 5px;">🎨 الرسام المسؤول عن البعد البصري:</label>
-                        <select id="plan-creator-select" style="width: 100%; padding: 8px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; font-family: var(--font-ar);">
-                            <option value="">-- اختر رساماً --</option>
-                        </select>
-                    </div>
-                    <div style="flex: 1; min-width: 200px;">
-                        <label style="font-weight: bold; font-size: 0.82rem; color: var(--color-cyan); display: block; margin-bottom: 5px;">🧭 المرحلة السردية للحلقة (Arc Stage):</label>
-                        <select id="plan-arc-stage" style="width: 100%; padding: 8px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; font-family: var(--font-ar);">
-                            <option value="intro">1. المغامرة والتعايش (Stories & Trials)</option>
-                            <option value="glitch">2. اكتشاف الشقوق والعيوب البصرية (The Glitch)</option>
-                            <option value="journey">3. السفر إلى حافة اللوحة القماشية (The Journey)</option>
-                            <option value="encounter">4. اللقاء الملحمي بالرسام الكوني (The Encounter)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <button type="button" id="btn-generate-episode-package" class="btn" style="background: var(--color-accent); color: white; font-weight: bold; height: 38px;">
-                            ✨ توليد مخطط الحلقة الكامل
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Display Results -->
-                <div id="episode-package-result" style="display: none; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 15px; margin-top: 15px;">
-                    <h4 id="episode-package-title" style="margin-top: 0; color: var(--color-cyan); font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">حزمة الحلقة المولدة</h4>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <strong style="font-size: 0.85rem; color: var(--text-secondary);">📝 ملخص قصة الحلقة (Synopsis):</strong>
-                        <p id="episode-package-desc" style="font-size: 0.82rem; line-height: 1.5; margin: 5px 0 0 0; color: var(--text-primary);"></p>
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                        <div style="background: var(--bg-primary); border: 1px solid var(--border-color); padding: 10px; border-radius: 4px;">
-                            <strong style="font-size: 0.8rem; color: var(--color-cyan);">👤 برومبت تصميم الشخصية (Imagen 3):</strong>
-                            <pre id="episode-prompt-char" style="font-size: 0.75rem; white-space: pre-wrap; margin: 5px 0 0 0; max-height: 100px; overflow-y: auto; color: var(--text-secondary); direction: ltr; text-align: left; font-family: var(--font-en);"></pre>
-                        </div>
-                        <div style="background: var(--bg-primary); border: 1px solid var(--border-color); padding: 10px; border-radius: 4px;">
-                            <strong style="font-size: 0.8rem; color: var(--color-cyan);">🌌 برومبت تصميم الخلفية/البيئة (Imagen 3):</strong>
-                            <pre id="episode-prompt-env" style="font-size: 0.75rem; white-space: pre-wrap; margin: 5px 0 0 0; max-height: 100px; overflow-y: auto; color: var(--text-secondary); direction: ltr; text-align: left; font-family: var(--font-en);"></pre>
-                        </div>
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div style="background: var(--bg-primary); border: 1px solid var(--border-color); padding: 10px; border-radius: 4px;">
-                            <strong style="font-size: 0.8rem; color: var(--color-cyan);">🎙️ حوار المشهد والصوت (Cloud TTS):</strong>
-                            <pre id="episode-prompt-voice" style="font-size: 0.75rem; white-space: pre-wrap; margin: 5px 0 0 0; max-height: 100px; overflow-y: auto; color: var(--text-secondary);"></pre>
-                        </div>
-                        <div style="background: var(--bg-primary); border: 1px solid var(--border-color); padding: 10px; border-radius: 4px;">
-                            <strong style="font-size: 0.8rem; color: var(--color-cyan);">🎬 برومبت تحريك الفيديو (Google Veo):</strong>
-                            <pre id="episode-prompt-video" style="font-size: 0.75rem; white-space: pre-wrap; margin: 5px 0 0 0; max-height: 100px; overflow-y: auto; color: var(--text-secondary); direction: ltr; text-align: left; font-family: var(--font-en);"></pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="guide-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <!-- Scene Creator & Timeline Panel -->
-                <div class="card-box" style="border-top: 4px solid var(--color-accent);">
-                    <h3 class="card-title">إنشاء وتعديل مشهد سينمائي</h3>
-                    <p class="card-subtitle">حدد السيناريو والشخصيات لتوليد المشهد وضمان اتساق النمط الفني</p>
-                    
-                    <form id="scene-form" style="display: flex; flex-direction: column; gap: 1rem;">
-                        <input type="hidden" id="scene-id">
-                        <div class="form-group">
-                            <label for="scene-title">عنوان المشهد *</label>
-                            <input type="text" id="scene-title" placeholder="أدخل اسم المشهد..." required style="width: 100%; box-sizing: border-box; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
-                        </div>
-                        <div class="form-group">
-                            <label for="scene-scenario">السيناريو المرتبط *</label>
-                            <div style="display: flex; gap: 8px;">
-                                <select id="scene-scenario" required style="flex: 1; box-sizing: border-box; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
-                                    <option value="" disabled selected>اختر السيناريو...</option>
-                                </select>
-                                <div style="display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 250px;">
-                                    <button type="button" class="btn" id="btn-auto-storyboard" style="background-color: var(--color-accent-light); color: var(--color-accent); border: 1px solid rgba(99, 102, 241, 0.2); font-weight: 700; cursor: pointer; white-space: nowrap; height: 32px; font-size: 0.72rem;">
-                                        ✨ لوحة عمل ذكية كاملة
-                                    </button>
-                                    <div style="display: flex; gap: 4px;">
-                                        <button type="button" class="btn btn-autofill" id="btn-autofill-chars" style="flex:1; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; font-size: 0.65rem; height: 26px; padding: 0 4px; white-space: nowrap;" title="توليد الكيانات المتصادمة آلياً">👤 Characters</button>
-                                        <button type="button" class="btn btn-autofill" id="btn-autofill-locs" style="flex:1; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; font-size: 0.65rem; height: 26px; padding: 0 4px; white-space: nowrap;" title="توليد البيئات المعمارية">🗺️ Locations</button>
-                                        <button type="button" class="btn btn-autofill" id="btn-autofill-props" style="flex:1; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; font-size: 0.65rem; height: 26px; padding: 0 4px; white-space: nowrap;" title="توليد الأدوات المتنافرة">🛡️ Props</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>الشخصيات المشاركة في المشهد *</label>
-                            <div class="checkbox-group-container" id="scene-characters-container" style="border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; background-color: var(--bg-primary); display: flex; flex-direction: column; gap: 8px; max-height: 120px; overflow-y: auto;">
-                                <!-- Dynamically populated -->
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label style="font-weight: bold; color: var(--color-cyan); display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                <span>🖼️ إطارات لقطات المشهد (Scene Frames)</span>
-                                <button type="button" id="btn-add-scene-frame" class="btn" style="padding: 2px 8px; font-size: 0.75rem; background: var(--color-accent-light); color: var(--color-accent); font-weight: bold; border: none; cursor: pointer; border-radius: 4px;">➕ إضافة إطار</button>
-                            </label>
-                            <div id="scene-frames-container" style="display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; background-color: var(--bg-primary); max-height: 200px; overflow-y: auto;">
-                                <!-- Dynamic frames list -->
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="scene-audio-profile">المسار الصوتي للمشهد (Audio & SFX Track) *</label>
-                            <select id="scene-audio-profile" required style="width: 100%; box-sizing: border-box; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
-                                <option value="default">صوت استوديو افتراضي (Default Synth)</option>
-                                <option value="retro-tape">خشخشة شريط سينمائي قديم (Retro Film Tape Crackle)</option>
-                                <option value="digital-glitch">نبضات وتشويش إلكتروني رقمي (Digital Glitch Beats)</option>
-                                <option value="orchestral-renaissance">كمان كلاسيكي ووقار أوركسترالي (Orchestral Renaissance)</option>
-                            </select>
-                        </div>
-                        <div class="form-group" style="border: 1px solid rgba(34, 211, 238, 0.2); background: rgba(34, 211, 238, 0.05); padding: 10px; border-radius: 6px; margin-bottom: 10px;">
-                            <span style="font-weight: bold; font-size: 0.82rem; color: var(--color-cyan); display: block; margin-bottom: 8px;">🎬 مصفوفة التوليد وحماية الصدام (Physics & Reference Matrix):</span>
-                            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
-                                <div style="flex: 1;">
-                                    <label for="scene-ref-method" style="font-size: 0.72rem; display: block; margin-bottom: 2px;">المنهجية المرجعية *</label>
-                                    <select id="scene-ref-method" style="font-size: 0.75rem; width: 100%; padding: 4px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
-                                        <option value="Frames">Frames (حماية مطلقة لحجم التماس ✅)</option>
-                                        <option value="Ingredients">Ingredients (غير موصى به - خطر تليين الخطوط ❌)</option>
-                                    </select>
-                                </div>
-                                <div style="flex: 1;">
-                                    <label for="scene-motion-engine" style="font-size: 0.72rem; display: block; margin-bottom: 2px;">نموذج التحريك والزمن *</label>
-                                    <select id="scene-motion-engine" style="font-size: 0.75rem; width: 100%; padding: 4px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
-                                        <option value="VO 3.1 Light">VO 3.1 Light (12fps - فيزياء مانجا/حبر)</option>
-                                        <option value="Omniflash">Omniflash (60fps - فيزياء زيت وكثافة)</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>ربط الأصول المرئية والمتحركة بهذا المشهد</label>
-                            <div style="display: flex; gap: 10px;">
-                                <div style="flex: 1;">
-                                    <label for="scene-comic" style="font-size: 0.8rem; color: var(--text-secondary);">لوحة العمل الحاكمة (Storyboard)</label>
-                                    <select id="scene-comic" style="width: 100%; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
-                                        <option value="">(اختياري)</option>
-                                    </select>
-                                </div>
-                                <div style="flex: 1;">
-                                    <label for="scene-video" style="font-size: 0.8rem; color: var(--text-secondary);">فيديو اللقطة (Video)</label>
-                                    <select id="scene-video" style="width: 100%; padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
-                                        <option value="">(اختياري)</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 10px; margin-top: 10px;">
-                            <button type="submit" class="btn btn-primary" id="btn-save-scene" style="flex: 1;">حفظ المشهد</button>
-                            <button type="button" class="btn btn-secondary" id="btn-clear-scene">تفريغ</button>
-                        </div>
-                    </form>
-
-                    <!-- Scenes List -->
-                    <div style="margin-top: 2rem;">
-                        <h4 style="margin-bottom: 0.8rem; font-size: 1rem;">المشاهد الحالية في الخط الزمني:</h4>
-                        <div id="scenes-timeline-list" style="display: flex; flex-direction: column; gap: 10px;">
-                            <!-- Dynamically populated -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Google Flow Style Consistency & Clash Preview -->
-                <div style="display: flex; flex-direction: column; gap: 2rem;">
-                    <!-- Consistency Prompt Generator -->
-                    <div class="card-box" style="border-top: 4px solid var(--color-cyan);">
-                        <h3 class="card-title">محرك اتساق الأنماط (Google Flow Prompt Engine)</h3>
-                        <p class="card-subtitle">البرومبت الكوني الموحد لتوليد هذا المشهد بنماذج الذكاء الاصطناعي مع الحفاظ على التباين البصري</p>
-                        
-                        <div class="prompt-copy-box" style="margin-top: 10px;">
-                            <button type="button" class="btn-copy-prompt" id="btn-copy-scene-prompt">نسخ</button>
-                            <pre class="prompt-text" id="scene-consistency-prompt-text" style="font-size: 0.8rem; line-height: 1.5; white-space: pre-wrap; word-break: break-all; margin: 0; padding-left: 50px; min-height: 100px; max-height: 250px; overflow-y: auto;">حدد شخصيتين على الأقل لتوليد برومبت اتساق المشهد...</pre>
-                        </div>
-                    </div>
-
-                    <!-- Visual Clash Live Simulator -->
-                    <div class="card-box" style="border-top: 4px solid var(--color-danger); flex: 1; display: flex; flex-direction: column;">
-                        <h3 class="card-title">محاكي التصادم البصري الحي (Visual Clash Live Simulator)</h3>
-                        <p class="card-subtitle">محاكاة فورية لتفاعل الشخصيات وأنماطها وحركتها المتنافرة</p>
-                        
-                        <div id="clash-preview-stage" class="clash-stage-outer" style="flex: 1; min-height: 250px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: #fff; overflow: hidden; position: relative;">
-                            <div class="clash-empty-state" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--text-tertiary); font-size: 0.9rem; text-align: center; padding: 1rem;">
-                                حدد شخصيات المشهد لبدء محاكاة التصادم البصري ثنائي الأبعاد/ثلاثي الأبعاد...
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tab: Raw Script Segmenter & Spell of Creation -->
-        <section id="tab-script" class="tab-pane">
-            <div class="section-header">
-                <div>
-                    <h2>📜 تفكيك السيناريو وتعويذة الخلق (The Spark & Breathing Life) ⚡</h2>
-                    <p>ألصق قصتك أو فكرتك الخام هنا ليقوم المساعد الكوني بتحليلها وتقسيمها إلى مشاهد وإطارات مصنفة فيزيائياً، وصياغة موجهات التحريك للعميل.</p>
-                </div>
-            </div>
-            
-            <div class="scenes-layout-grid" style="display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 1.5rem; height: calc(100vh - 220px); min-height: 500px;">
-                <!-- Right column: Script input -->
-                <div class="card" style="display: flex; flex-direction: column; height: 100%; box-sizing: border-box;">
-                    <div style="font-weight: 700; margin-bottom: 12px; font-size: 1.1rem; display: flex; align-items: center; gap: 6px;">
-                        <span>📜</span> <span>السيناريو الخام (Raw Narrative Script)</span>
-                    </div>
-                    <textarea id="script-input-text" style="flex: 1; width: 100%; box-sizing: border-box; background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-md); font-family: var(--font-ar); font-size: 0.9rem; line-height: 1.6; resize: none;" placeholder="زين، مدقق خطي في متروبوليس الحبر، يلاحظ السماء الورقية تتشقق لتسقط منها بقعة زيتية قرمزية..."></textarea>
-                    
-                    <button type="button" id="btn-parse-script" class="btn btn-primary" style="margin-top: 15px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px;">
-                        <span>✨</span> <span>تحليل وتفكيك السيناريو تلقائياً (Autofill Scenes)</span>
-                    </button>
-                </div>
-                
-                <!-- Left column: Segmented scenes & terminal -->
-                <div style="display: flex; flex-direction: column; gap: 1.2rem; height: 100%; overflow-y: auto; padding-right: 5px;">
-                    <!-- Segmented scenes container -->
-                    <div class="card" style="flex: 1; display: flex; flex-direction: column; min-height: 250px;">
-                        <div style="font-weight: 700; margin-bottom: 12px; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span>📋</span> <span>المشاهد والإطارات المستخلصة</span>
-                            </div>
-                            <button type="button" id="btn-export-script-scenes" class="btn" style="background-color: var(--color-accent-light); color: var(--color-accent); font-size: 0.78rem; padding: 4px 10px; font-weight: bold; border: 1px solid rgba(99,102,241,0.2); cursor: pointer; display: none;">
-                                📥 تصدير لخط العمل الكوني
-                            </button>
-                        </div>
-                        
-                        <div id="script-parsing-status" style="display:none; text-align:center; padding: 2rem; color: var(--text-secondary);">
-                            <div class="spinner" style="margin: 0 auto 10px auto; width: 24px; height: 24px; border: 3px solid rgba(34,211,238,0.2); border-top-color: var(--color-cyan); border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                            <span>جاري معالجة وتفكيك النص سردياً...</span>
-                        </div>
-                        
-                        <div id="script-empty-results" style="text-align: center; color: var(--text-tertiary); font-size: 0.88rem; padding: 3rem 1rem; flex: 1; display: flex; align-items: center; justify-content: center;">
-                            أدخل النص والسيناريو في الحقل الأيمن ثم اضغط زر التحليل لتفصيل المشاهد فيزيائياً وإخراجياً...
-                        </div>
-                        
-                        <div id="script-segmented-scenes-list" style="display: none; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1; padding: 5px;">
-                            <!-- Filled dynamically by JS -->
-                        </div>
-                    </div>
-                    
-                    <!-- Command Terminal: Spell of Creation -->
-                    <div class="card" id="terminal-spell-box" style="display: none; background: #0b0f19; border: 1px solid #1e293b; border-radius: var(--radius-md); padding: 15px; color: #f8fafc; font-family: 'Courier New', Courier, monospace; direction: ltr; text-align: left; box-shadow: inset 0 0 10px rgba(0,0,0,0.8);">
-                        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 12px; direction: rtl;">
-                            <span style="font-size: 0.8rem; font-weight: 700; color: #38bdf8; font-family: var(--font-ar);">💻 تعويذة التحريك الكونية (Breathing Life Terminal)</span>
-                            <button type="button" id="btn-copy-spell" style="background: none; border: 1px solid #334155; color: #94a3b8; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; cursor: pointer;">Copy</button>
-                        </div>
-                        <div style="font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; word-break: break-all;" id="terminal-spell-content">
-                            <!-- Filled dynamically -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tab: Drawing Room & Style Hybridizer -->
-        <section id="tab-drawing" class="tab-pane">
-            <div class="section-header">
-                <div>
-                    <h2>مرسم الأساليب الكونية والتهجين الفني 🎨🧬</h2>
-                    <p>امزج وهجن أساليب الرسم المختلفة للرسامين، وولد موجهات بصرية متكاملة للتوليد بالذكاء الاصطناعي (Imagen 3 & Midjourney).</p>
-                </div>
-            </div>
-
-            <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr; gap: 20px;">
-                <!-- Column 1: Configurator -->
-                <div class="card-box">
-                    <div class="card-header-icon">
-                        <span class="icon-big">🧬</span>
-                        <h3>مختبر دمج الأنماط والتهجين</h3>
-                    </div>
-                        <div class="form-group">
-                            <label>نوع نمط الرسم *</label>
-                            <select id="hybrid-mode" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;">
-                                <option value="hybrid">🧬 أسلوب فني مهجن (Hybrid Style)</option>
-                                <option value="single">🎨 أسلوب فني أحادي (Single Style)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>الأسلوب الفني الأول (الأساسي) *</label>
-                            <select id="hybrid-style-1" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;">
-                                <option value="لوحة زيتية كلاسيكية من عصر النهضة (Renaissance Oil Painting)">لوحة زيتية كلاسيكية من عصر النهضة</option>
-                                <option value="مانجا يابانية تقليدية بحبر أسود حاد (Sharp Black Ink Manga)">مانجا يابانية تقليدية بحبر أسود حاد</option>
-                                <option value="رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose Cartoon)">رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)</option>
-                                <option value="رسم تخطيطي خفيف بقلم الرصاص (Soft Graphite Pencil Sketch)">رسم تخطيطي خفيف بقلم الرصاص</option>
-                                <option value="رسوم رقمية ذات متجهات هندسية حادة (Sharp Geometric Vector Graphics)">رسوم رقمية حديثة ذات متجهات هندسية</option>
-                            </select>
-                        </div>
-
-                        <div id="hybrid-only-fields">
-                            <div class="form-group" style="margin-bottom: 15px;">
-                                <label>الأسلوب الفني الثاني (الفرعي للدمج) *</label>
-                                <select id="hybrid-style-2" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;">
-                                    <option value="مانجا يابانية تقليدية بحبر أسود حاد (Sharp Black Ink Manga)" selected>مانجا يابانية تقليدية بحبر أسود حاد</option>
-                                    <option value="لوحة زيتية كلاسيكية من عصر النهضة (Renaissance Oil Painting)">لوحة زيتية كلاسيكية من عصر النهضة</option>
-                                    <option value="رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose Cartoon)">رسوم كارتون كلاسيكية من الثلاثينات (Rubber Hose)</option>
-                                    <option value="رسم تخطيطي خفيف بقلم الرصاص (Soft Graphite Pencil Sketch)">رسم تخطيطي خفيف بقلم الرصاص</option>
-                                    <option value="رسوم رقمية ذات متجهات هندسية حادة (Sharp Geometric Vector Graphics)">رسوم رقمية حديثة ذات متجهات هندسية</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group" style="margin-bottom: 15px;">
-                                <label>نسبة الدمج الجيني للأسلوبين *</label>
-                                <input type="range" id="hybrid-ratio" min="10" max="90" step="5" value="50" style="width: 100%;">
-                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-top:5px; font-weight:bold;">
-                                    <span>الأسلوب الأول</span>
-                                    <span id="hybrid-ratio-label">50% / 50%</span>
-                                    <span>الأسلوب الثاني</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>عنصر أو غرض الرسم (الموضوع) *</label>
-                            <input type="text" id="hybrid-subject" placeholder="مثال: فارس كوني يطير في حقل نجوم..." value="فارس دروع كوني مهيب يطير وسط سديم النجوم" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>إضافات ومعدلات بصرية مخصصة (Custom Modifiers)</label>
-                            <input type="text" id="hybrid-modifiers" placeholder="مثال: إضاءة نيون سايبربانك، ألوان متوهجة، ضربات فرشاة خشنة..." value="خط تماس متوهج، تباين لوني مائي، إضاءة درامية حادة" style="width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:6px;">
-                        </div>
-
-                        <button type="button" id="btn-generate-hybrid-style" class="btn btn-primary" style="font-weight: bold; padding: 10px; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <span>🤖✨</span> <span>توليد ومعاينة الأسلوب الهجين</span>
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Column 2: Result & Mock Preview -->
-                <div class="card-box" style="display: flex; flex-direction: column; justify-content: space-between;">
-                    <div>
-                        <div class="card-header-icon">
-                            <span class="icon-big">🖼️</span>
-                            <h3>لوحة المعاينة التفاعلية والبرومبت الناتج</h3>
-                        </div>
-                        <div id="hybrid-preview-canvas" style="width:100%; height:200px; background:#1e1e2e; border-radius:8px; margin-top:15px; display:flex; align-items:center; justify-content:center; flex-direction:column; border:1px solid var(--border-color); position:relative; overflow:hidden;">
-                            <div id="hybrid-preview-visual" style="font-size:3rem; transition: all 0.5s ease;">🎨</div>
-                            <div id="hybrid-preview-text" style="color:#a6adc8; font-size:0.85rem; text-align:center; padding:10px; font-weight:bold;">قم بتوليد الأسلوب لمعاينة الدمج الكوني للفرشاة والألوان</div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 15px;">
-                        <label style="font-weight: bold; font-size: 0.85rem; display: block; margin-bottom: 5px;">موجه التوليد الهجين المقترح لـ Midjourney/Imagen 3:</label>
-                        <div class="prompt-copy-box">
-                            <button type="button" class="btn-copy-prompt" id="btn-copy-hybrid-prompt" style="padding: 6px 12px; font-size: 0.75rem; position: absolute; right: 5px; top: 5px;">نسخ</button>
-                            <pre id="hybrid-prompt-result" style="font-size:0.78rem; font-family:monospace; line-height:1.5; white-space:pre-wrap; word-break:break-all; padding: 10px 10px 10px 50px; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border-color); min-height:80px; margin:0; position:relative;"></pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tab: Knowledge & Manuals Hub -->
-        <section id="tab-manuals" class="tab-pane">
-            <div class="section-header">
-                <div>
-                    <h2>مركز المعرفة وأدلة التشغيل الكونية</h2>
-                    <p>الوصول إلى الوثائق التأسيسية وأدلة التشغيل التفاعلية لكون سكتشيك السينمائي.</p>
-                </div>
-            </div>
-
-                        <!-- Nav tabs inside Manuals for different asset interactions -->
-                        <div class="filter-tabs" style="margin-top: 10px; margin-bottom: 15px; background: var(--bg-secondary); padding: 5px; border-radius: 8px; display: flex; gap: 8px; overflow-x: auto;">
-                            <button class="filter-btn active" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-sources').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">📖 المصادر والمجلدات</button>
-                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-guide').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">💡 مرشد الإنتاج الذكي</button>
-                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-creators').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">✍️ الرسام والأداة</button>
-                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-scenarios').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">📝 السيناريو والطبقات</button>
-                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-environments').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">🌌 البيئة وتكامل الفيزياء</button>
-                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-characters').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">🎨 الشخصية والفصائل</button>
-                            <button class="filter-btn" onclick="document.querySelectorAll('.manuals-subtab').forEach(el=>el.style.display='none'); document.getElementById('subtab-media').style.display='block'; this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');" style="font-size:0.75rem; padding: 4px 8px;">📚🎬🎮 الوسائط والألعاب</button>
-                        </div>
-
-                        <!-- Subtab 0: Narrative Sources & Drive Folders -->
-                        <div id="subtab-sources" class="manuals-subtab" style="display: block;">
-                            <h4 style="color: var(--color-cyan); margin-bottom: 8px;">📂 هيكل المجلدات المقترح في Google Drive وصيغ الملفات المعتمدة</h4>
-                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 15px;">
-                                <thead>
-                                    <tr style="background-color: var(--bg-tertiary);">
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 35%;">المجلد الكوني في Drive</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">الصيغ المعتمدة للتحميل</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">إرشاد وملاحظات الاستخدام</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">00_Source_Materials (المصادر السردية)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">DOCX, GDOC, PDF</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">توثيق الروايات والأفكار التأسيسية التي تشتق منها كافة السيناريوهات لضمان تماسك البناء الدرامي.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">01_Scenarios (السيناريوهات والقصص)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">GDOC, PDF, TXT</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">سيناريوهات تفصيلية مقسمة لمشاهد كارتونية وزيتية، ومرتبطة بـ "رسام كوني" لتحديد فيزياء الأبعاد الحاكمة.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">02_Creators_Paintings (الرسوم والرسامين)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">PSD, PNG, JPEG</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">ملفات الرسامين الفنية المفتوحة لتعديل ضربات الفرشاة أو الحبر وتحديد معايير الفرشاة والأبعاد الحاكمة.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">03_Characters_Assets (أصول الشخصيات)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">PNG, SVG, EXR</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">أوراق تصميم الشخصيات بخلفية شفافة وبأبعاد معيارية للتماس البصري، مفصولة عن المحيط البصري.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">04_Environments_Assets (أصول البيئات)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">PNG, EXR, JPEG</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">تصاميم ثنائية الأبعاد للمانجا وثلاثية الأبعاد للزيتي، مجهّزة مع قنوات العمق (Depth Maps) لمعالجة التداخل.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">05_Voices_Audios (الملفات الصوتية والأصوات)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">MP3, WAV</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">البصمات الصوتية التعبيرية المستخرجة بمحركات Google AI Studio الصوتية والمرتبطة بالشخصيات مباشرة.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">06_Cosmic_Soundtracks (موسيقى كوكبية)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">MP3, WAV</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الألحان الحاكمة لخطوط التماس والموسيقى التصويرية المولدة ذكائياً لتعزيز الصدام البصري.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">07_Comics_Storyboards (لوحات العمل)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">PDF, ZIP, PNG</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">ملفات القصص المصورة والمسودات التفصيلية التي توضح موضع صدام الأبعاد وقوانين ميثاق المخرج البصري.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">08_Videos_Cinematics (المقاطع والفيديو)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">MP4, MOV</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">لقطات الفيديو النهائية بمعدلات إطارات مختلطة متنافرة وبقنوات صوتية منفصلة تعزز التنافر الصوتي.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">09_Downloadable_Games (ألعاب للتحميل)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">ZIP, EXE, DMG</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الألعاب الكونية المعدّة للتحميل المباشر والتي تدعم تبديل الشيدرات البرمجية والتحكم بكتلة الشخصيات.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">10_Written_Texts (نصوص ومخطوطات كوكبية)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">MD, TXT</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">المخطوطات والنصوص وحوارات الشخصيات التفصيلية المكتوبة بلغة ملحمية أو فلسفية المربوطة بالسيناريوهات.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">11_Props_Assets (أصول الأدوات والمقتنيات)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">PNG, SVG, EXR, OBJ</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">تصاميم وأوراق الأدوات والمقتنيات الكونية التي تستخدمها الشخصيات أو توجد في العوالم عند خط التماس.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Subtab 1: Creators -->
-                        <div id="subtab-creators" class="manuals-subtab" style="display: none;">
-                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
-                                <thead>
-                                    <tr style="background-color: var(--bg-tertiary);">
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 30%;">الرسام والأسلوب</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">الأداة المستخدمة</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">الأثر على فيزياء الإنتاج والحركة</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td rowspan="2" style="font-weight: bold; border: 1px solid var(--border-color); vertical-align: middle;">
-                                            <strong>سيد الحبر الأسود</strong><br>
-                                            <span style="font-size: 0.75rem; color: var(--text-tertiary);">أسلوب المانجا الحركي (12-24fps)</span>
-                                        </td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">ريشة الرسم المعدنية (G-Pen)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">انتاج خطوط حبر سوداء حادة وتظليل نقطي متباين. حركة سريعة ديناميكية وفقاعات كلام مادية تصطدم بالدروع.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(245, 158, 11, 0.05);">فرشاة شعر السنجاب (زيتية)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(245, 158, 11, 0.05); color: var(--color-orange);"><strong>الصدام السائل:</strong> تذوب خطوط الحبر وتتحول إلى بقع لزجة ثقيلة. تتباطأ سرعة المشهد إلى 60fps ناعمة لكنها لزجة، وتفقد الحواف حدتها لتصبح كالمياه الآسنة أحادية اللون.</td>
-                                    </tr>
-                                    <tr>
-                                        <td rowspan="2" style="font-weight: bold; border: 1px solid var(--border-color); vertical-align: middle;">
-                                            <strong>عازف الألوان الزيتية</strong><br>
-                                            <span style="font-size: 0.75rem; color: var(--text-tertiary);">الزيتي الكلاسيكي لعصر النهضة (60fps)</span>
-                                        </td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">فرشاة شعر السنجاب الغليظة</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">إنتاج لوحات زيتية غنية ذات عمق وجاذبية عالية. تظليل تشياروسكورو ناعم، ومرور الزمن بوقار ونعومة تامة.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(6, 182, 212, 0.05);">قلم فحم ناعم وقابل للمحو</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(6, 182, 212, 0.05); color: var(--color-cyan);"><strong>الوجود المترب:</strong> تتلاشى الألوان الزيتية الكثيفة وتتحول إلى مسحوق غرافيت خفيف. يفقد العالم جاذبيته العالية ويصبح عرضة للمحو السريع والتطاير مع الرياح الكونية.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold; border: 1px solid var(--border-color); vertical-align: middle;">
-                                            <strong>أي رسام كوني</strong>
-                                        </td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(239, 110, 110, 0.05); font-weight: bold;">ممحاة الفوضى (Cosmic Eraser)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(239, 110, 110, 0.05); color: var(--color-danger);"><strong>المحو المطلق:</strong> يتفكك الكائن أو الشخصية بالكامل ويتحول إلى فراغ أبيض. المحو هنا لا يقتل، بل يزيل أصل الوجود والتأريخ الفني للكائن.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Subtab 2: Scenarios -->
-                        <div id="subtab-scenarios" class="manuals-subtab" style="display: none;">
-                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
-                                <thead>
-                                    <tr style="background-color: var(--bg-tertiary);">
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 30%;">السيناريو والطبقة الزمنية</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">معدل الإطارات (Framerate)</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">التأثير على بيئة القصة والتفاعل السردي</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">الطبقة 1: الوجود المادي</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">24fps أو 60fps ناعم</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الأصول تظهر بكتلتها الكاملة وقوانين الفيزياء الافتراضية. الضوء ينعكس على الأجسام بشكل واقعي وتظهر ضربات الفرشاة بتفاصيلها الملموسة.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; background-color: rgba(6, 182, 212, 0.05);">الطبقة 2: الانعكاس والظلال</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(6, 182, 212, 0.05);">12fps خشن ومتقطع</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(6, 182, 212, 0.05); color: var(--color-cyan);">تتحول الظلال لأصول تفاعلية مستقلة. تبدأ الشخصيات بالانفصال عن ظلالها التي تتحرك بمعدل إطارات مغاير وتأثير القص اللوني.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; background-color: rgba(245, 158, 11, 0.05);">الطبقة 3: المخطط الهيكلي</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(245, 158, 11, 0.05);">ثابت أو ومضات ديناميكية</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(245, 158, 11, 0.05); color: var(--color-orange);">تتلاشى الأسطح والتلوين تماماً وتتحول الأصول إلى خطوط شبكية زرقاء (Wireframe). تنهار قوانين الجاذبية وتصبح الأجسام خفيفة وقابلة للاختراق.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Subtab 3: Environments -->
-                        <div id="subtab-environments" class="manuals-subtab" style="display: none;">
-                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
-                                <thead>
-                                    <tr style="background-color: var(--bg-tertiary);">
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 30%;">نوع البيئة</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">كثافة تداخل الأنماط</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">الفيزياء المطبقة عند التماس البصري</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">لوحة قماشية مائعة (Fluid Canvas)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">عالية (تداخل الأبنية والأرضيات)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الأرضيات تتصرف كالسوائل. تتأخر استجابة القفز وتذوب الخطوط الحادة للشخصيات مما يجعل الحركة لزجة وبطيئة وتتأثر بالخلط اللوني عند السكون.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; background-color: rgba(16, 185, 129, 0.05);">جزيرة قصاصات الصحف (Paper Scrap)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(16, 185, 129, 0.05);">متوسطة (تداخل الضوء والجاذبية)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; background-color: rgba(16, 185, 129, 0.05); color: var(--color-green);">الرياح تحرك أجزاء من البيئة كقصاصات الورق. الشخصيات خفيفة الوزن تتأثر بقوة بالتيارات الهوائية وتتعرض للانطواء والتمزق البصري المؤقت.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Subtab 4: Characters -->
-                        <div id="subtab-characters" class="manuals-subtab" style="display: none;">
-                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
-                                <thead>
-                                    <tr style="background-color: var(--bg-tertiary);">
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 30%;">فصيل الشخصية</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">السلاح الكوني النشط</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">القدرة التفاعلية الفورية في البيئة</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; color: var(--color-accent);">حراس الأزمان (Time Keepers)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">قلم القياس الكوني (Stylus)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">القدرة على إعادة رسم الحدود الفاصلة المغلقة وتثبيت معدل إطارات موحد 24fps لمنع التنافر البصري وإصلاح البيئات المشوهة.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; color: var(--color-danger);">قوى المحو (The Erasers)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">ممحاة الفوضى (Eraser)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; color: var(--color-danger);">تفتيت ومحو الهياكل الخارجية للأرضيات والأجسام، مما يترك فراغات بيضاء ممحوة (مضادة للمادة) تسقط من خلالها الشخصيات الأخرى.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold; color: var(--color-green);">الشخصيات المستيقظة (The Awakened)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الرسم الذاتي (Self-Redrawing)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; color: var(--color-green);">القدرة على تغيير أسلوب الرسم ذاتياً (مثلاً التحول لخط رصاص خفيف) لعبور الشقوق الضيقة أو تفادي الضربات الثقيلة للأسلحة الزيتية.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Subtab 5: Media & Games -->
-                        <div id="subtab-media" class="manuals-subtab" style="display: none;">
-                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
-                                <thead>
-                                    <tr style="background-color: var(--bg-tertiary);">
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 30%;">أصل الإنتاج النهائي</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right; width: 25%;">مبدأ المخرج الحاكم</th>
-                                        <th style="padding: 10px; border: 1px solid var(--border-color); text-align: right;">كيفية انعكاس التنافر البصري في الناتج النهائي</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">القصص المصورة (Comics)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">التباين في العمق وجاذبية الحبر</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">تداخل الكادرات وتجاوز الشخصيات لإطارات اللوحات. تتصرف فقاعات الكلام ككتل صلبة تدفع الشخصيات الأخرى أو تحجب الرؤية في الكادر.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">الفيديوهات المتحركة (Videos)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">الصوت المتنافر ومعدلات الإطارات</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">حركة متفاوتة السرعة للشخصيات في الكادر الواحد (12fps بجانب 60fps). المؤثرات الصوتية متباينة جداً (أصوات ورقية خشنة للمانجا بجانب صوت أوركسترالي دافئ للزيتي).</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: bold;">الألعاب التفاعلية (Games)</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">تغيير الشيدرات البرمجية والكتلة</td>
-                                        <td style="border: 1px solid var(--border-color); padding: 8px;">يتحكم اللاعب في تبديل هيئة الشخصية لحل الألغاز (مثل التحول لهيئة زيتية ثقيلة لكسر الأرضية الهشة، أو هيئة حبر خفيف للعبور مع الرياح).</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Subtab: Smart Production Guide -->
-                        <div id="subtab-guide" class="manuals-subtab" style="display: none;">
-                            <div style="background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.15); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <h4 style="color: var(--color-cyan); margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                                    <span>💡</span> مرشد الإنتاج الذكي وقواعد الترابط الكونية
-                                </h4>
-                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 12px;">
-                                    لتسهيل وتنظيم عملية الإنتاج من الفكرة القصصية إلى الأصول النهائية، يعتمد نظام سكتشيك على <strong>دورة حياة صارمة ومترابطة للأصول</strong> لضمان تماسك البناء الدرامي والفيزيائي للكون الكرتوني والزيتي.
-                                </p>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
-                                    <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 6px; border-right: 3px solid var(--color-orange);">
-                                        <h5 style="color: var(--color-orange); margin-top: 0; margin-bottom: 6px; font-size: 0.85rem;">🚫 قواعد الترابط الصارمة</h5>
-                                        <ul style="font-size: 0.78rem; color: var(--text-secondary); padding-right: 15px; margin: 0; line-height: 1.4;">
-                                            <li><strong>لا سيناريو بدون مصدر:</strong> لا يُسمح بحفظ السيناريو إلا بعد ربطه بمصدر سردي معتمد.</li>
-                                            <li><strong>لا أصول بدون سيناريو:</strong> يمنع تماماً حفظ الشخصيات، البيئات، الأصوات، أو الموسيقى دون ربطها بسيناريو مفعّل.</li>
-                                        </ul>
-                                    </div>
-                                    <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 6px; border-right: 3px solid var(--color-cyan);">
-                                        <h5 style="color: var(--color-cyan); margin-top: 0; margin-bottom: 6px; font-size: 0.85rem;">🔍 استكشاف الأصول بالذكاء الاصطناعي</h5>
-                                        <p style="font-size: 0.78rem; color: var(--text-secondary); margin: 0; line-height: 1.4;">
-                                            عند كتابة السيناريو، انقر على زر <strong>"🔍 استكشاف الأصول من المصدر السردي"</strong> لتقوم خوارزمية الذكاء الاصطناعي بتحليل الحبكة والثيمة واستخراج أصول مقترحة واعتمادها بضغطة زر.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <h5 style="color: var(--text-primary); margin-bottom: 8px; font-size: 0.85rem;">📈 خريطة سير العمل والإنتاج (Workflow Map)</h5>
-                            <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.8rem; line-height: 1.6;">
-                                <div style="display: flex; flex-direction: column; gap: 8px;">
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <span style="background: var(--color-cyan); color: var(--bg-primary); padding: 2px 6px; border-radius: 4px; font-weight: bold; min-width: 60px; text-align: center;">الخطوة 1</span>
-                                        <span>تعبئة وتوثيق <strong>المصدر السردي (00)</strong> الأصلي (رواية، فكرة ملحمية) من خلال الحقول المخصصة.</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <span style="background: var(--color-accent); color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold; min-width: 60px; text-align: center;">الخطوة 2</span>
-                                        <span>إنشاء <strong>السيناريو (01)</strong> وربطه بالمصدر. ثم استخدام ميزة الاستكشاف التلقائي لاستخراج مسودات الأصول.</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <span style="background: var(--color-orange); color: var(--bg-primary); padding: 2px 6px; border-radius: 4px; font-weight: bold; min-width: 60px; text-align: center;">الخطوة 3</span>
-                                        <span>ربط السيناريو بـ <strong>الرسام الكوني (02)</strong> لتحديد الأسلوب الحاكم وفيزياء ضربات الفرشاة وتصادم الألوان.</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <span style="background: var(--color-green); color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold; min-width: 60px; text-align: center;">الخطوة 4</span>
-                                        <span>تحميل وتدقيق أوراق تصميم <strong>الشخصيات والبيئات والأصوات والموسيقى (03 - 06)</strong> ومطابقتها للمواصفات.</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <span style="background: var(--text-muted); color: var(--bg-primary); padding: 2px 6px; border-radius: 4px; font-weight: bold; min-width: 60px; text-align: center;">الخطوة 5</span>
-                                        <span>تجميع الأصول لإنتاج <strong>لوحات العمل والقصص والمقاطع واللعبة النهائية (07 - 09)</strong>.</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section 2: Directory and documentation files access buttons -->
-                <div class="card-box" style="border-top: 4px solid var(--color-cyan); display: flex; flex-direction: column; justify-content: space-between;">
-                    <div>
-                        <h3 class="card-title">ملفات الأدلة والوثائق</h3>
-                        <p class="card-subtitle">الوصول السريع إلى وثائق التشغيل والميثاق البصري لكون سكتشيك</p>
-
-                        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 1.5rem;">
-                            <!-- Link 1: Platform Guide -->
-                            <a href="templates/platform_guide.html" target="_blank" class="btn" style="background-color: var(--color-accent-light); color: var(--color-accent); border: 1px solid rgba(99, 102, 241, 0.2); font-weight: bold; padding: 0.8rem 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; text-decoration: none;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <span style="font-size: 1.4rem;">📖</span>
-                                    <div style="text-align: right;">
-                                        <span style="display: block; font-size: 0.9rem;">دليل تشغيل المنصة (PDF Ready)</span>
-                                        <span style="display: block; font-size: 0.72rem; color: var(--text-tertiary); font-weight: normal;">خطوات التشغيل، جدول التنافر، وطباعة الـ PDF</span>
-                                    </div>
-                                </div>
-                                <span>➔</span>
-                            </a>
-
-                            <!-- Link 2: Sketchic Bible MD -->
-                            <a href="templates/sketchic_foundation_document.md" target="_blank" class="btn" style="background-color: var(--color-green-light); color: var(--color-green); border: 1px solid rgba(16, 185, 129, 0.2); font-weight: bold; padding: 0.8rem 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; text-decoration: none;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <span style="font-size: 1.4rem;">📜</span>
-                                    <div style="text-align: right;">
-                                        <span style="display: block; font-size: 0.9rem;">ميثاق كون سكتشيك (Markdown)</span>
-                                        <span style="display: block; font-size: 0.72rem; color: var(--text-tertiary); font-weight: normal;">قوانين الخط واللون والطبقات الثلاثية للكون</span>
-                                    </div>
-                                </div>
-                                <span>➔</span>
-                            </a>
-
-                            <!-- Link 3: Sketchic Bible HTML -->
-                            <a href="templates/sketchic_foundation_document.html" target="_blank" class="btn" style="background-color: var(--color-orange-light); color: var(--color-orange); border: 1px solid rgba(245, 158, 11, 0.2); font-weight: bold; padding: 0.8rem 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; text-decoration: none;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <span style="font-size: 1.4rem;">🌐</span>
-                                    <div style="text-align: right;">
-                                        <span style="display: block; font-size: 0.9rem;">ميثاق الوجود الكوني (HTML)</span>
-                                        <span style="display: block; font-size: 0.72rem; color: var(--text-tertiary); font-weight: normal;">نسخة المتصفح لسهولة القراءة الفورية للمقاييس الفنية</span>
-                                    </div>
-                                </div>
-                                <span>➔</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1rem; font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.5;">
-                        ℹ️ <strong>ملاحظة:</strong> يمكنك طباعة دليل التشغيل مباشرة كملف PDF وحفظه محلياً على جهازك عن طريق فتحه وتفعيل خيار الطباعة (Ctrl+P).
-                    </div>
-                </div>
-            </div>
-
-            <!-- دليل خيارات الإنتاج ومعايير الاختيار الكونية -->
-            <div class="card-box" style="margin-top: 2rem; border-top: 4px solid var(--color-green);">
-                <h3 class="card-title">💡 الدليل الشامل لخيارات الإنتاج ومعايير الاختيار الكونية</h3>
-                <p class="card-subtitle">دليل تشغيلي تفصيلي يوضح متى وكيف تختار كل قيمة أو أسلوب أثناء بناء الأصول الفنية في مستودع سكتشيك:</p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-                    
-                    <!-- 1. الرسام الكوني (The Creator) -->
-                    <div style="background-color: var(--bg-secondary); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-sm);">
-                        <div style="display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--color-orange); padding-bottom: 6px;">
-                            <span style="font-size: 1.5rem;">✍️</span>
-                            <h4 style="font-size: 1.05rem; margin: 0; color: var(--text-primary);">الرسام الكوني (Creators & Tools)</h4>
-                        </div>
-                        <div style="font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); display: flex; flex-direction: column; gap: 12px;">
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">⚡ أسلوب الرسم الحاكم (Art Style):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>زيتي كلاسيكي (Renaissance):</strong> اختره للمشاهد العميقة والدراما التأسيسية التي تتطلب تدرجات ضوء وظلال تشياروسكورو مهيبة.</li>
-                                    <li><strong>مانجا يابانية تقليدية:</strong> اختره لمشاهد القتال السريعة والأكشن لزيادة التباين والديناميكية.</li>
-                                    <li><strong>كارتون الثلاثينات (Rubber Hose):</strong> اختره للكوميديا والتحركات المطاطية السريالية التي تتعدى قوانين الطبيعة.</li>
-                                    <li><strong>رسم تخطيطي بالرصاص (Graphite):</strong> اختره لذكريات الماضي والغموض التي تبدو غير مكتملة أو في طور التكوين.</li>
-                                    <li><strong>رسوم رقمية (Vectors):</strong> اختره لتصميم التكنولوجيا النظيفة ومظاهر السايبورغ الرقمية الدقيقة.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🔧 الأداة الكونية المميزة (Cosmic Tool):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>فرشاة شعر السنجاب (زيتية):</strong> لإنشاء ضربات دافئة تؤدي لتباطؤ حركية الكائنات وزيادة سيولتها الجمالية.</li>
-                                    <li><strong>ريشة G-Pen المعدنية:</strong> لخطوط تحديد سوداء حادة تتصرف ككتل صلبة تصطدم بالدروع وفقاعات الكلام.</li>
-                                    <li><strong>فحم ناعم قابل للمحو:</strong> لخلق كائنات غير مستقرة بصرياً وقابلة للتلاشي أو التطاير مع الرياح.</li>
-                                    <li><strong>قلم الألواح اللاسلكي:</strong> لبناء هندسة مثالية وخطوط مستقيمة خالية من العيوب البشرية.</li>
-                                    <li><strong>ممحاة الفوضى (Cosmic Eraser):</strong> للقدرة على إزالة أصل وجود الكائن وتحويله لكتل فضاء بيضاء فارغة.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 2. السيناريوهات (Scenarios) -->
-                    <div style="background-color: var(--bg-secondary); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-sm);">
-                        <div style="display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--color-accent); padding-bottom: 6px;">
-                            <span style="font-size: 1.5rem;">📝</span>
-                            <h4 style="font-size: 1.05rem; margin: 0; color: var(--text-primary);">السيناريو والخصائص (Scenarios & Physics)</h4>
-                        </div>
-                        <div style="font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); display: flex; flex-direction: column; gap: 12px;">
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🎭 تصنيف قصة السيناريو (Genre):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>خيال علمي (Sci-Fi):</strong> اختره عند سرد السفر عبر الأبعاد والزمن والثقوب الكونية.</li>
-                                    <li><strong>سايبربانك (Cyberpunk):</strong> اختره عند التركيز على تعارض التقنية مع الأساليب التقليدية اليدوية.</li>
-                                    <li><strong>فانتازيا سحرية (Fantasy):</strong> للقصص الأسطورية والبيئات الطبيعية الكلاسيكية.</li>
-                                    <li><strong>دراما الصدام المرئي:</strong> للتركيز الحصري على تماسك الأنماط وتصارع الرسامين بداخل نفس البعد.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🗣️ أسلوب السرد (Narrative Style):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>تفصيلي بطيء ومكثف:</strong> للمشاهد التأملية والفلسفية والتركيز على جماليات الخطوط.</li>
-                                    <li><strong>حركي سريع ومليء بالإثارة:</strong> للمعارك والهروب السريع والتصادم المادي.</li>
-                                    <li><strong>فلسفي ميتافيزيقي:</strong> لقصص كسر الجدار الرابع واستيقاظ الكائنات داخل اللوحة.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🌐 الطبقة الزمنية المتوازية (Parallel Layer):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>Layer 1 (الوجود المادي):</strong> للمشاهد الواقعية حيث تحكم الجاذبية التقليدية.</li>
-                                    <li><strong>Layer 2 (الظلال):</strong> لسرد الغموض، التجسس، أو انفصال الصراع الداخلي للشخصية.</li>
-                                    <li><strong>Layer 3 (المخطط الهيكلي):</strong> لمشاهد انهيار البيئة وانعدام الجاذبية.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">⏳ معدل الإطارات الكوني (Framerate):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>12fps (حركة خشنة):</strong> لتعزيز القوة الحركية للمعارك والقتال بجمالية المانجا.</li>
-                                    <li><strong>24fps (حركة سينمائية):</strong> للحوارات العادية والمقاطع الروائية المستقرة.</li>
-                                    <li><strong>60fps (حركة ناعمة):</strong> لتسهيل انسياب السوائل والألوان الزيتية الثقيلة.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3. تصاميم الشخصيات (Characters) -->
-                    <div style="background-color: var(--bg-secondary); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-sm);">
-                        <div style="display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--color-cyan); padding-bottom: 6px;">
-                            <span style="font-size: 1.5rem;">🎨</span>
-                            <h4 style="font-size: 1.05rem; margin: 0; color: var(--text-primary);">تصميم الشخصيات (Characters)</h4>
-                        </div>
-                        <div style="font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); display: flex; flex-direction: column; gap: 12px;">
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">👤 الدور السردي للشخصية (Narrative Role):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>بطل القصة الرئيسي (Protagonist):</strong> عندما تقود الشخصية السعي لاستعادة التوازن البصري الكوني.</li>
-                                    <li><strong>الخصم الرئيسي (Antagonist):</strong> عندما تحاول الشخصية فرض نمط أحادي بالقوة ومحو التنوع.</li>
-                                    <li><strong>شخصية مستيقظة (Awakened):</strong> للشخصية التي تدرك أنها بداخل رسمة وتستطيع التلاعب بخواصها.</li>
-                                    <li><strong>حارس زمن (Time Keeper):</strong> لتمثيل الشرطة البصرية التي تعيد فرض ثبات الإطارات وقوانين المادة.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🔗 الرسام المرتبط (Associated Creator):</strong>
-                                <p style="margin: 0;">يُختار الرسام الذي يعكس أسلوبه الفني الجوهر الجمالي الأصلي للشخصية لتوريث قوانينه البصرية تلقائياً.</p>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🚩 الفصيل الكوني (Cosmic Faction):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>حراس الأزمان:</strong> لحماية أبعاد الرسم وتثبيت معدل إطارات مستقر 24fps.</li>
-                                    <li><strong>قوى المحو:</strong> للفوضويين الذين يستخدمون الممحاة لخلق فجوات بيضاء خالية من المادة.</li>
-                                    <li><strong>الشخصيات المستيقظة:</strong> للثوار الذين يمكنهم إعادة رسم أنفسهم للعبور من الشقوق والهرب.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3.5 الأصوات الكونية (Cosmic Voices) -->
-                    <div style="background-color: var(--bg-secondary); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-sm);">
-                        <div style="display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--color-accent); padding-bottom: 6px;">
-                            <span style="font-size: 1.5rem;">🎙️</span>
-                            <h4 style="font-size: 1.05rem; margin: 0; color: var(--text-primary);">الأصوات الكونية (Cosmic Voices)</h4>
-                        </div>
-                        <div style="font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); display: flex; flex-direction: column; gap: 12px;">
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🤖 محرك الصوت AI (Voice Engine):</strong>
-                                <p style="margin: 0;">يُحدد محرك الذكاء الاصطناعي المناسب لإنشاء الأداء الصوتي التعبيري التفاعلي مثل gemini-3.1-flash-tts-preview في Google AI Studio.</p>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">⚙️ إعدادات المشهد والسياق (Scene & Context):</strong>
-                                <p style="margin: 0;">لوصف الخلفية الصوتية المناسبة (مثل مكتبة هادئة، أو رياح عاتية) وسياق الأداء التعبيري للحوار.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3.6 الموسيقى الكونية (Cosmic Music) -->
-                    <div style="background-color: var(--bg-secondary); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-sm);">
-                        <div style="display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--color-cyan); padding-bottom: 6px;">
-                            <span style="font-size: 1.5rem;">🎵</span>
-                            <h4 style="font-size: 1.05rem; margin: 0; color: var(--text-primary);">الموسيقى الكونية (Cosmic Music)</h4>
-                        </div>
-                        <div style="font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); display: flex; flex-direction: column; gap: 12px;">
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🤖 محرك الموسيقى (Music Engine):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>Suno AI:</strong> لتوليد أغاني متكاملة مع كلمات وألحان معقدة تناسب تتر البداية أو النهاية.</li>
-                                    <li><strong>Udio AI:</strong> لألحان ومقاطع سينمائية وصوتية خلفية ذات جودة غنائية كلاسيكية فائقة.</li>
-                                    <li><strong>Google Lyria / MusicLM:</strong> للمقاطع الصوتية البيئية المؤثرة والمؤثرات المدمجة دون كلمات.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🎼 النمط والآلات (Genre & Instruments):</strong>
-                                <p style="margin: 0;">يُحدد الطابع اللحني للقطعة (أوركسترا كوني، سينث ويف، أو كلاسيكي) لتنسيقها مع نمط البعد الفني المسيطر.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 4. العوالم والبيئات (Environments) -->
-                    <div style="background-color: var(--bg-secondary); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-sm);">
-                        <div style="display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--color-green); padding-bottom: 6px;">
-                            <span style="font-size: 1.5rem;">🌌</span>
-                            <h4 style="font-size: 1.05rem; margin: 0; color: var(--text-primary);">العوالم والبيئات (Environments)</h4>
-                        </div>
-                        <div style="font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); display: flex; flex-direction: column; gap: 12px;">
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🌍 طبيعة البيئة الكونية (Env Type):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>داخل لوحة قماشية مائعة:</strong> عندما تريد بيئة سائلة ولزجة تبطئ حركة الشخصيات وتتأثر بالخلط اللوني.</li>
-                                    <li><strong>جزيرة عائمة من قصاصات الصحف:</strong> لبيئات الذكريات؛ حيث تكون الجاذبية ضعيفة وتتطاير المباني كالورق.</li>
-                                    <li><strong>غرفة ذات بعدين محاطة بجدران 3D:</strong> لإبراز التنافر الهندسي بين الأسطح المسطحة والعمق الثلاثي.</li>
-                                    <li><strong>مدينة سايبربانك بمتجهات حادة:</strong> لبيئة رقمية دقيقة ذات خطوط مستقيمة خالية من التعبير البشري.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">📊 كثافة تداخل الأنماط (Clash Density):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>منخفضة:</strong> للمناطق المستقرة ذات حواف التماس الرفيعة لتجنب الصدام القوي.</li>
-                                    <li><strong>متوسطة:</strong> للمناطق التي يتداخل فيها الضوء والجاذبية لخلق تأثيرات بصرية درامية.</li>
-                                    <li><strong>عالية:</strong> لمناطق الصدام الكبرى حيث تتصادم الأرضيات والمباني ذات الأنماط المختلفة.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🔗 الرسام المرتبط (Creator):</strong>
-                                <p style="margin: 0;">يحدد هوية الرسام الكوني الذي صمم بنية العالم الأساسية، مما يفرض فيزيائه الافتراضية على البيئة.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 5. القصص المصورة (Comics) -->
-                    <div style="background-color: var(--bg-secondary); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-sm);">
-                        <div style="display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--color-orange); padding-bottom: 6px;">
-                            <span style="font-size: 1.5rem;">📚</span>
-                            <h4 style="font-size: 1.05rem; margin: 0; color: var(--text-primary);">القصص المصورة (Comics)</h4>
-                        </div>
-                        <div style="font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); display: flex; flex-direction: column; gap: 12px;">
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">📐 صيغة وعرض القصة المصورة (Format):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>ويب تون طولي للموبايل:</strong> لسهولة القراءة عبر التمرير اللانهائي المناسب للهواتف.</li>
-                                    <li><strong>صفحات مانجا تقليدية (أبيض/أسود):</strong> للتركيز على قوة التظليل النقطي ورسم الخطوط بالتحبير الحاد.</li>
-                                    <li><strong>رواية مصورة غربية (Graphic Novel):</strong> للمشاهد ذات الكادرات العريضة والتشبع اللوني الكامل.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🎨 نمط الألوان والصدام (Color Style):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>أحادية اللون بالكامل:</strong> لفرض جو كلاسيكي درامي وتركيز النظر على التباينات والظلال.</li>
-                                    <li><strong>قص لوني متباين:</strong> لإبراز الصدام الجمالي المباشر في الكادرات بتداخل الحبر مع الزيتي.</li>
-                                    <li><strong>ألوان كاملة غنية:</strong> للمشاهد السينمائية المستوحاة بالكامل من اللوحات الزيتية الكلاسيكية.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">⚙️ ميكانيكية فيزياء التماس (Interface Physics):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>القص اللوني:</strong> لإبراز التنافر الضوئي حول الشخصيات عند التماس.</li>
-                                    <li><strong>عدم توافق الجاذبية:</strong> لتعليق بعض الكائنات في الهواء نتيجة تصادم الأبعاد.</li>
-                                    <li><strong>التفاعل مع فقاعات الكلام المادية:</strong> لجعل فقاعات الحوار تتصادم حركياً وتدفع الكائنات.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 6. الفيديوهات والألعاب (Videos & Games) -->
-                    <div style="background-color: var(--bg-secondary); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-sm);">
-                        <div style="display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--color-danger); padding-bottom: 6px;">
-                            <span style="font-size: 1.5rem;">🎬🎮</span>
-                            <h4 style="font-size: 1.05rem; margin: 0; color: var(--text-primary);">الوسائط والألعاب (Media & Games)</h4>
-                        </div>
-                        <div style="font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); display: flex; flex-direction: column; gap: 12px;">
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🎬 الفيديوهات المتحركة (Video Assets):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>محرك Runway Gen-3:</strong> يُفضل للتحولات السريعة والتعديلات الحركية الديناميكية.</li>
-                                    <li><strong>محرك OpenAI Sora:</strong> يُفضل للمشاهد السينمائية الطويلة ذات المحاكاة الفيزيائية العالية للضوء.</li>
-                                    <li><strong>محرك Luma Dream Machine:</strong> يُفضل للقطات حركة الكاميرا ثلاثية الأبعاد السريعة والمستمرة.</li>
-                                    <li><strong>محرك Google Vids:</strong> يُفضل لتنظيم ومشاركة وتلخيص عروض الفيديو وسرد القصص الكونية.</li>
-                                    <li><strong>معدل الإطارات المختلط المتنافر:</strong> لتمثيل ذروة التنافر في نفس المشهد (شخصية تتحرك بـ 12fps بجانب بيئة 60fps).</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: var(--text-primary); display: block; margin-bottom: 2px;">🎮 الألعاب التفاعلية (Games):</strong>
-                                <ul style="margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
-                                    <li><strong>منصات وألغاز 2D:</strong> لتصميم مراحل تركز على تبديل الحالة المادية والقفز لتفادي الفجوات.</li>
-                                    <li><strong>مغامرة RPG 3D:</strong> للاستكشاف الحر للبيئة وتجربة الصدام البصري من كافة الزوايا.</li>
-                                    <li><strong>رواية بصرية تفاعلية:</strong> للتركيز الكامل على الحوار والقرارات السردية للشخصيات المستيقظة.</li>
-                                    <li><strong>تبديل شيدر اللاعب:</strong> لحل الألغاز عن طريق تغيير وزن وكتلة شخصيتك لتخطي العقبات.</li>
-                                    <li><strong>بوابات الأبعاد:</strong> للتنقل اللحظي بين طبقات الرسم لحل الألغاز الكونية في المرحلة.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Tab 4: Landing Page Simulator -->
-        <section id="tab-simulator" class="tab-pane">
-            <div class="simulator-intro">
-                <h2>محاكي الموقع العام للجمهور (Sketchic Portal Preview)</h2>
-                <p>هذا استعراض حي وتفاعلي للصفحة الرئيسية العامة لمشروعك، يتم تغذيتها ديناميكياً بالأصول التي تم تعليمها كـ <strong>"منتهية" (Finished)</strong> في مستودع الأصول.</p>
-                <div class="alert alert-note" style="margin-top: 10px;">
-                    <div class="alert-icon">💡</div>
-                    <div class="alert-body">تنبيه: يمكنك التحكم في ظهور أي أصل في هذه الصفحة عن طريق تعديل حالته إلى "منتهي" من مستودع الأصول. الألوان هنا فاتحة وفاخرة لتسليط الضوء على الأنماط الفنية.</div>
-                </div>
-            </div>
-
-            <!-- Public Portal Container -->
-            <div class="portal-outer-frame" id="portal-frame">
-                <!-- Dynamically rendered custom landing page in a premium light mode format -->
-            </div>
-        </section>
-        
-    </main>
-
-    <!-- Modal: Add / Edit Asset -->
-    <div class="modal-overlay" id="asset-modal">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3 id="modal-title">إضافة أصل جديد</h3>
-                <button class="close-btn" id="btn-close-modal">&times;</button>
-            </div>
-            <form id="asset-form">
-                <input type="hidden" id="asset-id">
-                
-                <!-- Type Selection -->
-                <div class="form-group">
-                    <label for="asset-type">نوع الأصل *</label>
-                    <select id="asset-type" required>
-                        <option value="" disabled selected>اختر النوع...</option>
-                        <option value="creator">✍️ الرسام الكوني (The Creator)</option>
-                        <option value="source">📖 مصدر سردي أصلي (Source Material)</option>
-                        <option value="scenario">📝 سيناريو وقصة مكتوبة</option>
-                        <option value="written">📜 نصوص ومخطوطات كوكبية (Written Text)</option>
-                        <option value="environment">🌌 عالم وبيئة رسم (Environment)</option>
-                        <option value="character">🎨 تصميم شخصية (Character Concept)</option>
-                        <option value="prop">🛡️ أداة ومقتنى كوني (Prop)</option>
-                        <option value="voice">🎙️ صوت كوني (Cosmic Voice Profile)</option>
-                        <option value="music">🎵 موسيقى كونيّة (Cosmic Music Profile)</option>
-                        <option value="comic">📚 قصة مصورة أو لوحة قصة (Comic/Storyboard)</option>
-                        <option value="video">🎬 مقطع فيديو متحرك (Video Asset)</option>
-                        <option value="game">🎮 لعبة قابلة للتحميل (Downloadable Game)</option>
-                        <option value="project_summary">📊 مشروع متكامل شامل (Project Summary)</option>
-                    </select>
-                </div>
-
-                <!-- Dynamic Sub-options Container (loaded via JS) -->
-                <div id="dynamic-asset-options" style="margin-bottom: 1.2rem;"></div>
-
-                <!-- Suggested prompt for user (Real-time generation) -->
-                <div class="form-group" id="group-suggested-prompt" style="display: none;">
-                    <label>البرومبت المقترح للتوليد (تلقائي بناءً على خياراتك) 🤖</label>
-                    <div class="prompt-copy-box" style="margin-top: 5px;">
-                        <button type="button" class="btn-copy-prompt" id="btn-copy-modal-prompt">نسخ</button>
-                        <pre class="prompt-text" id="modal-suggested-prompt-text" style="font-size: 0.8rem; line-height: 1.5; white-space: pre-wrap; word-break: break-all; margin: 0; padding-left: 50px;"></pre>
-                    </div>
-                </div>
-
-                <!-- Prerequisites warning and guidance (Dynamic) -->
-                <div class="prereq-guide-box" id="prereq-guide-box" style="display: none;">
-                    <!-- Dynamically filled warnings and prompts -->
-                </div>
-
-                <div class="form-group">
-                    <label for="asset-title">عنوان الأصل *</label>
-                    <input type="text" id="asset-title" placeholder="أدخل اسماً مميزاً للأصل..." required>
-                </div>
-
-                <!-- Scenario Linkage (conditional) -->
-                <div class="form-group" id="group-related-scenario" style="display: none;">
-                    <label for="asset-related-scenario">السيناريو المرتبط</label>
-                    <select id="asset-related-scenario">
-                        <option value="">لا يوجد سيناريو مرتبط (أو اختر سيناريو...)</option>
-                        <!-- Populated dynamically with existing scenarios -->
-                    </select>
-                </div>
-
-                <!-- Source Linkage (conditional) -->
-                <div class="form-group" id="group-related-source" style="display: none;">
-                    <label for="asset-related-source">المصدر السردي المرتبط (الرواية/القصة الأصلية)</label>
-                    <div style="display: flex; gap: 8px;">
-                        <select id="asset-related-source" style="flex: 1;">
-                            <option value="">لا يوجد مصدر سردي مرتبط (أو اختر مصدراً...)</option>
-                            <!-- Populated dynamically with existing source assets -->
-                        </select>
-                        <button type="button" id="btn-extract-assets" class="btn" style="background-color: var(--color-cyan); color: #fff; font-size: 0.78rem; font-weight: bold; padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; display: flex; align-items: center; gap: 4px;">
-                            <span>🔍</span> <span>استكشاف الأصول</span>
-                        </button>
-                    </div>
-                    
-                    <!-- AI Extraction Proposed Panel -->
-                    <div id="ai-extraction-panel" style="display: none; border: 1px dashed var(--color-cyan); padding: 12px; border-radius: var(--radius-sm); background: rgba(6, 182, 212, 0.04); margin-top: 10px;">
-                        <div style="font-weight: bold; font-size: 0.8rem; color: var(--color-cyan); display: flex; align-items: center; gap: 4px; margin-bottom: 8px;">
-                            <span>🤖</span> <span>الأصول المستخرجة والجاهزة للاعتماد:</span>
-                        </div>
-                        <div id="extracted-assets-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 180px; overflow-y: auto;">
-                            <!-- Extracted assets show here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Creator Linkage (conditional) -->
-                <div class="form-group" id="group-related-creator" style="display: none;">
-                    <label for="asset-related-creator">الرسام المرتبط (الذي صمم/رسم هذا الأصل) *</label>
-                    <select id="asset-related-creator">
-                        <option value="">لا يوجد رسام مرتبط (أو اختر رساماً...)</option>
-                        <!-- Populated dynamically with existing creators -->
-                    </select>
-                </div>
-
-                <!-- Faction Selection (conditional) -->
-                <div class="form-group" id="group-related-faction" style="display: none;">
-                    <label for="asset-related-faction">الفصيل الكوني والشخصي (Faction) *</label>
-                    <select id="asset-related-faction">
-                        <option value="">لا ينتمي لأي فصيل (أو اختر فصيلاً...)</option>
-                        <option value="keepers">حراس الأزمان (Time Keepers) - سلاحهم: قلم القياس الكوني</option>
-                        <option value="erasers">قوى المحو (The Erasers) - سلاحهم: ممحاة الفوضى</option>
-                        <option value="awakened">الشخصيات المستيقظة (The Awakened) - سلاحهم: الرسم الذاتي</option>
-                    </select>
-                </div>
-
-                <!-- Characters Linkage (conditional) -->
-                <div class="form-group" id="group-related-characters" style="display: none;">
-                    <label>الشخصيات المشاركة في هذا الأصل</label>
-                    <div class="checkbox-group-container" id="characters-checkbox-container">
-                        <!-- Populated dynamically with existing characters -->
-                    </div>
-                </div>
-
-                <!-- Interface Physics Selector (conditional for comics & videos) -->
-                <div class="form-group" id="group-interface-physics" style="display: none;">
-                    <label for="asset-interface-physics">ميكانيكية فيزياء التماس (Interface Physics) *</label>
-                    <select id="asset-interface-physics">
-                        <option value="">اختر ميكانيكية فيزياء التماس...</option>
-                        <option value="chromatic">القص اللوني والتنافر الضوئي (Chromatic Shear)</option>
-                        <option value="gravity">عدم توافق الجاذبية الجمالية (Gravity Mismatch)</option>
-                        <option value="speech">التفاعل مع فقاعات الكلام المادية (Physical Speech Bubbles)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="asset-desc">الوصف والتفاصيل</label>
-                    <textarea id="asset-desc" rows="3" placeholder="اكتب تفاصيل الأصل، القصة، أو الأسلوب الفني المستخدم..."></textarea>
-                </div>
-
-                <!-- Field for actual prompt used -->
-                <div class="form-group">
-                    <label for="asset-used-prompt">البرومبت المستخدم في التوليد (للأرشفة والحفظ)</label>
-                    <textarea id="asset-used-prompt" rows="2" placeholder="الصق البرومبت الفعلي الذي استخدمته في Gemini لتوليد هذا الأصل..."></textarea>
-                </div>
-
-                <!-- Google Drive URL input with specialized prompt -->
-                <div class="form-group">
-                    <label for="asset-drive-url">رابط الملف على Google Drive *</label>
-                    <div style="display: flex; gap: 8px;">
-                        <input type="url" id="asset-drive-url" placeholder="https://drive.google.com/..." style="flex: 1;">
-                        <button type="button" id="btn-save-to-drive" class="btn" style="background-color: var(--color-cyan); color: #fff; font-size: 0.78rem; font-weight: bold; padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; display: flex; align-items: center; gap: 4px;">
-                            <span>💾</span> <span>حفظ في Drive</span>
-                        </button>
-                    </div>
-                    <span class="input-hint">ارفع ملفك على حساب Google AI Pro الخاص بك (5 TB) وضع رابط المشاركة هنا. أو انقر حفظ لتوليد رابط ومستند تلقائياً.</span>
-                </div>
-
-                <!-- Status Selection -->
-                <div class="form-group">
-                    <label for="asset-status">الحالة الإنتاجية</label>
-                    <select id="asset-status">
-                        <option value="draft">قيد العمل والإنشاء (Draft)</option>
-                        <option value="finished">منتهي وجاهز للعرض (Finished)</option>
-                    </select>
-                </div>
-
-                <!-- Director's Visual Checklist (conditional) -->
-                <div class="form-group" id="group-director-checklist" style="display: none;">
-                    <label style="color: var(--color-danger); font-weight: bold;">📋 ميثاق المخرج البصري (Director's Visual Checklist) *</label>
-                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px;">يجب تأكيد تطبيق المبادئ الفنية التالية لتحويل هذا الأصل الفني إلى حالة "منتهي":</p>
-                    <div class="checkbox-group-container" style="border: 1px solid var(--color-danger); padding: 10px; border-radius: 6px; background-color: rgba(239, 68, 68, 0.05); display: flex; flex-direction: column; gap: 8px;">
-                        <label class="checkbox-item" style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" id="chk-no-blending" name="director-checklist">
-                            <span>🚫 <strong>ممنوع الدمج الفني (No Blending):</strong> الحفاظ على الهوية البصرية والنمط الخاص بكل بعد دون ذوبان.</span>
-                        </label>
-                        <label class="checkbox-item" style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" id="chk-depth-contrast" name="director-checklist">
-                            <span>📐 <strong>التباين في العمق (Contrast in Depth):</strong> إبراز التنافر المادي بتداخل طبقات ثنائية الأبعاد في بيئة ثلاثية الأبعاد.</span>
-                        </label>
-                        <label class="checkbox-item" style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" id="chk-sonic-dissonance" name="director-checklist">
-                            <span>🔊 <strong>الصوت المتنافر (Sonic Dissonance):</strong> تعبير الأصوات والمؤثرات السمعية عن التباين الجمالي للأسلوب.</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" id="btn-cancel-modal">إلغاء</button>
-                    <button type="submit" class="btn btn-primary" id="btn-save-asset">حفظ الأصل</button>
-                </div>
-            </form>
+        <div class="form-group">
+            <label for="char-name">اسم الشخصية المقترح *</label>
+            <input type="text" id="char-name" placeholder="أدخل اسم الشخصية..." value="آرا الهجينة">
+        </div>
+
+        <div class="form-group">
+            <label for="char-school">المدرسة الفنية للرسام الحاكم *</label>
+            <select id="char-school">
+                <option value="manga">✒️ متروبوليس الحبر - المانجا (خطوط حادة، حركة 12fps، مونوكروم)</option>
+                <option value="oil">🎨 إمبراطورية القماش - زيتي كلاسيكي (بدون خطوط، حركة ناعمة 60fps)</option>
+                <option value="pencil">✏️ مملكة الغرافيت - رصاص وفحم (خطوط مرنة هشة تتلاشى بالمحو)</option>
+                <option value="digital">💻 المدى الرقمي - نيون ومتجهات هندسية (نظيفة، انتقال آني)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="char-psychology">🧠 البرمجة السيكولوجية ونواة الشخصية [Character Info]</label>
+            <select id="char-psychology">
+                <option value="dread">💀 خوف وجودي من الفناء والمحو (شخصية قلقة سريعة العطب تحمي قلبها)</option>
+                <option value="seeker">🎨 البحث عن الرسام الخالق (تتساءل باستمرار عن يد الرسام والخطوط)</option>
+                <option value="keeper">⚔️ حارس نقاوة البعد الفني (حظر الاندماج وخلط الألوان والأساليب)</option>
+                <option value="glitch">🧬 الكائن الهجين المتصدع (تجمع صفات الحبر ولزوجة الزيت الكثيف)</option>
+            </select>
+        </div>
+
+        <div class="instruction-box">
+            <h4>💡 إرشاد منصة Google Flow</h4>
+            <p>1. افتح استوديو Google Flow وابدأ مشروعاً جديداً.</p>
+            <p>2. أضف شخصية جديدة كـ <strong>Ingredient</strong>، وانسخ الموجه أدناه وضعه في حقل <strong>[Character Info]</strong> لضمان ثبات الشكل والسلوك.</p>
+        </div>
+
+        <div class="prompt-panel">
+            <div class="prompt-text" id="prompt-identity-text">توليد الموجه...</div>
+            <button type="button" class="btn btn-copy" onclick="window.app.copyText('prompt-identity-text')">نسخ الموجه لـ Google Flow 📋</button>
         </div>
     </div>
 
-    <!-- Modal: Google Vids Exporter -->
-    <div class="modal-overlay" id="vids-export-modal">
-        <div class="modal-card" style="max-width: 950px; width: 95%;">
-            <div class="modal-header" style="border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;">
-                <h3 style="display: flex; align-items: center; gap: 8px; margin: 0; color: var(--color-cyan);">
-                    🎬 تجهيز لـ Google Vids & Flow Storyboard Studio
-                </h3>
-                <button class="close-btn" id="btn-close-vids-modal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">&times;</button>
-            </div>
-            
-            <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 15px;">
-                💡 يقسم هذا المصدر السيناريو إلى لقطات متتالية سينمائية جاهزة للإدخال في **Google Vids** أو **Google Labs Flow (Storyboard Studio)**. يمكنك نسخ الموجهات المصاغة لنموذج **Veo للفيديو** أو استيراد جدول اللقطات.
-            </div>
+    <!-- Step 2: Custom Voice -->
+    <div class="step-card" id="step-2-card">
+        <div class="step-title-row">
+            <span class="step-badge">المرحلة 2</span>
+            <h2>بصمة الصوت المتنافر (Voice Setup)</h2>
+        </div>
 
-            <div style="max-height: 400px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 15px; background: var(--bg-secondary);">
-                <table style="width: 100%; border-collapse: collapse; text-align: right; font-size: 0.85rem;" id="vids-export-table">
-                    <thead>
-                        <tr style="background-color: var(--bg-tertiary); border-bottom: 1px solid var(--border-color);">
-                            <th style="padding: 10px; border-left: 1px solid var(--border-color); width: 60px;">اللقطة</th>
-                            <th style="padding: 10px; border-left: 1px solid var(--border-color); width: 340px;">موجه فيديو Veo (Google Labs Flow)</th>
-                            <th style="padding: 10px; border-left: 1px solid var(--border-color); width: 260px;">التعليق الصوتي (Voiceover)</th>
-                            <th style="padding: 10px;">المؤثرات الصوتية والموسيقى</th>
-                        </tr>
-                    </thead>
-                    <tbody id="vids-export-table-body">
-                        <!-- Dynamic Rows here -->
-                    </tbody>
-                </table>
-            </div>
+        <div class="form-group">
+            <label for="voice-speaker">صوت المتحدث المعتمد لـ Google Flow *</label>
+            <select id="voice-speaker">
+                <option value="Algenib">Algenib (صوت خشن، نبرة منخفضة - ممتاز للمانجا والرصاص)</option>
+                <option value="Charon">Charon (هادئ وعميق - ممتاز للزيتي الكلاسيكي)</option>
+                <option value="Kore">Kore (مشرق ونبرة حادة - ممتاز للنيون والرقمي)</option>
+                <option value="Aoede">Aoede (لحني وناعم وجودي)</option>
+            </select>
+        </div>
 
-            <div class="form-actions" style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-prompts">📋 نسخ موجهات الصور</button>
-                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-veo" style="border-color: rgba(6, 182, 212, 0.3); color: var(--color-cyan);">🎥 نسخ موجهات Veo (فيديو)</button>
-                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-flow-script">📝 نسخ مخطط Flow Scenebuilder</button>
-                    <button type="button" class="btn btn-secondary" id="btn-copy-vids-vo">🎙️ نسخ التعليق الصوتي</button>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                    <button type="button" class="btn btn-primary" id="btn-download-vids-csv" style="background-color: #10b981;">📥 تحميل CSV</button>
-                    <a href="https://workspace.google.com/products/vids/" target="_blank" class="btn btn-primary" style="background-color: #4f46e5; text-decoration: none; display: inline-flex; align-items: center; gap: 3px; font-size: 0.8rem;" title="فتح Google Vids">
-                        🎬 Vids 🔗
-                    </a>
-                    <a href="https://labs.google/fx/tools/flow" target="_blank" class="btn btn-primary" style="background-color: #db2777; text-decoration: none; display: inline-flex; align-items: center; gap: 3px; font-size: 0.8rem;" title="فتح Google Labs Flow">
-                        ✨ Flow 🔗
-                    </a>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="voice-dialogue">عينة الحوار ووسم الأداء الصوتي *</label>
+            <input type="text" id="voice-dialogue" value="[thoughtful] هل أنا مجرد خطوط يرسمها شخص آخر؟ [sighs] أخشى الفناء.">
+        </div>
+
+        <div class="instruction-box">
+            <h4>💡 إرشاد توليد الصوت</h4>
+            <p>1. في لوحة الشخصية بـ Google Flow، حدد محرك الصوت <strong>Gemini TTS</strong>.</p>
+            <p>2. اختر المتحدث المقترح، وانسخ نص الحوار مع الوسوم التعبيرية للحصول على نبرة متنافرة رائعة.</p>
+        </div>
+
+        <div class="prompt-panel">
+            <div class="prompt-text" id="prompt-voice-text">توليد موجه الصوت...</div>
+            <button type="button" class="btn btn-copy" onclick="window.app.copyText('prompt-voice-text')">نسخ موجه الصوت 📋</button>
         </div>
     </div>
 
-    <!-- Google APIs -->
-    <script src="https://apis.google.com/js/api.js" async defer></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    
-    <!-- Script imports -->
-    <script src="js/app.js"></script>
+    <!-- Step 3: Storyboard & Veo Prompt -->
+    <div class="step-card" id="step-3-card">
+        <div class="step-title-row">
+            <span class="step-badge">المرحلة 3</span>
+            <h2>توليد المشاهد والسيناريو لـ Google Flow</h2>
+        </div>
+
+        <div class="form-group">
+            <label for="scene-action">ماذا يحدث في المشهد؟ *</label>
+            <textarea id="scene-action" rows="3">الشخصية تقف عند خط التماس البصري، خطوط الحبر ترفض الذوبان في بحيرة الزيت الكلاسيكي المجاورة لها.</textarea>
+        </div>
+
+        <div class="instruction-box">
+            <h4>💡 إرشاد إنتاج الفيديو في Google Flow</h4>
+            <p>1. في لوحة المشهد الرئيسي بـ Google Flow، ضع هذا الموجه لتوليد مقطع الفيديو القصير.</p>
+            <p>2. استخدم ميزات التحكم بالكاميرا (Motion controls) للحصول على زاوية صدام بصرية قوية.</p>
+        </div>
+
+        <div class="prompt-panel">
+            <div class="prompt-text" id="prompt-scene-text">توليد موجه المشهد...</div>
+            <button type="button" class="btn btn-copy" onclick="window.app.copyText('prompt-scene-text')">نسخ موجه المشهد لـ Google Flow 📋</button>
+        </div>
+    </div>
+
+    <!-- Step 4: Assembly in Google Vids -->
+    <div class="step-card" id="step-4-card">
+        <div class="step-title-row">
+            <span class="step-badge">المرحلة 4</span>
+            <h2>التجميع والإنتاج النهائي في Google Vids</h2>
+        </div>
+
+        <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: var(--radius-sm); padding: 20px; margin-bottom: 20px;">
+            <h3 style="margin-top: 0; color: var(--color-green); font-size: 1rem;">🎉 مبروك! لقد جهزت كافة العناصر الوجودية</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 15px 0; line-height: 1.6;">
+                الآن أنت جاهز لتجميع الأصول (الفيديو والصوت المنتج من Google Flow) في لوحة عمل سينمائية واحدة متكاملة باستخدام **Google Vids** في Workspace.
+            </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.8rem; color: var(--text-primary);">
+                <div style="display: flex; gap: 8px; align-items: start;">
+                    <span style="color: var(--color-green);">✔️</span>
+                    <div><strong>الخطوة 1:</strong> افتح منصة Google Vids عن طريق الرابط <a href="https://vids.new" target="_blank" style="color: var(--color-cyan); font-weight: bold;">vids.new</a>.</div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: start;">
+                    <span style="color: var(--color-green);">✔️</span>
+                    <div><strong>الخطوة 2:</strong> قم بسحب وإدراج مقطع الفيديو الذي قمت بتوليده وحفظه من Google Flow إلى الخط الزمني لـ Google Vids.</div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: start;">
+                    <span style="color: var(--color-green);">✔️</span>
+                    <div><strong>الخطوة 3:</strong> أضف ملف التعليق الصوتي المخصص (Audio TTS Track) وضعه متطابقاً مع حركة شفتين الكائن في الفيديو.</div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: start;">
+                    <span style="color: var(--color-green);">✔️</span>
+                    <div><strong>الخطوة 4:</strong> استخدم مكتبة المؤثرات الصوتية والانتقالات في Google Vids لإنهاء العرض التقديمي لقصتك.</div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-primary" style="width: 100%;" onclick="window.app.resetWizard()">
+            🪐 ابدأ ببناء شخصية جديدة وعالم آخر
+        </button>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="actions-row">
+        <button type="button" class="btn" id="btn-prev" style="display: none;" onclick="window.app.prevStep()">➡️ السابق</button>
+        <button type="button" class="btn btn-primary" id="btn-next" onclick="window.app.nextStep()">التالي ⬅️</button>
+    </div>
+</div>
+
+<script src="js/app.js"></script>
 </body>
 </html>
