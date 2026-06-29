@@ -51,6 +51,9 @@ class DoubleDatabaseApp {
                 act: 'act1',
                 order: 1,
                 charCount: 'auto',
+                encounterToggle: false,
+                newCharsNum: '1',
+                newCharsStyle: 'random',
                 charIds: ['char-1'],
                 script: 'المشهد الأول: كينجي يراقب ولادة الحدود الحبرية على صفحة ورقية بيضاء لانهائية.'
             },
@@ -61,8 +64,11 @@ class DoubleDatabaseApp {
                 act: 'act2',
                 order: 1,
                 charCount: 'auto',
-                charIds: ['char-1', 'char-2'],
-                script: 'المشهد الثاني: كينجي يواجه آرا الهجينة عند خط التماس المشتعل. السماء تبدأ في التصدع وتتساقط منها رقاقات كرتونية.'
+                encounterToggle: true,
+                newCharsNum: 'random',
+                newCharsStyle: 'school-2',
+                charIds: ['char-1'],
+                script: 'المشهد الثاني: كينجي يواجه شخصيات غريبة عند خط التماس المشتعل.'
             }
         ];
 
@@ -109,10 +115,15 @@ class DoubleDatabaseApp {
         this.scenarioFormTitle = document.getElementById('scenario-form-title');
         this.scenarioPromptOutput = document.getElementById('scenario-prompt-output');
         this.dynamicCharactersOutputContainer = document.getElementById('dynamic-characters-output-container');
+
+        // Encounter fields
+        this.encounterToggle = document.getElementById('scenario-encounter-toggle');
+        this.encounterFields = document.getElementById('scenario-encounter-fields');
+        this.newCharsNum = document.getElementById('scenario-new-chars-num');
+        this.newCharsStyle = document.getElementById('scenario-new-chars-style');
     }
 
     bindEvents() {
-        // Add robust real-time update event listeners to prevent freeze and ensure updates
         const inputs = [
             this.scenarioTitle,
             this.scenarioSchoolSelect,
@@ -128,10 +139,18 @@ class DoubleDatabaseApp {
             }
         });
 
-        // Also watch character count select if it exists
         const countSelect = document.getElementById('scenario-char-count');
         if (countSelect) {
             countSelect.addEventListener('change', () => this.updateScenarioPreview());
+        }
+
+        if (this.newCharsNum) this.newCharsNum.addEventListener('change', () => this.updateScenarioPreview());
+        if (this.newCharsStyle) this.newCharsStyle.addEventListener('change', () => this.updateScenarioPreview());
+    }
+
+    toggleEncounterFields() {
+        if (this.encounterToggle && this.encounterFields) {
+            this.encounterFields.style.display = this.encounterToggle.checked ? 'flex' : 'none';
         }
     }
 
@@ -270,11 +289,13 @@ class DoubleDatabaseApp {
 
     // Populate dropdowns
     populateSchoolsDropdowns() {
-        const dropdowns = [this.charSchoolSelect, this.scenarioSchoolSelect];
+        const dropdowns = [this.charSchoolSelect, this.scenarioSchoolSelect, this.newCharsStyle];
         dropdowns.forEach(dropdown => {
             if (!dropdown) return;
             const currentVal = dropdown.value;
-            dropdown.innerHTML = '<option value="">-- اختر مدرسة فنية --</option>';
+            dropdown.innerHTML = dropdown === this.newCharsStyle ? 
+                '<option value="random">عشوائي متصادم (Random Clash Style)</option>' : 
+                '<option value="">-- اختر مدرسة فنية --</option>';
 
             this.schools.forEach(school => {
                 const opt = document.createElement('option');
@@ -425,7 +446,6 @@ class DoubleDatabaseApp {
         };
 
         Object.keys(acts).forEach(actKey => {
-            // Filter and sort scenarios inside this act
             const actScenarios = this.scenarios
                 .filter(s => s.act === actKey)
                 .sort((a, b) => (a.order || 1) - (b.order || 1));
@@ -475,6 +495,12 @@ class DoubleDatabaseApp {
         const act = this.scenarioActSelect.value;
         const order = parseInt(this.scenarioOrderInput.value) || 1;
         const charCount = document.getElementById('scenario-char-count').value;
+        
+        // Encounter properties
+        const encounterToggle = this.encounterToggle ? this.encounterToggle.checked : false;
+        const newCharsNum = this.newCharsNum ? this.newCharsNum.value : '1';
+        const newCharsStyle = this.newCharsStyle ? this.newCharsStyle.value : 'random';
+
         const script = this.scenarioScript.value.trim();
 
         // Gather checked character IDs
@@ -486,7 +512,12 @@ class DoubleDatabaseApp {
             return;
         }
 
-        const newScenario = { id: id || 'scenario-' + Date.now(), title, schoolId, act, order, charCount, charIds, script };
+        const newScenario = { 
+            id: id || 'scenario-' + Date.now(), 
+            title, schoolId, act, order, charCount, 
+            encounterToggle, newCharsNum, newCharsStyle,
+            charIds, script 
+        };
 
         if (id) {
             this.scenarios = this.scenarios.map(s => s.id === id ? newScenario : s);
@@ -510,6 +541,15 @@ class DoubleDatabaseApp {
         this.scenarioActSelect.value = scen.act || 'act1';
         this.scenarioOrderInput.value = scen.order || 1;
         document.getElementById('scenario-char-count').value = scen.charCount || 'auto';
+        
+        // Load encounter fields
+        if (this.encounterToggle) {
+            this.encounterToggle.checked = !!scen.encounterToggle;
+            this.toggleEncounterFields();
+        }
+        if (this.newCharsNum) this.newCharsNum.value = scen.newCharsNum || '1';
+        if (this.newCharsStyle) this.newCharsStyle.value = scen.newCharsStyle || 'random';
+
         this.scenarioScript.value = scen.script;
 
         // Reset and check matching character checkboxes
@@ -537,6 +577,14 @@ class DoubleDatabaseApp {
         this.scenarioActSelect.value = "act1";
         this.scenarioOrderInput.value = "1";
         document.getElementById('scenario-char-count').value = "auto";
+        
+        if (this.encounterToggle) {
+            this.encounterToggle.checked = false;
+            this.toggleEncounterFields();
+        }
+        if (this.newCharsNum) this.newCharsNum.value = "1";
+        if (this.newCharsStyle) this.newCharsStyle.value = "random";
+
         this.scenarioScript.value = "";
         const checkboxes = this.scenarioCharsContainer.querySelectorAll('input[name="scenario-char-checkbox"]');
         checkboxes.forEach(cb => cb.checked = false);
@@ -559,7 +607,7 @@ class DoubleDatabaseApp {
             }
 
             const school = this.schools.find(s => s.id === schoolId);
-            const schoolName = school ? school.name : 'أصل غير حدد';
+            const schoolName = school ? school.name : 'أصل غير محدد';
             const schoolDesc = school ? school.desc : '';
 
             // Extract selected characters and compile tags
@@ -572,7 +620,6 @@ class DoubleDatabaseApp {
             selectedCharIds.forEach(cid => {
                 const char = this.characters.find(c => c.id === cid);
                 if (char) {
-                    // Extract English name if exists
                     let engName = char.name;
                     const match = char.name.match(/\(([^)]+)\)/);
                     if (match && match[1]) {
@@ -585,7 +632,6 @@ class DoubleDatabaseApp {
                     const tag = `@${engName}`;
                     tagNames.push(tag);
 
-                    // Replace in script text
                     const arabicName = char.name.split('(')[0].trim();
                     if (arabicName) {
                         const escArabic = arabicName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -600,26 +646,53 @@ class DoubleDatabaseApp {
                 }
             });
 
-            // Determine prompt-level character count description
+            // Character count configuration
             const countSelectEl = document.getElementById('scenario-char-count');
             const countSelect = countSelectEl ? countSelectEl.value : 'auto';
             let countText = "";
             if (countSelect === "auto") {
-                countText = `${selectedCharIds.length} characters (${tagNames.join(', ') || 'none'})`;
+                countText = `${selectedCharIds.length} active character(s)`;
             } else if (countSelect === "0") {
-                countText = "0 characters (Background Landscape Scene Only)";
+                countText = "0 active characters (Landscape Only)";
             } else {
-                countText = `${countSelect} characters (${tagNames.join(', ') || 'none'})`;
+                countText = `${countSelect} active character(s)`;
             }
 
             // Generate Script Prompt Spell
             let prompt = `[Google Flow Prompt Spell - Story Studio Planner]\n`;
             prompt += `Project Title: ${title}\n`;
             prompt += `Style & Medium Rules: ${schoolName} (${schoolDesc})\n`;
-            prompt += `Frame Character Count: Exactly ${countText}\n`;
+            prompt += `Frame Active Characters Count: Exactly ${countText}\n`;
+            
             if (tagNames.length > 0) {
                 prompt += `Active Characters Linked: ${tagNames.join(', ')}\n`;
             }
+
+            // Encounter logic compilation
+            const encToggle = this.encounterToggle ? this.encounterToggle.checked : false;
+            if (encToggle) {
+                const num = this.newCharsNum ? this.newCharsNum.value : '1';
+                const styleId = this.newCharsStyle ? this.newCharsStyle.value : 'random';
+                
+                let styleDetail = "a contrasting artistic school";
+                if (styleId !== 'random') {
+                    const encSchool = this.schools.find(s => s.id === styleId);
+                    if (encSchool) {
+                        styleDetail = `the style of "${encSchool.name}" (${encSchool.desc})`;
+                    }
+                } else {
+                    styleDetail = "a contrasting spontaneous style (random visual clash)";
+                }
+
+                prompt += `Visual Encounter Phase: Confront with `;
+                if (num === 'random') {
+                    prompt += `a random, spontaneous number of newly generated character(s) representing ${styleDetail}.\n`;
+                } else {
+                    prompt += `exactly ${num} newly generated character(s) representing ${styleDetail}.\n`;
+                }
+                prompt += `Directive for New Characters: Do NOT bind them to pre-existing models. Generate them fresh matching their specific style descriptor to establish a sharp artistic confrontation.\n`;
+            }
+
             prompt += `\nScript Story / Action Plan:\n${script}\n\n`;
             
             if (characterDirectives.length > 0) {

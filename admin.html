@@ -474,14 +474,50 @@
                         <label>الشخصيات المشاركة في السيناريو *</label>
                         <a href="#" onclick="window.app.switchTab('characters'); return false;" style="font-size: 0.72rem; color: var(--color-cyan); text-decoration: none; font-weight: bold;">➕ إضافة شخصية جديدة سريعة</a>
                     </div>
-                    <div class="checkbox-group-container" id="scenario-chars-container" onchange="window.app.updateScenarioPreview()">
+                    <div class="checkbox-group-container" id="scenario-chars-container">
                         <!-- Dynamic checkboxes -->
                     </div>
                 </div>
 
                 <div class="form-group">
+                    <label for="scenario-char-count">عدد الشخصيات المطلوبة في الكادر (Character Count Option)</label>
+                    <select id="scenario-char-count" onchange="window.app.updateScenarioPreview()">
+                        <option value="auto">تلقائي (حسب الشخصيات المحددة أعلاه)</option>
+                        <option value="1">شخصية واحدة فقط (1)</option>
+                        <option value="2">شخصيتين (2)</option>
+                        <option value="3">ثلاث شخصيات (3)</option>
+                        <option value="0">خلفية أو جماد فقط (0 - No Characters)</option>
+                    </select>
+                </div>
+
+                <!-- New Encounter Section -->
+                <div class="form-group" style="border: 1px dashed var(--border-light); padding: 12px; border-radius: var(--radius-sm); background: rgba(255,255,255,0.01); margin-bottom: 15px;">
+                    <label class="checkbox-item" style="font-weight: bold; color: var(--color-cyan);">
+                        <input type="checkbox" id="scenario-encounter-toggle" onchange="window.app.toggleEncounterFields(); window.app.updateScenarioPreview();">
+                        <span>مواجهة شخصيات جديدة (Encounter New Characters)</span>
+                    </label>
+                    <div id="scenario-encounter-fields" style="display: none; margin-top: 10px; flex-direction: column; gap: 8px;">
+                        <div class="form-group">
+                            <label for="scenario-new-chars-num">عدد الشخصيات الجديدة</label>
+                            <select id="scenario-new-chars-num" onchange="window.app.updateScenarioPreview()">
+                                <option value="1">شخصية جديدة واحدة (1)</option>
+                                <option value="2">شخصيتين جديدتين (2)</option>
+                                <option value="random">عدد عشوائي وتلقائي (Random Count)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="scenario-new-chars-style">أسلوب/مدرسة الشخصيات الجديدة</label>
+                            <select id="scenario-new-chars-style" onchange="window.app.updateScenarioPreview()">
+                                <option value="random">عشوائي متصادم (Random Clash Style)</option>
+                                <!-- Dynamic options -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="scenario-script">نص السيناريو والأفكار الحركية *</label>
-                    <textarea id="scenario-script" rows="5" oninput="window.app.updateScenarioPreview()" placeholder="اكتب الأحداث والحوارات واللقطات بالتسلسل هنا..."></textarea>
+                    <textarea id="scenario-script" rows="5" placeholder="اكتب الأحداث والحوارات واللقطات بالتسلسل هنا..."></textarea>
                 </div>
 
                 <div style="display: flex; gap: 10px; margin-bottom: 15px;">
