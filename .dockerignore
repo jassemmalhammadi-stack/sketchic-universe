@@ -1,0 +1,12 @@
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+node_modules
+npm-debug.log*
+SECURITY_DEPLOYMENT.md
+TECHNICAL_REQUIREMENTS.md
+Sketchic_Universe_Bible.pdf
+Google_Drive_Templates
+templates
