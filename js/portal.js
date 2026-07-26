@@ -417,14 +417,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 <!-- Interactive Visual Clash Showcase -->
                 <div class="clash-showcase-container">
                     <h3 class="clash-title">تطبيق نظرية الصدام المرئي (Visual Clash Theory)</h3>
-                    <div class="clash-split-view">
-                        <div class="clash-panel clash-panel-manga">
-                            <h3>MANGA DIMENSION</h3>
-                            <p>أحادي اللون، خطوط حبر سوداء خشنة وحادة، وتعبيرات بصرية فائقة. يتحرك بسرعة 12 إطاراً في الثانية وبفيزياء خفيفة ومطاطية.</p>
+                    <div class="clash-experiment" id="clash-experiment">
+                        <div class="clash-split-view">
+                            <div class="clash-panel clash-panel-manga">
+                                <span class="clash-world-label">12 FPS • حبر أسود</span>
+                                <h3>MANGA DIMENSION</h3>
+                                <p>أحادي اللون، خطوط حبر سوداء خشنة وحادة، وتعبيرات بصرية فائقة. يتحرك بسرعة 12 إطاراً في الثانية وبفيزياء خفيفة ومطاطية.</p>
+                            </div>
+                            <div class="clash-boundary" aria-hidden="true"><span>✦</span></div>
+                            <div class="clash-panel clash-panel-oil">
+                                <span class="clash-world-label">60 FPS • زيت كلاسيكي</span>
+                                <h3>CLASSICAL OIL DIMENSION</h3>
+                                <p>ألوان غنية مستوحاة من لوحات عصر النهضة، إضاءة ناعمة ووقورة وتدرجات ظلال تشياروسكورو. يتحرك بـ 60 إطاراً في الثانية وثقيل الحركة.</p>
+                            </div>
                         </div>
-                        <div class="clash-panel clash-panel-oil">
-                            <h3>CLASSICAL OIL DIMENSION</h3>
-                            <p>ألوان غنية مستوحاة من لوحات عصر النهضة، إضاءة ناعمة ووقورة وتدرجات ظلال تشياروسكورو. يتحرك بـ 60 إطاراً في الثانية وثقيل الحركة.</p>
+                        <div class="clash-controls">
+                            <button type="button" class="clash-trigger" id="clash-trigger" aria-pressed="false">
+                                <span>⚡</span> فعّل نبضة الصدام
+                            </button>
+                            <p id="clash-status" aria-live="polite">العالمان مستقران حالياً — جرّب إطلاق النبضة.</p>
                         </div>
                     </div>
                 </div>
@@ -562,5 +573,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 </footer>
             </div>
         `;
+
+        const clashTrigger = document.getElementById('clash-trigger');
+        const clashExperiment = document.getElementById('clash-experiment');
+        const clashStatus = document.getElementById('clash-status');
+
+        if (clashTrigger && clashExperiment && clashStatus) {
+            clashTrigger.addEventListener('click', () => {
+                const isActive = clashExperiment.classList.toggle('is-colliding');
+                clashTrigger.setAttribute('aria-pressed', String(isActive));
+                clashTrigger.innerHTML = isActive
+                    ? '<span>✦</span> أوقف النبضة'
+                    : '<span>⚡</span> فعّل نبضة الصدام';
+                clashStatus.textContent = isActive
+                    ? 'تمزّق الحد الفاصل: الحبر والزيت يتبادلان قوانين الحركة.'
+                    : 'عاد العالمان إلى الاستقرار — يمكنك إطلاق نبضة جديدة.';
+            });
+        }
     }
 });
