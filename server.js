@@ -39,8 +39,22 @@ function checkAuth(req) {
 }
 
 const server = http.createServer((req, res) => {
-    // Enforce basic auth if configured
-    if (!checkAuth(req)) {
+    let pathname;
+    try {
+        pathname = decodeURIComponent(new URL(req.url, `http://${req.headers.host || 'localhost'}`).pathname);
+    } catch {
+        res.statusCode = 400;
+        res.end('Bad Request');
+        return;
+    }
+
+    const isAdminPage = pathname === '/admin' || pathname === '/admin.html';
+    const requiresAdmin = isAdminPage
+        || pathname === '/js/app.js'
+        || pathname.startsWith('/api/');
+
+    // The public portal stays open; only administration routes require credentials.
+    if (requiresAdmin && !checkAuth(req)) {
         res.writeHead(401, {
             'WWW-Authenticate': 'Basic realm="Sketchic Admin Area"',
             'Content-Type': 'text/plain; charset=utf-8'
@@ -123,10 +137,16 @@ const server = http.createServer((req, res) => {
     }
     
     // Normalize URL and resolve path
-    let filePath = path.join(PUBLIC_DIR, req.url === '/' ? 'admin.html' : req.url);
+    const requestedPath = pathname === '/'
+        ? 'index.html'
+        : isAdminPage
+            ? 'admin.html'
+            : pathname.replace(/^[/\\]+/, '');
+    let filePath = path.resolve(PUBLIC_DIR, requestedPath);
+    const relativePath = path.relative(PUBLIC_DIR, filePath);
     
     // Prevent directory traversal
-    if (!filePath.startsWith(PUBLIC_DIR)) {
+    if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
         res.statusCode = 403;
         res.end('Access Denied');
         return;
@@ -134,15 +154,9 @@ const server = http.createServer((req, res) => {
     
     fs.stat(filePath, (err, stats) => {
         if (err || !stats.isFile()) {
-            // Serve admin.html for SPA fallback if file not found (excluding assets)
-            const ext = path.extname(filePath);
-            if (!ext || ext === '.html') {
-                filePath = path.join(PUBLIC_DIR, 'admin.html');
-            } else {
-                res.statusCode = 404;
-                res.end('File Not Found');
-                return;
-            }
+            res.statusCode = 404;
+            res.end('File Not Found');
+            return;
         }
         
         const ext = path.extname(filePath).toLowerCase();
