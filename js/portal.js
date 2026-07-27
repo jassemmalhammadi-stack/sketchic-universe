@@ -4,6 +4,25 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const portalFrame = document.getElementById('portal-frame');
+
+    function trackEvent(name, parameters = {}) {
+        if (typeof window.gtag === 'function') {
+            window.gtag('event', name, parameters);
+        }
+    }
+
+    document.addEventListener('click', event => {
+        const contentLink = event.target.closest('a.portal-btn');
+        if (!contentLink) return;
+
+        const section = contentLink.closest('.portal-section');
+        const sectionTitle = section?.querySelector('.portal-section-header h3')?.textContent?.trim() || 'unknown';
+        trackEvent('content_open', {
+            content_section: sectionTitle,
+            link_text: contentLink.textContent.trim(),
+            link_url: contentLink.href
+        });
+    });
     
     // Fetch the exported assets JSON
     fetch('public_assets.json')
@@ -581,6 +600,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (clashTrigger && clashExperiment && clashStatus) {
             clashTrigger.addEventListener('click', () => {
                 const isActive = clashExperiment.classList.toggle('is-colliding');
+                trackEvent('clash_pulse', { state: isActive ? 'started' : 'stopped' });
                 clashTrigger.setAttribute('aria-pressed', String(isActive));
                 clashTrigger.innerHTML = isActive
                     ? '<span>✦</span> أوقف النبضة'
