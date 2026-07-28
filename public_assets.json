@@ -1,1 +1,53 @@
-[]
+[
+    {
+        "id": "creator-manga-ink",
+        "title": "رسّام عالم الحبر الياباني",
+        "type": "creator",
+        "status": "finished",
+        "desc": "صانع عالم ورقي أحادي اللون تحكمه خطوط الحبر الداكنة، ونقاط التظليل، وخطوط الحركة السريعة.",
+        "subOptions": {
+            "artStyle": "Manga Ink / G-Pen",
+            "tool": "قلم الحبر الكوني"
+        }
+    },
+    {
+        "id": "creator-classical-oil",
+        "title": "رسّام عالم الزيت الكلاسيكي",
+        "type": "creator",
+        "status": "finished",
+        "desc": "صانع عالم غني بطبقات الزيت وملمس القماش، تحكمه الإضاءة الدرامية والظلال العميقة والحركة الانسيابية.",
+        "subOptions": {
+            "artStyle": "Classical Oil / Renaissance",
+            "tool": "الفرشاة الكونية"
+        }
+    },
+    {
+        "id": "creator-graphite-sketch",
+        "title": "رسّام عالم الرصاص",
+        "type": "creator",
+        "status": "finished",
+        "desc": "صانع عالم هش من خطوط الجرافيت والتظليل المتقاطع ومسحوق الفحم، حيث يمكن للمحو أن يغيّر الواقع.",
+        "subOptions": {
+            "artStyle": "Graphite Pencil Sketch",
+            "tool": "قلم الرصاص الوجودي"
+        }
+    },
+    {
+        "id": "character-kenji",
+        "title": "كينجي (Kenji)",
+        "type": "character",
+        "status": "finished",
+        "desc": "مراقب صامت من عالم الحبر الياباني، يخفي خلف هدوئه ردود فعل قتالية حادة وإصراراً على حماية استقلاله.",
+        "relatedCreator": "creator-manga-ink",
+        "relatedFaction": "keepers"
+    },
+    {
+        "id": "character-ara",
+        "title": "آرا الهجينة (Ara)",
+        "type": "character",
+        "status": "finished",
+        "desc": "شخصية مستيقظة تدرك هشاشة وجودها المرسوم، وتتحرك بحذر كي تحافظ على طبقاتها الزيتية من المحو.",
+        "relatedCreator": "creator-classical-oil",
+        "relatedFaction": "awakened"
+    }
+]
