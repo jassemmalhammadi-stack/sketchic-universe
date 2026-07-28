@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 creatorsHtml += `
                     <div class="portal-card" style="border-top: 4px solid #f59e0b; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
+                        ${c.imageUrl ? `<img src="${c.imageUrl}" alt="غلاف ${c.title}" loading="lazy" style="width:100%; aspect-ratio:3/2; object-fit:cover; display:block; border-radius:4px 4px 0 0;">` : ''}
                         <div class="portal-card-body">
                             <span class="portal-card-meta" style="color:#b45309; font-weight:700;">✍️ الرسام الكوني (The Drawer)</span>
                             <h4 style="margin: 10px 0 5px 0; font-size:1.2rem;">${c.title}</h4>
@@ -156,7 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 charsHtml += `
                     <div class="character-profile-card">
-                        <div class="character-avatar">👤</div>
+                        ${c.imageUrl
+                            ? `<img src="${c.imageUrl}" alt="صورة ${c.title}" loading="lazy" style="width:112px; aspect-ratio:1/1; object-fit:cover; border-radius:12px; flex:0 0 auto;">`
+                            : '<div class="character-avatar">👤</div>'}
                         <div class="character-info">
                             <h4>${c.title}</h4>
                             ${drawnByText ? `<span style="font-size:0.75rem; color:#b45309; font-weight:700; margin-bottom:4px; display:block;">✍️ ${drawnByText}</span>` : ''}
