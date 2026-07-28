@@ -21,7 +21,17 @@ const MIME_TYPES = {
 const { exec } = require('child_process');
 
 const ADMIN_USER = process.env.ADMIN_USERNAME || 'admin';
-const ADMIN_PASS = process.env.ADMIN_PASSWORD; // if not set in environment, bypass basic authentication
+const ADMIN_PASS = process.env.ADMIN_PASSWORD;
+const MAX_PUBLISH_BYTES = 1024 * 1024;
+const ALLOWED_ASSET_TYPES = new Set([
+    'source', 'creator', 'scenario', 'character', 'prop', 'voice',
+    'music', 'comic', 'video', 'game'
+]);
+
+if (process.env.K_SERVICE && !ADMIN_PASS) {
+    console.error('ADMIN_PASSWORD is required in Cloud Run.');
+    process.exit(1);
+}
 
 function checkAuth(req) {
     if (!ADMIN_PASS) return true; // Bypass authentication locally if no password is configured
@@ -38,7 +48,41 @@ function checkAuth(req) {
     return user === ADMIN_USER && pass === ADMIN_PASS;
 }
 
+function isValidPublishPayload(data) {
+    return Array.isArray(data) && data.every(asset => (
+        asset
+        && typeof asset === 'object'
+        && typeof asset.id === 'string'
+        && asset.id.length > 0
+        && asset.id.length <= 120
+        && typeof asset.title === 'string'
+        && asset.title.length > 0
+        && asset.title.length <= 300
+        && ALLOWED_ASSET_TYPES.has(asset.type)
+        && ['draft', 'finished'].includes(asset.status)
+    ));
+}
+
+function isPublicFile(relativePath) {
+    const normalized = relativePath.replace(/\\/g, '/');
+    return normalized === 'index.html'
+        || normalized === 'public_assets.json'
+        || normalized.startsWith('css/')
+        || normalized === 'js/portal.js'
+        || normalized.startsWith('assets/');
+}
+
 const server = http.createServer((req, res) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    res.setHeader(
+        'Content-Security-Policy',
+        "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data: https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com"
+    );
+
     let pathname;
     try {
         pathname = decodeURIComponent(new URL(req.url, `http://${req.headers.host || 'localhost'}`).pathname);
@@ -70,10 +114,21 @@ const server = http.createServer((req, res) => {
         let body = '';
         req.on('data', chunk => {
             body += chunk.toString();
+            if (Buffer.byteLength(body, 'utf8') > MAX_PUBLISH_BYTES) {
+                res.writeHead(413, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ success: false, error: 'Publish payload is too large' }));
+                req.destroy();
+            }
         });
         req.on('end', () => {
+            if (res.writableEnded) return;
             try {
                 const data = JSON.parse(body);
+                if (!isValidPublishPayload(data)) {
+                    res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+                    res.end(JSON.stringify({ success: false, error: 'Invalid asset payload' }));
+                    return;
+                }
                 fs.writeFile(path.join(PUBLIC_DIR, 'public_assets.json'), JSON.stringify(data, null, 4), 'utf8', (err) => {
                     if (err) {
                         res.writeHead(500, { 'Content-Type': 'application/json' });
@@ -149,6 +204,12 @@ const server = http.createServer((req, res) => {
     if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
         res.statusCode = 403;
         res.end('Access Denied');
+        return;
+    }
+
+    if (!isPublicFile(relativePath) && !(requiresAdmin && ['admin.html', 'js/app.js'].includes(relativePath.replace(/\\/g, '/')))) {
+        res.statusCode = 404;
+        res.end('File Not Found');
         return;
     }
     
