@@ -5,6 +5,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const portalFrame = document.getElementById('portal-frame');
 
+    function hasPublishedUrl(url) {
+        if (typeof url !== 'string' || url.includes('mock')) return false;
+        try {
+            return new URL(url).protocol === 'https:';
+        } catch {
+            return false;
+        }
+    }
+
     function trackEvent(name, parameters = {}) {
         if (typeof window.gtag === 'function') {
             window.gtag('event', name, parameters);
@@ -309,8 +318,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 let sourceLinkHtml = "";
                 if (s.relatedSource) {
                     const src = finishedAssets.find(a => a.id === s.relatedSource) || assets.find(a => a.id === s.relatedSource);
-                    if (src) {
-                        sourceLinkHtml = `<div style="font-size:0.8rem; color:#64748b; margin: 4px 0 10px 0;">📖 مقتبس من المصدر: <a href="${src.driveUrl}" target="_blank" style="color:var(--color-cyan); text-decoration:underline; font-weight:bold;">${src.title}</a></div>`;
+                    if (src && hasPublishedUrl(src.driveUrl)) {
+                        sourceLinkHtml = `<div style="font-size:0.8rem; color:#64748b; margin: 4px 0 10px 0;">📖 مقتبس من المصدر: <a href="${src.driveUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--color-cyan); text-decoration:underline; font-weight:bold;">${src.title}</a></div>`;
                     }
                 }
                 
@@ -325,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             ${sourceLinkHtml}
                             <p>${s.desc}</p>
                             <div class="portal-card-action">
-                                <a href="${s.driveUrl}" target="_blank" class="portal-btn portal-btn-primary">قراءة السيناريو الكامل على Google Docs</a>
+                                ${hasPublishedUrl(s.driveUrl) ? `<a href="${s.driveUrl}" target="_blank" rel="noopener noreferrer" class="portal-btn portal-btn-primary">قراءة السيناريو الكامل</a>` : '<span class="portal-btn portal-btn-outline" aria-disabled="true">السيناريو الكامل قريباً</span>'}
                             </div>
                         </div>
                     </div>

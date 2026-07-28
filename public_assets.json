@@ -54,5 +54,24 @@
         "desc": "شخصية مستيقظة تدرك هشاشة وجودها المرسوم، وتتحرك بحذر كي تحافظ على طبقاتها الزيتية من المحو.",
         "relatedCreator": "creator-classical-oil",
         "relatedFaction": "awakened"
+    },
+    {
+        "id": "scenario-first-boundary-pulse",
+        "title": "نبضة الحدّ الأول",
+        "type": "scenario",
+        "status": "finished",
+        "driveUrl": "https://sketchic.net/assets/stories/first-boundary-pulse.html",
+        "desc": "يلتقي كينجي وآرا عند شقّ بين عالم الحبر وعالم الزيت، ويضطران إلى تثبيت خط التماس معاً قبل أن تترك قوى المحو أثرها الأول.",
+        "relatedCharacters": [
+            "character-kenji",
+            "character-ara"
+        ],
+        "subOptions": {
+            "genre": "فانتازيا كونية / مغامرة غامضة",
+            "duration": "3–4 دقائق",
+            "parallelLayer": "الطبقة الأولى: الوجود المادي",
+            "framerate": "12fps ↔ 60fps",
+            "visualRule": "12fps حبر ياباني مقابل 60fps زيت كلاسيكي بلا مزج"
+        }
     }
 ]
