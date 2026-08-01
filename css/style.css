@@ -642,6 +642,30 @@ h1, h2, h3, h4, h5, h6 {
     border-color: rgba(16, 185, 129, 0.15);
 }
 
+.reveal-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    margin: 0.55rem 0 0;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.reveal-live {
+    color: #166534;
+    background: #dcfce7;
+    border: 1px solid #86efac;
+}
+
+.reveal-teaser {
+    color: #6b21a8;
+    background: #f3e8ff;
+    border: 1px solid #d8b4fe;
+}
+
 .asset-card-body h3 {
     font-size: 1.15rem;
     margin-bottom: 0.5rem;
