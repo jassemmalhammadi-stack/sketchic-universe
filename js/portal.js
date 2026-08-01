@@ -97,6 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
             creators.forEach(c => {
                 const style = (c.subOptions && c.subOptions.artStyle) ? c.subOptions.artStyle : "أسلوب رسم متفرد";
                 const tool = (c.subOptions && c.subOptions.tool) ? c.subOptions.tool : "أداة كونيّة";
+                const releaseStage = Number(c.releaseStage) || 1;
+                const publicLabel = c.publicLabel || `المرحلة ${releaseStage}`;
+                const releaseClass = releaseStage === 1 ? "reveal-live" : "reveal-teaser";
                 
                 let sourceLinkHtml = "";
                 if (c.relatedSource) {
@@ -111,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${c.imageUrl ? `<img src="${c.imageUrl}" alt="غلاف ${c.title}" loading="lazy" style="width:100%; aspect-ratio:3/2; object-fit:cover; display:block; border-radius:4px 4px 0 0;">` : ''}
                         <div class="portal-card-body">
                             <span class="portal-card-meta" style="color:#b45309; font-weight:700;">✍️ الرسام الكوني (The Drawer)</span>
+                            <span class="reveal-badge ${releaseClass}">${publicLabel}</span>
                             <h4 style="margin: 10px 0 5px 0; font-size:1.2rem;">${c.title}</h4>
                             <div style="font-size:0.75rem; color:#d97706; margin-bottom: 10px;">
                                 <span>🎨 الأسلوب الحاكم: ${style}</span><br>

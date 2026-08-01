@@ -4,6 +4,8 @@
         "title": "رسّام عالم الحبر الياباني",
         "type": "creator",
         "status": "finished",
+        "releaseStage": 1,
+        "publicLabel": "المرحلة الأولى — مكشوف",
         "imageUrl": "assets/covers/world-manga-ink.webp",
         "desc": "صانع عالم ورقي أحادي اللون تحكمه خطوط الحبر الداكنة، ونقاط التظليل، وخطوط الحركة السريعة.",
         "subOptions": {
@@ -16,6 +18,8 @@
         "title": "رسّام عالم الزيت الكلاسيكي",
         "type": "creator",
         "status": "finished",
+        "releaseStage": 1,
+        "publicLabel": "المرحلة الأولى — مكشوف",
         "imageUrl": "assets/covers/world-classical-oil.webp",
         "desc": "صانع عالم غني بطبقات الزيت وملمس القماش، تحكمه الإضاءة الدرامية والظلال العميقة والحركة الانسيابية.",
         "subOptions": {
@@ -28,6 +32,8 @@
         "title": "رسّام عالم الرصاص",
         "type": "creator",
         "status": "finished",
+        "releaseStage": 2,
+        "publicLabel": "شوهدت إشاراته — الكشف الكامل لاحقاً",
         "imageUrl": "assets/covers/world-graphite.webp",
         "desc": "صانع عالم هش من خطوط الجرافيت والتظليل المتقاطع ومسحوق الفحم، حيث يمكن للمحو أن يغيّر الواقع.",
         "subOptions": {
