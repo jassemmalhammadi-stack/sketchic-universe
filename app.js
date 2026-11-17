@@ -1,3 +1,5 @@
+const SHOW_CONVERGENCE = false;
+
 const FILMS = {
   "erasers-edge": {
     titleAr: "حارس الممحاة",
@@ -29,12 +31,6 @@ const FILMS = {
     full: "assets/videos/The_Stained_Glass_Echo_Full_Film.mp4",
     shorts: "assets/videos/The_Stained_Glass_Echo_Shorts_9x16.mp4",
   },
-  convergence: {
-    titleAr: "تقاطع العوالم",
-    titleEn: "The Sketchic Convergence",
-    full: "assets/videos/The_Sketchic_Convergence_Full_Film.mp4",
-    shorts: "assets/videos/The_Sketchic_Convergence_Shorts_9x16.mp4",
-  },
 };
 
 const I18N = {
@@ -52,11 +48,11 @@ const I18N = {
       "عالم سينمائي هجين يجمع بين الرسومات اليدوية ثنائية الأبعاد (الحبر، الفحم، الألوان المائية، التطريز، والزجاج الملوّن) والبيئات الواقعية الملموسة — حيث تحافظ كل خامة على روحها الأصلية تحت إضاءة الغروب والفوانيس.",
     heroWatch: "استكشف كتالوج الأفلام",
     heroLaws: "دستور العالم الكوني",
-    statFilms: "أفلام الموسم الأول",
+    statFilms: "عوالم وأفلام معتمدة",
     statFormats: "نسخ سينمائية وشورتس",
     statChars: "شخصيات وأدوات مثبتة",
     filmsKicker: "01 / الكتالوج الرسمي",
-    filmsTitle: "أفلام الموسم الأول الستة",
+    filmsTitle: "العوالم الخمسة المعتمدة",
     filmsSub:
       "اختر بين النسخة السينمائية الكاملة (16:9) أو نسخة الشورتس العمودية (9:16) للمشاهدة الفورية داخل المشغّل.",
     f1Genre: "مغامرة وخيال",
@@ -79,10 +75,6 @@ const I18N = {
     f5Title: "لحن الزجاج الملوّن",
     f5Desc:
       "في قاعة زجاجية حجرية مهجورة، تنفصل حارسة من الزجاج الملوّن ذي الإطار الرصاصي الداكن عن نافذة قوطية فقدت ألوانها، لتجمع النوتات الحبرية الذهبية بقوسها المنشوري وتعيد اللحن والضوء.",
-    f6Genre: "ختام الموسم الأول",
-    f6Title: "تقاطع العوالم",
-    f6Desc:
-      'فوق طاولة مرسم رئيسية تلتقي فيها معالم العوالم الخمسة، تهبّ "عاصفة المحو الكبرى" لمسح كل شيء، فيتحد أبطال Sketchic Universe الخمسة بأدواتهم الفنية لحماية عالمهم المشترك.',
     watchFull: "مشاهدة الفيلم (16:9)",
     watchShorts: "شورتس (9:16)",
     openFlow: "فتح المشروع في Google Flow ↗",
@@ -101,7 +93,7 @@ const I18N = {
     charsKicker: "03 / الشخصيات والأدوات المثبّتة",
     charsTitle: "أرشيف الأبطال والعناصر المرجعية",
     charsSub: "الشخصيات والأدوات المعتمَدة في Google Flow للحفاظ على الاتساق البصري عبر جميع المشاهد.",
-    filterAll: "الكل (17)",
+    filterAll: "الكل (15)",
     roleHero: "البطل",
     roleHeroine: "البطلة",
     roleArtifact: "الأداة المنقذة",
@@ -111,8 +103,6 @@ const I18N = {
     roleCompanion: "المرافق",
     roleLandmark: "المعلم",
     roleElement: "العنصر",
-    roleMasterLandmark: "معلم التقاطع",
-    roleUnityArtifact: "شعار التحالف",
     c1Name: "فارس الحبر",
     c1Desc:
       "محارب صغير بطول إصبع مرسوم بالحبر الأسود والفحم، يرتدي عباءة ورقية ممزقة الحواف ويحمل سيفاً من سنّ قلم حبر رفيع، بعينين متوهجتين بلون أبيض دافئ.",
@@ -158,16 +148,10 @@ const I18N = {
     c15Name: "النوتات الحبرية الذهبية",
     c15Desc:
       "نوتات موسيقية مرسومة بالحبر الذهبي وشرائط ألوان زجاجية متوهجة تسبح في الهواء وتُلقي انعكاسات قوس قزح على البلاط الحجري.",
-    c16Name: "طاولة التقاطع الكبرى",
-    c16Desc:
-      "طاولة مرسم خشبية رئيسية تجتمع عليها دفاتر الحبر، الورق الشفاف المائي، تروس التطريز الذهبي، وقوس الزجاج الملوّن في مواجهة عاصفة المحو.",
-    c17Name: "شعار التحالف المتوهج",
-    c17Desc:
-      "سنّ قلم ذهبي، قوس منشوري زجاجي، إبرة خياطة ذهبية، وخطوط حبر تتحد في دائرة نور متوهجة لدفع ضباب المحو بعيداً عن العوالم.",
     voicesKicker: "04 / الأصوات المثبّتة",
     voicesTitle: "سجل أصوات الشخصيات في Google Flow",
     voicesSub:
-      "الأصوات الرسمية المعتمدة لبطاقات الشخصيات لضمان ثبات النبرة والأداء الصوتي عبر جميع الحلقات وتقاطع العوالم.",
+      "الأصوات الرسمية المعتمدة لبطاقات الشخصيات لضمان ثبات النبرة والأداء الصوتي عبر جميع العوالم والمشاهد.",
     v1Trait: "Ink Knight Voice — شجاع وحماسي",
     v2Trait: "Explorer Voice — فضولي ومغامر",
     v3Trait: "Cartographer Voice — هادئ ومتأمّل",
@@ -196,11 +180,11 @@ const I18N = {
       "A hybrid cinematic universe uniting 2D hand-drawn ink, charcoal, watercolor, embroidery, and stained-glass art with tactile photorealistic worlds — preserving every medium's raw texture under golden hour sunbeams and lantern light.",
     heroWatch: "Explore the Film Catalog",
     heroLaws: "Read the Cosmic Laws",
-    statFilms: "Season 1 Short Films",
+    statFilms: "Official Worlds & Films",
     statFormats: "Cinema & Shorts Cuts",
     statChars: "Canonical Ingredients",
     filmsKicker: "01 / Official Catalog",
-    filmsTitle: "Season 1 — Six Canonical Films",
+    filmsTitle: "The Five Canonical Worlds",
     filmsSub:
       "Switch seamlessly between the 16:9 widescreen Full Film and the 9:16 vertical Shorts cut right inside the theater player.",
     f1Genre: "Fantasy & Adventure",
@@ -223,10 +207,6 @@ const I18N = {
     f5Title: "The Stained-Glass Echo",
     f5Desc:
       "In a sunlit stone conservatory, a 2D stained-glass mosaic guardian steps down from a fading gothic rose window, gathering golden ink musical notes with her prism bow to restore color and melody.",
-    f6Genre: "Season 1 Finale",
-    f6Title: "The Sketchic Convergence",
-    f6Desc:
-      "Upon a grand master artist table where all five worlds converge, a great Eraser Storm threatens to wipe everything clean — uniting Ink Knight, The Explorer, Ink Fox, Thread Weaver, and Glass Guardian.",
     watchFull: "Watch Full Film (16:9)",
     watchShorts: "Shorts Cut (9:16)",
     openFlow: "Open Project in Google Flow ↗",
@@ -245,7 +225,7 @@ const I18N = {
     charsKicker: "03 / Canonical Ingredients",
     charsTitle: "Characters & Artifacts Archive",
     charsSub: "Reference characters and tools locked for Google Flow to preserve visual continuity across scenes.",
-    filterAll: "All (17)",
+    filterAll: "All (15)",
     roleHero: "Protagonist",
     roleHeroine: "Protagonist",
     roleArtifact: "Saving Artifact",
@@ -255,8 +235,6 @@ const I18N = {
     roleCompanion: "Companion",
     roleLandmark: "Landmark",
     roleElement: "Element",
-    roleMasterLandmark: "Convergence Landmark",
-    roleUnityArtifact: "Alliance Crest",
     c1Name: "Ink Knight",
     c1Desc:
       "A finger-sized 2D black ink and charcoal warrior wearing a tattered paper cape, wielding a fountain-pen nib sword with glowing warm-white eyes.",
@@ -302,16 +280,10 @@ const I18N = {
     c15Name: "Golden Ink Musical Notes",
     c15Desc:
       "Glowing hand-drawn 2D golden ink musical notes and shimmering stained-glass color ribbons casting rainbow caustics onto real stone flagstones.",
-    c16Name: "The Grand Convergence Desk",
-    c16Desc:
-      "A grand oak master artist table where open sketchbooks, translucent watercolor vellum, clockwork gears, and a stained-glass arch meet against an advancing eraser storm.",
-    c17Name: "The Radiant Sketchic Crest",
-    c17Desc:
-      "A golden fountain pen nib, stained-glass prism bow, golden sewing needle, and swirling ink lines converging in a radiant circle of light to push back the erasure mist.",
     voicesKicker: "04 / Locked Voices",
     voicesTitle: "Google Flow Character Voices",
     voicesSub:
-      "Official voice bindings locked per character card to preserve vocal consistency across all episodes and the Season 1 convergence.",
+      "Official voice bindings locked per character card to preserve vocal consistency across all worlds and scenes.",
     v1Trait: "Ink Knight Voice — Brave & Spirited",
     v2Trait: "Explorer Voice — Curious & Adventurous",
     v3Trait: "Cartographer Voice — Calm & Contemplative",
@@ -327,6 +299,142 @@ const I18N = {
     footerTag: "Sketchic Universe — Hybrid Cinema Studio",
   },
 };
+
+function enableConvergenceIfUnlocked() {
+  if (!SHOW_CONVERGENCE) return;
+
+  FILMS.convergence = {
+    titleAr: "تقاطع العوالم",
+    titleEn: "The Sketchic Convergence",
+    full: "assets/videos/The_Sketchic_Convergence_Full_Film.mp4",
+    shorts: "assets/videos/The_Sketchic_Convergence_Shorts_9x16.mp4",
+  };
+
+  Object.assign(I18N.ar, {
+    statFilms: "أفلام الموسم الأول",
+    filmsTitle: "أفلام الموسم الأول الستة",
+    filterAll: "الكل (17)",
+    f6Genre: "ختام الموسم الأول",
+    f6Title: "تقاطع العوالم",
+    f6Desc:
+      'فوق طاولة مرسم رئيسية تلتقي فيها معالم العوالم الخمسة، تهبّ "عاصفة المحو الكبرى" لمسح كل شيء، فيتحد أبطال Sketchic Universe الخمسة بأدواتهم الفنية لحماية عالمهم المشترك.',
+    roleMasterLandmark: "معلم التقاطع",
+    roleUnityArtifact: "شعار التحالف",
+    c16Name: "طاولة التقاطع الكبرى",
+    c16Desc:
+      "طاولة مرسم خشبية رئيسية تجتمع عليها دفاتر الحبر، الورق الشفاف المائي، تروس التطريز الذهبي، وقوس الزجاج الملوّن في مواجهة عاصفة المحو.",
+    c17Name: "شعار التحالف المتوهج",
+    c17Desc:
+      "سنّ قلم ذهبي، قوس منشوري زجاجي، إبرة خياطة ذهبية، وخطوط حبر تتحد في دائرة نور متوهجة لدفع ضباب المحو بعيداً عن العوالم.",
+    voicesSub:
+      "الأصوات الرسمية المعتمدة لبطاقات الشخصيات لضمان ثبات النبرة والأداء الصوتي عبر جميع الحلقات وتقاطع العوالم.",
+  });
+
+  Object.assign(I18N.en, {
+    statFilms: "Season 1 Short Films",
+    filmsTitle: "Season 1 — Six Canonical Films",
+    filterAll: "All (17)",
+    f6Genre: "Season 1 Finale",
+    f6Title: "The Sketchic Convergence",
+    f6Desc:
+      "Upon a grand master artist table where all five worlds converge, a great Eraser Storm threatens to wipe everything clean — uniting Ink Knight, The Explorer, Ink Fox, Thread Weaver, and Glass Guardian.",
+    roleMasterLandmark: "Convergence Landmark",
+    roleUnityArtifact: "Alliance Crest",
+    c16Name: "The Grand Convergence Desk",
+    c16Desc:
+      "A grand oak master artist table where open sketchbooks, translucent watercolor vellum, clockwork gears, and a stained-glass arch meet against an advancing eraser storm.",
+    c17Name: "The Radiant Sketchic Crest",
+    c17Desc:
+      "A golden fountain pen nib, stained-glass prism bow, golden sewing needle, and swirling ink lines converging in a radiant circle of light to push back the erasure mist.",
+    voicesSub:
+      "Official voice bindings locked per character card to preserve vocal consistency across all episodes and the Season 1 convergence.",
+  });
+
+  const filmsNum = document.getElementById("statFilmsNum");
+  const charsNum = document.getElementById("statCharsNum");
+  if (filmsNum) filmsNum.textContent = "06";
+  if (charsNum) charsNum.textContent = "17";
+
+  const filmsGrid = document.querySelector(".films-grid");
+  if (filmsGrid) {
+    filmsGrid.insertAdjacentHTML(
+      "beforeend",
+      `
+        <article class="film-card film-card-finale" data-film="convergence">
+          <div class="film-preview">
+            <video class="film-thumb-video" muted loop playsinline preload="metadata">
+              <source src="assets/videos/The_Sketchic_Convergence_Full_Film.mp4#t=2" type="video/mp4" />
+            </video>
+            <div class="film-overlay">
+              <span class="film-number">06</span>
+              <span class="film-duration">48s • Finale</span>
+            </div>
+            <button class="play-trigger" type="button" data-open-film="convergence" data-format="16:9" aria-label="Play The Sketchic Convergence">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="film-body">
+            <div class="film-tags">
+              <span class="tag tag-finale" data-i18n="f6Genre">ختام الموسم الأول</span>
+              <span class="tag tag-ink">All 5 Media × Master Desk</span>
+            </div>
+            <h3 class="film-title">
+              <span data-i18n="f6Title">تقاطع العوالم</span>
+              <small class="film-title-en">The Sketchic Convergence</small>
+            </h3>
+            <p class="film-logline" data-i18n="f6Desc"></p>
+            <div class="film-palette">
+              <span class="swatch" style="background:#111111" title="#111111 Charcoal Ink"></span>
+              <span class="swatch" style="background:#38A3A5" title="#38A3A5 Vellum Teal"></span>
+              <span class="swatch" style="background:#F4C44E" title="#F4C44E Embroidery Gold"></span>
+              <span class="swatch" style="background:#C81D3B" title="#C81D3B Stained-Glass Ruby"></span>
+            </div>
+            <div class="film-actions">
+              <button class="btn btn-sm btn-primary" type="button" data-open-film="convergence" data-format="16:9" data-i18n="watchFull">مشاهدة الفيلم (16:9)</button>
+              <button class="btn btn-sm btn-outline" type="button" data-open-film="convergence" data-format="9:16" data-i18n="watchShorts">شورتس (9:16)</button>
+            </div>
+            <a href="https://flow.google.com/project/923357ab-84bc-4413-8c3b-328fec3a6f03" target="_blank" rel="noopener noreferrer" class="flow-link" data-i18n="openFlow">فتح المشروع في Google Flow ↗</a>
+          </div>
+        </article>`
+    );
+  }
+
+  const filterBar = document.querySelector(".filter-bar");
+  if (filterBar) {
+    filterBar.insertAdjacentHTML(
+      "beforeend",
+      `<button class="filter-btn" type="button" data-filter="convergence" data-i18n="f6Title">تقاطع العوالم</button>`
+    );
+  }
+
+  const charsGrid = document.getElementById("charsGrid");
+  if (charsGrid) {
+    charsGrid.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div class="char-card" data-film-group="convergence">
+          <div class="char-top">
+            <span class="char-role" data-i18n="roleMasterLandmark">معلم التقاطع</span>
+            <span class="char-film-badge badge-finale">The Sketchic Convergence</span>
+          </div>
+          <h3 data-i18n="c16Name">طاولة التقاطع الكبرى</h3>
+          <span class="char-en">The Grand Convergence Desk</span>
+          <p data-i18n="c16Desc"></p>
+        </div>
+        <div class="char-card" data-film-group="convergence">
+          <div class="char-top">
+            <span class="char-role" data-i18n="roleUnityArtifact">شعار التحالف</span>
+            <span class="char-film-badge badge-finale">The Sketchic Convergence</span>
+          </div>
+          <h3 data-i18n="c17Name">شعار التحالف المتوهج</h3>
+          <span class="char-en">The Radiant Sketchic Crest</span>
+          <p data-i18n="c17Desc"></p>
+        </div>`
+    );
+  }
+}
+
+enableConvergenceIfUnlocked();
 
 let currentLang = localStorage.getItem("sketchic_lang") || "ar";
 let activeFilmKey = null;

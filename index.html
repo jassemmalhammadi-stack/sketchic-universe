@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sketchic.net — Sketchic Universe | عالم سكتشيك السينمائي</title>
-  <meta name="description" content="الموقع الرسمي لعالم سكتشيك (Sketchic Universe): الموسم الأول الكامل (6 أفلام قصيرة) يمزج الرسم اليدوي بالحبر والألوان المائية والتطريز والزجاج الملوّن مع السينما الواقعية." />
+  <meta name="description" content="الموقع الرسمي لعالم سكتشيك (Sketchic Universe): خمسة عوالم وأفلام قصيرة تمزج الرسم اليدوي بالحبر والألوان المائية والتطريز والزجاج الملوّن مع السينما الواقعية." />
   <meta property="og:title" content="Sketchic.net — Sketchic Universe" />
-  <meta property="og:description" content="حيث تصطدم خطوط الحبر اليدوية بالسينما الواقعية — كتالوج أفلام الموسم الأول الستة، القوانين الكونية، الشخصيات، والأصوات المثبتة." />
+  <meta property="og:description" content="حيث تصطدم خطوط الحبر اليدوية بالسينما الواقعية — كتالوج العوالم الخمسة المعتمدة، القوانين الكونية، الشخصيات، والأصوات المثبتة." />
   <meta property="og:image" content="assets/images/YouTube_Channel_Banner_2560x1440.png" />
   <link rel="icon" type="image/png" href="assets/images/YouTube_Channel_Profile_800x800.png" />
 
@@ -93,8 +93,8 @@
 
       <div class="hero-stats">
         <div class="stat-item">
-          <span class="stat-num">06</span>
-          <span class="stat-label" data-i18n="statFilms">أفلام الموسم الأول</span>
+          <span class="stat-num" id="statFilmsNum">05</span>
+          <span class="stat-label" data-i18n="statFilms">عوالم وأفلام معتمدة</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
@@ -103,7 +103,7 @@
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
-          <span class="stat-num">17</span>
+          <span class="stat-num" id="statCharsNum">15</span>
           <span class="stat-label" data-i18n="statChars">شخصيات وأدوات مثبتة</span>
         </div>
       </div>
@@ -115,7 +115,7 @@
     <div class="container">
       <div class="section-header">
         <span class="section-kicker" data-i18n="filmsKicker">01 / الكتالوج الرسمي</span>
-        <h2 class="section-title" data-i18n="filmsTitle">أفلام الموسم الأول الستة</h2>
+        <h2 class="section-title" data-i18n="filmsTitle">العوالم الخمسة المعتمدة</h2>
         <p class="section-subtitle" data-i18n="filmsSub">
           اختر بين النسخة السينمائية الكاملة (16:9) أو نسخة الشورتس العمودية (9:16) للمشاهدة الفورية داخل المشغّل.
         </p>
@@ -336,49 +336,6 @@
             </a>
           </div>
         </article>
-
-        <!-- Film 6: The Sketchic Convergence -->
-        <article class="film-card film-card-finale" data-film="convergence">
-          <div class="film-preview">
-            <video class="film-thumb-video" muted loop playsinline preload="metadata">
-              <source src="assets/videos/The_Sketchic_Convergence_Full_Film.mp4#t=2" type="video/mp4" />
-            </video>
-            <div class="film-overlay">
-              <span class="film-number">06</span>
-              <span class="film-duration">48s • Finale</span>
-            </div>
-            <button class="play-trigger" type="button" data-open-film="convergence" data-format="16:9" aria-label="Play The Sketchic Convergence">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
-
-          <div class="film-body">
-            <div class="film-tags">
-              <span class="tag tag-finale" data-i18n="f6Genre">ختام الموسم الأول</span>
-              <span class="tag tag-ink">All 5 Media × Master Desk</span>
-            </div>
-            <h3 class="film-title">
-              <span data-i18n="f6Title">تقاطع العوالم</span>
-              <small class="film-title-en">The Sketchic Convergence</small>
-            </h3>
-            <p class="film-logline" data-i18n="f6Desc">
-              فوق طاولة مرسم رئيسية تلتقي فيها معالم العوالم الخمسة، تهبّ "عاصفة المحو الكبرى" لمسح كل شيء، فيتحد أبطال Sketchic Universe الخمسة بأدواتهم الفنية لحماية عالمهم المشترك.
-            </p>
-            <div class="film-palette">
-              <span class="swatch" style="background:#111111" title="#111111 Charcoal Ink"></span>
-              <span class="swatch" style="background:#38A3A5" title="#38A3A5 Vellum Teal"></span>
-              <span class="swatch" style="background:#F4C44E" title="#F4C44E Embroidery Gold"></span>
-              <span class="swatch" style="background:#C81D3B" title="#C81D3B Stained-Glass Ruby"></span>
-            </div>
-            <div class="film-actions">
-              <button class="btn btn-sm btn-primary" type="button" data-open-film="convergence" data-format="16:9" data-i18n="watchFull">مشاهدة الفيلم (16:9)</button>
-              <button class="btn btn-sm btn-outline" type="button" data-open-film="convergence" data-format="9:16" data-i18n="watchShorts">شورتس (9:16)</button>
-            </div>
-            <a href="https://flow.google.com/project/923357ab-84bc-4413-8c3b-328fec3a6f03" target="_blank" rel="noopener noreferrer" class="flow-link" data-i18n="openFlow">
-              فتح المشروع في Google Flow ↗
-            </a>
-          </div>
-        </article>
       </div>
     </div>
   </section>
@@ -434,13 +391,12 @@
       </div>
 
       <div class="filter-bar" role="tablist" aria-label="Filter Characters by Film">
-        <button class="filter-btn active" type="button" data-filter="all" data-i18n="filterAll">الكل (17)</button>
+        <button class="filter-btn active" type="button" data-filter="all" data-i18n="filterAll">الكل (15)</button>
         <button class="filter-btn" type="button" data-filter="erasers-edge" data-i18n="f1Title">حارس الممحاة</button>
         <button class="filter-btn" type="button" data-filter="paper-sky" data-i18n="f2Title">نافذة السحاب</button>
         <button class="filter-btn" type="button" data-filter="ink-thief" data-i18n="f3Title">سارق الظلال المرسومة</button>
         <button class="filter-btn" type="button" data-filter="clockwork-thread" data-i18n="f4Title">حائك الزمن</button>
         <button class="filter-btn" type="button" data-filter="stained-glass" data-i18n="f5Title">لحن الزجاج الملوّن</button>
-        <button class="filter-btn" type="button" data-filter="convergence" data-i18n="f6Title">تقاطع العوالم</button>
       </div>
 
       <div class="chars-grid" id="charsGrid">
@@ -598,27 +554,6 @@
           <span class="char-en">Golden Ink Musical Notes</span>
           <p data-i18n="c15Desc">نوتات موسيقية مرسومة بالحبر الذهبي وشرائط ألوان زجاجية متوهجة تسبح في الهواء وتُلقي انعكاسات قوس قزح على البلاط الحجري.</p>
         </div>
-
-        <!-- The Sketchic Convergence -->
-        <div class="char-card" data-film-group="convergence">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleMasterLandmark">معلم التقاطع</span>
-            <span class="char-film-badge badge-finale">The Sketchic Convergence</span>
-          </div>
-          <h3 data-i18n="c16Name">طاولة التقاطع الكبرى</h3>
-          <span class="char-en">The Grand Convergence Desk</span>
-          <p data-i18n="c16Desc">طاولة مرسم خشبية رئيسية تجتمع عليها دفاتر الحبر، الورق الشفاف المائي، تروس التطريز الذهبي، وقوس الزجاج الملوّن في مواجهة عاصفة المحو.</p>
-        </div>
-
-        <div class="char-card" data-film-group="convergence">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleUnityArtifact">شعار التحالف</span>
-            <span class="char-film-badge badge-finale">The Sketchic Convergence</span>
-          </div>
-          <h3 data-i18n="c17Name">شعار التحالف المتوهج</h3>
-          <span class="char-en">The Radiant Sketchic Crest</span>
-          <p data-i18n="c17Desc">سنّ قلم ذهبي، قوس منشوري زجاجي، إبرة خياطة ذهبية، وخطوط حبر تتحد في دائرة نور متوهجة لدفع ضباب المحو بعيداً عن العوالم.</p>
-        </div>
       </div>
     </div>
   </section>
@@ -630,7 +565,7 @@
         <span class="section-kicker" data-i18n="voicesKicker">04 / الأصوات المثبّتة</span>
         <h2 class="section-title" data-i18n="voicesTitle">سجل أصوات الشخصيات في Google Flow</h2>
         <p class="section-subtitle" data-i18n="voicesSub">
-          الأصوات الرسمية المعتمدة لبطاقات الشخصيات لضمان ثبات النبرة والأداء الصوتي عبر جميع الحلقات وتقاطع العوالم.
+          الأصوات الرسمية المعتمدة لبطاقات الشخصيات لضمان ثبات النبرة والأداء الصوتي عبر جميع العوالم والمشاهد.
         </p>
       </div>
 

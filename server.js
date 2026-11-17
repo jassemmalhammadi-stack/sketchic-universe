@@ -5,6 +5,7 @@ const path = require('path');
 const PORT = Number(process.env.PORT) || 8080;
 const HOST = process.env.HOST || '0.0.0.0';
 const PUBLIC_DIR = __dirname;
+const ENABLE_CONVERGENCE = process.env.ENABLE_CONVERGENCE === 'true';
 const MAX_RANGE_CHUNK = 8 * 1024 * 1024; // 8 MiB per range response (under Cloud Run 32 MiB limit)
 const STREAM_CHUNKED_THRESHOLD = 20 * 1024 * 1024;
 
@@ -26,6 +27,9 @@ const MIME_TYPES = {
 
 function isPublicFile(relativePath) {
   const normalized = relativePath.replace(/\\/g, '/');
+  if (!ENABLE_CONVERGENCE && normalized.includes('The_Sketchic_Convergence')) {
+    return false;
+  }
   return (
     normalized === 'index.html' ||
     normalized === 'styles.css' ||
