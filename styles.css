@@ -537,6 +537,27 @@ a {
   font-family: var(--font-mono);
 }
 
+.tag-indigo {
+  background: rgba(129, 140, 248, 0.16);
+  color: #a5b4fc;
+}
+
+.tag-ruby {
+  background: rgba(225, 29, 72, 0.18);
+  color: #fda4af;
+}
+
+.tag-finale {
+  background: linear-gradient(135deg, rgba(232, 168, 56, 0.28), rgba(225, 29, 72, 0.22));
+  color: #fde68a;
+  border: 1px solid rgba(232, 168, 56, 0.4);
+}
+
+.film-card-finale {
+  border-color: rgba(232, 168, 56, 0.42);
+  box-shadow: 0 0 32px rgba(232, 168, 56, 0.12);
+}
+
 .film-title {
   display: flex;
   flex-direction: column;
@@ -718,6 +739,21 @@ a {
   color: #66d2d4;
 }
 
+.badge-indigo {
+  background: rgba(129, 140, 248, 0.16);
+  color: #a5b4fc;
+}
+
+.badge-ruby {
+  background: rgba(225, 29, 72, 0.18);
+  color: #fda4af;
+}
+
+.badge-finale {
+  background: linear-gradient(135deg, rgba(232, 168, 56, 0.28), rgba(225, 29, 72, 0.22));
+  color: #fde68a;
+}
+
 .char-card h3 {
   font-size: 1.2rem;
   font-weight: 800;
@@ -734,6 +770,69 @@ a {
 .char-card p {
   font-size: 0.9rem;
   color: #cfc7b8;
+}
+
+/* Voices Registry Section */
+.voices-section {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--ink-border);
+}
+
+.voices-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.35rem;
+}
+
+.voice-card {
+  background: var(--bg-card);
+  border: 1px solid var(--ink-border);
+  border-radius: var(--radius-md);
+  padding: 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.voice-card:hover {
+  border-color: rgba(232, 168, 56, 0.4);
+  transform: translateY(-3px);
+}
+
+.voice-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.voice-char {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: var(--paper-cream);
+}
+
+.voice-name-chip {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: var(--gold-soft);
+  border: 1px solid rgba(232, 168, 56, 0.35);
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+}
+
+.voice-film {
+  font-size: 0.82rem;
+  color: var(--paper-muted);
+  font-weight: 600;
+}
+
+.voice-trait {
+  font-size: 0.9rem;
+  color: #dcd4c6;
 }
 
 /* Studio Section */
@@ -962,7 +1061,8 @@ a {
 @media (max-width: 1024px) {
   .films-grid,
   .laws-grid,
-  .chars-grid {
+  .chars-grid,
+  .voices-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .studio-grid {
@@ -993,7 +1093,8 @@ a {
 
   .films-grid,
   .laws-grid,
-  .chars-grid {
+  .chars-grid,
+  .voices-grid {
     grid-template-columns: 1fr;
   }
 
