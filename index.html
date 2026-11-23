@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sketchic.net — Sketchic Universe | عالم سكتشيك السينمائي</title>
-  <meta name="description" content="الموقع الرسمي لعالم سكتشيك (Sketchic Universe): خمسة عوالم وأفلام قصيرة تمزج الرسم اليدوي بالحبر والألوان المائية والتطريز والزجاج الملوّن مع السينما الواقعية." />
+  <meta name="description" content="الموقع الرسمي لعالم سكتشيك (Sketchic Universe): 15 عالماً وحلقةً عبر الموسمين الأول والثاني تمزج الرسم اليدوي بالحبر والألوان المائية والتطريز والأوريغامي والزجاج الملوّن مع السينما الواقعية." />
   <meta property="og:title" content="Sketchic.net — Sketchic Universe" />
-  <meta property="og:description" content="حيث تصطدم خطوط الحبر اليدوية بالسينما الواقعية — كتالوج العوالم الخمسة المعتمدة، القوانين الكونية، الشخصيات، والأصوات المثبتة." />
+  <meta property="og:description" content="حيث تصطدم خطوط الحبر اليدوية بالسينما الواقعية — كتالوج الموسمين الأول والثاني (15 عالماً وحلقةً)، القصص المصورة، القوانين الكونية، واللعبة التفاعلية." />
   <meta property="og:image" content="assets/images/YouTube_Channel_Banner_2560x1440.png" />
   <link rel="icon" type="image/png" href="assets/images/YouTube_Channel_Profile_800x800.png" />
 
@@ -41,9 +41,11 @@
 
       <nav class="nav-links" aria-label="Main Navigation">
         <a href="#films" data-i18n="navFilms">الأفلام</a>
+        <a href="#comics" data-i18n="navComics">القصص المصورة</a>
         <a href="#laws" data-i18n="navLaws">القوانين الكونية</a>
         <a href="#characters" data-i18n="navChars">الشخصيات والأدوات</a>
         <a href="#voices" data-i18n="navVoices">الأصوات المثبتة</a>
+        <a href="play/index.html" data-i18n="navPlay">اللعبة 🎮</a>
         <a href="#studio" data-i18n="navStudio">استوديو Flow</a>
       </nav>
 
@@ -88,6 +90,8 @@
 
       <div class="hero-cta">
         <a href="#films" class="btn btn-primary" data-i18n="heroWatch">استكشف كتالوج الأفلام</a>
+        <a href="#comics" class="btn btn-outline" data-i18n="heroComics">اقرأ القصص المصورة</a>
+        <a href="play/index.html" class="btn btn-outline" data-i18n="heroPlay">العب الديمو 🎮</a>
         <a href="#laws" class="btn btn-ghost" data-i18n="heroLaws">دستور العالم الكوني</a>
       </div>
 
@@ -121,221 +125,37 @@
         </p>
       </div>
 
-      <div class="films-grid">
-        <!-- Film 1: The Eraser's Edge -->
-        <article class="film-card" data-film="erasers-edge">
-          <div class="film-preview">
-            <video class="film-thumb-video" muted loop playsinline preload="metadata" poster="assets/images/YouTube_Channel_Banner_2560x1440.png">
-              <source src="assets/videos/The_Erasers_Edge_Full_Film.mp4#t=2" type="video/mp4" />
-            </video>
-            <div class="film-overlay">
-              <span class="film-number">01</span>
-              <span class="film-duration">48s • 16:9 / 9:16</span>
-            </div>
-            <button class="play-trigger" type="button" data-open-film="erasers-edge" data-format="16:9" aria-label="Play The Eraser's Edge">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
+      <div class="filter-bar" id="filmsFilterBar" role="tablist" aria-label="Filter Films by Season" hidden>
+        <!-- Hydrated dynamically when Season 2 worlds are present -->
+      </div>
 
-          <div class="film-body">
-            <div class="film-tags">
-              <span class="tag tag-gold" data-i18n="f1Genre">مغامرة وخيال</span>
-              <span class="tag tag-ink">2D Ink × Macro Desk</span>
-            </div>
-            <h3 class="film-title">
-              <span data-i18n="f1Title">حارس الممحاة</span>
-              <small class="film-title-en">The Eraser's Edge</small>
-            </h3>
-            <p class="film-logline" data-i18n="f1Desc">
-              في مرسم فنان مهجور تغمره شمس الغروب، يستيقظ محارب صغير مرسوم بالحبر الأسود ليكتشف أن "ضباب الممحاة" يبتلع عالمه الورقي، فيقفز إلى سطح الطاولة الحقيقي بحثاً عن القلم الذهبي.
-            </p>
-            <div class="film-palette">
-              <span class="swatch" style="background:#111111" title="#111111 Ink Black"></span>
-              <span class="swatch" style="background:#F5F0E6" title="#F5F0E6 Paper Cream"></span>
-              <span class="swatch" style="background:#E8A838" title="#E8A838 Golden Hour"></span>
-              <span class="swatch" style="background:#9A9A9A" title="#9A9A9A Eraser Fog"></span>
-            </div>
-            <div class="film-actions">
-              <button class="btn btn-sm btn-primary" type="button" data-open-film="erasers-edge" data-format="16:9" data-i18n="watchFull">مشاهدة الفيلم (16:9)</button>
-              <button class="btn btn-sm btn-outline" type="button" data-open-film="erasers-edge" data-format="9:16" data-i18n="watchShorts">شورتس (9:16)</button>
-            </div>
-            <a href="https://flow.google.com/project/bc47928c-6253-4d50-95ac-f16d9ffde458" target="_blank" rel="noopener noreferrer" class="flow-link" data-i18n="openFlow">
-              فتح المشروع في Google Flow ↗
-            </a>
-          </div>
-        </article>
+      <div class="films-grid" id="filmsGrid" aria-live="polite">
+        <!-- Hydrated dynamically from Sketchic Canon DB -->
+      </div>
+    </div>
+  </section>
 
-        <!-- Film 2: The Paper-Sky Voyager -->
-        <article class="film-card" data-film="paper-sky">
-          <div class="film-preview">
-            <video class="film-thumb-video" muted loop playsinline preload="metadata">
-              <source src="assets/videos/The_Paper_Sky_Voyager_Full_Film.mp4#t=2" type="video/mp4" />
-            </video>
-            <div class="film-overlay">
-              <span class="film-number">02</span>
-              <span class="film-duration">48s • 16:9 / 9:16</span>
-            </div>
-            <button class="play-trigger" type="button" data-open-film="paper-sky" data-format="16:9" aria-label="Play The Paper-Sky Voyager">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
+  <!-- Illustrated Comics Section -->
+  <section class="section comics-section" id="comics">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-kicker" data-i18n="comicsKicker">02 / قصص عالم سكتشيك المصورة</span>
+        <h2 class="section-title" data-i18n="comicsTitle">مكتبة الكوميكس التفاعلية</h2>
+        <p class="section-subtitle" data-i18n="comicsSub">
+          سلسلة قصص مصورة تجمع لوحات الحبر والواقعية فوق صفحات ورق سكتش تفاعلية مع تبديل فوري بين العربية والإنجليزية.
+        </p>
+      </div>
 
-          <div class="film-body">
-            <div class="film-tags">
-              <span class="tag tag-teal" data-i18n="f2Genre">مغامرة وخيال</span>
-              <span class="tag tag-ink">Watercolor × Stone City</span>
-            </div>
-            <h3 class="film-title">
-              <span data-i18n="f2Title">نافذة السحاب</span>
-              <small class="film-title-en">The Paper-Sky Voyager</small>
-            </h3>
-            <p class="film-logline" data-i18n="f2Desc">
-              في مدينة حجرية باهتة الألوان، تكتشف مستكشفة أن رسوماتها على الأوراق الشفافة تتحول إلى بوابات ثلاثية الأبعاد أمام ضوء الشمس، فتعبر خلف طائرتها الورقية إلى عالم السماء المخططة.
-            </p>
-            <div class="film-palette">
-              <span class="swatch" style="background:#6E7378" title="#6E7378 Stone Grey"></span>
-              <span class="swatch" style="background:#38A3A5" title="#38A3A5 Watercolor Teal"></span>
-              <span class="swatch" style="background:#F4C86A" title="#F4C86A Sun Gold"></span>
-              <span class="swatch" style="background:#FAF6EE" title="#FAF6EE Vellum White"></span>
-            </div>
-            <div class="film-actions">
-              <button class="btn btn-sm btn-primary" type="button" data-open-film="paper-sky" data-format="16:9" data-i18n="watchFull">مشاهدة الفيلم (16:9)</button>
-              <button class="btn btn-sm btn-outline" type="button" data-open-film="paper-sky" data-format="9:16" data-i18n="watchShorts">شورتس (9:16)</button>
-            </div>
-            <a href="https://flow.google.com/project/1517c759-65a8-4988-88dc-16074df69d71" target="_blank" rel="noopener noreferrer" class="flow-link" data-i18n="openFlow">
-              فتح المشروع في Google Flow ↗
-            </a>
-          </div>
-        </article>
+      <article class="comic-featured" id="comicFeatured" data-comic="erasers-edge">
+        <!-- Hydrated dynamically from Sketchic Canon DB -->
+      </article>
 
-        <!-- Film 3: The Ink-Shadow Thief -->
-        <article class="film-card" data-film="ink-thief">
-          <div class="film-preview">
-            <video class="film-thumb-video" muted loop playsinline preload="metadata">
-              <source src="assets/videos/The_Ink_Shadow_Thief_Full_Film.mp4#t=2" type="video/mp4" />
-            </video>
-            <div class="film-overlay">
-              <span class="film-number">03</span>
-              <span class="film-duration">48s • 16:9 / 9:16</span>
-            </div>
-            <button class="play-trigger" type="button" data-open-film="ink-thief" data-format="16:9" aria-label="Play The Ink-Shadow Thief">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
+      <div class="comics-roadmap-header">
+        <span class="roadmap-label" data-i18n="comicsRoadmapLabel">خارطة إصدارات الموسم الأول القادمة</span>
+      </div>
 
-          <div class="film-body">
-            <div class="film-tags">
-              <span class="tag tag-gold" data-i18n="f3Genre">غموض ليلي</span>
-              <span class="tag tag-ink">Charcoal Glow × Lanterns</span>
-            </div>
-            <h3 class="film-title">
-              <span data-i18n="f3Title">سارق الظلال المرسومة</span>
-              <small class="film-title-en">The Ink-Shadow Thief</small>
-            </h3>
-            <p class="film-logline" data-i18n="f3Desc">
-              في بلدة حجرية ليليّة مضاءة بالفوانيس، تنفصل الظلال عن أصحابها وتتحول إلى مخلوقات حبرية متمرّدة تهرب نحو البرج الممزق، فينطلق رسّام الخرائط مع ثعلب الفحم المرسوم لاستعادة ظلّه قبل الفجر.
-            </p>
-            <div class="film-palette">
-              <span class="swatch" style="background:#0E1116" title="Nocturnal Night"></span>
-              <span class="swatch" style="background:#F59E0B" title="Warm Lantern Amber"></span>
-              <span class="swatch" style="background:#E5E7EB" title="Glowing Charcoal Line"></span>
-              <span class="swatch" style="background:#374151" title="Wet Cobblestone"></span>
-            </div>
-            <div class="film-actions">
-              <button class="btn btn-sm btn-primary" type="button" data-open-film="ink-thief" data-format="16:9" data-i18n="watchFull">مشاهدة الفيلم (16:9)</button>
-              <button class="btn btn-sm btn-outline" type="button" data-open-film="ink-thief" data-format="9:16" data-i18n="watchShorts">شورتس (9:16)</button>
-            </div>
-            <a href="https://flow.google.com/project/304c7c52-c1c2-43fd-a800-e03e05358091" target="_blank" rel="noopener noreferrer" class="flow-link" data-i18n="openFlow">
-              فتح المشروع في Google Flow ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- Film 4: The Clockwork Thread -->
-        <article class="film-card" data-film="clockwork-thread">
-          <div class="film-preview">
-            <video class="film-thumb-video" muted loop playsinline preload="metadata">
-              <source src="assets/videos/The_Clockwork_Thread_Full_Film.mp4#t=2" type="video/mp4" />
-            </video>
-            <div class="film-overlay">
-              <span class="film-number">04</span>
-              <span class="film-duration">48s • 16:9 / 9:16</span>
-            </div>
-            <button class="play-trigger" type="button" data-open-film="clockwork-thread" data-format="16:9" aria-label="Play The Clockwork Thread">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
-
-          <div class="film-body">
-            <div class="film-tags">
-              <span class="tag tag-indigo" data-i18n="f4Genre">خيال وحرفة</span>
-              <span class="tag tag-ink">2D Embroidery × Clockwork</span>
-            </div>
-            <h3 class="film-title">
-              <span data-i18n="f4Title">حائك الزمن</span>
-              <small class="film-title-en">The Clockwork Thread</small>
-            </h3>
-            <p class="film-logline" data-i18n="f4Desc">
-              في ورشة خياطة وساعات قديمة دافئة الإضاءة، يستيقظ مخلوق صغير منسوج من خيوط التطريز الذهبية والنيلية، ليحمل إبرة خياطة ذهبية ويتسلق تروس ساعة عملاقة لإعادة خياطة شقٍّ زمني متصدع.
-            </p>
-            <div class="film-palette">
-              <span class="swatch" style="background:#1E1B2E" title="#1E1B2E Indigo Linen"></span>
-              <span class="swatch" style="background:#F4C44E" title="#F4C44E Golden Thread"></span>
-              <span class="swatch" style="background:#B87333" title="#B87333 Antique Brass"></span>
-              <span class="swatch" style="background:#3B281E" title="#3B281E Oak Workbench"></span>
-            </div>
-            <div class="film-actions">
-              <button class="btn btn-sm btn-primary" type="button" data-open-film="clockwork-thread" data-format="16:9" data-i18n="watchFull">مشاهدة الفيلم (16:9)</button>
-              <button class="btn btn-sm btn-outline" type="button" data-open-film="clockwork-thread" data-format="9:16" data-i18n="watchShorts">شورتس (9:16)</button>
-            </div>
-            <a href="https://flow.google.com/project/5ea3c5f5-adbd-4c65-9caa-d5ffc0df87d1" target="_blank" rel="noopener noreferrer" class="flow-link" data-i18n="openFlow">
-              فتح المشروع في Google Flow ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- Film 5: The Stained-Glass Echo -->
-        <article class="film-card" data-film="stained-glass">
-          <div class="film-preview">
-            <video class="film-thumb-video" muted loop playsinline preload="metadata">
-              <source src="assets/videos/The_Stained_Glass_Echo_Full_Film.mp4#t=2" type="video/mp4" />
-            </video>
-            <div class="film-overlay">
-              <span class="film-number">05</span>
-              <span class="film-duration">48s • 16:9 / 9:16</span>
-            </div>
-            <button class="play-trigger" type="button" data-open-film="stained-glass" data-format="16:9" aria-label="Play The Stained-Glass Echo">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
-
-          <div class="film-body">
-            <div class="film-tags">
-              <span class="tag tag-ruby" data-i18n="f5Genre">خيال موسيقي</span>
-              <span class="tag tag-ink">Stained-Glass × Stone Hall</span>
-            </div>
-            <h3 class="film-title">
-              <span data-i18n="f5Title">لحن الزجاج الملوّن</span>
-              <small class="film-title-en">The Stained-Glass Echo</small>
-            </h3>
-            <p class="film-logline" data-i18n="f5Desc">
-              في قاعة زجاجية حجرية مهجورة، تنفصل حارسة من الزجاج الملوّن ذي الإطار الرصاصي الداكن عن نافذة قوطية فقدت ألوانها، لتجمع النوتات الحبرية الذهبية بقوسها المنشوري وتعيد اللحن والضوء.
-            </p>
-            <div class="film-palette">
-              <span class="swatch" style="background:#C81D3B" title="#C81D3B Ruby Glass"></span>
-              <span class="swatch" style="background:#1D5DC8" title="#1D5DC8 Sapphire Glass"></span>
-              <span class="swatch" style="background:#199A64" title="#199A64 Emerald Glass"></span>
-              <span class="swatch" style="background:#F5B041" title="#F5B041 Amber Caustics"></span>
-            </div>
-            <div class="film-actions">
-              <button class="btn btn-sm btn-primary" type="button" data-open-film="stained-glass" data-format="16:9" data-i18n="watchFull">مشاهدة الفيلم (16:9)</button>
-              <button class="btn btn-sm btn-outline" type="button" data-open-film="stained-glass" data-format="9:16" data-i18n="watchShorts">شورتس (9:16)</button>
-            </div>
-            <a href="https://flow.google.com/project/bac505f5-a656-4ab7-b3d0-c764891aa631" target="_blank" rel="noopener noreferrer" class="flow-link" data-i18n="openFlow">
-              فتح المشروع في Google Flow ↗
-            </a>
-          </div>
-        </article>
+      <div class="comics-series-grid" id="comicsSeriesGrid" aria-live="polite">
+        <!-- Hydrated dynamically from Sketchic Canon DB -->
       </div>
     </div>
   </section>
@@ -344,37 +164,15 @@
   <section class="section laws-section" id="laws">
     <div class="container">
       <div class="section-header">
-        <span class="section-kicker" data-i18n="lawsKicker">02 / الدستور الموحّد</span>
+        <span class="section-kicker" data-i18n="lawsKicker">03 / الدستور الموحّد</span>
         <h2 class="section-title" data-i18n="lawsTitle">القوانين الكونية لعالم سكتشيك</h2>
         <p class="section-subtitle" data-i18n="lawsSub">
           ثلاث قواعد بصرية وسردية تحكم كل مشهد يتم إنتاجه داخل عالم Sketchic Universe.
         </p>
       </div>
 
-      <div class="laws-grid">
-        <div class="law-card">
-          <div class="law-index">01</div>
-          <h3 data-i18n="law1Title">الصدام المرئي (Visual Clash)</h3>
-          <p data-i18n="law1Desc">
-            تلتقي الخامات الفنية ثنائية الأبعاد (الحبر، الفحم، الألوان المائية، الورق، التطريز، والزجاج الملوّن) مع البيئة السينمائية الواقعية دون أن تذوب فيها؛ كل عنصر يحافظ على ملمسه الأصلي مع تفاعل حقيقي مع الضوء والظل.
-          </p>
-        </div>
-
-        <div class="law-card">
-          <div class="law-index">02</div>
-          <h3 data-i18n="law2Title">فيزيائية الأدوات الفنية</h3>
-          <p data-i18n="law2Desc">
-            الأقلام، الأوراق الشفافة، الفوانيس، الإبرة الذهبية، القوس المنشوري، والممحاة ليست مجرد ديكور خلفي — بل هي أدوات خلق ومواجهة وبوابات عبور حقيقية تحرك مسار القصة وتحدد مصير الأبطال.
-          </p>
-        </div>
-
-        <div class="law-card">
-          <div class="law-index">03</div>
-          <h3 data-i18n="law3Title">طبيعة الصراع (بلا عنف دموي)</h3>
-          <p data-i18n="law3Desc">
-            الصراع في سكتشيك بصري وخيالي خالص ضد قوى المحو، الفقدان، أو بهتان الألوان — يُعبَّر عنه بتمزق الورق، زحف ضباب الممحاة، أو تمرد الظلال، دون أي عنف دموي.
-          </p>
-        </div>
+      <div class="laws-grid" id="lawsGrid" aria-live="polite">
+        <!-- Hydrated dynamically from Sketchic Canon DB -->
       </div>
     </div>
   </section>
@@ -383,177 +181,19 @@
   <section class="section chars-section" id="characters">
     <div class="container">
       <div class="section-header">
-        <span class="section-kicker" data-i18n="charsKicker">03 / الشخصيات والأدوات المثبّتة</span>
+        <span class="section-kicker" data-i18n="charsKicker">04 / الشخصيات والأدوات المثبّتة</span>
         <h2 class="section-title" data-i18n="charsTitle">أرشيف الأبطال والعناصر المرجعية</h2>
         <p class="section-subtitle" data-i18n="charsSub">
           الشخصيات والأدوات المعتمَدة في Google Flow للحفاظ على الاتساق البصري عبر جميع المشاهد.
         </p>
       </div>
 
-      <div class="filter-bar" role="tablist" aria-label="Filter Characters by Film">
-        <button class="filter-btn active" type="button" data-filter="all" data-i18n="filterAll">الكل (15)</button>
-        <button class="filter-btn" type="button" data-filter="erasers-edge" data-i18n="f1Title">حارس الممحاة</button>
-        <button class="filter-btn" type="button" data-filter="paper-sky" data-i18n="f2Title">نافذة السحاب</button>
-        <button class="filter-btn" type="button" data-filter="ink-thief" data-i18n="f3Title">سارق الظلال المرسومة</button>
-        <button class="filter-btn" type="button" data-filter="clockwork-thread" data-i18n="f4Title">حائك الزمن</button>
-        <button class="filter-btn" type="button" data-filter="stained-glass" data-i18n="f5Title">لحن الزجاج الملوّن</button>
+      <div class="filter-bar" id="charsFilterBar" role="tablist" aria-label="Filter Characters by Film">
+        <!-- Hydrated dynamically from Sketchic Canon DB -->
       </div>
 
-      <div class="chars-grid" id="charsGrid">
-        <!-- Eraser's Edge -->
-        <div class="char-card" data-film-group="erasers-edge">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleHero">البطل</span>
-            <span class="char-film-badge">The Eraser's Edge</span>
-          </div>
-          <h3 data-i18n="c1Name">فارس الحبر</h3>
-          <span class="char-en">Ink Knight</span>
-          <p data-i18n="c1Desc">محارب صغير بطول إصبع مرسوم بالحبر الأسود والفحم، يرتدي عباءة ورقية ممزقة الحواف ويحمل سيفاً من سنّ قلم حبر رفيع، بعينين متوهجتين بلون أبيض دافئ.</p>
-        </div>
-
-        <div class="char-card" data-film-group="erasers-edge">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleArtifact">الأداة المنقذة</span>
-            <span class="char-film-badge">The Eraser's Edge</span>
-          </div>
-          <h3 data-i18n="c2Name">القلم الذهبي</h3>
-          <span class="char-en">The Golden Nib</span>
-          <p data-i18n="c2Desc">قلم حبر عتيق ضخم من النحاس والذهب المنقوش يتكئ على كتب جلدية، يتوهج سنه بنور كهرماني دافئ يفيض بالحبر المضيء لإعادة رسم العالم.</p>
-        </div>
-
-        <div class="char-card" data-film-group="erasers-edge">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleThreat">التهديد</span>
-            <span class="char-film-badge">The Eraser's Edge</span>
-          </div>
-          <h3 data-i18n="c3Name">ضباب الممحاة</h3>
-          <span class="char-en">The Eraser Fog</span>
-          <p data-i18n="c3Desc">موجة زاحفة من الغبار الرمادي البارد وفتات الممحاة المطاطية، تمحو خطوط الحبر والألوان وتحوّل كل ما تلمسه إلى بياض ورقي فارغ.</p>
-        </div>
-
-        <!-- Paper-Sky Voyager -->
-        <div class="char-card" data-film-group="paper-sky">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleHeroine">البطلة</span>
-            <span class="char-film-badge badge-teal">The Paper-Sky Voyager</span>
-          </div>
-          <h3 data-i18n="c4Name">المستكشفة</h3>
-          <span class="char-en">The Explorer</span>
-          <p data-i18n="c4Desc">شابة ترتدي معطفاً قماشياً ونظارات طيران نحاسية فوق أسطح مدينة حجرية باهتة، ترفع دفترها الشفاف أمام أشعة الشمس لتفتح بوابات السماء.</p>
-        </div>
-
-        <div class="char-card" data-film-group="paper-sky">
-          <div class="char-top">
-            <span class="char-role" data-i18n="rolePortal">الأداة السحرية</span>
-            <span class="char-film-badge badge-teal">The Paper-Sky Voyager</span>
-          </div>
-          <h3 data-i18n="c5Name">الدفتر الشفاف</h3>
-          <span class="char-en">Translucent Sketchbook Portal</span>
-          <p data-i18n="c5Desc">أوراق رسم شفافة تحمل خطوط حبر هندسية ولمسات ألوان مائية؛ بمجرد مرور ضوء الشمس خلالها تتحول الرسومات المسطحة إلى عمق ثلاثي الأبعاد.</p>
-        </div>
-
-        <div class="char-card" data-film-group="paper-sky">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleVehicle">المركبة</span>
-            <span class="char-film-badge badge-teal">The Paper-Sky Voyager</span>
-          </div>
-          <h3 data-i18n="c6Name">الطائرة الورقية المرسومة</h3>
-          <span class="char-en">The Paper-Sky Airship</span>
-          <p data-i18n="c6Desc">طائرة ورقية مطوية من ورق كريمي وخطوط حبر هندسية وضربات ألوان مائية فيروزية وذهبية تحلق وسط الغيوم مخلفة ذيلاً من الحبر المضيء.</p>
-        </div>
-
-        <!-- Ink-Shadow Thief -->
-        <div class="char-card" data-film-group="ink-thief">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleHero">البطل</span>
-            <span class="char-film-badge">The Ink-Shadow Thief</span>
-          </div>
-          <h3 data-i18n="c7Name">رسّام الخرائط</h3>
-          <span class="char-en">The Cartographer</span>
-          <p data-i18n="c7Desc">رسّام خرائط شاب يرتدي معطفاً صوفياً داكناً وحقيبة جلدية، يحمل فانوساً نحاسياً دافئاً في شوارع الحجر الرطبة بحثاً عن ظله المفقود.</p>
-        </div>
-
-        <div class="char-card" data-film-group="ink-thief">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleCompanion">المرافق</span>
-            <span class="char-film-badge">The Ink-Shadow Thief</span>
-          </div>
-          <h3 data-i18n="c8Name">الثعلب المرسوم</h3>
-          <span class="char-en">The Charcoal Ink Fox</span>
-          <p data-i18n="c8Desc">ثعلب رشيق مرسوم بالفحم الأسود وخطوط بيضاء متوهجة، يتحرك على الجدران والأرضيات الحجرية الحقيقية كظل حيّ.</p>
-        </div>
-
-        <div class="char-card" data-film-group="ink-thief">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleLandmark">المعلم</span>
-            <span class="char-film-badge">The Ink-Shadow Thief</span>
-          </div>
-          <h3 data-i18n="c9Name">البرج الممزق</h3>
-          <span class="char-en">The Torn Paper Tower</span>
-          <p data-i18n="c9Desc">برج جرس قوطي حجري شاهق يتمزق جزؤه العلوي في سماء الليل الضبابية ليتحول إلى رسومات حبر مسطحة وطيور ظلّية دوّارة.</p>
-        </div>
-
-        <!-- The Clockwork Thread -->
-        <div class="char-card" data-film-group="clockwork-thread">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleHero">البطل</span>
-            <span class="char-film-badge badge-indigo">The Clockwork Thread</span>
-          </div>
-          <h3 data-i18n="c10Name">حائك الخيوط</h3>
-          <span class="char-en">Thread Weaver</span>
-          <p data-i18n="c10Desc">مخلوق صغير منسوج من خيوط التطريز الذهبية والنيلية على قماش الكتان، يرتدي قبعة كشتبان ويحمل إبرة خياطة ذهبية لامعة كعصا.</p>
-        </div>
-
-        <div class="char-card" data-film-group="clockwork-thread">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleLandmark">المعلم</span>
-            <span class="char-film-badge badge-indigo">The Clockwork Thread</span>
-          </div>
-          <h3 data-i18n="c11Name">ساعة التروس العملاقة</h3>
-          <span class="char-en">The Giant Clockwork</span>
-          <p data-i18n="c11Desc">آلية ساعة نحاسية عتيقة شاهقة فوق طاولة خياطة، تتشابك فيها التروس الذهبية والنوابض مع شقٍّ زمني متوهج في المركز.</p>
-        </div>
-
-        <div class="char-card" data-film-group="clockwork-thread">
-          <div class="char-top">
-            <span class="char-role" data-i18n="rolePortal">الأداة السحرية</span>
-            <span class="char-film-badge badge-indigo">The Clockwork Thread</span>
-          </div>
-          <h3 data-i18n="c12Name">بكرة الخيط الذهبي</h3>
-          <span class="char-en">The Golden Spool</span>
-          <p data-i18n="c12Desc">بكرة خشبية عتيقة ملفوفة بخيوط تطريز ذهبية متوهجة بجوار مقص نحاسي، تتصاعد منها الخيوط المضيئة لرتق الزمن.</p>
-        </div>
-
-        <!-- The Stained-Glass Echo -->
-        <div class="char-card" data-film-group="stained-glass">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleHeroine">البطلة</span>
-            <span class="char-film-badge badge-ruby">The Stained-Glass Echo</span>
-          </div>
-          <h3 data-i18n="c13Name">حارسة الزجاج</h3>
-          <span class="char-en">Glass Guardian</span>
-          <p data-i18n="c13Desc">حارسة مرسومة من شظايا زجاج ملوّن شفاف (ياقوتي، أزرق، زمردي، وكهرماني) بإطار رصاصي داكن، تحمل قوساً منشوريّاً وتُلقي انعكاسات ضوئية ملوّنة.</p>
-        </div>
-
-        <div class="char-card" data-film-group="stained-glass">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleLandmark">المعلم</span>
-            <span class="char-film-badge badge-ruby">The Stained-Glass Echo</span>
-          </div>
-          <h3 data-i18n="c14Name">النافذة القوطية المتلاشية</h3>
-          <span class="char-en">The Shattered Rose Window</span>
-          <p data-i18n="c14Desc">نافذة قوطية دائرية عملاقة داخل قاعة حجرية مشمسة، نصفها يفيض بألوان الزجاج الملوّن ونصفها الآخر بهت وتحوّل إلى زجاج شفاف بلا لون.</p>
-        </div>
-
-        <div class="char-card" data-film-group="stained-glass">
-          <div class="char-top">
-            <span class="char-role" data-i18n="roleElement">العنصر</span>
-            <span class="char-film-badge badge-ruby">The Stained-Glass Echo</span>
-          </div>
-          <h3 data-i18n="c15Name">النوتات الحبرية الذهبية</h3>
-          <span class="char-en">Golden Ink Musical Notes</span>
-          <p data-i18n="c15Desc">نوتات موسيقية مرسومة بالحبر الذهبي وشرائط ألوان زجاجية متوهجة تسبح في الهواء وتُلقي انعكاسات قوس قزح على البلاط الحجري.</p>
-        </div>
+      <div class="chars-grid" id="charsGrid" aria-live="polite">
+        <!-- Hydrated dynamically from Sketchic Canon DB -->
       </div>
     </div>
   </section>
@@ -562,67 +202,15 @@
   <section class="section voices-section" id="voices">
     <div class="container">
       <div class="section-header">
-        <span class="section-kicker" data-i18n="voicesKicker">04 / الأصوات المثبّتة</span>
+        <span class="section-kicker" data-i18n="voicesKicker">05 / الأصوات المثبّتة</span>
         <h2 class="section-title" data-i18n="voicesTitle">سجل أصوات الشخصيات في Google Flow</h2>
         <p class="section-subtitle" data-i18n="voicesSub">
           الأصوات الرسمية المعتمدة لبطاقات الشخصيات لضمان ثبات النبرة والأداء الصوتي عبر جميع العوالم والمشاهد.
         </p>
       </div>
 
-      <div class="voices-grid">
-        <div class="voice-card">
-          <div class="voice-header">
-            <span class="voice-char">Ink Knight</span>
-            <span class="voice-name-chip">Fenrir</span>
-          </div>
-          <span class="voice-film" data-i18n="f1Title">حارس الممحاة</span>
-          <p class="voice-trait" data-i18n="v1Trait">Ink Knight Voice — شجاع وحماسي</p>
-        </div>
-
-        <div class="voice-card">
-          <div class="voice-header">
-            <span class="voice-char">The Explorer</span>
-            <span class="voice-name-chip">Autonoe</span>
-          </div>
-          <span class="voice-film" data-i18n="f2Title">نافذة السحاب</span>
-          <p class="voice-trait" data-i18n="v2Trait">Explorer Voice — فضولي ومغامر</p>
-        </div>
-
-        <div class="voice-card">
-          <div class="voice-header">
-            <span class="voice-char">The Cartographer</span>
-            <span class="voice-name-chip">Achird</span>
-          </div>
-          <span class="voice-film" data-i18n="f3Title">سارق الظلال المرسومة</span>
-          <p class="voice-trait" data-i18n="v3Trait">Cartographer Voice — هادئ ومتأمّل</p>
-        </div>
-
-        <div class="voice-card">
-          <div class="voice-header">
-            <span class="voice-char">Ink Fox</span>
-            <span class="voice-name-chip">Aoede</span>
-          </div>
-          <span class="voice-film" data-i18n="f3Title">سارق الظلال المرسومة</span>
-          <p class="voice-trait" data-i18n="v4Trait">صوت خفيف وأثيري</p>
-        </div>
-
-        <div class="voice-card">
-          <div class="voice-header">
-            <span class="voice-char">Thread Weaver</span>
-            <span class="voice-name-chip">Fenrir</span>
-          </div>
-          <span class="voice-film" data-i18n="f4Title">حائك الزمن</span>
-          <p class="voice-trait" data-i18n="v5Trait">صوت رشيق وشجاع</p>
-        </div>
-
-        <div class="voice-card">
-          <div class="voice-header">
-            <span class="voice-char">Glass Guardian</span>
-            <span class="voice-name-chip">Erinome</span>
-          </div>
-          <span class="voice-film" data-i18n="f5Title">لحن الزجاج الملوّن</span>
-          <p class="voice-trait" data-i18n="v6Trait">صوت بلوري وواضح (البديل: Despina)</p>
-        </div>
+      <div class="voices-grid" id="voicesGrid" aria-live="polite">
+        <!-- Hydrated dynamically from Sketchic Canon DB -->
       </div>
     </div>
   </section>
@@ -639,8 +227,12 @@
       </div>
 
       <div class="studio-info">
-        <span class="section-kicker" data-i18n="studioKicker">05 / الهوية والإنتاج</span>
+        <span class="section-kicker" data-i18n="studioKicker">06 / الهوية والإنتاج</span>
         <h2 class="section-title" data-i18n="studioTitle">صُنع في Google Flow</h2>
+        <div class="canon-status-pill" id="canonDbStatusBadge" aria-live="polite">
+          <span class="nib-dot"></span>
+          <span id="canonDbStatusText">Sketchic Canon DB v1.0.0 • متّصل</span>
+        </div>
         <p data-i18n="studioDesc">
           تُنتج أفلام Sketchic Universe عبر خطوط إنتاج Google Flow السينمائية باستخدام بطاقات الشخصيات والأصوات والأدوات المرجعية (Characters, Voices & Ingredients) لضمان وحدة الأسلوب، الإضاءة، وملمس الرسم اليدوي في كل لقطة.
         </p>
@@ -684,6 +276,11 @@
           <span id="modalSubtitle" class="modal-sub">Format</span>
         </div>
         <div class="cinema-controls">
+          <div class="format-switcher subtitle-switcher" role="group" aria-label="Subtitles">
+            <button type="button" class="fmt-btn active" data-modal-sub="ar">CC عربي</button>
+            <button type="button" class="fmt-btn" data-modal-sub="en">CC EN</button>
+            <button type="button" class="fmt-btn" data-modal-sub="off">CC Off</button>
+          </div>
           <div class="format-switcher" role="group" aria-label="Aspect Ratio">
             <button type="button" class="fmt-btn active" data-modal-fmt="16:9">16:9 Full</button>
             <button type="button" class="fmt-btn" data-modal-fmt="9:16">9:16 Shorts</button>
@@ -698,6 +295,54 @@
     </div>
   </div>
 
+  <!-- Interactive Bilingual Comic Reader Modal -->
+  <div class="comic-modal" id="comicModal" role="dialog" aria-modal="true" aria-labelledby="comicModalTitle" hidden>
+    <div class="comic-backdrop" id="comicBackdrop"></div>
+    <div class="comic-dialog">
+      <div class="comic-reader-header">
+        <div class="comic-reader-meta">
+          <h3 id="comicModalTitle">حارس الممحاة — The Eraser's Edge</h3>
+          <span id="comicPageIndicator" class="modal-sub">الغلاف (1 / 4)</span>
+        </div>
+        <div class="comic-reader-controls">
+          <div class="view-switcher" role="group" aria-label="Comic View Mode">
+            <button type="button" class="fmt-btn active" data-comic-view="page" data-i18n="comicViewPages">الصفحات</button>
+            <button type="button" class="fmt-btn" data-comic-view="scroll" data-i18n="comicViewScroll">تمرير كامل</button>
+          </div>
+          <button type="button" class="reader-tool-btn" id="comicCleanArtBtn" aria-pressed="false" data-i18n="comicCleanArt">لوحات صافية</button>
+          <button type="button" class="reader-tool-btn reader-lang-btn" id="comicLangBtn" aria-label="Toggle Comic Language">EN</button>
+          <button type="button" class="reader-tool-btn" id="comicPrintBtn" data-i18n="comicPrintShort">طباعة / PDF</button>
+          <button type="button" class="modal-close" id="comicModalClose" aria-label="Close">✕</button>
+        </div>
+      </div>
+
+      <div class="comic-reader-stage" id="comicStage"></div>
+
+      <div class="comic-reader-footer" id="comicFooter">
+        <button type="button" class="btn btn-sm btn-outline" id="comicPrevBtn" data-i18n="comicPrevPage">الصفحة السابقة</button>
+        <div class="comic-page-pills" id="comicPagePills"></div>
+        <span class="comic-dir-hint" id="comicDirHint" data-i18n="comicDirHint">اتجاه القراءة: من اليمين إلى اليسار ←</span>
+        <button type="button" class="btn btn-sm btn-primary" id="comicNextBtn" data-i18n="comicNextPage">الصفحة التالية</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Canon DB Inspector Modal -->
+  <div class="canon-modal" id="canonModal" role="dialog" aria-modal="true" aria-labelledby="canonModalTitle" hidden>
+    <div class="canon-backdrop" id="canonBackdrop"></div>
+    <div class="canon-dialog">
+      <div class="canon-modal-header">
+        <div class="canon-modal-meta">
+          <span class="section-kicker" id="canonModalKicker">SKETCHIC CANON DB</span>
+          <h3 id="canonModalTitle">Canon Inspector</h3>
+        </div>
+        <button type="button" class="modal-close" id="canonModalClose" aria-label="Close">✕</button>
+      </div>
+      <div class="canon-modal-body" id="canonModalBody"></div>
+    </div>
+  </div>
+
+  <script src="data/canon-db.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

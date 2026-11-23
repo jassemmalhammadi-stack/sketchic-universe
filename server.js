@@ -5,9 +5,102 @@ const path = require('path');
 const PORT = Number(process.env.PORT) || 8080;
 const HOST = process.env.HOST || '0.0.0.0';
 const PUBLIC_DIR = __dirname;
+const CANON_DB_PATH = path.join(PUBLIC_DIR, 'data', 'canon-db.json');
 const ENABLE_CONVERGENCE = process.env.ENABLE_CONVERGENCE === 'true';
 const MAX_RANGE_CHUNK = 8 * 1024 * 1024; // 8 MiB per range response (under Cloud Run 32 MiB limit)
 const STREAM_CHUNKED_THRESHOLD = 20 * 1024 * 1024;
+
+function loadCanonDb(enableConvergence) {
+  const raw = fs.readFileSync(CANON_DB_PATH, 'utf8');
+  const db = JSON.parse(raw);
+  db.meta = db.meta || {};
+  db.meta.showConvergence = Boolean(enableConvergence);
+
+  if (!enableConvergence) {
+    db.worlds = (db.worlds || []).filter((w) => w.isPublic !== false);
+    db.characters = (db.characters || []).filter((c) => c.isPublic !== false);
+    db.ingredients = (db.ingredients || []).filter((i) => i.isPublic !== false);
+    db.comics = (db.comics || []).filter((c) => c.isPublic !== false);
+
+    const visibleWorldIds = new Set(db.worlds.map((w) => w.id));
+    const visibleCharIds = new Set(db.characters.map((c) => c.id));
+    const visibleIngIds = new Set(db.ingredients.map((i) => i.id));
+
+    db.voiceBindings = (db.voiceBindings || []).filter(
+      (vb) => visibleWorldIds.has(vb.worldId) && visibleCharIds.has(vb.characterId)
+    );
+    db.worldAppearances = (db.worldAppearances || []).filter((wa) => {
+      if (!visibleWorldIds.has(wa.worldId)) return false;
+      return wa.entityType === 'character'
+        ? visibleCharIds.has(wa.entityId)
+        : visibleIngIds.has(wa.entityId);
+    });
+  }
+
+  return db;
+}
+
+function sendDynamicPayload(req, res, body, contentType) {
+  const byteLength = Buffer.byteLength(body, 'utf8');
+  res.writeHead(200, {
+    'Content-Type': contentType,
+    'Content-Length': byteLength,
+    'Cache-Control': 'no-cache'
+  });
+  if (req.method === 'HEAD') {
+    res.end();
+    return;
+  }
+  res.end(body, 'utf8');
+}
+
+function handleCanonRoute(req, res, pathname) {
+  const routes = new Set([
+    '/api/canon',
+    '/api/canon/worlds',
+    '/api/canon/characters',
+    '/api/canon/voices',
+    '/api/canon/ingredients',
+    '/api/canon/comics',
+    '/api/canon/laws',
+    '/data/canon-db.json',
+    '/data/canon-db.js'
+  ]);
+  if (!routes.has(pathname)) return false;
+
+  let db;
+  try {
+    db = loadCanonDb(ENABLE_CONVERGENCE);
+  } catch (err) {
+    res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify({ error: 'Failed to load Sketchic Canon DB' }));
+    return true;
+  }
+
+  if (pathname === '/data/canon-db.js') {
+    const jsPayload = `window.SKETCHIC_CANON_DB = ${JSON.stringify(db)};\n`;
+    sendDynamicPayload(req, res, jsPayload, 'application/javascript; charset=utf-8');
+    return true;
+  }
+
+  let payload = db;
+  if (pathname === '/api/canon/worlds') {
+    payload = { meta: db.meta, worlds: db.worlds };
+  } else if (pathname === '/api/canon/characters') {
+    payload = { meta: db.meta, characters: db.characters };
+  } else if (pathname === '/api/canon/voices') {
+    payload = { meta: db.meta, voices: db.voices, voiceBindings: db.voiceBindings };
+  } else if (pathname === '/api/canon/ingredients') {
+    payload = { meta: db.meta, ingredients: db.ingredients };
+  } else if (pathname === '/api/canon/comics') {
+    payload = { meta: db.meta, comics: db.comics };
+  } else if (pathname === '/api/canon/laws') {
+    payload = { meta: db.meta, cosmicLaws: db.cosmicLaws };
+  }
+
+  sendDynamicPayload(req, res, JSON.stringify(payload), 'application/json; charset=utf-8');
+  return true;
+}
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -22,6 +115,7 @@ const MIME_TYPES = {
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
   '.mp4': 'video/mp4',
+  '.vtt': 'text/vtt; charset=utf-8',
   '.txt': 'text/plain; charset=utf-8'
 };
 
@@ -35,8 +129,13 @@ function isPublicFile(relativePath) {
     normalized === 'styles.css' ||
     normalized === 'app.js' ||
     normalized === 'CNAME' ||
+    normalized === 'play/index.html' ||
+    normalized === 'play/game.css' ||
+    normalized === 'play/game.js' ||
+    normalized === 'flow-studio/index.html' ||
     normalized.startsWith('assets/images/') ||
-    normalized.startsWith('assets/videos/')
+    normalized.startsWith('assets/videos/') ||
+    normalized.startsWith('assets/subtitles/')
   );
 }
 
@@ -66,7 +165,18 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  const requestedPath = pathname === '/' ? 'index.html' : pathname.replace(/^[/\\]+/, '');
+  if (handleCanonRoute(req, res, pathname)) {
+    return;
+  }
+
+  const requestedPath =
+    pathname === '/'
+      ? 'index.html'
+      : pathname === '/play' || pathname === '/play/'
+      ? 'play/index.html'
+      : pathname === '/flow-studio' || pathname === '/flow-studio/'
+      ? 'flow-studio/index.html'
+      : pathname.replace(/^[/\\]+/, '');
   const filePath = path.resolve(PUBLIC_DIR, requestedPath);
   const relativePath = path.relative(PUBLIC_DIR, filePath);
 

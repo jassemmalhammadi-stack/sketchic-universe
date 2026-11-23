@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sketchic.net — Playable Teaser | لعبة عالم سكتشيك</title>
+  <link rel="icon" type="image/png" href="../assets/images/YouTube_Channel_Profile_800x800.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="game.css" />
+</head>
+<body>
+  <header class="play-header">
+    <div class="play-header-inner">
+      <a href="../index.html" class="back-brand">
+        <img src="../assets/images/YouTube_Channel_Profile_800x800.png" alt="Sketchic" class="brand-avatar" />
+        <div>
+          <span class="brand-name">Sketchic<span class="brand-dot">.net</span></span>
+          <span class="brand-sub" data-gi18n="headerSub">اللعبة التشويقية التفاعلية</span>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <button id="loreVaultBtn" class="btn-chip" type="button" data-gi18n="loreVaultBtn">خزنة المخطوطة السرية 🔑</button>
+        <button id="gameLangBtn" class="btn-chip gold" type="button">EN</button>
+        <a href="../index.html" class="btn-chip" data-gi18n="backHome">← العودة للموقع</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="play-main">
+    <div class="hud-bar">
+      <div class="hud-group">
+        <button id="hudHeroBtn" class="btn-chip hero-pill" type="button" title="Switch Canon Hero">
+          <img id="hudHeroImg" src="../assets/images/game/portrait_ink_knight.png" alt="" class="hero-pill-img" />
+          <span id="hudHeroName">فارس الحبر</span>
+          <span class="hero-pill-swap">⇄</span>
+        </button>
+        <div class="hud-pill">
+          <span class="hud-label" data-gi18n="hudDimLabel">البُعد الحالي</span>
+          <strong id="hudDimension" class="hud-val gold">2D PAGE</strong>
+        </div>
+        <div class="hud-pill">
+          <span class="hud-label" data-gi18n="hudInkLabel">مخزون الحبر</span>
+          <div class="ink-meter"><div id="hudInkBar" class="ink-fill"></div></div>
+        </div>
+        <div class="hud-pill">
+          <span class="hud-label" data-gi18n="hudScoreLabel">القطرات</span>
+          <strong id="hudDrops" class="hud-val">0</strong>
+        </div>
+      </div>
+
+      <div class="hud-group">
+        <label class="skin-toggle" id="spectrumSkinLabel" hidden>
+          <input type="checkbox" id="spectrumSkinToggle" />
+          <span data-gi18n="spectrumSkin">سيف الطيف الحي ✨</span>
+        </label>
+        <button id="restartBtn" class="btn-chip" type="button" data-gi18n="restartBtn">إعادة المرحلة</button>
+      </div>
+    </div>
+
+    <div class="stage-shell">
+      <canvas id="gameCanvas" width="960" height="540" aria-label="Sketchic Universe Playable Stage"></canvas>
+
+      <!-- Title / Cutscene Overlay -->
+      <div class="stage-overlay" id="stageOverlay">
+        <video id="cutsceneVideo" class="cutscene-video" playsinline muted loop autoplay hidden></video>
+        <div class="overlay-scrim"></div>
+        <div class="overlay-card" id="overlayCard">
+          <span class="overlay-kicker" data-gi18n="overlayKicker">SKETCHIC UNIVERSE: THE GAME • PLAYABLE TEASER</span>
+          <h1 id="overlayTitle" data-gi18n="titleMain">حارس الممحاة — الانتقال البُعدي</h1>
+          <p id="overlayDesc" data-gi18n="titleDesc">
+            اختر بطلك المعتمد من عالم سكتشيك وانطلق من صفحة السكتش ثنائية الأبعاد إلى طاولة البلوط ثلاثية الأبعاد! بدّل بين البُعدين لترسم جسوراً وتتفادى الماء والأقلام المتدحرجة هرباً من ناسك الفراغ الأبيض وضباب الممحاة.
+          </p>
+          <div class="hero-roster" id="heroRoster" role="radiogroup" aria-label="Choose Canon Hero">
+            <button type="button" class="hero-card active" data-hero="ink_knight" aria-pressed="true">
+              <img src="../assets/images/game/portrait_ink_knight.png" alt="Ink Knight" />
+              <span data-hero-label="ink_knight">فارس الحبر</span>
+            </button>
+            <button type="button" class="hero-card" data-hero="thread_weaver" aria-pressed="false">
+              <img src="../assets/images/game/portrait_thread_weaver.png" alt="Thread Weaver" />
+              <span data-hero-label="thread_weaver">حائك الخيوط</span>
+            </button>
+            <button type="button" class="hero-card" data-hero="origami_warden" aria-pressed="false">
+              <img src="../assets/images/game/portrait_origami_warden.png" alt="Origami Warden" />
+              <span data-hero-label="origami_warden">حارسة الأوريغامي</span>
+            </button>
+            <button type="button" class="hero-card" data-hero="ink_fox" aria-pressed="false">
+              <img src="../assets/images/game/portrait_ink_fox.png" alt="Ink Fox" />
+              <span data-hero-label="ink_fox">ثعلب الحبر</span>
+            </button>
+          </div>
+          <div class="controls-legend">
+            <span><kbd>A / D</kbd> <em data-gi18n="ctrlMove">حركة</em></span>
+            <span><kbd>Space</kbd> <em data-gi18n="ctrlJump">قفز</em></span>
+            <span><kbd>Shift / E</kbd> <em data-gi18n="ctrlShift">تبديل 2D ⇄ 3D</em></span>
+            <span><kbd>F</kbd> <em data-gi18n="ctrlBridge">رسم جسر حبر (في 2D)</em></span>
+          </div>
+          <div class="overlay-buttons">
+            <button id="startGameBtn" class="btn-primary" type="button" data-gi18n="startBtn">ابدأ المغامرة ▶</button>
+            <button id="skipCutsceneBtn" class="btn-chip" type="button" data-gi18n="skipBtn" hidden>تخطي المشهد ⏭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Touch / Click Action Controls -->
+    <div class="touch-controls">
+      <div class="touch-pad">
+        <button type="button" class="pad-btn" data-key="left" aria-label="Move Left">◀</button>
+        <button type="button" class="pad-btn" data-key="right" aria-label="Move Right">▶</button>
+      </div>
+      <div class="touch-pad">
+        <button type="button" class="pad-btn wide" id="touchShiftBtn" data-gi18n="btnShift">تبديل 2D⇄3D</button>
+        <button type="button" class="pad-btn wide" id="touchBridgeBtn" data-gi18n="btnBridge">جسر حبر ✒</button>
+        <button type="button" class="pad-btn jump" data-key="jump" data-gi18n="btnJump">قفز ▲</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Secret Blueprint Lore Code Vault Modal -->
+  <div class="lore-modal" id="loreModal" role="dialog" aria-modal="true" hidden>
+    <div class="lore-backdrop" id="loreBackdrop"></div>
+    <div class="lore-dialog">
+      <div class="lore-header">
+        <div>
+          <span class="overlay-kicker">MASTER BLUEPRINT ARCHIVE</span>
+          <h2 data-gi18n="loreTitle">خزنة أكواد المخطوطة السرية</h2>
+        </div>
+        <button type="button" class="close-btn" id="loreCloseBtn" aria-label="Close">✕</button>
+      </div>
+      <p class="lore-intro" data-gi18n="loreIntro">
+        أدخل الرموز المخفية داخل حلقات الموسم الثاني (مثل DROPLET-01 وPENDULUM-02 وPRISM-03 وORIGAMI-04) لفتح أسرار الفنان المفقود وتفعيل سيف «قلم الطيف الحي» داخل اللعبة.
+      </p>
+      <form id="loreForm" class="lore-form">
+        <input id="loreInput" type="text" placeholder="DROPLET-01" autocomplete="off" />
+        <button type="submit" class="btn-primary" data-gi18n="loreSubmit">فتح الكود</button>
+      </form>
+      <div id="loreFeedback" class="lore-feedback"></div>
+      <div id="loreList" class="lore-entries"></div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
