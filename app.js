@@ -81,6 +81,7 @@ const I18N = {
     seasonAll: "جميع المواسم",
     season1Label: "الموسم 1",
     season2Label: "الموسم 2 — أثر الفنان",
+    season3Label: "الموسم 3 — العالم الرقمي",
   },
   en: {
     brandSub: "Sketchic Universe",
@@ -162,6 +163,7 @@ const I18N = {
     seasonAll: "All Seasons",
     season1Label: "Season 1",
     season2Label: "Season 2 — Traces of the Maker",
+    season3Label: "Season 3 — The Digital Canvas",
   },
 };
 
@@ -231,13 +233,19 @@ function isSeason2Unlocked() {
   return Boolean(canonDb && canonDb.meta && canonDb.meta.showSeason2);
 }
 
+function isSeason3Unlocked() {
+  return Boolean(canonDb && canonDb.meta && canonDb.meta.showSeason3);
+}
+
 function getVisibleWorlds() {
   if (!canonDb || !Array.isArray(canonDb.worlds)) return [];
   const showAll = isConvergenceUnlocked();
   const showS2 = isSeason2Unlocked();
+  const showS3 = isSeason3Unlocked();
   return canonDb.worlds
     .filter((w) => {
-      if (Number(w.season) >= 2) return showS2 && w.isPublic !== false;
+      if (Number(w.season) >= 3) return showS3 && w.isPublic !== false;
+      if (Number(w.season) === 2) return showS2 && w.isPublic !== false;
       return showAll || w.isPublic !== false;
     })
     .slice()
@@ -399,22 +407,29 @@ function renderFilmsCatalog() {
   const worlds = getVisibleWorlds();
   const visibleComics = getVisibleComics();
   const hasSeason2 = worlds.some((w) => Number(w.season) === 2);
+  const hasSeason3 = worlds.some((w) => Number(w.season) === 3);
 
-  if (!hasSeason2 && activeSeasonFilter !== "all") {
+  if (!hasSeason2 && !hasSeason3 && activeSeasonFilter !== "all") {
     activeSeasonFilter = "all";
   }
 
   if (filmsFilterBar) {
-    filmsFilterBar.hidden = !hasSeason2;
+    filmsFilterBar.hidden = !(hasSeason2 || hasSeason3);
     filmsFilterBar.innerHTML = "";
-    if (hasSeason2) {
+    if (hasSeason2 || hasSeason3) {
       const s1Count = worlds.filter((w) => Number(w.season) === 1).length;
       const s2Count = worlds.filter((w) => Number(w.season) === 2).length;
+      const s3Count = worlds.filter((w) => Number(w.season) === 3).length;
       const seasonOptions = [
         { key: "all", label: `${dict.seasonAll} (${worlds.length})` },
         { key: "1", label: `${dict.season1Label} (${s1Count})` },
-        { key: "2", label: `${dict.season2Label} (${s2Count})` },
       ];
+      if (hasSeason2) {
+        seasonOptions.push({ key: "2", label: `${dict.season2Label} (${s2Count})` });
+      }
+      if (hasSeason3) {
+        seasonOptions.push({ key: "3", label: `${dict.season3Label} (${s3Count})` });
+      }
       seasonOptions.forEach((opt) => {
         const btn = makeEl(
           "button",
@@ -451,11 +466,12 @@ function renderFilmsCatalog() {
     preview.appendChild(video);
 
     const overlay = makeEl("div", "film-overlay");
+    const sNum = Number(w.season || 1);
     const numLabel =
-      Number(w.season) === 2
+      sNum >= 2
         ? w.episode === 0
-          ? "S2 • TEASER"
-          : `S2 • E${padTwo(w.episode)}`
+          ? `S${sNum} • TEASER`
+          : `S${sNum} • E${padTwo(w.episode)}`
         : padTwo(w.worldNum);
     overlay.appendChild(makeEl("span", "film-number", numLabel));
     overlay.appendChild(makeEl("span", "film-duration", w.durationBadge));
@@ -473,12 +489,12 @@ function renderFilmsCatalog() {
 
     const body = makeEl("div", "film-body");
     const tags = makeEl("div", "film-tags");
-    if (hasSeason2) {
+    if (hasSeason2 || hasSeason3) {
       const sTag =
-        Number(w.season) === 2
+        sNum >= 2
           ? w.episode === 0
-            ? "S2 • Trailer"
-            : `S2E${padTwo(w.episode)}`
+            ? `S${sNum} • Trailer`
+            : `S${sNum}E${padTwo(w.episode)}`
           : `S1 • #${padTwo(w.worldNum)}`;
       tags.appendChild(makeEl("span", "tag film-season-badge", sTag));
     }
@@ -1696,11 +1712,12 @@ async function syncCanonFromApi() {
 
     const prevShow = Boolean(canonDb && canonDb.meta && canonDb.meta.showConvergence);
     const prevS2 = Boolean(canonDb && canonDb.meta && canonDb.meta.showSeason2);
+    const prevS3 = Boolean(canonDb && canonDb.meta && canonDb.meta.showSeason3);
     const prevVersion = canonDb && canonDb.meta ? canonDb.meta.dbVersion : null;
     canonDb = liveDb;
     canonSourceMode = "api";
 
-    if (prevShow !== Boolean(liveDb.meta.showConvergence) || prevS2 !== Boolean(liveDb.meta.showSeason2) || prevVersion !== liveDb.meta.dbVersion) {
+    if (prevShow !== Boolean(liveDb.meta.showConvergence) || prevS2 !== Boolean(liveDb.meta.showSeason2) || prevS3 !== Boolean(liveDb.meta.showSeason3) || prevVersion !== liveDb.meta.dbVersion) {
       renderAllFromCanon();
     } else {
       renderCanonStatusBadge();

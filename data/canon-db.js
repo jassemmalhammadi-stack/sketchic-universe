@@ -2,7 +2,7 @@
 window.SKETCHIC_CANON_DB = {
   "meta": {
     "id": "sketchic-universe",
-    "dbVersion": "1.2.0",
+    "dbVersion": "1.3.0",
     "nameAr": "عالم سكتشيك",
     "nameEn": "Sketchic Universe",
     "websiteUrl": "https://Sketchic.net",
@@ -12,7 +12,8 @@ window.SKETCHIC_CANON_DB = {
     "youtubeUrl": "https://www.youtube.com/channel/UCztH7trk7F9wglxWYWsZXNg",
     "showConvergence": true,
     "showSeason2": true,
-    "updatedAt": "2026-11-24"
+    "updatedAt": "2026-11-24",
+    "showSeason3": true
   },
   "brandAssets": [
     {
@@ -186,6 +187,42 @@ window.SKETCHIC_CANON_DB = {
       "signatureFoleyAr": "خشخشة تسجيل عتيق / تقليب صفحات دفتر جلدي قديم",
       "voicePromptTag": "Consistent deep, warm nostalgic lower male voiceover (Charon), steady and reflective like an antique studio tape recording.",
       "signatureFoleyEn": "warm vintage tape reel crackle + leather journal page turn"
+    },
+    {
+      "id": "voice-callirrhoe",
+      "voiceName": "Callirrhoe",
+      "gender": "Female",
+      "pitch": "Middle",
+      "fallbackVoice": "Laomedeia",
+      "toneAr": "مشرق سريع الإيقاع وشغوف",
+      "toneEn": "Vibrant, Agile & Luminous",
+      "voicePromptTag": "Consistent vibrant, agile luminous young female voice (Callirrhoe), crisp and energetic with buoyant warmth.",
+      "signatureFoleyAr": "نقرة نقطة ارتكاز + تمرير حريري لتيار النيون فوق الزجاج",
+      "signatureFoleyEn": "sharp Bezier anchor node snap + electric neon vector ribbon whoosh"
+    },
+    {
+      "id": "voice-umbriel",
+      "voiceName": "Umbriel",
+      "gender": "Male",
+      "pitch": "Lower-middle",
+      "fallbackVoice": "Alnilam",
+      "toneAr": "هادئ رصين ومهيب بنبرة هندسية",
+      "toneEn": "Sleek, Calm & Architectural",
+      "voicePromptTag": "Consistent sleek, calm measured lower-middle male voice (Umbriel), authoritative glass-resonant timbre.",
+      "signatureFoleyAr": "انزلاق زجاج داكن + قفل تثبيت هندسي صامت",
+      "signatureFoleyEn": "low obsidian glass slide + deep bass synth pulse + digital flatten lock snap"
+    },
+    {
+      "id": "voice-gacrux",
+      "voiceName": "Gacrux",
+      "gender": "Female",
+      "pitch": "Mature",
+      "fallbackVoice": "Vindemiatrix",
+      "toneAr": "بلّوري ذكي ورشيق كرنين القلم الضوئي",
+      "toneEn": "Crisp, Airy & Bell-Bright",
+      "voicePromptTag": "Consistent crisp, airy bell-bright companion voice (Gacrux), enthusiastic and concise.",
+      "signatureFoleyAr": "رنين بلوري ناعم لسن القلم السعوي",
+      "signatureFoleyEn": "crystalline capacitive nib chime + cheerful upward sparkle glissando"
     }
   ],
   "voiceBindings": [
@@ -287,6 +324,39 @@ window.SKETCHIC_CANON_DB = {
       "voiceAlias": "Maker Journal Echo (1:1 Lock)",
       "traitAr": "عميق ودافئ كالتسجيل العتيق (البديل: Schedar)",
       "traitEn": "Deep, Warm & Nostalgic (Alt: Schedar)"
+    },
+    {
+      "id": "vb-10",
+      "sortOrder": 10,
+      "characterId": "char-vector-sprite",
+      "voiceId": "voice-callirrhoe",
+      "worldId": "world-s3-trailer",
+      "displayCharEn": "Vector Sprite",
+      "voiceAlias": "Neon Vector Pulse (1:1 Lock)",
+      "traitAr": "مشرق سريع الإيقاع وشغوف (البديل: Laomedeia)",
+      "traitEn": "Vibrant, Agile & Luminous (Alt: Laomedeia)"
+    },
+    {
+      "id": "vb-11",
+      "sortOrder": 11,
+      "characterId": "char-layer-architect",
+      "voiceId": "voice-umbriel",
+      "worldId": "world-s3-trailer",
+      "displayCharEn": "The Layer Architect",
+      "voiceAlias": "Obsidian Grid Order (1:1 Lock)",
+      "traitAr": "هادئ رصين ومهيب بنبرة هندسية (البديل: Alnilam)",
+      "traitEn": "Sleek, Calm & Architectural (Alt: Alnilam)"
+    },
+    {
+      "id": "vb-12",
+      "sortOrder": 12,
+      "characterId": "char-cursor-wisp",
+      "voiceId": "voice-gacrux",
+      "worldId": "world-s3-trailer",
+      "displayCharEn": "Cursor Wisp",
+      "voiceAlias": "Capacitive Lantern Bell (1:1 Lock)",
+      "traitAr": "بلّوري ذكي ورشيق (البديل: Vindemiatrix)",
+      "traitEn": "Crisp, Airy & Bell-Bright (Alt: Vindemiatrix)"
     }
   ],
   "worlds": [
@@ -6118,6 +6188,273 @@ window.SKETCHIC_CANON_DB = {
           ]
         }
       ]
+    },
+    {
+      "id": "world-s3-trailer",
+      "worldNum": 16,
+      "slug": "season-3-trailer",
+      "folderName": "10_Season_3_The_Digital_Canvas/00_Season_3_Trailer",
+      "season": 3,
+      "episode": 0,
+      "isPublic": true,
+      "isFinale": false,
+      "titleAr": "بوابة اللوح الرقمي — إعلان الموسم الثالث",
+      "titleEn": "The Digital Canvas Awakens — Season 3 Trailer",
+      "genreAr": "تريلر الموسم الثالث",
+      "genreEn": "Season 3 Teaser",
+      "tagStyle": "tag-finale",
+      "mediumTag": "Analog Ink × Neon Vectors",
+      "visualStyleAr": "إعلان سينمائي يفتح بوابة اللوح الرقمي وتصادم الحبر اليدوي مع متجهات النيون وطبقات الزجاج المضيء.",
+      "visualStyleEn": "Cinematic Season 3 teaser uniting hand-drawn charcoal ink with luminous neon-cyan/magenta Bezier vectors inside suspended RGB glass layers.",
+      "loglineAr": "مع استيقاظ اللوح الرقمي على طاولة المرسم، يعبر فارس الحبر جسر القلم السعوي نحو عالم الطبقات الزجاجية، حيث تلتقي نبض المتجهات بمواجهة مهندس الطبقات الصارم.",
+      "loglineEn": "As the Awakened Drawing Tablet comes alive on the studio desk, Ink Knight crosses the capacitive stylus into luminous RGB glass towers alongside Vector Sprite against The Layer Architect.",
+      "durationSec": 63,
+      "durationBadge": "63s • 1080p S3",
+      "flowProjectId": "690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowProjectUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowSceneUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3/collection/07f9b1db-f2f6-4dac-93f9-1f86ab4b1957",
+      "assembledSceneName": "Season 3 Official Teaser Trailer",
+      "flowModel": "Omni 1.2 Flash • 1080p",
+      "archiveBiblePath": "10_Season_3_The_Digital_Canvas/00_Season_3_Trailer/01_World_Bible.md",
+      "archiveCharsPath": "10_Season_3_The_Digital_Canvas/00_Season_3_Trailer/02_Characters_and_Ingredients.md",
+      "archiveStoryboardPath": "10_Season_3_The_Digital_Canvas/00_Season_3_Trailer/03_Storyboard_and_Flow_Prompts.md",
+      "archiveFullVideoPath": "10_Season_3_The_Digital_Canvas/00_Season_3_Trailer/final/S3_Trailer_The_Digital_Canvas_Full_Film.mp4",
+      "archiveShortsVideoPath": "10_Season_3_The_Digital_Canvas/00_Season_3_Trailer/final/S3_Trailer_The_Digital_Canvas_Shorts_9x16.mp4",
+      "webFullVideoPath": "assets/videos/S3_Trailer_The_Digital_Canvas_Full_Film.mp4",
+      "webShortsVideoPath": "assets/videos/S3_Trailer_The_Digital_Canvas_Shorts_9x16.mp4",
+      "webPosterPath": "assets/images/posters/season-3-trailer.jpg",
+      "webFullSubArPath": "assets/subtitles/S3_Trailer_The_Digital_Canvas_Full_Film.ar.vtt",
+      "webFullSubEnPath": "assets/subtitles/S3_Trailer_The_Digital_Canvas_Full_Film.en.vtt",
+      "webShortsSubArPath": "assets/subtitles/S3_Trailer_The_Digital_Canvas_Shorts_9x16.ar.vtt",
+      "webShortsSubEnPath": "assets/subtitles/S3_Trailer_The_Digital_Canvas_Shorts_9x16.en.vtt",
+      "youtubeFullUrl": "https://youtu.be/i6ollj1LVlo",
+      "youtubeShortsUrl": "https://youtube.com/shorts/4ZEhpBSecoo",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#00E5FF",
+          "labelEn": "Electric Vector Cyan",
+          "labelAr": "سماوي المتجهات الكهربائي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#FF4D8D",
+          "labelEn": "Magenta Anchor Spark",
+          "labelAr": "وردي نقاط الارتكاز",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#7C3AED",
+          "labelEn": "Royal Wireframe Violet",
+          "labelAr": "بنفسجي الشبكة الهندسية",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#0F172A",
+          "labelEn": "Obsidian Tablet Glass",
+          "labelAr": "زجاج اللوح الداكن",
+          "showOnCard": true
+        }
+      ],
+      "visualRules": [
+        {
+          "ruleNum": 1,
+          "titleAr": "الخامة السابعة: المتجهات المضيئة وطبقات الزجاج",
+          "titleEn": "Seventh Medium: Luminous 2D Vectors & RGB Glass",
+          "descriptionAr": "خطوط متجهات ثنائية الأبعاد مسطّحة وحادّة بنبض سماوي ووردي تسبح فوق ألواح زجاجية داكنة دون تشويه أو عنف.",
+          "descriptionEn": "Crisp flat 2D neon-cyan and magenta vector paths gliding over obsidian-slate bevelled glass panes with crisp optical reflections."
+        },
+        {
+          "ruleNum": 2,
+          "titleAr": "جسر التقاء التناظري والرقمي",
+          "titleEn": "Analog Craft Meets Digital Precision",
+          "descriptionAr": "تكامل الحبر والفحم وخيط الذهب مع الخطوط الرقمية لبناء إبداع هجين حي بدل محو أحدهما للآخر.",
+          "descriptionEn": "Hand-drawn charcoal ink and golden stitches weave harmoniously into glowing Bezier geometry without flattening raw human warmth."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "s3t-s1",
+          "sceneNum": 1,
+          "titleAr": "استيقاظ اللوح الرقمي عند الفجر",
+          "titleEn": "The Digital Canvas Wakes at Dawn",
+          "goalAr": "ايقاظ اللوح الرقمي عند الفجر بصوت Charon.",
+          "flowPrompt": "Cinematic slow-dolly macro hook gliding across twilight oak studio grain toward the awakened Digital Drawing Tablet glowing beside open cream paper sketchbooks, warm leftover lantern amber contrasting sharply against luminous glowing sky-cyan and luminous royal-violet screen radiance reflecting onto dusty glass inkwells, family-friendly tactile craft physics, strictly NO visible on-screen speaker figure. Rippling neon light circles expand smoothly across the clean black smoked-glass screen as dust motes hover illuminated above the oak edge. Voice Lock [The Maker's Echo -> Charon]: Consistent deep, warm nostalgic lower male voiceover (Charon), steady and evocative like a quiet conservatory studio tape echo revealing a new digital doorway (strictly off-screen disembodied voiceover — NO visible on-screen speaker figure). Signature Foley: soft antique tape resonance + subtle twilight breeze over vellum pages + resonant capacitive glass chime.",
+          "voiceId": "voice-charon",
+          "attachments": [
+            {
+              "type": "ingredient",
+              "refId": "ing-awakened-drawing-tablet",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-charon",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3t-s2",
+          "sceneNum": 2,
+          "titleAr": "القلم المعدني يلامس زجاج الشاشة",
+          "titleEn": "Ink Meets the Capacitive Stylus",
+          "goalAr": "هبوط فارس الحبر على القلم السعوي وتلاطم الحبر مع الضوء.",
+          "flowPrompt": "Intimate extreme low-angle macro dolly-in gliding smoothly onto the slanted sleek capacitive stylus connecting open paper pages to the illuminated glass screen, electric neon-cyan upward glow lighting weathered paper dust, tiny finger-sized macro scale, family-friendly tactile craft physics. Stepping bravely across the beveled metallic stylus barrel, @Ink_Knight — tiny finger-sized 2D hand-drawn black-ink and charcoal young warrior (deep charcoal-black cross-hatching with crisp die-cut cream-paper border, bare-headed with short spiky black-ink hair and NO hood, expressive sketched young warrior face with two glowing white eyes, fluttering tattered paper-strip cape, metallic fountain-pen-nib blade; flat 2D ink texture casting real shadow) — taps his nib carefully onto the glowing glass display, sending dramatic liquid charcoal ink ripples colliding cleanly with electric neon-cyan vector light rings. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp fountain-pen metallic tap on glass, vibrant electric capacitive chime, and rising mysterious string pulse only.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3t-s3",
+          "sceneNum": 3,
+          "titleAr": "الانجذاب نحو أفق الزجاج",
+          "titleEn": "Pull Toward the Glass Horizon",
+          "goalAr": "انجذاب فارس الحبر نحو طبقات الأفق الزجاجي بصوت Fenrir.",
+          "flowPrompt": "Dynamic steady macro push-over-shoulder descending smoothly over the glowing beveled edge of the Digital Drawing Tablet as the wooden studio ceiling reflects mirrored inside the dark mirror-glass horizon below, electric neon-cyan gridlines rushing endlessly toward infinity, tiny finger-sized scale, family-friendly tactile craft physics. Bracing his paper boots at the luminous threshold edge while warm studio shadows frame the beveled bezel, @Ink_Knight — tiny finger-sized 2D black-ink and charcoal warrior (deep charcoal-black cross-hatching, die-cut cream-paper border, bare-headed short spiky black-ink hair with NO hood, two bright glowing white eyes, cross-hatched tunic, tattered paper cape; flat 2D ink texture) — leans forward in awe into the endless glowing vertical layers stacked inside the screen. Voice Lock [Ink Knight -> Fenrir]: Consistent passionate, brave lower-middle male voice (Fenrir), hushed with fierce curiosity and wonder, with clean 2D ink mouth lip-sync while his spiky ink hair and glowing eyes remain luminous; only Ink Knight speaks in this shot. Signature Foley: deep digital air-current hum + light crisp paper flutter + heroic string swell.",
+          "voiceId": "voice-fenrir",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-awakened-drawing-tablet",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-fenrir",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3t-s4",
+          "sceneNum": 4,
+          "titleAr": "شلال الطبقات الضوئية",
+          "titleEn": "Cascade of RGB Glass Layers",
+          "goalAr": "غوص بصري عبر طبقات الـ RGB الشفافة المتلألئة.",
+          "flowPrompt": "Vertiginous steady forward macro fly-through diving swiftly down between giant hovering beveled transparent glass art-layer panes suspended in deep obsidian-slate twilight space, top glass pane carrying floating red watercolor splashes, middle layer floating stitched saffron-gold thread trails, and deep foreground snapping cleanly with crisp electric neon-cyan and vibrant magenta-pink geometric Bezier paths, lush light refraction caustics across dark space, family-friendly tactile craft physics. Streams of glowing pixel dust cascade gracefully between layers without colliding harshly. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crystalline transparent glass slide sweeps, shimmering arpeggiated synth harp cascades, and driving rhythmic percussion only.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3t-s5",
+          "sceneNum": 5,
+          "titleAr": "ظهور بطلة المتجهات المضيئة",
+          "titleEn": "Enter Vector Sprite",
+          "goalAr": "ظهور نبض المتجهات المضيئة بصوت Callirrhoe.",
+          "flowPrompt": "Kinetic steady side-gliding macro tracking shot swooping gracefully alongside @Vector_Sprite as she skates swiftly across a deep obsidian-slate glass bridge slicing through mid-air neon prism mist, glowing sky-cyan reflections mirroring sharply beneath her feet, tiny finger-sized scale, family-friendly tactile craft physics. Drawing crisp curving ribbons of light behind her Bezier Pen-Tool staff, @Vector_Sprite — tiny finger-sized luminous 2D vector-art heroine drawn in crisp electric neon-cyan and vibrant magenta-pink Bezier strokes with floating glowing diamond anchor-node earrings, sleek deep obsidian-slate tunic with neon piping, translucent glowing vector ribbon skirt trailing square glowing sky-cyan pixel motes; strictly flat 2D glowing vector craft art — spins brightly toward camera, flashing an agile joyful spark from her floating stylus lance. Voice Lock [Vector Sprite -> Callirrhoe]: Consistent vibrant, agile luminous young female voice (Callirrhoe), crisp and energetic with buoyant warmth, welcoming newcomers with urgent playful sparks; only Vector Sprite speaks in this shot. Signature Foley: sharp Bezier node snap + electric neon vector ribbon whoosh + crisp glass skate shimmer.",
+          "voiceId": "voice-callirrhoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-callirrhoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3t-s6",
+          "sceneNum": 6,
+          "titleAr": "ظهور مهندس الطبقات الصامت",
+          "titleEn": "Enter The Layer Architect",
+          "goalAr": "ظهور مهندس الطبقات وتسطيح الفوضى بصوت Umbriel.",
+          "flowPrompt": "Imposing steady low-angle slow push-in towering dramatically up before the silhouette of @Layer_Architect standing atop intersecting transparent wireframe grid planes bathed in luminous royal-violet and cold glowing sky-cyan rim glow against deep obsidian-slate darkness, monumental contrast versus tiny background vector bridges, family-friendly tactile craft physics. Adjusting floating transparent glass frames around his shoulders, @Layer_Architect — tall imposing architectural construct of beveled translucent deep obsidian-slate glass panes and luminous royal-violet wireframe mesh grids, sleek strictly eyeless smoked-glass visor faceplate crossed by a single calm horizontal electric neon-cyan horizon light beam (strictly rigid visor, zero erratic jaw distortion), concentric wireframe halo, translucent cloak shedding crisp dissolving cyan-violet squares, wielding his Grid Stylus Scepter — extends one composed arm forward, effortlessly snapping an errant warm charcoal splatter nearby into cold motionless rectilinear vector geometry. Voice Lock [The Layer Architect -> Umbriel]: Consistent sleek, calm measured lower-middle male voice (Umbriel), authoritative glass-resonant timbre devoid of crude anger, speaking cleanly while his dark smoked-glass visor remains strictly rigid; only The Layer Architect speaks in this shot. Signature Foley: low obsidian glass slide + deep bass synth pulse + crisp digital flatten lock snap.",
+          "voiceId": "voice-umbriel",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-umbriel",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3t-s7",
+          "sceneNum": 7,
+          "titleAr": "تصادم الخامات عبر الزجاج",
+          "titleEn": "Analog Ink Collides with Neon Vectors",
+          "goalAr": "اتحاد فارس الحبر ونبض المتجهات في دوامة مشتركة.",
+          "flowPrompt": "Explosive steady lateral macro two-shot tracking cleanly across the glass-and-paper bridge as cold luminous royal-violet wireframe sweep lines surge toward an open sketchbook rim, vibrant golden studio sunset rim light clashing against blazing electric neon-cyan and vibrant magenta-pink energy arcs, tiny finger-sized scale, family-friendly tactile craft physics. Vaulting cleanly side-by-side over an incoming sweeping grid ribbon, @Ink_Knight — 2D black-ink knight (deep charcoal-black cross-hatching, die-cut cream-paper border, spiky ink hair, two glowing white eyes, ink nib sword) — slashes a roaring wave of hand-drawn black ink and amber gold forward into union with @Vector_Sprite — flat 2D luminous vector heroine (electric neon-cyan and vibrant magenta-pink Bezier strokes, floating anchor-node earrings, Bezier Pen-Tool staff) — igniting a breathtaking spiral burst where raw textured paper charcoal weaves seamlessly through razor-sharp neon curves. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — thunderous hybrid fountain-nib swoosh, harmonic neon vector chord shimmer, and towering trailer orchestral crescendo.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3t-s8",
+          "sceneNum": 8,
+          "titleAr": "بوابة الإبداع الهجين",
+          "titleEn": "Portal of the Living Hybrid Canvas",
+          "goalAr": "انسحاب عمودي نحو اللوح والمرسم المفتوح بختام صامت.",
+          "flowPrompt": "Majestic steady crane pull-back pulling vertically away from the illuminated spiral blast until the entire awakened Digital Drawing Tablet and vintage sunlit wood sketchbook corner fill an epic balanced centered frame in twilight amber and cyan symmetry, family-friendly tactile craft physics. At the clean dark glowing glass center of the screen, liquid golden ink brushstrokes and blazing electric neon-cyan Bezier arcs swirl gracefully together into one dazzling pure circular light vortex—radiating crisp luminous golden and cyan geometry across an open dark obsidian center canvas completely free of text, words, letters, numbers, or watermarks. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — majestic resonant hybrid cello-and-synth final impact chord swelling cleanly then ringing out into crystalline silence.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "ingredient",
+              "refId": "ing-awakened-drawing-tablet",
+              "flowTab": "Images"
+            }
+          ]
+        }
+      ]
     }
   ],
   "characters": [
@@ -6359,6 +6696,87 @@ window.SKETCHIC_CANON_DB = {
       "portraitPrompt": "Close-up macro shot of an antique torn blueprint parchment glowing with warm amber memory light and fountain pen nib marks on an oak desk",
       "bodyPrompt": null,
       "continuityPrefix": null
+    },
+    {
+      "id": "char-vector-sprite",
+      "cardOrder": 29,
+      "slug": "vector-sprite",
+      "primaryWorldId": "world-s3-trailer",
+      "voiceId": "voice-callirrhoe",
+      "isPublic": true,
+      "roleKey": "roleHeroine",
+      "roleAr": "بطلة م3 الجديدة",
+      "roleEn": "Season 3 Heroine",
+      "nameAr": "نبض المتجهات",
+      "nameEn": "Vector Sprite",
+      "shortNameEn": "The Digital Canvas",
+      "badgeStyle": "badge-teal",
+      "mediumEn": "2D Luminous Neon Vector Art",
+      "flowTab": "Characters",
+      "characterInfoEn": "Tiny finger-sized 2D vector-art heroine drawn in crisp electric neon-cyan and magenta Bezier strokes with glowing diamond anchor-node earrings, sleek dark obsidian tunic, and Bezier Pen-Tool staff. Voice: Callirrhoe (Alt: Laomedeia).",
+      "descriptionAr": "بطلة رقمية صغيرة بحجم الإصبع مرسومة بخطوط متجهات ثنائية الأبعاد حادة السماوي والوردي مع أقراط نقاط ارتكاز مضيئة وصولجان أداة القلم.",
+      "descriptionEn": "A finger-sized luminous 2D vector heroine drawn in electric cyan and magenta Bezier curves, wielding a floating Pen-Tool staff across glowing RGB glass bridges.",
+      "portraitPrompt": "Clean 2D luminous digital vector illustration portrait of ONLY @Vector_Sprite — tiny finger-sized luminous 2D vector-art heroine drawn in crisp electric neon-cyan and vibrant magenta-pink Bezier curve strokes with floating glowing diamond anchor-node earrings, expressive glowing sky-cyan geometric eyes and lively subtle smile, sleek deep obsidian-slate sleeveless glass-trimmed collar edged with neon-cyan light piping — centered framing against a smooth uniform softly blurred neutral dark charcoal-slate backdrop, strictly flat 2D glowing vector aesthetic, NO 3D shading, NO UI buttons, NO text, NO watermarks, 3:4.",
+      "bodyPrompt": "Clean 4-panel horizontal character turnaround sheet on a uniform flat pale cool-grey matte backdrop with clear separation gaps showing ONLY @Vector_Sprite in four poses: close-up portrait bust, front full-body hero stance holding her glowing Bezier Pen-Tool staff vertically, clean side profile showing trailing glowing sky-cyan vector ribbon cape and crisp diamond anchor-node pins, and back view showing the luminous magenta-pink and electric neon-cyan Bezier spine weave; strictly flat 2D luminescent vector craft art, NO text, NO labels, NO shadows touching neighbors, 16:9.",
+      "continuityPrefix": "Hybrid 2D/3D cinematic frame from Sketchic Universe. @Vector_Sprite: tiny finger-sized luminous 2D vector-art heroine drawn in crisp electric neon-cyan and vibrant magenta-pink Bezier strokes with floating glowing diamond anchor-node earrings, dark obsidian-slate tunic with neon piping, translucent vector ribbon skirt trailing sky-cyan pixels, wielding a Bezier Pen-Tool staff; flat 2D glowing vector craft art.",
+      "vaultPortraitPath": "00_Canon_Vault/Characters_Cards/Season_3/Vector_Sprite_Portrait.png",
+      "vaultFullBodyPath": "00_Canon_Vault/Characters_Cards/Season_3/Vector_Sprite_4Panel_Sheet.png",
+      "vaultLegacyCardPath": null,
+      "mouthSyncRuleEn": "Expressive clean 2D luminous vector mouth lip-sync with agile geometric eye sparkle while keeping strictly flat 2D glowing vector aesthetic."
+    },
+    {
+      "id": "char-layer-architect",
+      "cardOrder": 30,
+      "slug": "layer-architect",
+      "primaryWorldId": "world-s3-trailer",
+      "voiceId": "voice-umbriel",
+      "isPublic": true,
+      "roleKey": "roleAntagonist",
+      "roleAr": "خصم م3 الفلسفي",
+      "roleEn": "Architectural Construct",
+      "nameAr": "مهندس الطبقات",
+      "nameEn": "The Layer Architect",
+      "shortNameEn": "The Digital Canvas",
+      "badgeStyle": "badge-indigo",
+      "mediumEn": "Obsidian Glass & Wireframe Construct",
+      "flowTab": "Characters",
+      "characterInfoEn": "Tall imposing architectural construct crafted from bevelled obsidian-slate glass UI panes and royal-violet wireframe grids, eyeless/mouthless smoked-glass visor crossed by a single horizontal cyan light line, and Grid Stylus Scepter. Voice: Umbriel (Alt: Alnilam).",
+      "descriptionAr": "كيان معماري مهيب من ألواح الزجاج المشطوف الداكن والشبكات البنفسجية، بقناع زجاجي مصمت يخترقه خط ضوئي سماوي أفقي واحد.",
+      "descriptionEn": "A monumental construct of bevelled dark glass UI panes and royal-violet wireframes seeking to compress chaotic hand-drawn art into sterile rectilinear order.",
+      "portraitPrompt": "Cinematic macro studio portrait of ONLY @Layer_Architect — tall imposing architectural construct crafted from floating overlapping beveled translucent deep obsidian-slate glass UI panes and crisp luminous royal-violet wireframe mesh grids, sleek strictly eyeless and mouthless smooth smoked-glass visor faceplate crossed by one calm horizontal electric neon-cyan horizon light line, concentric geometric wireframe layer-halo framing behind his shoulders — centered against a uniform dark smoked-slate backdrop, strictly rigid visor with zero mouth, NO text, NO watermarks, 3:4.",
+      "bodyPrompt": "Clean 4-panel horizontal character turnaround sheet on a uniform flat pale cool-grey matte backdrop with clear separation gaps showing ONLY @Layer_Architect in four poses: close-up eyeless smoked-glass visor bust with luminous royal-violet grid halo, front full-body monumental stance holding his glowing Grid Stylus Scepter vertically, side profile showing tiered translucent deep obsidian-slate glass UI cloak plates shedding subtle neon-cyan pixel squares, and back view showing floating overlapping beveled wireframe wings; strictly family-friendly digital craft construct, NO text, NO labels, 16:9.",
+      "continuityPrefix": "Hybrid 2D/3D cinematic frame from Sketchic Universe. @Layer_Architect: tall imposing architectural construct of beveled translucent deep obsidian-slate glass panes and luminous royal-violet wireframe mesh grids, sleek strictly eyeless smoked-glass visor faceplate crossed by one calm horizontal electric neon-cyan horizon light beam (strictly rigid visor, zero mouth opening), concentric wireframe halo, wielding his Grid Stylus Scepter.",
+      "vaultPortraitPath": "00_Canon_Vault/Characters_Cards/Season_3/Layer_Architect_Portrait.png",
+      "vaultFullBodyPath": "00_Canon_Vault/Characters_Cards/Season_3/Layer_Architect_4Panel_Sheet.png",
+      "vaultLegacyCardPath": null,
+      "mouthSyncRuleEn": "Strictly rigid eyeless and mouthless smoked-glass visor: horizontal cyan horizon beam pulses softly with speech while visor stays completely rigid."
+    },
+    {
+      "id": "char-cursor-wisp",
+      "cardOrder": 31,
+      "slug": "cursor-wisp",
+      "primaryWorldId": "world-s3-trailer",
+      "voiceId": "voice-gacrux",
+      "isPublic": true,
+      "roleKey": "roleCompanion",
+      "roleAr": "مرشد القلم المضيء",
+      "roleEn": "Digital Lantern Guide",
+      "nameAr": "شعلة المؤشر",
+      "nameEn": "Cursor Wisp",
+      "shortNameEn": "The Glass Horizon",
+      "badgeStyle": "badge-teal",
+      "mediumEn": "Capacitive Pearl-Glass Spirit",
+      "flowTab": "Characters",
+      "characterInfoEn": "Thumb-sized floating pearl-silver and glowing sky-cyan capacitive stylus-nib lantern spirit with twin translucent diamond cursor wings and two expressive optical dot eyes (zero warped mouth). Voice: Gacrux (Alt: Vindemiatrix).",
+      "descriptionAr": "روح فانوس صغيرة بحجم الإبهام بشكل سنّ قلم سعوي لؤلؤي ومضيء، بجناحين ماسيّين شفافين وعينين ضوئيتين نقطيتين بلا فم مشوّه.",
+      "descriptionEn": "A thumb-sized floating pearl-silver capacitive stylus-nib spirit with translucent diamond cursor wings and bright cyan optical dot eyes.",
+      "portraitPrompt": "Studio close-up of ONLY @Cursor_Wisp — thumb-sized floating luminous glowing sky-cyan and warm pearl-silver capacitive stylus-nib lantern spirit with smooth sleek metallic pearl nib crown, twin soft diamond translucent cursor wings, two bright expressive electric neon-cyan optical dot eyes, and subtle golden core spark inside translucent glass casing — hovering centered against a uniform softly blurred neutral dark slate backdrop, strictly zero human mouth, NO text, NO clutter, 3:4.",
+      "bodyPrompt": "Clean 4-panel horizontal character turnaround sheet on a uniform flat pale neutral grey backdrop with clear gaps showing ONLY @Cursor_Wisp in four poses: close-up glowing stylus-nib lantern face, front symmetrical hovering wing stance radiating soft sky-cyan starlight crumbs, side glide view showing sleek conical pearl-silver capacitive nib tail, and top-back hover view showing crystalline glowing teal-cyan diamond wing veins; NO text, NO labels, 16:9.",
+      "continuityPrefix": "Hybrid 2D/3D cinematic frame from Sketchic Universe. @Cursor_Wisp: thumb-sized floating luminous sky-cyan and warm pearl-silver capacitive stylus-nib lantern spirit with metallic pearl nib crown, twin translucent diamond cursor wings, two bright cyan optical dot eyes, zero human mouth.",
+      "vaultPortraitPath": "00_Canon_Vault/Characters_Cards/Season_3/Cursor_Wisp_Portrait.png",
+      "vaultFullBodyPath": "00_Canon_Vault/Characters_Cards/Season_3/Cursor_Wisp_4Panel_Sheet.png",
+      "vaultLegacyCardPath": null,
+      "mouthSyncRuleEn": "Mouthless optical-lantern spirit: translucent golden core spark and two sky-cyan optical dot eyes brighten expressively with zero warped human mouth."
     }
   ],
   "ingredients": [
@@ -6703,6 +7121,158 @@ window.SKETCHIC_CANON_DB = {
       "descriptionAr": "أداة موحّدة تجمع الخامات الست: الحبر والفحم، الخيط الذهبي، الألوان المائية الشفافة، منشور الزجاج، ومقبض الأوريغامي لإكمال المسودات لا تدميرها.",
       "descriptionEn": "The ultimate fused tool uniting all six mediums—charcoal ink, golden embroidery, watercolor vellum, glass prism shard, and origami grip—to complete unfinished worlds.",
       "referencePrompt": "Extreme macro hero shot of an ornate cracked brass-and-gold fountain pen reforged with luminous black-and-gold charcoal ink core, golden embroidery binding, watercolor vellum seal, ruby-emerald-sapphire prism shard at the nib heart, and folded ivory-gold origami grip radiating seven-spectrum light"
+    },
+    {
+      "id": "ing-awakened-drawing-tablet",
+      "cardOrder": 32,
+      "slug": "awakened-drawing-tablet",
+      "primaryWorldId": "world-s3-trailer",
+      "isPublic": true,
+      "category": "portal",
+      "roleKey": "rolePortal",
+      "roleAr": "البوابة الرقمية",
+      "roleEn": "Digital Portal",
+      "nameAr": "اللوح الرقمي المستيقظ",
+      "nameEn": "Awakened Drawing Tablet",
+      "badgeStyle": "badge-teal",
+      "flowTab": "Images",
+      "descriptionAr": "لوح رسم زجاجي حديث يستيقظ بجوار دفاتر المرسم العتيقة متوهجاً بشبكات أفق سماوية وبنفسجية ثلاثية الأبعاد.",
+      "descriptionEn": "A sleek glass digital drawing tablet awakening beside vintage oak sketchbooks with layered sky-cyan and royal-violet horizon grids.",
+      "referencePrompt": "Macro photorealistic studio shot of a sleek modern glass Digital Drawing Tablet resting awakened beside vintage weathered oak artist sketchbooks at twilight, dark obsidian bezel framing a glowing 2D-3D layered sky-cyan and luminous royal-violet geometric horizon grid reflecting upward onto dusty brass studio jars, strictly NO text or words on screen, 16:9.",
+      "vaultPlatePath": "00_Canon_Vault/Ingredients_Plates/Season_3/Awakened_Drawing_Tablet.png"
+    },
+    {
+      "id": "ing-capacitive-stylus-bridge",
+      "cardOrder": 33,
+      "slug": "capacitive-stylus-bridge",
+      "primaryWorldId": "world-s3-trailer",
+      "isPublic": true,
+      "category": "bridge",
+      "roleKey": "roleArtifact",
+      "roleAr": "جسر العبور",
+      "roleEn": "Threshold Bridge",
+      "nameAr": "جسر القلم السعوي",
+      "nameEn": "Capacitive Stylus Bridge",
+      "badgeStyle": "badge-teal",
+      "flowTab": "Images",
+      "descriptionAr": "قلم رقمي فضي وداكن يربط مائلاً بين حافة ورق السكتش الكريمي وزجاج الشاشة المضيء ليعبر الأبطال من خلاله.",
+      "descriptionEn": "A silver-and-obsidian capacitive digital stylus slanted seamlessly between torn cream sketchbook paper and the glowing cyan glass canvas.",
+      "referencePrompt": "Dramatic macro shot of a sleek silver-and-obsidian capacitive digital stylus slanted gently between the creamy torn paper edge of an open wooden sketchbook and the luminous cyan-glowing glass screen of a drawing tablet, casting crisp mixed analog-and-neon reflections across dark oak wood grain, strictly NO text, 16:9.",
+      "vaultPlatePath": "00_Canon_Vault/Ingredients_Plates/Season_3/Capacitive_Stylus_Bridge.png"
+    },
+    {
+      "id": "ing-rgb-layer-glass-prism",
+      "cardOrder": 34,
+      "slug": "rgb-layer-glass-prism",
+      "primaryWorldId": "world-s3-trailer",
+      "isPublic": true,
+      "category": "environment",
+      "roleKey": "rolePrism",
+      "roleAr": "بنية الطبقات",
+      "roleEn": "Layered Architecture",
+      "nameAr": "منشور طبقات الـ RGB الزجاجية",
+      "nameEn": "RGB Layer Glass Prism",
+      "badgeStyle": "badge-indigo",
+      "flowTab": "Images",
+      "descriptionAr": "ألواح زجاجية رقيقة مشطوفة الحواف تطفو متوازية في فضاء داكن حاملة خطوط ألوان مائية وحرير ذهبي ومتجهات نيون.",
+      "descriptionEn": "Parallel bevelled translucent glass layer panes stacked in twilight space carrying watercolor splashes, golden threads, and cyan vectors.",
+      "referencePrompt": "Macro architectural shot inside a glowing digital screen realm showing floating parallel sheets of ultra-thin beveled clear glass stacked vertically in dark twilight space—one sheet etching crimson vector splines, the middle holding golden stitched paths, the front glowing electric neon-cyan—refraction caustics everywhere, strictly NO text, 16:9.",
+      "vaultPlatePath": "00_Canon_Vault/Ingredients_Plates/Season_3/RGB_Layer_Glass_Prism.png"
+    },
+    {
+      "id": "ing-undo-history-corridor",
+      "cardOrder": 35,
+      "slug": "undo-history-corridor",
+      "primaryWorldId": "world-s3-trailer",
+      "isPublic": true,
+      "category": "environment",
+      "roleKey": "roleArchive",
+      "roleAr": "ممر الذاكرة",
+      "roleEn": "Memory Archive",
+      "nameAr": "ممر سجلّ التراجع",
+      "nameEn": "Undo History Corridor",
+      "badgeStyle": "badge-indigo",
+      "flowTab": "Images",
+      "descriptionAr": "ممر زجاجي بلوري عميق المنظور تتكرر فيه لوحات المسودات السابقة وأصداء الفحم المجمدة وتموجات الزمن السماوية.",
+      "descriptionEn": "An atmospheric corridor of repeating frosted glass artboards holding frozen charcoal echoes and glowing sky-cyan temporal ripples.",
+      "referencePrompt": "Atmospheric deep-perspective macro corridor made of translucent frosted glass artboards repeating cleanly into glowing distance inside the tablet canvas, frozen charcoal echoes and glowing sky-cyan time ripples drifting softly between frames, strictly NO UI buttons or text, 16:9.",
+      "vaultPlatePath": "00_Canon_Vault/Ingredients_Plates/Season_3/Undo_History_Corridor.png"
+    },
+    {
+      "id": "ing-pixel-dust-cascade",
+      "cardOrder": 36,
+      "slug": "pixel-dust-cascade",
+      "primaryWorldId": "world-s3-trailer",
+      "isPublic": true,
+      "category": "phenomenon",
+      "roleKey": "roleClash",
+      "roleAr": "شلال البكسلات",
+      "roleEn": "Digital Cascade",
+      "nameAr": "شلال غبار البكسلات",
+      "nameEn": "Pixel Dust Cascade",
+      "badgeStyle": "badge-finale",
+      "flowTab": "Images",
+      "descriptionAr": "شلالات من مربعات البكسل الشفافة السماوية واللؤلؤية تنساب بنعومة عبر قوس الزجاج الملوّن الدافئ.",
+      "descriptionEn": "Luminous cascading waterfalls of square cyan and pearl-silver pixel cubes drifting gracefully across warm sunlit stained-glass arches.",
+      "referencePrompt": "Macro visual-clash still showing luminous cascading waterfalls of tiny translucent square electric neon-cyan and warm pearl-silver pixel cubes drifting cleanly across a sunlit amber stained-glass studio arch, transforming ripples without shattering the masonry, strictly NO gore or text, 16:9.",
+      "vaultPlatePath": "00_Canon_Vault/Ingredients_Plates/Season_3/Pixel_Dust_Cascade.png"
+    },
+    {
+      "id": "ing-bezier-anchor-relic",
+      "cardOrder": 37,
+      "slug": "bezier-anchor-relic",
+      "primaryWorldId": "world-s3-trailer",
+      "isPublic": true,
+      "category": "artifact",
+      "roleKey": "roleArtifact",
+      "roleAr": "أيقونة المنحنيات",
+      "roleEn": "Vector Core Relic",
+      "nameAr": "جوهرة نقطة الارتكاز",
+      "nameEn": "Bezier Anchor Relic",
+      "badgeStyle": "badge-teal",
+      "flowTab": "Images",
+      "descriptionAr": "نقطة ارتكاز ماسية متوهجة تسبح فوق الزجاج الداكن باعثة ذراعي منحنى بيزييه المضيئين بالسماوي والوردي.",
+      "descriptionEn": "A glowing multifaceted diamond node floating above dark obsidian glass, radiating twin luminous cyan and magenta Bezier handle curves.",
+      "referencePrompt": "Extreme macro hero object shot of a glowing multifaceted crystalline diamond node suspended above smooth dark obsidian glass, radiating two supple curved luminous electric neon-cyan and vibrant magenta-pink vector light handles floating cleanly in mid-air, NO text, 16:9.",
+      "vaultPlatePath": "00_Canon_Vault/Ingredients_Plates/Season_3/Bezier_Anchor_Relic.png"
+    },
+    {
+      "id": "ing-living-hybrid-stylus",
+      "cardOrder": 38,
+      "slug": "living-hybrid-stylus",
+      "primaryWorldId": "world-s3-trailer",
+      "isPublic": true,
+      "category": "artifact",
+      "roleKey": "roleUnityArtifact",
+      "roleAr": "السلاح الهجين الأسمى",
+      "roleEn": "Hybrid Master Stylus",
+      "nameAr": "القلم الهجين الحي",
+      "nameEn": "Living Hybrid Stylus",
+      "badgeStyle": "badge-finale",
+      "flowTab": "Images",
+      "descriptionAr": "قلم الفنان الهجين الموحّد: سن حبر نحاسي وذهبي مضفور بالخيط والزجاج الملون يندمج بسلاسة في هيكل قلم سعوي مضيء بالمتجهات.",
+      "descriptionEn": "An ornate master stylus fusing a golden fountain-pen nib, braided thread, and prism gem into an obsidian capacitive barrel spiraling with neon vectors.",
+      "referencePrompt": "Extreme macro hero weapon/tool plate of an ornate unified hybrid artist stylus merging tactile and digital worlds: lower tapered metallic brass fountain-pen nib glowing warm amber-gold interwoven with braided golden embroidery cord and emerald-ruby prism gem, tapering seamlessly into a sleek obsidian capacitive pen barrel spiraling with luminous electric neon-cyan and vibrant magenta-pink light veins, NO text, 16:9.",
+      "vaultPlatePath": "00_Canon_Vault/Ingredients_Plates/Season_3/Living_Hybrid_Stylus.png"
+    },
+    {
+      "id": "ing-open-hybrid-studio-desk",
+      "cardOrder": 39,
+      "slug": "open-hybrid-studio-desk",
+      "primaryWorldId": "world-s3-trailer",
+      "isPublic": true,
+      "category": "environment",
+      "roleKey": "roleSanctuary",
+      "roleAr": "المرسم الهجين المفتوح",
+      "roleEn": "Open Hybrid Desk",
+      "nameAr": "المرسم الهجين المفتوح",
+      "nameEn": "Open Hybrid Studio Desk",
+      "badgeStyle": "badge-finale",
+      "flowTab": "Images",
+      "descriptionAr": "طاولة المرسم الخشبية وقد تعانقت فوقها دفاتر الحبر والتطريز والأوريغامي والزجاج الملوّن مع اللوح الرقمي المستيقظ في تناغم مضيء.",
+      "descriptionEn": "Wide sunlit conservatory oak desk where charcoal sketchbooks, gold embroidery, stained glass, origami, and the Awakened Drawing Tablet coexist in radiant harmony.",
+      "referencePrompt": "Wide panoramic golden-and-twilight sunlit conservatory artist oak desk where hand-drawn charcoal sketchbooks, embroidered golden thread paths, colorful stained-glass arches, origami towers, and the luminous awakened Digital Drawing Tablet coexist in radiant collaborative glow, dust motes and vector sparkles dancing harmoniously together, strictly NO text, 16:9.",
+      "vaultPlatePath": "00_Canon_Vault/Ingredients_Plates/Season_3/Open_Hybrid_Studio_Desk.png"
     }
   ],
   "worldAppearances": [
@@ -7293,6 +7863,48 @@ window.SKETCHIC_CANON_DB = {
       "entityType": "ingredient",
       "entityId": "ing-eraser-fog",
       "appearanceRole": "antagonist_mist"
+    },
+    {
+      "worldId": "world-s3-trailer",
+      "entityType": "character",
+      "entityId": "char-makers-echo",
+      "appearanceRole": "narrator_voiceover"
+    },
+    {
+      "worldId": "world-s3-trailer",
+      "entityType": "character",
+      "entityId": "char-ink-knight",
+      "appearanceRole": "protagonist"
+    },
+    {
+      "worldId": "world-s3-trailer",
+      "entityType": "character",
+      "entityId": "char-vector-sprite",
+      "appearanceRole": "season3_heroine"
+    },
+    {
+      "worldId": "world-s3-trailer",
+      "entityType": "character",
+      "entityId": "char-layer-architect",
+      "appearanceRole": "season3_antagonist"
+    },
+    {
+      "worldId": "world-s3-trailer",
+      "entityType": "ingredient",
+      "entityId": "ing-awakened-drawing-tablet",
+      "appearanceRole": "digital_portal"
+    },
+    {
+      "worldId": "world-s3-trailer",
+      "entityType": "ingredient",
+      "entityId": "ing-capacitive-stylus-bridge",
+      "appearanceRole": "threshold_bridge"
+    },
+    {
+      "worldId": "world-s3-trailer",
+      "entityType": "ingredient",
+      "entityId": "ing-rgb-layer-glass-prism",
+      "appearanceRole": "glass_prism_realm"
     }
   ],
   "comics": [
