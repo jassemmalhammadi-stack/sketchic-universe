@@ -1,7 +1,7 @@
 {
   "meta": {
     "id": "sketchic-universe",
-    "dbVersion": "1.3.0",
+    "dbVersion": "1.4.0",
     "nameAr": "عالم سكتشيك",
     "nameEn": "Sketchic Universe",
     "websiteUrl": "https://Sketchic.net",
@@ -11,7 +11,7 @@
     "youtubeUrl": "https://www.youtube.com/channel/UCztH7trk7F9wglxWYWsZXNg",
     "showConvergence": true,
     "showSeason2": true,
-    "updatedAt": "2026-11-24",
+    "updatedAt": "2026-11-25",
     "showSeason3": true
   },
   "brandAssets": [
@@ -6454,6 +6454,501 @@
           ]
         }
       ]
+    },
+    {
+      "id": "world-s3-e01",
+      "worldNum": 17,
+      "slug": "the-glass-horizon",
+      "folderName": "10_Season_3_The_Digital_Canvas/S3E01_The_Glass_Horizon",
+      "season": 3,
+      "episode": 1,
+      "isPublic": true,
+      "isFinale": false,
+      "titleAr": "أفق الزجاج المضيء",
+      "titleEn": "The Glass Horizon",
+      "genreAr": "مغامرة رقمية هجينة",
+      "genreEn": "Hybrid Vector Adventure",
+      "tagStyle": "tag-finale",
+      "mediumTag": "Analog Ink × Neon Vectors",
+      "visualStyleAr": "مواجهة بصرية بين دفء الفحم والحبر الورقي وشبكات المتجهات المضيئة فوق طبقات الزجاج السماوي الداكن.",
+      "visualStyleEn": "Cinematic contrast between hand-hatched charcoal ink paper craft and luminous neon-cyan/magenta Bezier vectors over beveled obsidian glass layers.",
+      "loglineAr": "يعبر فارس الحبر جسر القلم الرقمي إلى أفق الزجاج المضيء برفقة وميض القلم، حيث يتحالف مع نبض المتجهات في مواجهة مهندس الطبقات الساعي لتسطيح كل أثر بشري.",
+      "loglineEn": "Ink Knight crosses the capacitive stylus bridge into the glowing RGB glass canvas, where Cursor Wisp and fearless Vector Sprite unite with him against The Layer Architect's sterile symmetry.",
+      "durationSec": 127,
+      "durationBadge": "2:07 • 1080p S3",
+      "flowProjectId": "690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowProjectUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowSceneUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3/collection/e3a636c7-bd17-4af2-86d0-6c8d09561871",
+      "assembledSceneName": "S3E01 — The Glass Horizon",
+      "flowModel": "Omni 1.2 Flash • 1080p",
+      "archiveBiblePath": "10_Season_3_The_Digital_Canvas/S3E01_The_Glass_Horizon/01_World_Bible.md",
+      "archiveCharsPath": "10_Season_3_The_Digital_Canvas/S3E01_The_Glass_Horizon/02_Characters_and_Ingredients.md",
+      "archiveStoryboardPath": "10_Season_3_The_Digital_Canvas/S3E01_The_Glass_Horizon/03_Storyboard_and_Flow_Prompts.md",
+      "archiveFullVideoPath": "10_Season_3_The_Digital_Canvas/S3E01_The_Glass_Horizon/final/S3E01_The_Glass_Horizon_Full_Film.mp4",
+      "archiveShortsVideoPath": "10_Season_3_The_Digital_Canvas/S3E01_The_Glass_Horizon/final/S3E01_The_Glass_Horizon_Shorts_9x16.mp4",
+      "webFullVideoPath": "assets/videos/S3E01_The_Glass_Horizon_Full_Film.mp4",
+      "webShortsVideoPath": "assets/videos/S3E01_The_Glass_Horizon_Shorts_9x16.mp4",
+      "webPosterPath": "assets/images/posters/the-glass-horizon.jpg",
+      "webFullSubArPath": "assets/subtitles/S3E01_The_Glass_Horizon_Full_Film.ar.vtt",
+      "webFullSubEnPath": "assets/subtitles/S3E01_The_Glass_Horizon_Full_Film.en.vtt",
+      "webShortsSubArPath": "assets/subtitles/S3E01_The_Glass_Horizon_Shorts_9x16.ar.vtt",
+      "webShortsSubEnPath": "assets/subtitles/S3E01_The_Glass_Horizon_Shorts_9x16.en.vtt",
+      "youtubeFullUrl": "https://youtu.be/OlLG77YJ1YU",
+      "youtubeShortsUrl": "https://youtube.com/shorts/-Y2EfhdeJD8",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#00E5FF",
+          "labelEn": "Electric Vector Cyan",
+          "labelAr": "سماوي المتجهات الكهربائي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#FF4D8D",
+          "labelEn": "Magenta Anchor Spark",
+          "labelAr": "وردي نقاط الارتكاز",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#7C3AED",
+          "labelEn": "Royal Wireframe Violet",
+          "labelAr": "بنفسجي الشبكة الهندسية",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#0F172A",
+          "labelEn": "Obsidian Tablet Glass",
+          "labelAr": "زجاج اللوح الداكن",
+          "showOnCard": true
+        }
+      ],
+      "visualRules": [
+        {
+          "ruleNum": 1,
+          "titleAr": "التعايش التكتيكي بين الحبر اليدوي ومنحنيات بيزييه",
+          "titleEn": "Tactile Analog Ink Meets Crisp Bezier Vectors",
+          "descriptionAr": "يحافظ فارس الحبر على حافة الورق الكريمية والتهشير الفحمي بينما تتحرك نبض المتجهات بخطوط سماوية ووردية مسطّحة.",
+          "descriptionEn": "Ink Knight retains die-cut cream paper grain alongside flat neon-cyan and magenta vector paths without blurring organic craft."
+        },
+        {
+          "ruleNum": 2,
+          "titleAr": "قفل الجسور الزجاجية والواجهة المعقّمة",
+          "titleEn": "Macro Glass Bridges & Rigid Sentinel Contrast",
+          "descriptionAr": "يحافظ مهندس الطبقات على قناع زجاجي داكن صارم خالٍ من العيون بخط أفق مضيء واحد يعبّر عن برودة التناظر الهندسي.",
+          "descriptionEn": "The Layer Architect maintains a strictly eyeless smoked-glass visor crossed by one calm horizontal horizon beam contrasting warm paper strokes."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "s3e01-s1",
+          "sceneNum": 1,
+          "titleAr": "استجابة الحبر لنداء الزجاج",
+          "titleEn": "Ink Answers the Glass",
+          "goalAr": "فارس الحبر يلتقط نداء الشاشة المتوهّج عند حافة الدفتر.",
+          "flowPrompt": "Cinematic macro tracking hook skimming smoothly across the shadowed oak rim where open paper sketchbooks meet the Awakened Drawing Tablet at dusk, warm golden lamp reflections contrasting sharply against luminous glowing sky-cyan and luminous royal-violet rings pulsing silently out of the dark glass screen, tiny finger-sized scale, family-friendly tactile craft physics. Stepping toward the glowing edge, @Ink_Knight — tiny finger-sized 2D hand-drawn black-ink and charcoal young warrior (deep charcoal-black cross-hatching, crisp die-cut cream-paper border, bare-headed with short spiky black-ink hair and NO hood, two glowing white eyes, tattered paper-strip cape, holding metallic fountain-pen-nib blade; flat 2D ink texture) — watches in stillness as a single suspended droplet of liquid charcoal ink floats magically upward from his steel nib toward the glowing mirror surface. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — subtle paper page rustle, magnetic liquid ink shimmer, and warm glass resonance swell only.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-awakened-drawing-tablet",
+              "flowTab": "Images"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-grand-convergence-desk",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s2",
+          "sceneNum": 2,
+          "titleAr": "قرار العبور إلى العالم الجديد",
+          "titleEn": "Decision at the Sketchbook Rim",
+          "goalAr": "المستكشفة تقرر العبور مع فارس الحبر نحو العالم الرقمي.",
+          "flowPrompt": "Steady low-angle studio two-shot beside the open sunlit vellum sketchbook looking toward the luminous bezel edge of the tablet, crisp photorealistic live-action scale versus tiny finger-sized 2D ink knight hovering on the cream parchment corner, warm studio amber mixing with soft cyan rim glow, family-friendly tactile craft physics. Kneeling near the open teal-tinted vellum pages, @The_Explorer — 100% photorealistic live-action young female explorer (natural human facial features, messy dark-brown updo hair with loose windblown strands, brass aviator goggles on forehead, weathered khaki-olive canvas coat, dark charcoal knit scarf, diagonal leather satchel strap, fingerless leather gloves, translucent vellum sketchbook brushed with translucent teal-turquoise watercolor) — points toward the glass horizon ripple while tiny @Ink_Knight — 2D charcoal cross-hatched knight (deep charcoal-black, die-cut paper border, spiky ink hair, glowing white eyes) — nods firmly in anticipation. Voice Lock [The Explorer -> Autonoe]: Consistent bright, curious middle-pitch female voice (Autonoe), warm and determined with natural live-action lip-sync; only The Explorer speaks in this shot while Ink Knight stays silent. Signature Foley: translucent vellum paper crinkle + quiet dusk breeze.",
+          "voiceId": "voice-autonoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-explorer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-grand-convergence-desk",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-autonoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s3",
+          "sceneNum": 3,
+          "titleAr": "مدّ جسر القلم الرقمي",
+          "titleEn": "The Capacitive Stylus Bridge",
+          "goalAr": "جسر القلم الرقمي يهبط فوق موجة الضوء الزرقاء.",
+          "flowPrompt": "Clean tactile extreme macro shot locked tightly onto the wooden desk seam as a gleaming silver-and-deep obsidian-slate capacitive digital stylus settles smoothly across the gap between the torn cream sketchbook margin and the glowing electric neon-cyan tablet glass surface, dramatic dual amber-and-cyan surface reflections gleaming cleanly on metallic barrel bevels and dark wood grain, family-friendly tactile craft physics. Micro sparks of glowing sky-cyan light wake along the magnetic side-rail of the resting stylus, turning it into a solid diagonal bridge descending cleanly into the luminous mirror screen below. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp magnetic stylus lock click + resonant glass bell hum + adventurous woodwind lift.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s4",
+          "sceneNum": 4,
+          "titleAr": "العبور على ظهر القلم السعوي",
+          "titleEn": "Charging Into Screen Light",
+          "goalAr": "فارس الحبر يندفع بثبات فوق سن القلم المضيء.",
+          "flowPrompt": "Steep smooth forward macro tracking shot gliding briskly alongside the sleek metallic spine of the diagonal capacitive stylus down into glowing cyan screen reflection, crisp reflections of swirling digital nebula rings mirroring off smooth metal below, tiny finger-sized scale, family-friendly tactile craft physics. Balancing expertly down the sloping cylindrical rim with fluttering paper cape, @Ink_Knight — tiny 2D hand-drawn black-ink and charcoal warrior (deep charcoal-black cross-hatching, die-cut cream-paper border, bare-headed spiky black-ink hair with NO hood, two glowing white eyes, nib sword) — charges forward toward the shining glass surface below. Voice Lock [Ink Knight -> Fenrir]: Consistent passionate, brave lower-middle male voice (Fenrir), exhilarated and resolute with sharp 2D ink mouth lip-sync; only Ink Knight speaks in this shot. Signature Foley: brisk metallic boot taps descending sleek obsidian stylus + surging digital light rush.",
+          "voiceId": "voice-fenrir",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-fenrir",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s5",
+          "sceneNum": 5,
+          "titleAr": "الهبوط على مرآة العالم الرقمي",
+          "titleEn": "Touchdown on the Mirror Horizon",
+          "goalAr": "الهبوط الأول داخل أفق الطبقات الزجاجية الداكنة.",
+          "flowPrompt": "Magical slow-motion low macro landing shot framed right atop an endless horizontal mirror-glass floor inside deep obsidian-slate twilight light, distant floating beveled transparent glass panels towering vertically like translucent skyscrapers washed in glowing sky-cyan and vibrant magenta-pink horizon fog, tiny finger-sized scale, family-friendly tactile craft physics. Stepping cleanly off the capacitive nib onto the responsive mirror floor, @Ink_Knight — tiny flat 2D cross-hatched black-ink warrior (die-cut cream-paper outline, spiky ink hair, two bright white eyes, tattered paper cape) — triggers luminous interlocking rings of electric neon-cyan pixels rippling calmly outward from beneath his paper boots. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crystalline liquid-glass footstep chime, ethereal shimmering pad chord, and soft electronic harmonic bloom only.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s6",
+          "sceneNum": 6,
+          "titleAr": "رسالة الفنان المخبّأة في الطبقات",
+          "titleEn": "Hidden Note in the Layers",
+          "goalAr": "رسالة الفنان المخبّأة تتردد بين انعكاسات المنشور.",
+          "flowPrompt": "Reverent steady upward tilt macro shot rising smoothly over a translucent layered glass tablet canvas pulsing with faint warm amber golden-ink wireframe outlines suspended inside glowing sky-cyan glass layers, intricate hand-drawn parchment texture memories shining delicately behind translucent grid squares, strictly NO visible on-screen speaker figure, family-friendly tactile craft physics. Tiny golden ink embers swirl harmoniously through luminous glass panes as the hidden digital memory layer breathes softly in twilight contrast. Voice Lock [The Maker's Echo -> Charon]: Consistent deep, warm nostalgic lower male voiceover (Charon), serene and affectionate like a preserved voice note left inside the project file (strictly off-screen disembodied voiceover — NO visible on-screen speaker figure). Signature Foley: subtle antique studio tape warmth + soft luminous glass layer tone.",
+          "voiceId": "voice-charon",
+          "attachments": [
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-charon",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s7",
+          "sceneNum": 7,
+          "titleAr": "ظهور مرشد القلم المضيء",
+          "titleEn": "Enter Cursor Wisp",
+          "goalAr": "ظهور وميض القلم الرقمي مرشداً نحو جسور النور.",
+          "flowPrompt": "Playful steady macro close-up hovering slightly above a curved translucent sky-cyan neon spline walkway cutting across stacked twilight glass planes, luminous glowing sky-cyan and warm pearl-silver starlight illuminating @Ink_Knight's curious upturned paper face, tiny finger-sized scale, family-friendly tactile craft physics. Swooping brightly down from a nearby bevelled glass corner, @Cursor_Wisp — thumb-sized floating warm pearl-silver and glowing sky-cyan capacitive stylus-nib spirit with twin soft diamond translucent cursor wings, two bright cyan optical dot eyes, zero warped human mouth — zips in curious loops around @Ink_Knight — 2D cross-hatched black-ink warrior (spiky ink hair, cream-paper border, two glowing white eyes) — waving its glowing nib tip toward the rising neon glass bridges ahead. Voice Lock [Cursor Wisp -> Gacrux]: Consistent crisp, airy bell-bright companion voice (Gacrux), enthusiastic and concise while its rounded translucent lantern frame glows gently with zero distorted human mouth warping; only Cursor Wisp speaks in this shot while Ink Knight stays silent. Signature Foley: crystalline capacitive bell-chimes + cheerful upward sparkle glissando.",
+          "voiceId": "voice-gacrux",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-gacrux",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s8",
+          "sceneNum": 8,
+          "titleAr": "حراسة بوابة الورق من الخلف",
+          "titleEn": "Guarding the Desk Anchor",
+          "goalAr": "المستكشفة تثبّت شريط العودة عند حافة الطاولة.",
+          "flowPrompt": "Warm crisp over-shoulder macro two-shot right along the glowing tablet frame rim where physical sketchbook parchment meets the bright glass portal, golden lantern beam blending with glowing sky-cyan dust sparks drifting across the seam, family-friendly tactile craft physics. Tapping her translucent teal-watercolor vellum bookmark neatly against the illuminated metal stylus rim, @The_Explorer — 100% photorealistic live-action young explorer (messy updo brown hair, brass goggles, olive canvas coat, brown fingerless gloves) — locks a shimmering amber anchor ribbon securely to the rim while tiny glowing @Cursor_Wisp flashes a cheerful pearl-silver beacon back toward the open studio sky. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — soft paper bookmark snap, shimmering tether hum, and gentle glass pulse only.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-explorer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s9",
+          "sceneNum": 9,
+          "titleAr": "موجة المسح الهندسي المعقّم",
+          "titleEn": "Purple Wireframe Sweep",
+          "goalAr": "نبض المتجهات تصدّ موجة المسح الهندسي البنفسجية.",
+          "flowPrompt": "Kinetic smooth wide macro warning pan racing across an elevated open glass gallery filled with playful floating hand-sketched cloud doodles suddenly struck by cold horizontal bands of luminous royal-violet wireframe sweep gridlines, dramatic tension between lively curves and sterile straight mesh, tiny finger-sized scale, family-friendly tactile craft physics. Leaping high atop a shimmering suspended curved rail beside the floating diamond Bezier Anchor Relic, @Vector_Sprite — tiny finger-sized luminous 2D vector-art heroine drawn in crisp electric neon-cyan and vibrant magenta-pink Bezier curve strokes, diamond anchor-node earrings, deep obsidian-slate glass tunic, Bezier Pen-Tool staff — raises an urgent radiant vector barricade ring to deflect approaching purple sweep waves off the fragile hand-sketched clouds. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — sharp digital warning sweep, resonant crystal anchor ping, and accelerating urgent synth pulse only.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s10",
+          "sceneNum": 10,
+          "titleAr": "إنقاذ متزامن على منحنى بيزييه",
+          "titleEn": "Rescue Along a Bezier Curve",
+          "goalAr": "إنقاذ متزامن عبر منحنى بيزييه نحو شرفة الارتكاز.",
+          "flowPrompt": "Dynamic sweeping curved macro tracking two-shot banking effortlessly along a glowing rollercoaster ribbon of electric neon-cyan and vibrant magenta-pink Bezier vectors high above rushing purple wireframe sweep waves below, bright cyan-magenta rim light framing both tiny heroes cleanly in crisp 2D silhouette, tiny finger-sized scale, family-friendly tactile craft physics. Extending her free hand cleanly while steering with her floating Bezier Pen-Tool staff, @Vector_Sprite — flat 2D luminous vector heroine (crisp electric neon-cyan and magenta-pink strokes, glowing anchor-node earrings, sleek dark obsidian-slate tunic) — sweeps deftly beside @Ink_Knight — 2D cross-hatched black-ink warrior (die-cut cream-paper border, spiky ink hair, two bright white eyes, ink nib sword) — whisking him smoothly upward onto a protected crystal anchor terrace. Voice Lock [Vector Sprite -> Callirrhoe]: Consistent vibrant, agile luminous young female voice (Callirrhoe), quick-witted and sparkling with fearless kinetic rhythm; only Vector Sprite speaks in this shot while Ink Knight remains silent. Signature Foley: rapid sweeping Bezier curve swoosh + crystal terrace landing chime + pulsing electronic tension.",
+          "voiceId": "voice-callirrhoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-callirrhoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s11",
+          "sceneNum": 11,
+          "titleAr": "ما الذي يمحو الحبر هنا؟",
+          "titleEn": "Why Erase the Ink Grain?",
+          "goalAr": "تساؤل فارس الحبر أمام معمار العالم الزجاجي الصارم.",
+          "flowPrompt": "Focused medium macro two-shot tucked smoothly beneath a transparent bevelled glass arch glowing softly with muted glowing sky-cyan reflections and golden dust particles catching the edges of torn black ink paper, warm ink-versus-neon color contrast, tiny finger-sized scale, family-friendly tactile craft physics. Checking a tiny straightened vector line along the edge of his cream paper cape, @Ink_Knight — flat 2D cross-hatched black-ink warrior (deep charcoal-black hatching, die-cut cream-paper border, spiky ink hair, glowing white eyes) — turns toward calm alert @Vector_Sprite — flat 2D electric neon-cyan and magenta-pink vector heroine standing watch near the archway — questioning why this glass realm treats hand-drawn brush warmth as a flaw to flatten. Voice Lock [Ink Knight -> Fenrir]: Consistent passionate, brave lower-middle male voice (Fenrir), earnest and fiercely loyal to analog craft with clean 2D ink mouth lip-sync; only Ink Knight speaks in this shot while Vector Sprite listens silently. Signature Foley: quiet glass hum + faint rustle of crisp paper edges.",
+          "voiceId": "voice-fenrir",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-fenrir",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s12",
+          "sceneNum": 12,
+          "titleAr": "تسطيح جبل الفحم المرسوم",
+          "titleEn": "Flattening the Charcoal Mountain",
+          "goalAr": "مهندس الطبقات يسطّح رسماً فحمياً يدوياً إلى شبكة هندسية.",
+          "flowPrompt": "Awe-inspiring steady crane low macro reveal drifting down across a grand dark smoked-glass hall inside deep obsidian-slate atmosphere bathed in austere luminous royal-violet floor grids and icy glowing sky-cyan light beams, family-friendly tactile craft physics. Gliding majestically above an orphaned 2D charcoal-and-ink miniature mountain sketch captured from the open notebook, @Layer_Architect — tall imposing architectural construct sculpted from floating beveled deep obsidian-slate glass UI panes and glowing royal-violet wireframe mesh grids, smooth strictly eyeless smoked-glass visor crossed by one calm horizontal electric neon-cyan light line, concentric geometric layer-stack halo, translucent cloak shedding crisp square pixels — traces one measured geometric arc with his Grid Stylus Scepter, cleanly compressing the warm messy expressive charcoal strokes into a cold sleek spotless uniform rectilinear vector diagram. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — solemn low crystalline glass organ tone, sterile precision digital lock clicks, and gentle fading echo of charcoal scratch only.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s13",
+          "sceneNum": 13,
+          "titleAr": "حجة حارس التناظر والكمال",
+          "titleEn": "Philosophy of The Layer Architect",
+          "goalAr": "مواجهة هادئة مع حارس التناظر والكمال الهندسي.",
+          "flowPrompt": "Dramatic steady slow push-in standoff macro two-shot contrasting towering monumental glass stillness against tiny defiant vector luminescence across a diamond grid terrace, cold glowing sky-cyan sheen on deep obsidian-slate facets versus crisp neon sparks, clear scale contrast, family-friendly tactile craft physics. Looking calmly down toward resilient tiny @Vector_Sprite — bright 2D electric neon-cyan and magenta-pink vector heroine holding her Pen-Tool staff defensively forward — towering @Layer_Architect — tall architectural beveled dark obsidian-slate glass and luminous royal-violet wireframe construct with concentric halo and smooth strictly eyeless smoked-glass visor crossed by one horizontal neon-cyan light line (strictly rigid visor, zero erratic jaw motion) — raises his Grid Stylus Scepter effortlessly, articulating his quiet belief that every crooked human smudge must be merged into flawless digital geometry. Voice Lock [The Layer Architect -> Umbriel]: Consistent sleek, calm measured lower-middle male voice (Umbriel), composed glass-resonant authority devoid of rage while his visor stays strictly rigid; only The Layer Architect speaks in this shot while Vector Sprite stays silent. Signature Foley: quiet sterile neon grid hum + cold glass reverberation.",
+          "voiceId": "voice-umbriel",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-umbriel",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s14",
+          "sceneNum": 14,
+          "titleAr": "الارتداد والنجاة خلف حاجز الطبقات",
+          "titleEn": "Through the Closing Glass Shutters",
+          "goalAr": "اندفاع سريع ونجاة خلف حاجز الطبقات الزجاجية المغلقة.",
+          "flowPrompt": "Fast crisp lateral macro chase tracking two-shot gliding straight through cascading translucent glass layer shutters rapidly sliding vertically like silent frosted sliding doors bathed in luminous royal-violet edge glow and electric neon-cyan trails, tiny finger-sized scale, family-friendly tactile craft physics. Slicing a dark liquid charcoal ink deflection veil to mask their flight while @Vector_Sprite — nimble luminous 2D cyan-magenta vector heroine spinning her Bezier Pen-Tool staff like a hook — vaults seamlessly through the final narrowing glass gap dragging @Ink_Knight — 2D cross-hatched black-ink knight (spiky ink hair, die-cut cream-paper border, glowing white eyes, tattered paper cape) — cleanly past the locking boundary into calm lower horizon light. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — rapid hydraulic frosted-glass door whooshes, snapping nylon-sharp vector line zips, and tight percussive escape strings only.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s15",
+          "sceneNum": 15,
+          "titleAr": "عهد التحالف الأول عند نقطة الارتكاز",
+          "titleEn": "Pact at the Bezier Anchor Relic",
+          "goalAr": "عهد التحالف الأول بين الحبر اليدوي والمتجهات عند نقطة الارتكاز.",
+          "flowPrompt": "Uplifting warm-meets-neon macro two-shot kneeling beside the radiant hovering multifaceted Bezier Anchor Relic anchored above smooth dark glass while distant golden studio sunset dust filters softly downward through translucent panes above, tiny finger-sized scale, family-friendly tactile craft physics. Touching her glowing Pen-Tool staff tenderly against @Ink_Knight's ink blade — igniting gentle harmonious rings where warm paper gold wraps cleanly inside electric neon-cyan and vibrant magenta-pink curves — @Vector_Sprite — luminous 2D vector heroine with glowing diamond anchor-node earrings and dark obsidian tunic — turns confidently toward resolute @Ink_Knight — 2D black-ink knight (die-cut cream-paper border, spiky ink hair, glowing white eyes) — vowing to guide all six paper realms up into the deep RGB towers to rescue the Maker's first tablet art. Voice Lock [Vector Sprite -> Callirrhoe]: Consistent vibrant, agile luminous young female voice (Callirrhoe), hopeful and warmly heroic with crisp 2D mouth sync; only Vector Sprite speaks in this shot while Ink Knight listens silently. Signature Foley: serene crystalline harmonic bloom + soft golden ink resonance.",
+          "voiceId": "voice-callirrhoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-callirrhoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e01-s16",
+          "sceneNum": 16,
+          "titleAr": "أفق العالم الرقمي المفتوح",
+          "titleEn": "The Digital Canvas Awaits",
+          "goalAr": "انسحاب عمودي مهيب يكشف أفق اللوح الرقمي المضيء.",
+          "flowPrompt": "Majestic steady slow aerial pull-back receding smoothly away from the glowing diamond Bezier anchor crest until the entire vast vertical canyon of translucent RGB glass towers inside the Awakened Drawing Tablet and the warm sunlit upper oak desk rim align cleanly in symmetrical balance, family-friendly tactile craft physics. Swarms of warm golden charcoal sparks and luminous glowing sky-cyan vector particles drift upward together like stars across an open deep obsidian center sky completely free of text, words, letters, numbers, or watermarks. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — sweeping wondrous cello-and-glass-harp resolution chord swelling cleanly into silent anticipation.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "ingredient",
+              "refId": "ing-awakened-drawing-tablet",
+              "flowTab": "Images"
+            }
+          ]
+        }
+      ]
     }
   ],
   "characters": [
@@ -7904,6 +8399,66 @@
       "entityType": "ingredient",
       "entityId": "ing-rgb-layer-glass-prism",
       "appearanceRole": "glass_prism_realm"
+    },
+    {
+      "worldId": "world-s3-e01",
+      "entityType": "character",
+      "entityId": "char-ink-knight",
+      "appearanceRole": "protagonist"
+    },
+    {
+      "worldId": "world-s3-e01",
+      "entityType": "character",
+      "entityId": "char-explorer",
+      "appearanceRole": "portal_guide"
+    },
+    {
+      "worldId": "world-s3-e01",
+      "entityType": "character",
+      "entityId": "char-makers-echo",
+      "appearanceRole": "narrator_voiceover"
+    },
+    {
+      "worldId": "world-s3-e01",
+      "entityType": "character",
+      "entityId": "char-cursor-wisp",
+      "appearanceRole": "digital_guide"
+    },
+    {
+      "worldId": "world-s3-e01",
+      "entityType": "character",
+      "entityId": "char-vector-sprite",
+      "appearanceRole": "season3_heroine"
+    },
+    {
+      "worldId": "world-s3-e01",
+      "entityType": "character",
+      "entityId": "char-layer-architect",
+      "appearanceRole": "season3_antagonist"
+    },
+    {
+      "worldId": "world-s3-e01",
+      "entityType": "ingredient",
+      "entityId": "ing-awakened-drawing-tablet",
+      "appearanceRole": "digital_portal"
+    },
+    {
+      "worldId": "world-s3-e01",
+      "entityType": "ingredient",
+      "entityId": "ing-capacitive-stylus-bridge",
+      "appearanceRole": "threshold_bridge"
+    },
+    {
+      "worldId": "world-s3-e01",
+      "entityType": "ingredient",
+      "entityId": "ing-rgb-layer-glass-prism",
+      "appearanceRole": "glass_prism_realm"
+    },
+    {
+      "worldId": "world-s3-e01",
+      "entityType": "ingredient",
+      "entityId": "ing-bezier-anchor-relic",
+      "appearanceRole": "alliance_relic"
     }
   ],
   "comics": [
