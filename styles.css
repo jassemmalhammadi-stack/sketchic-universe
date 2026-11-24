@@ -2276,6 +2276,10 @@ a {
   border: 1px solid rgba(232, 168, 56, 0.35);
 }
 
+.film-card.hidden {
+  display: none;
+}
+
 .comic-upcoming-card.is-available {
   border-style: solid;
   border-color: rgba(232, 168, 56, 0.28);

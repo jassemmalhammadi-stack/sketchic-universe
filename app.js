@@ -24,8 +24,8 @@ const I18N = {
     statFormats: "نسخ سينمائية وشورتس",
     statChars: "شخصيات وأدوات مثبتة",
     filmsKicker: "01 / الكتالوج الرسمي",
-    filmsTitle: "العوالم الخمسة المعتمدة",
-    filmsTitleFinale: "أفلام الموسم الأول الستة",
+    filmsTitle: "كتالوج عوالم وأفلام سكتشيك",
+    filmsTitleFinale: "كتالوج عوالم وأفلام سكتشيك",
     filmsSub:
       "اختر بين النسخة السينمائية الكاملة (16:9) أو نسخة الشورتس العمودية (9:16) للمشاهدة الفورية داخل المشغّل.",
     watchFull: "مشاهدة الفيلم (16:9)",
@@ -106,8 +106,8 @@ const I18N = {
     statFormats: "Cinema & Shorts Cuts",
     statChars: "Canonical Ingredients",
     filmsKicker: "01 / Official Catalog",
-    filmsTitle: "The Five Canonical Worlds",
-    filmsTitleFinale: "Season 1 — Six Canonical Films",
+    filmsTitle: "Official Sketchic Universe Film Catalog",
+    filmsTitleFinale: "Official Sketchic Universe Film Catalog",
     filmsSub:
       "Switch seamlessly between the 16:9 widescreen Full Film and the 9:16 vertical Shorts cut right inside the theater player.",
     watchFull: "Watch Full Film (16:9)",
