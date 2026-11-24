@@ -296,11 +296,70 @@ body {
   font-size: 0.85rem;
 }
 
+.stage-selector {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.stage-selector[hidden] {
+  display: none;
+}
+
+.stage-btn {
+  background: rgba(12, 11, 10, 0.78);
+  border: 1px solid var(--ink-border);
+  color: var(--paper-muted);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.stage-btn:hover {
+  border-color: rgba(232, 168, 56, 0.65);
+  color: var(--paper-cream);
+}
+
+.stage-btn.active {
+  background: rgba(232, 168, 56, 0.2);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
 .hero-roster {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.55rem;
-  margin-bottom: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin-bottom: 0.45rem;
+}
+
+.hero-ability-hint {
+  font-size: 0.75rem !important;
+  color: #66d2d4 !important;
+  margin-bottom: 0.5rem !important;
+  min-height: 1.2em;
+}
+
+.boss-pill[hidden] {
+  display: none;
+}
+
+.boss-meter {
+  width: 118px;
+  border-color: rgba(232, 168, 56, 0.45);
+}
+
+.boss-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #e8a838, #f4c44e, #38a3a5, #d946ef);
+  transition: width 0.15s ease;
 }
 
 .hero-roster[hidden] {

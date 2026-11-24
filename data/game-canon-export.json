@@ -1,0 +1,852 @@
+{
+  "schemaVersion": "2.0",
+  "universe": "Sketchic Universe",
+  "updatedAt": "2026-11-24",
+  "cosmicLaws": [
+    {
+      "id": "law-01",
+      "lawNum": 1,
+      "titleAr": "الصدام المرئي (Visual Clash)",
+      "titleEn": "Visual Clash",
+      "descriptionAr": "تلتقي الخامات الفنية ثنائية الأبعاد (الحبر، الفحم، الألوان المائية، الورق، التطريز، والزجاج الملوّن) مع البيئة السينمائية الواقعية دون أن تذوب فيها؛ كل عنصر يحافظ على ملمسه الأصلي مع تفاعل حقيقي مع الضوء والظل.",
+      "descriptionEn": "2D artistic media (ink, charcoal, watercolor, paper, embroidery, and stained-glass) meet photorealistic live-action environments without melting away; each medium retains its authentic texture while casting real light and shadow."
+    },
+    {
+      "id": "law-02",
+      "lawNum": 2,
+      "titleAr": "فيزيائية الأدوات الفنية",
+      "titleEn": "Physics of Art Tools",
+      "descriptionAr": "الأقلام، الأوراق الشفافة، الفوانيس، الإبرة الذهبية، القوس المنشوري، والممحاة ليست مجرد ديكور خلفي — بل هي أدوات خلق ومواجهة وبوابات عبور حقيقية تحرك مسار القصة وتحدد مصير الأبطال.",
+      "descriptionEn": "Fountain pens, translucent vellum, lanterns, sewing needles, prism bows, and erasers are never mere props — they are active instruments of creation, confrontation, and dimensional travel."
+    },
+    {
+      "id": "law-03",
+      "lawNum": 3,
+      "titleAr": "طبيعة الصراع (بلا عنف دموي)",
+      "titleEn": "Conflict Without Gore",
+      "descriptionAr": "الصراع في سكتشيك بصري وخيالي خالص ضد قوى المحو، الفقدان، أو بهتان الألوان — يُعبَّر عنه بتمزق الورق، زحف ضباب الممحاة، أو تمرد الظلال، دون أي عنف دموي.",
+      "descriptionEn": "Conflict in Sketchic is purely visual and imaginative against forces of erasure, loss, or fading color — expressed through torn paper, eraser mist, and rebellious shadows, with zero gore."
+    }
+  ],
+  "heroes": [
+    {
+      "gameId": "ink_knight",
+      "canonId": "char-ink-knight",
+      "nameAr": "فارس الحبر",
+      "nameEn": "Ink Knight",
+      "mediumEn": "2D Black Ink & Charcoal",
+      "voiceId": "voice-fenrir",
+      "primaryWorldId": "world-01",
+      "stats": {
+        "speedMultiplier": 1.0,
+        "jumpMultiplier": 1.0
+      },
+      "abilityAr": "موجة سنّ القلم (+14% إكمالاً)",
+      "abilityEn": "Pen-Nib Arc Wave (+14% Boss Completion)",
+      "spritePath": "assets/images/game/sprite_ink_knight.png",
+      "portraitPath": "assets/images/game/portrait_ink_knight.png"
+    },
+    {
+      "gameId": "the_explorer",
+      "canonId": "char-explorer",
+      "nameAr": "المستكشفة",
+      "nameEn": "The Explorer",
+      "mediumEn": "Live-Action Explorer + 2D Vellum",
+      "voiceId": "voice-autonoe",
+      "primaryWorldId": "world-02",
+      "stats": {
+        "speedMultiplier": 1.04,
+        "jumpMultiplier": 1.02
+      },
+      "abilityAr": "طيران ورقي وتيار صاعد",
+      "abilityEn": "Paper Kite Glide + Updraft Boost",
+      "spritePath": "assets/images/game/sprite_the_explorer.png",
+      "portraitPath": "assets/images/game/portrait_the_explorer.png"
+    },
+    {
+      "gameId": "thread_weaver",
+      "canonId": "char-thread-weaver",
+      "nameAr": "حائك الخيوط",
+      "nameEn": "Thread Weaver",
+      "mediumEn": "2D Golden & Indigo Embroidery",
+      "voiceId": "voice-puck",
+      "primaryWorldId": "world-04",
+      "stats": {
+        "speedMultiplier": 0.98,
+        "jumpMultiplier": 1.0
+      },
+      "abilityAr": "جسر 14ث + إبطاء الزمن",
+      "abilityEn": "14s Golden Stitch Bridge + Time Slow (55%)",
+      "spritePath": "assets/images/game/sprite_thread_weaver.png",
+      "portraitPath": "assets/images/game/portrait_thread_weaver.png"
+    },
+    {
+      "gameId": "origami_warden",
+      "canonId": "char-origami-warden",
+      "nameAr": "حارسة الأوريغامي",
+      "nameEn": "Origami Warden",
+      "mediumEn": "2D-3D Ivory & Gold-Leaf Origami",
+      "voiceId": "voice-kore",
+      "primaryWorldId": "world-s2-trailer",
+      "stats": {
+        "speedMultiplier": 0.96,
+        "jumpMultiplier": 1.0
+      },
+      "abilityAr": "درع منشوري تلقائي وهبوط خفيف",
+      "abilityEn": "Auto Prism Fold Shield + Feather Fall",
+      "spritePath": "assets/images/game/sprite_origami_warden.png",
+      "portraitPath": "assets/images/game/portrait_origami_warden.png"
+    },
+    {
+      "gameId": "ink_fox",
+      "canonId": "char-ink-fox",
+      "nameAr": "الثعلب المرسوم",
+      "nameEn": "The Charcoal Ink Fox",
+      "mediumEn": "2D Charcoal & Glowing White Lines",
+      "voiceId": "voice-aoede",
+      "primaryWorldId": "world-03",
+      "stats": {
+        "speedMultiplier": 1.2,
+        "jumpMultiplier": 1.06
+      },
+      "abilityAr": "قفزة ثانية بالظل + اندفاع حصين",
+      "abilityEn": "Shadow Double-Jump + Invulnerable Dash",
+      "spritePath": "assets/images/game/sprite_ink_fox.png",
+      "portraitPath": "assets/images/game/portrait_ink_fox.png"
+    },
+    {
+      "gameId": "glass_guardian",
+      "canonId": "char-glass-guardian",
+      "nameAr": "حارسة الزجاج",
+      "nameEn": "Glass Guardian",
+      "mediumEn": "2D Translucent Stained-Glass Mosaic",
+      "voiceId": "voice-erinome",
+      "primaryWorldId": "world-05",
+      "stats": {
+        "speedMultiplier": 1.0,
+        "jumpMultiplier": 1.02
+      },
+      "abilityAr": "موجة انكسار سباعية (+18% إكمالاً)",
+      "abilityEn": "7-Color Refraction Pulse (+18% Boss Completion)",
+      "spritePath": "assets/images/game/sprite_glass_guardian.png",
+      "portraitPath": "assets/images/game/portrait_glass_guardian.png"
+    }
+  ],
+  "bosses": [
+    {
+      "gameId": "pale_draughtsman",
+      "canonId": "char-pale-draughtsman",
+      "nameAr": "ناسك الفراغ الأبيض",
+      "nameEn": "The Pale Draughtsman",
+      "voiceId": "voice-enceladus",
+      "spritePath": "assets/images/game/sprite_pale_draughtsman.png",
+      "victoryMechanic": "NON_VIOLENT_COLOR_COMPLETION_0_TO_100",
+      "phases": [
+        0,
+        25,
+        50,
+        75,
+        100
+      ],
+      "patterns": [
+        "MONOCHROME_ERASER_CUBES",
+        "SILVER_RULER_SWEEP"
+      ]
+    }
+  ],
+  "worlds": [
+    {
+      "id": "world-01",
+      "worldNum": 1,
+      "season": 1,
+      "episode": 1,
+      "slug": "erasers-edge",
+      "titleAr": "حارس الممحاة",
+      "titleEn": "The Eraser's Edge",
+      "mediumTag": "2D Ink × Macro Desk",
+      "durationSec": 48,
+      "posterPath": "assets/images/posters/erasers-edge.jpg",
+      "youtubeFullUrl": "https://youtu.be/QEpkjkAgc2c",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#111111",
+          "labelEn": "Ink Black",
+          "labelAr": "أسود حبر فاحم",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#F5F0E6",
+          "labelEn": "Paper Cream",
+          "labelAr": "أبيض ورقي كريمي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#E8A838",
+          "labelEn": "Golden Hour",
+          "labelAr": "ذهبي غروب",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#9A9A9A",
+          "labelEn": "Eraser Fog",
+          "labelAr": "رمادي ضباب الممحاة",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-02",
+      "worldNum": 2,
+      "season": 1,
+      "episode": 2,
+      "slug": "paper-sky",
+      "titleAr": "نافذة السحاب",
+      "titleEn": "The Paper-Sky Voyager",
+      "mediumTag": "Watercolor × Stone City",
+      "durationSec": 48,
+      "posterPath": "assets/images/posters/paper-sky.jpg",
+      "youtubeFullUrl": "https://youtu.be/4z3Y9nAKbu8",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#6E7378",
+          "labelEn": "Stone Grey",
+          "labelAr": "رمادي حجري",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#38A3A5",
+          "labelEn": "Watercolor Teal",
+          "labelAr": "فيروزي مائي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#F4C86A",
+          "labelEn": "Sun Gold",
+          "labelAr": "ذهبي شمس",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#FAF6EE",
+          "labelEn": "Vellum White",
+          "labelAr": "أبيض ورقي شفاف",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 5,
+          "hexCode": "#8A99A8",
+          "labelEn": "Misty Blue",
+          "labelAr": "أزرق ضبابي",
+          "showOnCard": false
+        },
+        {
+          "sortOrder": 6,
+          "hexCode": "#1A1A1A",
+          "labelEn": "Blueprint Ink",
+          "labelAr": "حبر أسود هندسي",
+          "showOnCard": false
+        }
+      ]
+    },
+    {
+      "id": "world-03",
+      "worldNum": 3,
+      "season": 1,
+      "episode": 3,
+      "slug": "ink-thief",
+      "titleAr": "سارق الظلال المرسومة",
+      "titleEn": "The Ink-Shadow Thief",
+      "mediumTag": "Charcoal Glow × Lanterns",
+      "durationSec": 48,
+      "posterPath": "assets/images/posters/ink-thief.jpg",
+      "youtubeFullUrl": "https://youtu.be/N8i5FSDQqNU",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#0E1116",
+          "labelEn": "Nocturnal Night",
+          "labelAr": "ليل عميق",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#F59E0B",
+          "labelEn": "Warm Lantern Amber",
+          "labelAr": "كهرمان الفوانيس",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#E5E7EB",
+          "labelEn": "Glowing Charcoal Line",
+          "labelAr": "توهج الفحم الأبيض",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#374151",
+          "labelEn": "Wet Cobblestone",
+          "labelAr": "حجر مرصوف رطب",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-04",
+      "worldNum": 4,
+      "season": 1,
+      "episode": 4,
+      "slug": "clockwork-thread",
+      "titleAr": "حائك الزمن",
+      "titleEn": "The Clockwork Thread",
+      "mediumTag": "2D Embroidery × Clockwork",
+      "durationSec": 48,
+      "posterPath": "assets/images/posters/clockwork-thread.jpg",
+      "youtubeFullUrl": "https://youtu.be/y1XHyOwIa-M",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#1E1B2E",
+          "labelEn": "Indigo Linen",
+          "labelAr": "كتان نيلي داكن",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#F4C44E",
+          "labelEn": "Golden Thread",
+          "labelAr": "خيط تطريز ذهبي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#B87333",
+          "labelEn": "Antique Brass",
+          "labelAr": "نحاس عتيق",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#3B281E",
+          "labelEn": "Oak Workbench",
+          "labelAr": "طاولة بلوط دافئة",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-05",
+      "worldNum": 5,
+      "season": 1,
+      "episode": 5,
+      "slug": "stained-glass",
+      "titleAr": "لحن الزجاج الملوّن",
+      "titleEn": "The Stained-Glass Echo",
+      "mediumTag": "Stained-Glass × Stone Hall",
+      "durationSec": 48,
+      "posterPath": "assets/images/posters/stained-glass.jpg",
+      "youtubeFullUrl": "https://youtu.be/zsYO-xxSQeM",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#C81D3B",
+          "labelEn": "Ruby Glass",
+          "labelAr": "زجاج ياقوتي أحمر",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#1D5DC8",
+          "labelEn": "Sapphire Glass",
+          "labelAr": "زجاج ياقوتي أزرق",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#199A64",
+          "labelEn": "Emerald Glass",
+          "labelAr": "زجاج زمردي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#F5B041",
+          "labelEn": "Amber Caustics",
+          "labelAr": "كهرمان ضوئي",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-06",
+      "worldNum": 6,
+      "season": 1,
+      "episode": 6,
+      "slug": "convergence",
+      "titleAr": "تقاطع العوالم",
+      "titleEn": "The Sketchic Convergence",
+      "mediumTag": "All 5 Media × Master Desk",
+      "durationSec": 56,
+      "posterPath": "assets/images/posters/convergence.jpg",
+      "youtubeFullUrl": "https://youtu.be/RprHIxnKkqY",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#111111",
+          "labelEn": "Charcoal Ink",
+          "labelAr": "حبر وفحم أسود",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#38A3A5",
+          "labelEn": "Vellum Teal",
+          "labelAr": "فيروزي الورق الشفاف",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#F4C44E",
+          "labelEn": "Embroidery Gold",
+          "labelAr": "ذهبي التطريز",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#C81D3B",
+          "labelEn": "Stained-Glass Ruby",
+          "labelAr": "ياقوتي الزجاج الملوّن",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s2-trailer",
+      "worldNum": 7,
+      "season": 2,
+      "episode": 0,
+      "slug": "season-2-trailer",
+      "titleAr": "أثر الفنان المفقود — الإعلان الرسمي",
+      "titleEn": "Traces of the Maker — Season 2 Trailer",
+      "mediumTag": "6 Media × Origami & Void",
+      "durationSec": 48,
+      "posterPath": "assets/images/posters/season-2-trailer.jpg",
+      "youtubeFullUrl": "https://youtu.be/9-MKGsASU5s",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#F3EDE2",
+          "labelEn": "Ivory Washi",
+          "labelAr": "ورق أوريغامي عاجي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#E8A838",
+          "labelEn": "Gold Leaf",
+          "labelAr": "رقائق الذهب",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#D8DFE6",
+          "labelEn": "Bleached Void",
+          "labelAr": "فراغ الورق الأبيض",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#38A3A5",
+          "labelEn": "Spectrum Teal",
+          "labelAr": "فيروزي الطيف",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s2e01",
+      "worldNum": 8,
+      "season": 2,
+      "episode": 1,
+      "slug": "spilled-sea",
+      "titleAr": "الطوفان الزجاجي",
+      "titleEn": "The Spilled Sea",
+      "mediumTag": "2D Ink × Translucent Vellum",
+      "durationSec": 143,
+      "posterPath": "assets/images/posters/spilled-sea.jpg",
+      "youtubeFullUrl": "https://youtu.be/oU8wg3PxWso",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#1E4D7B",
+          "labelEn": "Cobalt Runoff",
+          "labelAr": "زرقة ماء الفرش",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#D68A28",
+          "labelEn": "Sunset Amber",
+          "labelAr": "كهرمان الغروب",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#F4EBD9",
+          "labelEn": "Vellum Cream",
+          "labelAr": "ورق فيلوم كريمي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#111111",
+          "labelEn": "Crosshatch Ink",
+          "labelAr": "حبر أسود متقاطع",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s2e02",
+      "worldNum": 9,
+      "season": 2,
+      "episode": 2,
+      "slug": "shadows-in-the-pendulum",
+      "titleAr": "الظل المسروق من الساعة",
+      "titleEn": "Shadows in the Pendulum",
+      "mediumTag": "2D Embroidery & Charcoal × Antique Brass",
+      "durationSec": 127,
+      "posterPath": "assets/images/posters/shadows-in-the-pendulum.jpg",
+      "youtubeFullUrl": "https://youtu.be/x8C1PKRmQmw",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#C99A3B",
+          "labelEn": "Antique Brass",
+          "labelAr": "نحاس الساعة العتيق",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#243463",
+          "labelEn": "Royal Indigo",
+          "labelAr": "نيلي التطريز",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#161618",
+          "labelEn": "Charcoal Shadow",
+          "labelAr": "ظل الفحم",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#E39C3D",
+          "labelEn": "Lantern Amber",
+          "labelAr": "كهرمان المصباح",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s2e03",
+      "worldNum": 10,
+      "season": 2,
+      "episode": 3,
+      "slug": "refraction-of-silence",
+      "titleAr": "انكسار الصمت",
+      "titleEn": "Refraction of Silence",
+      "mediumTag": "2D Stained Glass & Ink × Stone Conservatory",
+      "durationSec": 128,
+      "posterPath": "assets/images/posters/refraction-of-silence.jpg",
+      "youtubeFullUrl": "https://youtu.be/x-48cJP8-Vs",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#D6324B",
+          "labelEn": "Stained Glass Ruby",
+          "labelAr": "ياقوت الزجاج الملوّن",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#3A6BC5",
+          "labelEn": "Cathedral Sapphire",
+          "labelAr": "ياقوت أزرق كاتدرائي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#F2B84B",
+          "labelEn": "Molten Nib Gold",
+          "labelAr": "ذهب ريشة الحبر",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#B7BCC4",
+          "labelEn": "Monochrome Eraser Mist",
+          "labelAr": "رمادي مكعبات المحو",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s2e04",
+      "worldNum": 11,
+      "season": 2,
+      "episode": 4,
+      "slug": "the-folded-sentinel",
+      "titleAr": "حارسة الطيّات المنسية",
+      "titleEn": "The Folded Sentinel",
+      "mediumTag": "2D-3D Japanese Washi Origami × Sunlit Artist Shelf",
+      "durationSec": 127,
+      "posterPath": "assets/images/posters/the-folded-sentinel.jpg",
+      "youtubeFullUrl": "https://youtu.be/kZ7EiGBeRnY",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#F6EFE2",
+          "labelEn": "Ivory Washi Paper",
+          "labelAr": "ورق الواشي العاجي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#D4AF37",
+          "labelEn": "Gold-Leaf Fold Crease",
+          "labelAr": "ثنيات الرقائق الذهبية",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#38A3A5",
+          "labelEn": "Sunlit Vellum Teal",
+          "labelAr": "فيروزي الدفتر الشفاف",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#9A9A9A",
+          "labelEn": "Overhang Eraser Mist",
+          "labelAr": "ضباب الممحاة الرمادي",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s2e05",
+      "worldNum": 12,
+      "season": 2,
+      "episode": 5,
+      "slug": "map-of-the-torn-margin",
+      "titleAr": "خريطة الهامش المقطوع",
+      "titleEn": "Map of the Torn Margin",
+      "mediumTag": "2D Embroidery & Charcoal × Antique Oak Desk & Brass Lantern",
+      "durationSec": 127,
+      "posterPath": "assets/images/posters/map-of-the-torn-margin.jpg",
+      "youtubeFullUrl": "https://youtu.be/BsEQ0YbcT20",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#F4C44E",
+          "labelEn": "Thermal Blueprint Gold",
+          "labelAr": "ذهب الحبر الحراري والخيط",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#1E2460",
+          "labelEn": "Weaver Royal Indigo",
+          "labelAr": "نيلي حائك الخيوط الملكي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#F7F9FC",
+          "labelEn": "Fox Chalk Spirit Rim",
+          "labelAr": "هالة طباشير الثعلب",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#9A9A9A",
+          "labelEn": "Forgotten Drawer Mist",
+          "labelAr": "رمادي ضباب الممحاة",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s2e06",
+      "worldNum": 13,
+      "season": 2,
+      "episode": 6,
+      "slug": "into-the-unfinished-drawer",
+      "titleAr": "درج المسودات المنسي",
+      "titleEn": "Into the Unfinished Drawer",
+      "mediumTag": "2D Cross-Hatched Ink & Washi Origami × Paper-Sculpture Antagonist",
+      "durationSec": 127,
+      "posterPath": "assets/images/posters/into-the-unfinished-drawer.jpg",
+      "youtubeFullUrl": "https://youtu.be/mWxy8JqXClE",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#111111",
+          "labelEn": "Cross-Hatched Ink Shadow",
+          "labelAr": "ظلال الحبر المتشابكة",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#F7F9FC",
+          "labelEn": "Bleached White Vellum",
+          "labelAr": "ورق الصياغة المبيّض",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#9A9A9A",
+          "labelEn": "Drafting Ruler Steel",
+          "labelAr": "فضي مساطر الصياغة",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#D4AF37",
+          "labelEn": "Golden Embroidery Thread",
+          "labelAr": "ذهب خيط النجاة والمخطط",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s2e07",
+      "worldNum": 14,
+      "season": 2,
+      "episode": 7,
+      "slug": "pulse-of-six-media",
+      "titleAr": "نبض الخامات الست",
+      "titleEn": "Pulse of Six Media",
+      "mediumTag": "Six Unified Art Media × Living Spectrum Nib Confrontation",
+      "durationSec": 127,
+      "posterPath": "assets/images/posters/pulse-of-six-media.jpg",
+      "youtubeFullUrl": "https://youtu.be/A_bh1TUxs9s",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#D4AF37",
+          "labelEn": "Living Spectrum Nib Gold",
+          "labelAr": "ذهب سنّ الطيف الحيّ",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#1E9B8C",
+          "labelEn": "Teal Watercolor Vellum",
+          "labelAr": "فيروز ألوان الماء والرقّ",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#D93848",
+          "labelEn": "Ruby Stained-Glass Prism",
+          "labelAr": "ياقوت الزجاج المعشّق",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#F4F6FA",
+          "labelEn": "Cold Wireframe White",
+          "labelAr": "بياض الشبكة الهندسية",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s2e08",
+      "worldNum": 15,
+      "season": 2,
+      "episode": 8,
+      "slug": "the-unfinished-masterpiece",
+      "titleAr": "لوحة لا تُمحى",
+      "titleEn": "The Unfinished Masterpiece",
+      "mediumTag": "All Six Worlds + The Maker's Echo × Digital Season 3 Awakening",
+      "durationSec": 159,
+      "posterPath": "assets/images/posters/the-unfinished-masterpiece.jpg",
+      "youtubeFullUrl": "https://youtu.be/phfQiRMcEHw",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#9A9A9A",
+          "labelEn": "Eraser Eclipse Mist",
+          "labelAr": "ضباب كسوف الممحاة",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#F4C44E",
+          "labelEn": "Golden Sky Portal Light",
+          "labelAr": "ذهب بوابات الشمس",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#38A3A5",
+          "labelEn": "Prismatic Completion Flow",
+          "labelAr": "طيف الإكمال الفيروزي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#1D5DC8",
+          "labelEn": "Digital Awakening Pulse",
+          "labelAr": "نبض اللوح الرقمي",
+          "showOnCard": true
+        }
+      ]
+    }
+  ],
+  "secretCodes": [
+    {
+      "code": "DROPLET-01",
+      "episode": 1
+    },
+    {
+      "code": "PENDULUM-02",
+      "episode": 2
+    },
+    {
+      "code": "PRISM-03",
+      "episode": 3
+    },
+    {
+      "code": "ORIGAMI-04",
+      "episode": 4
+    },
+    {
+      "code": "THERMAL-05",
+      "episode": 5
+    },
+    {
+      "code": "UNFINISHED-06",
+      "episode": 6
+    },
+    {
+      "code": "SPECTRUM-07",
+      "episode": 7
+    },
+    {
+      "code": "MASTERPIECE-08",
+      "episode": 8
+    }
+  ]
+}

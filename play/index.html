@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sketchic.net — Playable Teaser | لعبة عالم سكتشيك</title>
+  <title>Sketchic.net — Playable Teaser v2.0 | لعبة عالم سكتشيك</title>
   <link rel="icon" type="image/png" href="../assets/images/YouTube_Channel_Profile_800x800.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,11 +17,12 @@
         <img src="../assets/images/YouTube_Channel_Profile_800x800.png" alt="Sketchic" class="brand-avatar" />
         <div>
           <span class="brand-name">Sketchic<span class="brand-dot">.net</span></span>
-          <span class="brand-sub" data-gi18n="headerSub">اللعبة التشويقية التفاعلية</span>
+          <span class="brand-sub" data-gi18n="headerSub">اللعبة التفاعلية — الإصدار 2.0</span>
         </div>
       </a>
 
       <div class="header-actions">
+        <button id="sfxBtn" class="btn-chip" type="button" aria-pressed="true">🔊 SFX</button>
         <button id="loreVaultBtn" class="btn-chip" type="button" data-gi18n="loreVaultBtn">خزنة المخطوطة السرية 🔑</button>
         <button id="gameLangBtn" class="btn-chip gold" type="button">EN</button>
         <a href="../index.html" class="btn-chip" data-gi18n="backHome">← العودة للموقع</a>
@@ -46,6 +47,15 @@
           <div class="ink-meter"><div id="hudInkBar" class="ink-fill"></div></div>
         </div>
         <div class="hud-pill">
+          <span class="hud-label" data-gi18n="hudPowerLabel">القدرة [Q]</span>
+          <strong id="hudPowerStatus" class="hud-val gold">جاهزة</strong>
+        </div>
+        <div class="hud-pill boss-pill" id="hudBossPill" hidden>
+          <span class="hud-label" data-gi18n="hudBossLabel">اكتمال اللوحة</span>
+          <div class="ink-meter boss-meter"><div id="hudBossBar" class="boss-fill"></div></div>
+          <strong id="hudBossPct" class="hud-val gold">0%</strong>
+        </div>
+        <div class="hud-pill">
           <span class="hud-label" data-gi18n="hudScoreLabel">القطرات</span>
           <strong id="hudDrops" class="hud-val">0</strong>
         </div>
@@ -56,6 +66,7 @@
           <input type="checkbox" id="spectrumSkinToggle" />
           <span data-gi18n="spectrumSkin">سيف الطيف الحي ✨</span>
         </label>
+        <button id="stageSwitchBtn" class="btn-chip" type="button" data-gi18n="stageSwitchBtn">القائمة / المراحل</button>
         <button id="restartBtn" class="btn-chip" type="button" data-gi18n="restartBtn">إعادة المرحلة</button>
       </div>
     </div>
@@ -68,15 +79,29 @@
         <video id="cutsceneVideo" class="cutscene-video" playsinline muted loop autoplay hidden></video>
         <div class="overlay-scrim"></div>
         <div class="overlay-card" id="overlayCard">
-          <span class="overlay-kicker" data-gi18n="overlayKicker">SKETCHIC UNIVERSE: THE GAME • PLAYABLE TEASER</span>
+          <span class="overlay-kicker" data-gi18n="overlayKicker">SKETCHIC UNIVERSE: THE GAME • EDITION 2.0</span>
           <h1 id="overlayTitle" data-gi18n="titleMain">حارس الممحاة — الانتقال البُعدي</h1>
           <p id="overlayDesc" data-gi18n="titleDesc">
-            اختر بطلك المعتمد من عالم سكتشيك وانطلق من صفحة السكتش ثنائية الأبعاد إلى طاولة البلوط ثلاثية الأبعاد! بدّل بين البُعدين لترسم جسوراً وتتفادى الماء والأقلام المتدحرجة هرباً من ناسك الفراغ الأبيض وضباب الممحاة.
+            اختر مرحلتك وبطلك من الأبطال الستة المعتمدين! قفز بين صفحة السكتش 2D وطاولة البلوط 3D، أو واجه «ناسك الفراغ الأبيض» لإكماله بألوان الطيف الحي.
           </p>
+
+          <div class="stage-selector" id="stageSelector" role="radiogroup" aria-label="Choose Stage">
+            <button type="button" class="stage-btn active" data-stage="1" aria-pressed="true" data-gi18n="stage1Btn">
+              المرحلة 1: حافة الممحاة
+            </button>
+            <button type="button" class="stage-btn" data-stage="2" aria-pressed="false" data-gi18n="stage2Btn">
+              المرحلة 2: لوحة لا تُمحى (الزعيم) 🎨
+            </button>
+          </div>
+
           <div class="hero-roster" id="heroRoster" role="radiogroup" aria-label="Choose Canon Hero">
             <button type="button" class="hero-card active" data-hero="ink_knight" aria-pressed="true">
               <img src="../assets/images/game/portrait_ink_knight.png" alt="Ink Knight" />
               <span data-hero-label="ink_knight">فارس الحبر</span>
+            </button>
+            <button type="button" class="hero-card" data-hero="the_explorer" aria-pressed="false">
+              <img src="../assets/images/game/portrait_the_explorer.png" alt="The Explorer" />
+              <span data-hero-label="the_explorer">المستكشفة</span>
             </button>
             <button type="button" class="hero-card" data-hero="thread_weaver" aria-pressed="false">
               <img src="../assets/images/game/portrait_thread_weaver.png" alt="Thread Weaver" />
@@ -90,15 +115,24 @@
               <img src="../assets/images/game/portrait_ink_fox.png" alt="Ink Fox" />
               <span data-hero-label="ink_fox">ثعلب الحبر</span>
             </button>
+            <button type="button" class="hero-card" data-hero="glass_guardian" aria-pressed="false">
+              <img src="../assets/images/game/portrait_glass_guardian.png" alt="Glass Guardian" />
+              <span data-hero-label="glass_guardian">حارسة الزجاج</span>
+            </button>
           </div>
+
+          <p id="heroAbilityHint" class="hero-ability-hint"></p>
+
           <div class="controls-legend">
             <span><kbd>A / D</kbd> <em data-gi18n="ctrlMove">حركة</em></span>
             <span><kbd>Space</kbd> <em data-gi18n="ctrlJump">قفز</em></span>
             <span><kbd>Shift / E</kbd> <em data-gi18n="ctrlShift">تبديل 2D ⇄ 3D</em></span>
-            <span><kbd>F</kbd> <em data-gi18n="ctrlBridge">رسم جسر حبر (في 2D)</em></span>
+            <span><kbd>F</kbd> <em id="ctrlActionText" data-gi18n="ctrlBridge">جسر حبر / ضربة طيف</em></span>
+            <span><kbd>Q</kbd> <em data-gi18n="ctrlPower">قدرة البطل</em></span>
           </div>
           <div class="overlay-buttons">
             <button id="startGameBtn" class="btn-primary" type="button" data-gi18n="startBtn">ابدأ المغامرة ▶</button>
+            <button id="nextStageBtn" class="btn-chip gold" type="button" data-gi18n="nextStageBtn" hidden>انتقل للمرحلة 2: الزعيم 🎨</button>
             <button id="skipCutsceneBtn" class="btn-chip" type="button" data-gi18n="skipBtn" hidden>تخطي المشهد ⏭</button>
           </div>
         </div>
@@ -114,6 +148,7 @@
       <div class="touch-pad">
         <button type="button" class="pad-btn wide" id="touchShiftBtn" data-gi18n="btnShift">تبديل 2D⇄3D</button>
         <button type="button" class="pad-btn wide" id="touchBridgeBtn" data-gi18n="btnBridge">جسر حبر ✒</button>
+        <button type="button" class="pad-btn wide" id="touchPowerBtn" data-gi18n="btnPower">قدرة [Q] ✨</button>
         <button type="button" class="pad-btn jump" data-key="jump" data-gi18n="btnJump">قفز ▲</button>
       </div>
     </div>

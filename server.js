@@ -121,14 +121,12 @@ const MIME_TYPES = {
 
 function isPublicFile(relativePath) {
   const normalized = relativePath.replace(/\\/g, '/');
-  if (!ENABLE_CONVERGENCE && normalized.includes('The_Sketchic_Convergence')) {
-    return false;
-  }
   return (
     normalized === 'index.html' ||
     normalized === 'styles.css' ||
     normalized === 'app.js' ||
     normalized === 'CNAME' ||
+    normalized === 'data/game-canon-export.json' ||
     normalized === 'play/index.html' ||
     normalized === 'play/game.css' ||
     normalized === 'play/game.js' ||
