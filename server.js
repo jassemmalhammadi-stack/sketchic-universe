@@ -115,6 +115,9 @@ const MIME_TYPES = {
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
   '.mp4': 'video/mp4',
+  '.mp3': 'audio/mpeg',
+  '.wav': 'audio/wav',
+  '.ogg': 'audio/ogg',
   '.vtt': 'text/vtt; charset=utf-8',
   '.txt': 'text/plain; charset=utf-8'
 };
@@ -133,7 +136,8 @@ function isPublicFile(relativePath) {
     normalized === 'flow-studio/index.html' ||
     normalized.startsWith('assets/images/') ||
     normalized.startsWith('assets/videos/') ||
-    normalized.startsWith('assets/subtitles/')
+    normalized.startsWith('assets/subtitles/') ||
+    normalized.startsWith('assets/audio/')
   );
 }
 
