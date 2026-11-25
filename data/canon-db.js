@@ -2,7 +2,7 @@
 window.SKETCHIC_CANON_DB = {
   "meta": {
     "id": "sketchic-universe",
-    "dbVersion": "1.6.0",
+    "dbVersion": "1.7.0",
     "nameAr": "عالم سكتشيك",
     "nameEn": "Sketchic Universe",
     "websiteUrl": "https://Sketchic.net",
@@ -7985,6 +7985,526 @@ window.SKETCHIC_CANON_DB = {
           ]
         }
       ]
+    },
+    {
+      "id": "world-s3-e04",
+      "worldNum": 20,
+      "slug": "pixel-storm-over-paper",
+      "folderName": "10_Season_3_The_Digital_Canvas/S3E04_Pixel_Storm_Over_Paper",
+      "season": 3,
+      "episode": 4,
+      "isPublic": true,
+      "isFinale": false,
+      "titleAr": "عاصفة البكسل فوق الورق",
+      "titleEn": "Pixel Storm Over Paper",
+      "genreAr": "فانتازيا ضوئية ورقية",
+      "genreEn": "Spectrum & Origami Fantasy",
+      "tagStyle": "tag-finale",
+      "mediumTag": "Stained Glass × Gold Origami",
+      "visualStyleAr": "شاشات ورق الواشي المطيّة بالذهب تعكس شعاع قوس المنشور السباعي لصهر مكعبات البكسل إلى ضوء انسيابي حيّ.",
+      "visualStyleEn": "Gold-leaf Japanese washi origami folding screens bouncing Glass Guardian's continuous seven-color liquid rainbow beam through cascading cyan pixel cubes.",
+      "loglineAr": "يتسلّل غبار المربعات الرقمية عبر جسر القلم، فتتحد حارسة الأوريغامي وحارسة الزجاج وميض القلم لتحويل البكسلات القاسية إلى ضوء حيّ متناغم.",
+      "loglineEn": "When jagged pixel cubes pour across the stylus bridge, Origami Warden, Glass Guardian, and Cursor Wisp turn harsh quantization into flowing rainbow sunlight.",
+      "durationSec": 127,
+      "durationBadge": "2:07 • 1080p S3",
+      "flowProjectId": "690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowProjectUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowSceneUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3/collection/250ee4cc-4c81-4d46-aec6-e1cd310fac2c",
+      "assembledSceneName": "S3E04 — Pixel Storm Over Paper",
+      "flowModel": "Omni 1.2 Flash • 1080p • Auto-Ducking",
+      "archiveBiblePath": "10_Season_3_The_Digital_Canvas/S3E04_Pixel_Storm_Over_Paper/01_World_Bible.md",
+      "archiveCharsPath": "10_Season_3_The_Digital_Canvas/S3E04_Pixel_Storm_Over_Paper/02_Characters_and_Ingredients.md",
+      "archiveStoryboardPath": "10_Season_3_The_Digital_Canvas/S3E04_Pixel_Storm_Over_Paper/03_Storyboard_and_Flow_Prompts.md",
+      "archiveFullVideoPath": "10_Season_3_The_Digital_Canvas/S3E04_Pixel_Storm_Over_Paper/final/S3E04_Pixel_Storm_Over_Paper_Full_Film.mp4",
+      "archiveShortsVideoPath": "10_Season_3_The_Digital_Canvas/S3E04_Pixel_Storm_Over_Paper/final/S3E04_Pixel_Storm_Over_Paper_Shorts_9x16.mp4",
+      "webFullVideoPath": "assets/videos/S3E04_Pixel_Storm_Over_Paper_Full_Film.mp4",
+      "webShortsVideoPath": "assets/videos/S3E04_Pixel_Storm_Over_Paper_Shorts_9x16.mp4",
+      "webPosterPath": "assets/images/posters/pixel-storm-over-paper.jpg",
+      "webFullSubArPath": "assets/subtitles/S3E04_Pixel_Storm_Over_Paper_Full_Film.ar.vtt",
+      "webFullSubEnPath": "assets/subtitles/S3E04_Pixel_Storm_Over_Paper_Full_Film.en.vtt",
+      "webShortsSubArPath": "assets/subtitles/S3E04_Pixel_Storm_Over_Paper_Shorts_9x16.ar.vtt",
+      "webShortsSubEnPath": "assets/subtitles/S3E04_Pixel_Storm_Over_Paper_Shorts_9x16.en.vtt",
+      "youtubeFullUrl": "https://youtu.be/IcPdJxuGW0Y",
+      "youtubeShortsUrl": "https://youtube.com/shorts/oona5Y9ETwA",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#199A64",
+          "labelEn": "Stained-Glass Spectrum Green",
+          "labelAr": "زمردي منشور الزجاج",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#F4C44E",
+          "labelEn": "Gold-Leaf Washi Crease",
+          "labelAr": "ذهب طيّات الواشي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#38BDF8",
+          "labelEn": "Cascading Pixel Dust",
+          "labelAr": "سماوي غبار البكسل",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#C81D3B",
+          "labelEn": "Crimson Lead-Came Glass",
+          "labelAr": "قرمزي الزجاج المعشّق",
+          "showOnCard": true
+        }
+      ],
+      "visualRules": [
+        {
+          "ruleNum": 1,
+          "titleAr": "مصدّات الواشي الذهبية العاكسة للضوء",
+          "titleEn": "Gold-Leaf Origami Screens Bounce Square Pixels",
+          "descriptionAr": "تصدّ حواجز ورق الواشي المطوية بنقش الكركي المربعات الرقمية وترفع انعكاس الشمس نحو وتر المنشور.",
+          "descriptionEn": "Pleated ivory Japanese washi folding screens with gold-leaf seams deflect cascading square pixel blocks and reflect window light toward the prism bow."
+        },
+        {
+          "ruleNum": 2,
+          "titleAr": "طيف المنشور السباعي يذيب التكميم الشبكي",
+          "titleEn": "Continuous Spectrum Melts Quantization",
+          "descriptionAr": "يعيد شعاع الطيف المتّصل سباعياً تدوير الحواف الرقمية المسنّنة إلى قطرات مضيئة تتناغم مع الزجاج الملوّن والورق.",
+          "descriptionEn": "Glass Guardian's seven-color liquid rainbow beam smooths jagged pixel stairs back into fluid sunlight and harmless shimmering sparkles."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "s3e04-s01",
+          "sceneNum": 1,
+          "titleAr": "تكميم قوس الزجاج الملوّن بالبكسل",
+          "titleEn": "Pixel Cascade Across Stained Glass",
+          "goalAr": "انسكاب مكعبات البكسل السماوية فوق قوس الزجاج الملوّن المشمس وتقطّع الحواف المضيئة.",
+          "flowPrompt": "Dramatic sweeping macro opening hook beneath a sunlit carved stone Gothic arch glowing with warm amber stained-glass lancet windows as a shimmering torrent of tiny translucent square electric sky-cyan and warm pearl-silver pixel cubes pours smoothly through the arch and cascades over stone onto the oak studio desk, family-friendly tactile craft physics. Wherever the pixel mist kisses the curved amber stained-glass leading and golden sunlight caustics, silky curved color halos snap instantaneously into rigid stair-stepped square blocks while fluttering @Cursor_Wisp — thumb-sized floating warm pearl-silver and glowing electric sky-cyan capacitive stylus-nib lantern spirit with metallic pearl nib crown, twin faceted diamond cursor wings, smooth visor with bright cyan optical eyes and zero human mouth warping — darts sharply backward in wide-eyed alarm over tiny folded origami roofs. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — rapid glassy digital cube rattle like cascading crystal marbles, crisp stair-step electronic crunch across glass, and urgent stylus wing hum foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s02",
+          "sceneNum": 2,
+          "titleAr": "عبور الغبار عبر جسر القلم",
+          "titleEn": "Crossing the Stylus Bridge",
+          "goalAr": "إنذار وميض القلم بعبور غبار البكسل فوق جسر القلم الرقمي.",
+          "flowPrompt": "Crisp macro two-shot perched right beside the sleek silver-and-obsidian capacitive digital stylus slanting cleanly between weathered deckle-edged ivory sketchbook paper and a glowing sky-cyan tablet rim over dark oak grain as swirling square electric sky-cyan and warm pearl-silver pixel cubes drift upward along the metallic pen barrel, tiny finger-sized scale, family-friendly tactile craft physics. Zipping quickly before steadfast @Origami_Warden — finger-sized intricate origami samurai warrior folded from crisp crane-embossed ivory washi paper edged with gleaming gold-leaf crease seams, folded kabuto helmet with V-shaped golden crest, strictly rigid faceless folded white paper mask with zero mouth opening or eye distortion, pleated armor holding a gleaming golden folded paper spear — @Cursor_Wisp (warm pearl-silver stylus spirit with twin cyan diamond wings and bright optical dot eyes, zero human mouth warping) hovers urgently and says: \"The pixel dust crossed the stylus bridge! It is turning every gentle curve into rigid squares!\" Voice Lock [Cursor Wisp -> Gacrux]: Consistent crisp, airy bell-bright companion voice (Gacrux), urgent and expressive; only Cursor Wisp speaks while Origami Warden stands silent and resolute behind her rigid folded mask. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-gacrux",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-origami-warden",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-gacrux",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s03",
+          "sceneNum": 3,
+          "titleAr": "إعلان حراسة القلاع المطويّة",
+          "titleEn": "Stand Behind the Pleated Walls",
+          "goalAr": "إعلان حارسة الأوريغامي حماية القلاع المطويّة خلف مصدّات الواشي.",
+          "flowPrompt": "Grounded heroic low-angle macro two-shot upon carved oak tabletop before delicate towering ivory-and-gold folded origami pagodas as sunlit warm amber stained-glass reflections collide with falling cascades of glowing translucent electric sky-cyan pixel cubes overhead, tiny finger-sized scale, family-friendly tactile craft physics. Planting the base of her gleaming golden folded paper spear cleanly into wood beside orbiting @Cursor_Wisp (pearl-silver capacitive stylus spirit with twin cyan diamond cursor wings), stalwart @Origami_Warden — crisp crane-embossed ivory Japanese washi paper samurai with gold-leaf seams, horned origami kabuto, pleated armor, forearm shield pleats, and strictly rigid faceless folded white paper mask completely free of mouth movement or distortion — declares firmly: \"Stand behind the pleated walls! No loose grid will flatten our folded sanctuary.\" Voice Lock [Origami Warden -> Kore]: Consistent firm, noble disciplined middle-pitch female voice (Kore), calm and commanding resonating cleanly behind her rigid faceless folded paper mask with zero mask warping; only Origami Warden speaks while Cursor Wisp hovers silently. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-kore",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-origami-warden",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-kore",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s04",
+          "sceneNum": 4,
+          "titleAr": "مصدّات الأوريغامي الذهبية ضدّ الطوفان",
+          "titleEn": "Golden Origami Accordion Barricade",
+          "goalAr": "نصب شاشات الواشي المطوية بالذهب لصدّ وابل المربعات دون تدمير.",
+          "flowPrompt": "Dynamic sweeping macro craft-action shot across the sunlit origami table beneath falling streams of square translucent electric sky-cyan and silver pixel cubes, warm sunlit stone archway gleaming in the background, tiny finger-sized scale, family-friendly tactile craft physics. Sweeping her gleaming golden folded paper spear in one crisp precision arc, noble @Origami_Warden (finger-sized ivory crane-embossed washi paper samurai with gold-leaf creases, rigid faceless folded paper mask, pleated shield and skirt) snaps three tall zig-zag accordion-pleated ivory washi and gold-leaf folding screens cleanly upright in a protective fan barricade; cascades of glowing square pixel cubes rain hard against the diagonal paper valleys, ricocheting softly upward like glittering confetti without indenting a single golden crease. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp rapid heavyweight washi-paper accordion snap folds, clean dry papery pattering of bouncing pixel cubes on gold foil, and resonant golden paper spear whoosh foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-origami-warden",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s05",
+          "sceneNum": 5,
+          "titleAr": "تكسّر الهالات الملوّنة أسفل القوس",
+          "titleEn": "Shattered Caustics Beneath the Arch",
+          "goalAr": "رصد تكميم الهالات القزحية على الأرضية تحت وطأة العاصفة.",
+          "flowPrompt": "Luminous medium macro action shot beside the sunlit arched amber stained-glass studio window as dense swirling curtains of translucent square cyan and pearl-silver pixel cubes sweep across warm oak flagstones, momentarily turning the floor's fluid ruby-amber-emerald rainbow glass caustics into stuttering geometric mosaic blocks, family-friendly tactile craft physics. Raising one leaded mosaic arm to shield her eyes while gripping her curved iridescent rainbow-glowing stained-glass prism tuning-bow, radiant @Glass_Guardian — luminous 2D translucent stained-glass mosaic warrior woman framed by bold black lead came outlines, flowing crimson-rose glass hair with teal shard accent, emerald shoulder pauldrons, crimson-ruby, sapphire-blue, amber-gold, and emerald glass armor, flowing leaded cape — watches the pixel storm climb her cape trim alongside darting @Cursor_Wisp (pearl-silver capacitive stylus spirit with twin diamond cyan wings). Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — swelling crystalline wind chime shimmer, digital square mosaic crackling across glass panes, and steady vibrant rainbow tuning-bow harmonic resonance foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-glass-guardian",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s06",
+          "sceneNum": 6,
+          "titleAr": "خطة الطيف المتصل والعروة الورقية",
+          "titleEn": "Plan of Paper and Full Spectrum",
+          "goalAr": "اتفاق حارسة الزجاج وحارسة الأوريغامي على توجيه الطيف المتصل.",
+          "flowPrompt": "Balanced warm-lit macro two-shot sheltered right behind the tall pleated ivory-and-gold washi folding screens as electric sky-cyan pixel dust glitters brightly along the paper barrier edge, crisp tactile contrast between glowing leaded glass and handmade paper grain, tiny finger-sized scale, family-friendly tactile craft physics. Raising her glowing curved rainbow prism tuning-bow gracefully beside poised @Origami_Warden (finger-sized ivory and gold-leaf folded samurai with rigid faceless folded paper mask, golden folded paper spear), luminous 2D @Glass_Guardian (bold black lead came outlines, crimson-rose stained-glass hair with teal shard, pale amber-porcelain glass face, emerald pauldrons, crimson-sapphire-amber mosaic armor, subtle 2D lip-sync) gazes at the golden paper folds and speaks melodically: \"Squares divide light into pieces, Warden. Hold your golden creases steady—I will weave the full spectrum through them.\" Voice Lock [Glass Guardian -> Erinome]: Consistent clear, crystalline melodic middle-pitch female voice (Erinome), serene and resonant with subtle 2D stained-glass lip movement; only Glass Guardian speaks while Origami Warden nods silently behind her rigid faceless folded mask. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-erinome",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-glass-guardian",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-origami-warden",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-erinome",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s07",
+          "sceneNum": 7,
+          "titleAr": "شحن وتر المنشور بعواكس الورق الذهبية",
+          "titleEn": "Charging the Prism Tuning-Bow",
+          "goalAr": "شحن وتر قوس المنشور بانعكاس ضوء الشمس على مراوح الورق الذهبية.",
+          "flowPrompt": "Breathtaking synchronized preparation shot right beneath warm window shafts as crisp cyan pixel cubes swirl just beyond the golden paper barrier, brilliant rainbow refraction spilling softly onto ivory pleats, family-friendly tactile craft physics. Angling two sleek triangular gold-leaf and ivory washi reflector fans steeply forward like sunlit mirrors, agile @Origami_Warden (folded ivory samurai, gold-leaf seams, rigid faceless folded paper mask) channels a concentrated pillar of warm window light squarely onto the lifted string of @Glass_Guardian's iridescent curved prism tuning-bow; drawing the radiant bowstring back smoothly with serene grace, 2D leaded-mosaic @Glass_Guardian (flowing crimson-rose hair with teal shard, ruby-sapphire-emerald-amber stained-glass armor and cape) gathers swirling window sunlight into a single blindingly smooth liquid seven-color rainbow spark glowing cleanly at her crystal nock. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp pleated gold-leaf paper fan snaps, soaring crystalline tuning-fork harmonic buildup, and rich sunlit prism draw hum foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-glass-guardian",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-origami-warden",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s08",
+          "sceneNum": 8,
+          "titleAr": "صمود الدرع عند موجة القمّة",
+          "titleEn": "Shield Wall at the Crest",
+          "goalAr": "صمود درع الأوريغامي أمام ذروة موجات البكسل فوق الحجر.",
+          "flowPrompt": "Heroic low macro close shot directly beneath a cresting translucent tidal cascade of bright cyan-blue and silver-violet square pixel cubes surging above the carved stone archway rim, warm golden light bouncing off folded paper edges, tiny finger-sized scale, family-friendly tactile craft physics. Bracing both feet wide and locking her pleated ivory-and-gold forearm shield solidly against the stone pedestal edge with her golden folded paper spear raised diagonally, stalwart @Origami_Warden — finger-sized intricate crane-embossed ivory Japanese washi samurai with gleaming gold-leaf crease seams, horned origami kabuto helmet, and strictly rigid faceless folded white paper mask with zero human eyes or mouth movement — calls clearly: \"Every crisp fold doubles our strength! Strike the center ridge—let the light flow!\" Voice Lock [Origami Warden -> Kore]: Consistent firm, noble disciplined middle-pitch female voice (Kore), poised and unwavering behind her strictly rigid faceless folded paper mask; only Origami Warden is in frame and zero mask distortion occurs. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-kore",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-origami-warden",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-kore",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s09",
+          "sceneNum": 9,
+          "titleAr": "إطلاق الوتر المنشوري الكامل",
+          "titleEn": "Continuous Color Never Breaks",
+          "goalAr": "سحب الوتر المنشوري الكامل مع توجيه وميض القلم عند القوس.",
+          "flowPrompt": "Luminous intense close-medium macro two-shot facing into swirling sunlit pixel rain as blinding seven-color prism fire illuminates @Glass_Guardian's black-leaded stained-glass facets and @Cursor_Wisp orbits tightly around the gleaming bowtip leaving fine golden-and-cyan guidance sparks in air, family-friendly tactile craft physics. Pulling her curved iridescent rainbow prism tuning-bow to full tension with cape billowing dramatically in translucent ruby, sapphire, and emerald shards, radiant 2D @Glass_Guardian (crimson-rose stained-glass hair with teal shard, pale amber-porcelain glass face, subtle crisp 2D lip-sync) calls cleanly: \"True color never breaks into boxes. Watch the continuous spectrum mend every jagged edge!\" Voice Lock [Glass Guardian -> Erinome]: Consistent clear, crystalline melodic middle-pitch female voice (Erinome), radiant and confident with subtle 2D stained-glass lip movement; only Glass Guardian speaks while @Cursor_Wisp (pearl-silver capacitive stylus spirit with twin cyan diamond wings, zero mouth) hovers silently aligning the bowtip. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-erinome",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-glass-guardian",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-erinome",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s10",
+          "sceneNum": 10,
+          "titleAr": "شعاع الطيف السباعي يذيب التكميم الشبكي",
+          "titleEn": "Seven-Color Liquid Rainbow Beam",
+          "goalAr": "انطلاق شعاع الطيف السباعي وارتداده عن المراوح لإذابة التكميم الشبكي.",
+          "flowPrompt": "Dazzling panoramic macro action climax across the Gothic stained-glass studio arch as @Glass_Guardian releases her drawn iridescent prism tuning-bow, launching a brilliant continuous seven-color liquid rainbow beam straight off @Origami_Warden's gleaming gold-leaf origami reflector fans; rebounding cleanly upward in seven sweeping curved spectrum ribbons through the cascading square pixel waterfall, the flowing continuous rainbow light seamlessly rounds every sharp pixel corner, melting jagged cyan blocks back into smooth luminous morning dew and rich curving warm amber, ruby, emerald, and sapphire stained-glass light pouring serenely down onto the crisp ivory paper sanctuary without shattering a single stone. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — pure harmonic crystal tuning-bow release ring, sweeping seven-tone glass resonance chime, and gentle shimmering liquid rainbow fizz foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-glass-guardian",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-origami-warden",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s11",
+          "sceneNum": 11,
+          "titleAr": "تعلّم البكسل رقصة الضوء",
+          "titleEn": "Teaching Pixels to Dance with Sunlight",
+          "goalAr": "فرحة وميض القلم بتحوّل البكسلات الخشنة إلى شرارات ضوئية متناغمة.",
+          "flowPrompt": "Joyful warm-lit macro two-shot under the cleanly restored curved Gothic stained-glass arch where formerly jagged square pixels now float weightlessly as gentle softly glowing iridescent pearl-and-cyan bokeh teardrops swirling peacefully around @Glass_Guardian's leaded mosaic cape, family-friendly tactile craft physics. Twirling joyfully through dancing sunlit rainbow sparkles beside smiling serene @Glass_Guardian (2D leaded stained-glass mosaic heroine resting her iridescent prism bow gently by her side), @Cursor_Wisp — floating thumb-sized warm pearl-silver capacitive stylus spirit with twin translucent cyan diamond wings and bright optical cyan dot eyes, strictly zero human mouth warping — chimes brightly: \"They are not breaking anything anymore! Your rainbow beam taught the pixels how to dance with sunlight!\" Voice Lock [Cursor Wisp -> Gacrux]: Consistent crisp, airy bell-bright companion voice (Gacrux), delighted and playful without erratic mouth warping; only Cursor Wisp speaks while Glass Guardian smiles silently. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-gacrux",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-glass-guardian",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-gacrux",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s12",
+          "sceneNum": 12,
+          "titleAr": "ختم القنطرة الورقية والمنشورية فوق القلم",
+          "titleEn": "Sealing the Capacitive Stylus Bridge",
+          "goalAr": "ختم جسر القلم بطوق منشور قزحي وأوريغامي ذهبي مرشّح للضوء.",
+          "flowPrompt": "Intimate detailed macro craftsmanship two-shot directly atop the sleek silver-and-obsidian capacitive digital stylus spanning the gap between cream torn sketchbook pages and the dark drawing tablet glass, rich golden afternoon light glinting on wood grain and glass bevels, tiny finger-sized scale, family-friendly tactile craft physics. Wrapping a precision-pleated ivory crane-embossed washi and gold-leaf origami seal collar neatly around the mid-barrel of the stylus while @Glass_Guardian (luminous 2D stained-glass mosaic warrior woman in emerald pauldrons and crimson-sapphire-amber glass armor) touches the luminous curve of her prism tuning-bow cleanly against the golden paper fold, both heroes bind a continuous glowing rainbow-and-gold optical filter band around the stylus bridge so only harmonious shimmering sparks may cross. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp delicate paper origami fold tuck around metal barrel, clean crystalline bow touch ding, and serene golden harmonic lock hum foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-origami-warden",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-glass-guardian",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s13",
+          "sceneNum": 13,
+          "titleAr": "ميثاق الورق والزجاج",
+          "titleEn": "Pact of Warm Paper and Crystal Light",
+          "goalAr": "تحية عهد الورق الدافئ والزجاج المنشوري بعد تأمين الجسر.",
+          "flowPrompt": "Dignified warm golden-hour macro two-shot right beside the sealed rainbow-and-gold capacitive stylus on weathered oak wood and cream torn paper edges, soft dust motes floating through gentle rainbow refraction, tiny finger-sized scale, family-friendly tactile craft physics. Lowering her gleaming golden folded paper spear in graceful martial salute beside serene listening 2D @Glass_Guardian (leaded stained-glass mosaic heroine holding her curved prism tuning-bow cleanly), steadfast @Origami_Warden — finger-sized ivory Japanese washi paper samurai with gleaming gold-leaf crease seams, horned origami kabuto, and strictly rigid faceless folded white paper mask with zero human eyes or mouth motion — states calmly: \"Paper remembers the warmth of hands, and crystal remembers the shape of light. Together, nothing fades.\" Voice Lock [Origami Warden -> Kore]: Consistent firm, noble disciplined middle-pitch female voice (Kore), warm and dignified behind her strictly rigid faceless folded paper mask; only Origami Warden speaks while Glass Guardian bows gently in silence. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-kore",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-origami-warden",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-glass-guardian",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-kore",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s14",
+          "sceneNum": 14,
+          "titleAr": "شبح الرواق الأبيض المعقّم في الأفق",
+          "titleEn": "Omen of the White Sterile Gallery",
+          "goalAr": "رصد الرواق الأبيض الخالي من الأثر عبر أفق الزجاج تمهيداً للحلقة الخامسة.",
+          "flowPrompt": "Atmospheric foreboding macro-to-horizon two-shot framed from behind @Glass_Guardian and @Cursor_Wisp atop the warm sunlit Gothic stained-glass arch sill looking across into distant towering stark white-and-indigo frosted digital gallery doors opening far within the screen realm to reveal rows of empty flat spotless white frames devoid of any ink or brushwork, striking contrast between rich warm glass light and cold sterile white gleam ahead, family-friendly tactile craft physics. Lifting her curved iridescent prism bow steadily toward the cold white horizon as nervous @Cursor_Wisp (pearl-silver stylus spirit with twin cyan diamond wings, optical dot eyes) floats close beside her shoulder, radiant 2D @Glass_Guardian (leaded stained-glass warrior with crimson-rose hair, teal shard, crimson-sapphire-emerald cape, subtle 2D lip-sync) warns with calm gravity: \"Look past the glass horizon—the Architect opened a silent white gallery stripped of every brushstroke.\" Voice Lock [Glass Guardian -> Erinome]: Consistent clear, crystalline melodic middle-pitch female voice (Erinome), solemn and prophetic with subtle 2D stained-glass lip movement; only Glass Guardian speaks while Cursor Wisp hovers quietly. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-erinome",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-glass-guardian",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-erinome",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s15",
+          "sceneNum": 15,
+          "titleAr": "توازن الطيف والطيّات عند الغسق",
+          "titleEn": "Dusk Over Restored Arches",
+          "goalAr": "سلام الغسق واستقرار القوس الملوّن وأبراج الواشي تحت ألوان الطيف.",
+          "flowPrompt": "Serene luminous sunset-toned macro closing two-shot beneath the restored Gothic amber stained-glass studio arch where rich seven-color liquid light caustics drape harmoniously over miniature folded ivory-and-gold origami temples and fluttering crane silhouettes while gentle iridescent pearl sparkles drift upward in peace, tiny finger-sized scale, family-friendly tactile craft physics. Standing steadfastly side by side along the carved stone ledge looking out across the studio horizon, @Origami_Warden (folded ivory and gold-leaf washi samurai resting cleanly on her golden folded paper spear, rigid faceless folded mask) and @Glass_Guardian (2D luminous stained-glass mosaic heroine with leaded rainbow cape rippling softly in warm breeze) keep peaceful watch over paper and glass. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — gentle sunlit stained-glass wind chime resonance, faint peaceful origami paper settle rustle, and quiet sparkling dust shimmer foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-origami-warden",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-glass-guardian",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e04-s16",
+          "sceneNum": 16,
+          "titleAr": "ألوان الطيف تعبر اللوح الرقمي المستيقظ",
+          "titleEn": "Spectrum Above the Awakened Tablet",
+          "goalAr": "انسحاب جوي نصيّ النظافة يكشف اللوح الرقمي المستيقظ وطاولة المرسم.",
+          "flowPrompt": "Majestic steady slow aerial pull-back receding smoothly from the serene sunlit stained-glass studio arch and ivory origami towers until the wide luminous Awakened Drawing Tablet rests cleanly beside weathered oak sketchbooks and vintage brass brush jars on the twilight wooden artist desk, family-friendly tactile craft physics. Streams of smooth seven-color rainbow prism light ribbons and delicate gleaming gold-leaf origami motes spiral peacefully upward together across a wide clean deep obsidian-slate center sky completely free of text, words, letters, numbers, or watermarks. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — tranquil open room air and faint musical crystal spark shimmer foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "ingredient",
+              "refId": "ing-awakened-drawing-tablet",
+              "flowTab": "Images"
+            }
+          ]
+        }
+      ]
     }
   ],
   "characters": [
@@ -9564,6 +10084,42 @@ window.SKETCHIC_CANON_DB = {
     },
     {
       "worldId": "world-s3-e03",
+      "entityType": "ingredient",
+      "entityId": "ing-awakened-drawing-tablet",
+      "appearanceRole": "tablet_horizon"
+    },
+    {
+      "worldId": "world-s3-e04",
+      "entityType": "character",
+      "entityId": "char-glass-guardian",
+      "appearanceRole": "co_heroine"
+    },
+    {
+      "worldId": "world-s3-e04",
+      "entityType": "character",
+      "entityId": "char-origami-warden",
+      "appearanceRole": "co_heroine"
+    },
+    {
+      "worldId": "world-s3-e04",
+      "entityType": "character",
+      "entityId": "char-cursor-wisp",
+      "appearanceRole": "guide"
+    },
+    {
+      "worldId": "world-s3-e04",
+      "entityType": "ingredient",
+      "entityId": "ing-pixel-dust-cascade",
+      "appearanceRole": "primary_stage"
+    },
+    {
+      "worldId": "world-s3-e04",
+      "entityType": "ingredient",
+      "entityId": "ing-capacitive-stylus-bridge",
+      "appearanceRole": "sealed_bridge"
+    },
+    {
+      "worldId": "world-s3-e04",
       "entityType": "ingredient",
       "entityId": "ing-awakened-drawing-tablet",
       "appearanceRole": "tablet_horizon"

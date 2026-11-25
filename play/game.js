@@ -154,6 +154,10 @@ const LORE_CODES = {
     ar: ["القصاصة السرية S3-03 — مصباح متاهة التراجع", "ثبّت «رسّام الخرائط» بفانوسه الكهرماني و«ثعلب الحبر» و«وميض القلم» أوّل سكتش خام للخالق داخل ممر سجل التراجع وصدّوا موجة Ctrl+Z."],
     en: ["Season 3 Vault #03 — Lantern of the Undo Labyrinth", "With his amber brass lantern, The Cartographer, Ink Fox, and Cursor Wisp shielded the Maker's very first raw draft inside the Undo History Corridor."],
   },
+  "PIXEL-04": {
+    ar: ["القصاصة السرية S3-04 — قوس الطيف ضد البكسل", "رفعت «حارسة الأوريغامي» مصدّات الواشي الذهبية وأطلقت «حارسة الزجاج» شعاع قوس المنشور لصهر طوفان المربعات الرقمية إلى ضوء حيّ."],
+    en: ["Season 3 Vault #04 — Prism Against the Pixel Storm", "Origami Warden raised gold-leaf pleated shields while Glass Guardian fired a seven-color prism beam to melt rigid pixel dust into flowing sunlight."],
+  },
 };
 
 const HERO_ORDER = [
