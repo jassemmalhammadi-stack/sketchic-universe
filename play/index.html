@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sketchic.net — Playable Teaser v2.0 | لعبة عالم سكتشيك</title>
+  <title>Sketchic.net — Playable Teaser v2.5 | لعبة عالم سكتشيك</title>
   <link rel="icon" type="image/png" href="../assets/images/YouTube_Channel_Profile_800x800.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="game.css" />
+  <link rel="stylesheet" href="game.css?v=20261125-v25" />
 </head>
 <body>
   <header class="play-header">
@@ -17,11 +17,12 @@
         <img src="../assets/images/YouTube_Channel_Profile_800x800.png" alt="Sketchic" class="brand-avatar" />
         <div>
           <span class="brand-name">Sketchic<span class="brand-dot">.net</span></span>
-          <span class="brand-sub" data-gi18n="headerSub">اللعبة التفاعلية — الإصدار 2.0</span>
+          <span class="brand-sub" data-gi18n="headerSub">اللعبة التفاعلية — الإصدار 2.5</span>
         </div>
       </a>
 
       <div class="header-actions">
+        <button id="bgmBtn" class="btn-chip" type="button" aria-pressed="true">🎵 OST</button>
         <button id="sfxBtn" class="btn-chip" type="button" aria-pressed="true">🔊 SFX</button>
         <button id="loreVaultBtn" class="btn-chip" type="button" data-gi18n="loreVaultBtn">خزنة المخطوطة السرية 🔑</button>
         <button id="gameLangBtn" class="btn-chip gold" type="button">EN</button>
@@ -79,10 +80,10 @@
         <video id="cutsceneVideo" class="cutscene-video" playsinline muted loop autoplay hidden></video>
         <div class="overlay-scrim"></div>
         <div class="overlay-card" id="overlayCard">
-          <span class="overlay-kicker" data-gi18n="overlayKicker">SKETCHIC UNIVERSE: THE GAME • EDITION 2.0</span>
-          <h1 id="overlayTitle" data-gi18n="titleMain">حارس الممحاة — الانتقال البُعدي</h1>
+          <span class="overlay-kicker" data-gi18n="overlayKicker">SKETCHIC UNIVERSE: THE GAME • EDITION 2.5</span>
+          <h1 id="overlayTitle" data-gi18n="titleMain">سكتشيك — الأبطال السبعة ومواجهة اللوحة</h1>
           <p id="overlayDesc" data-gi18n="titleDesc">
-            اختر مرحلتك وبطلك من الأبطال الستة المعتمدين! قفز بين صفحة السكتش 2D وطاولة البلوط 3D، أو واجه «ناسك الفراغ الأبيض» لإكماله بألوان الطيف الحي.
+            اختر مرحلتك وبطلك من الأبطال السبعة المعتمدين! اقفز بين صفحة السكتش 2D وطاولة البلوط 3D، أو واجه «ناسك الفراغ الأبيض» لإكماله بألوان الطيف الحي.
           </p>
 
           <div class="stage-selector" id="stageSelector" role="radiogroup" aria-label="Choose Stage">
@@ -118,6 +119,10 @@
             <button type="button" class="hero-card" data-hero="glass_guardian" aria-pressed="false">
               <img src="../assets/images/game/portrait_glass_guardian.png" alt="Glass Guardian" />
               <span data-hero-label="glass_guardian">حارسة الزجاج</span>
+            </button>
+            <button type="button" class="hero-card" data-hero="vector_sprite" aria-pressed="false">
+              <img src="../assets/images/game/portrait_vector_sprite.png" alt="Vector Sprite" />
+              <span data-hero-label="vector_sprite">نبض المتجهات</span>
             </button>
           </div>
 
@@ -177,6 +182,6 @@
     </div>
   </div>
 
-  <script src="game.js"></script>
+  <script src="game.js?v=20261125-v25"></script>
 </body>
 </html>

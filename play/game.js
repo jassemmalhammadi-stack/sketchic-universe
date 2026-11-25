@@ -1,6 +1,6 @@
 const GI18N = {
   ar: {
-    headerSub: "اللعبة التفاعلية — الإصدار 2.0",
+    headerSub: "اللعبة التفاعلية — الإصدار 2.5",
     loreVaultBtn: "خزنة المخطوطة السرية 🔑",
     backHome: "← العودة للموقع",
     hudDimLabel: "البُعد الحالي",
@@ -11,10 +11,10 @@ const GI18N = {
     spectrumSkin: "سيف الطيف الحي ✨",
     stageSwitchBtn: "القائمة / المراحل",
     restartBtn: "إعادة المرحلة",
-    overlayKicker: "SKETCHIC UNIVERSE: THE GAME • EDITION 2.0",
-    titleMain: "سكتشيك — الأبطال الستة ومواجهة اللوحة",
+    overlayKicker: "SKETCHIC UNIVERSE: THE GAME • EDITION 2.5",
+    titleMain: "سكتشيك — الأبطال السبعة ومواجهة اللوحة",
     titleDesc:
-      "اختر مرحلتك وبطلك من الأبطال الستة المعتمدين! اقفز بين صفحة السكتش 2D وطاولة البلوط 3D، أو واجه «ناسك الفراغ الأبيض» لإكماله بألوان الطيف الحي.",
+      "اختر مرحلتك وبطلك من الأبطال السبعة المعتمدين (بينهم «نبض المتجهات»)! اقفز بين صفحة السكتش 2D وطاولة البلوط 3D، أو واجه «ناسك الفراغ الأبيض» على أنغام Flow Music التفاعلية.",
     stage1Btn: "المرحلة 1: حافة الممحاة",
     stage2Btn: "المرحلة 2: لوحة لا تُمحى (الزعيم) 🎨",
     ctrlMove: "حركة",
@@ -52,7 +52,7 @@ const GI18N = {
     codeInvalid: "كود غير معروف — ابحث في حلقات الموسم الثاني.",
   },
   en: {
-    headerSub: "Interactive Game — Edition 2.0",
+    headerSub: "Interactive Game — Edition 2.5",
     loreVaultBtn: "Secret Blueprint Vault 🔑",
     backHome: "← Back to Sketchic.net",
     hudDimLabel: "Dimension",
@@ -63,10 +63,10 @@ const GI18N = {
     spectrumSkin: "Living Spectrum Blade ✨",
     stageSwitchBtn: "Stages & Heroes",
     restartBtn: "Restart Stage",
-    overlayKicker: "SKETCHIC UNIVERSE: THE GAME • EDITION 2.0",
-    titleMain: "Sketchic Universe — Six Heroes & The Final Canvas",
+    overlayKicker: "SKETCHIC UNIVERSE: THE GAME • EDITION 2.5",
+    titleMain: "Sketchic Universe — Seven Heroes & The Final Canvas",
     titleDesc:
-      "Pick any of the six official Sketchic canon heroes! Dash across the 2D sketchbook onto the 3D oak studio desk, or paint The Pale Draughtsman whole in Stage 2's non-violent Boss Finale.",
+      "Pick any of the seven official Sketchic canon heroes (including Season 3's Vector Sprite)! Dash between 2D sketchbook and 3D desk with adaptive Flow Music OST.",
     stage1Btn: "Stage 1: The Eraser's Edge",
     stage2Btn: "Stage 2: Unfinished Masterpiece (Boss) 🎨",
     ctrlMove: "Move",
@@ -138,6 +138,14 @@ const LORE_CODES = {
     ar: ["القصاصة #08 — اللوحة المكتملة", "أضاء لوح الرسم الرقمي Sketchic.net معلناً ولادة البُعد الجديد."],
     en: ["Blueprint #08 — Unfinished Masterpiece", "The digital drawing tablet awakened, opening Sketchic.net's next horizon."],
   },
+  "DIGITAL-00": {
+    ar: ["القصاصة السرية S3-00 — بوابة اللوح الرقمي", "عند التقاء الحبر والخيوط والزجاج داخل الشاشة المضيئة، ظهرت «نبض المتجهات» أمام «مهندس الطبقات»."],
+    en: ["Season 3 Vault #00 — The Digital Canvas", "Where hand-drawn mediums cross the glass threshold, Vector Sprite stands against The Layer Architect."],
+  },
+  "VECTOR-01": {
+    ar: ["القصاصة السرية S3-01 — عهد نقطة الارتكاز", "تعاهدت «نبض المتجهات» مع «فارس الحبر» عند الجوهرة الماسية على حماية العوالم الستة داخل أبراج RGB."],
+    en: ["Season 3 Vault #01 — Pact at the Bezier Anchor", "Vector Sprite and Ink Knight swore to guide all six paper realms up into the RGB towers."],
+  },
 };
 
 const HERO_ORDER = [
@@ -147,6 +155,7 @@ const HERO_ORDER = [
   "origami_warden",
   "ink_fox",
   "glass_guardian",
+  "vector_sprite",
 ];
 
 const HEROES = {
@@ -264,6 +273,25 @@ const HEROES = {
     abilityAr: "استرداد حبر مضاعف + [Q] موجة انكسار سباعية تبدد الخطر وتلوّن الزعيم (+18%)",
     abilityEn: "+30% ink drops + [Q] 7-Color Refraction Ring clears hazards & paints (+18%)",
   },
+  vector_sprite: {
+    id: "vector_sprite",
+    ar: "نبض المتجهات",
+    en: "Vector Sprite",
+    portrait: "../assets/images/game/portrait_vector_sprite.png",
+    sprite: "../assets/images/game/sprite_vector_sprite.png",
+    bridgeFill: "#00E5FF",
+    bridgeStroke: "#FF4D8D",
+    rimColor: "#00E5FF",
+    renderH: 76,
+    speedMul: 1.12,
+    jumpMul: 1.06,
+    bridgeW: 135,
+    bridgeCost: 18,
+    bridgeTtl: 9.5,
+    powerCd: 4.0,
+    abilityAr: "جسر بيزييه نيون عريض (135px) + سرعة +12% + [Q] نبض متجهات يبدد الخطر (210px) ويلوّن الزعيم (+16%)",
+    abilityEn: "Wide 135px Neon Bezier Bridge + 12% speed + [Q] Bezier Neon Pulse clears hazards (210px) & paints (+16%)",
+  },
 };
 
 const SPRITES = {};
@@ -283,6 +311,52 @@ if (selectedStage !== 1 && selectedStage !== 2) selectedStage = 1;
 let unlockedCodes = JSON.parse(localStorage.getItem("sketchic_lore_codes") || "[]");
 let spectrumEnabled = unlockedCodes.length > 0;
 let sfxEnabled = true;
+
+// Adaptive Flow Music OST manager ($0, synced from 00_Canon_Vault/Sonic_Vault)
+const bgmBtn = document.getElementById("bgmBtn");
+let bgmEnabled = localStorage.getItem("sketchic_game_bgm") !== "false";
+let bgmStarted = false;
+let currentBgmKey = null;
+const ostPaper = new Audio("../assets/audio/ost_paper_studio.mp3");
+ostPaper.loop = true;
+ostPaper.volume = 0.32;
+const ostDigital = new Audio("../assets/audio/ost_digital_canvas.mp3");
+ostDigital.loop = true;
+ostDigital.volume = 0.32;
+const ostSting = new Audio("../assets/audio/sonic_logo_sting.mp3");
+ostSting.loop = false;
+ostSting.volume = 0.55;
+
+function getTargetBgmKey() {
+  const stageVal = typeof state !== "undefined" && state.mode === "play" ? state.stage : selectedStage;
+  return stageVal === 2 || selectedHeroId === "vector_sprite" ? "digital" : "paper";
+}
+
+function syncBgmBtn() {
+  if (!bgmBtn) return;
+  bgmBtn.textContent = bgmEnabled ? "🎵 OST" : "🔇 OST";
+  bgmBtn.setAttribute("aria-pressed", String(bgmEnabled));
+}
+
+function syncBgmPlayback(fromGesture = false) {
+  if (fromGesture) bgmStarted = true;
+  syncBgmBtn();
+  if (!bgmEnabled || !bgmStarted) {
+    ostPaper.pause();
+    ostDigital.pause();
+    return;
+  }
+  const target = getTargetBgmKey();
+  if (currentBgmKey !== target) {
+    ostPaper.pause();
+    ostDigital.pause();
+    currentBgmKey = target;
+  }
+  const activeTrack = target === "digital" ? ostDigital : ostPaper;
+  if (activeTrack.paused) {
+    activeTrack.play().catch(() => {});
+  }
+}
 
 // Lightweight procedural Web Audio synthesizer ($0, no external audio assets)
 let audioCtx = null;
@@ -548,6 +622,12 @@ function showOverlay(mode) {
     tryPlayCutscene("../assets/videos/game/Game_Title_Loop.mp4", "title", false);
   } else if (mode === "victory") {
     playSfx("win");
+    if (bgmEnabled) {
+      ostPaper.pause();
+      ostDigital.pause();
+      ostSting.currentTime = 0;
+      ostSting.play().catch(() => {});
+    }
     if (state.stage === 1) {
       overlayTitle.textContent = d.winTitle1;
       overlayDesc.textContent = d.winDesc1;
@@ -744,6 +824,10 @@ function triggerHeroPower() {
   } else if (selectedHeroId === "glass_guardian") {
     state.rings.push({ x: px, y: py, r: 16, maxR: 230, color: "rainbow" });
     clearNearbyBossCubes(px, py, 240, 18);
+  } else if (selectedHeroId === "vector_sprite") {
+    state.rings.push({ x: px, y: py, r: 16, maxR: 210, color: "#00E5FF" });
+    state.rings.push({ x: px, y: py, r: 8, maxR: 145, color: "#FF4D8D" });
+    clearNearbyBossCubes(px, py, 210, 16);
   }
   updateHud();
 }
@@ -1434,6 +1518,7 @@ function setSelectedHero(heroId) {
   selectedHeroId = heroId;
   localStorage.setItem("sketchic_game_hero", heroId);
   syncHeroUi();
+  syncBgmPlayback(false);
 }
 
 function setSelectedStage(stageNum) {
@@ -1448,6 +1533,7 @@ function setSelectedStage(stageNum) {
     });
   }
   syncActionLabels();
+  syncBgmPlayback(false);
 }
 
 function syncHeroUi() {
@@ -1511,6 +1597,9 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Shift" || e.key === "e" || e.key === "E") toggleDimension();
   if (e.key === "f" || e.key === "F") firePrimaryAction();
   if (e.key === "q" || e.key === "Q") triggerHeroPower();
+  if (!bgmStarted && ["ArrowLeft","ArrowRight","ArrowUp","a","A","d","D","w","W"," ","Shift","e","E","f","F","q","Q"].includes(e.key)) {
+    syncBgmPlayback(true);
+  }
 });
 
 document.addEventListener("keyup", (e) => {
@@ -1535,10 +1624,18 @@ document.getElementById("touchShiftBtn").addEventListener("click", toggleDimensi
 if (touchBridgeBtn) touchBridgeBtn.addEventListener("click", firePrimaryAction);
 if (touchPowerBtn) touchPowerBtn.addEventListener("click", triggerHeroPower);
 
-startGameBtn.addEventListener("click", () => startRunWithIntro(selectedStage));
+startGameBtn.addEventListener("click", () => {
+  ostSting.pause();
+  ostSting.currentTime = 0;
+  syncBgmPlayback(true);
+  startRunWithIntro(selectedStage);
+});
 if (nextStageBtn) {
   nextStageBtn.addEventListener("click", () => {
+    ostSting.pause();
+    ostSting.currentTime = 0;
     setSelectedStage(2);
+    syncBgmPlayback(true);
     startRunWithIntro(2);
   });
 }
@@ -1547,10 +1644,20 @@ if (stageSwitchBtn) {
   stageSwitchBtn.addEventListener("click", () => showOverlay("title"));
 }
 restartBtn.addEventListener("click", () => {
+  ostSting.pause();
+  ostSting.currentTime = 0;
   buildLevel(selectedStage);
+  syncBgmPlayback(true);
   beginGameplay();
 });
 gameLangBtn.addEventListener("click", () => applyGameLang(lang === "ar" ? "en" : "ar"));
+if (bgmBtn) {
+  bgmBtn.addEventListener("click", () => {
+    bgmEnabled = !bgmEnabled;
+    localStorage.setItem("sketchic_game_bgm", String(bgmEnabled));
+    syncBgmPlayback(true);
+  });
+}
 if (sfxBtn) {
   sfxBtn.addEventListener("click", () => {
     sfxEnabled = !sfxEnabled;
@@ -1610,5 +1717,6 @@ if (stageSelector) {
 
 buildLevel(selectedStage);
 applyGameLang(lang);
+syncBgmBtn();
 showOverlay("title");
 requestAnimationFrame(loop);

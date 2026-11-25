@@ -34,6 +34,7 @@ const I18N = {
     storyboardBtn: "مشاهد الدستور (6)",
     openFlow: "فتح المشروع في Google Flow ↗",
     openFlowScene: "فتح المشهد المجمّع ↗",
+    watchYoutube: "يوتيوب ↗",
     comicsKicker: "02 / قصص عالم سكتشيك المصورة",
     comicsTitle: "مكتبة الكوميكس التفاعلية",
     comicsSub:
@@ -49,6 +50,7 @@ const I18N = {
     comicViewPages: "الصفحات",
     comicViewScroll: "تمرير كامل",
     comicCleanArt: "لوحات صافية",
+    comicOstBtn: "🎵 موسيقى",
     comicPrintShort: "طباعة / PDF",
     comicPrevPage: "الصفحة السابقة",
     comicNextPage: "الصفحة التالية",
@@ -116,6 +118,7 @@ const I18N = {
     storyboardBtn: "Storyboard (6)",
     openFlow: "Open Project in Google Flow ↗",
     openFlowScene: "Open Assembled Scene ↗",
+    watchYoutube: "YouTube ↗",
     comicsKicker: "02 / Sketchic Comics",
     comicsTitle: "Interactive Illustrated Comics",
     comicsSub:
@@ -131,6 +134,7 @@ const I18N = {
     comicViewPages: "Pages",
     comicViewScroll: "Full Scroll",
     comicCleanArt: "Clean Art",
+    comicOstBtn: "🎵 OST",
     comicPrintShort: "Print / PDF",
     comicPrevPage: "Previous Page",
     comicNextPage: "Next Page",
@@ -215,8 +219,29 @@ const comicPagePills = document.getElementById("comicPagePills");
 const comicPrevBtn = document.getElementById("comicPrevBtn");
 const comicNextBtn = document.getElementById("comicNextBtn");
 const comicCleanArtBtn = document.getElementById("comicCleanArtBtn");
+const comicOstBtn = document.getElementById("comicOstBtn");
 const comicLangBtn = document.getElementById("comicLangBtn");
 const comicPrintBtn = document.getElementById("comicPrintBtn");
+
+let comicOstEnabled = false;
+const comicOstAudio = new Audio("assets/audio/ost_paper_studio.mp3");
+comicOstAudio.loop = true;
+comicOstAudio.volume = 0.28;
+
+function setComicOst(enabled) {
+  comicOstEnabled = Boolean(enabled);
+  if (comicOstEnabled) {
+    comicOstAudio.play().catch(() => {
+      comicOstEnabled = false;
+    });
+  } else {
+    comicOstAudio.pause();
+  }
+  if (comicOstBtn) {
+    comicOstBtn.classList.toggle("active", comicOstEnabled);
+    comicOstBtn.setAttribute("aria-pressed", String(comicOstEnabled));
+  }
+}
 
 const canonModal = document.getElementById("canonModal");
 const canonBackdrop = document.getElementById("canonBackdrop");
@@ -553,6 +578,14 @@ function renderFilmsCatalog() {
     flowLink.target = "_blank";
     flowLink.rel = "noopener noreferrer";
     linksRow.appendChild(flowLink);
+
+    if (w.youtubeFullUrl) {
+      const ytLink = makeEl("a", "flow-link yt-card-link", dict.watchYoutube);
+      ytLink.href = w.youtubeFullUrl;
+      ytLink.target = "_blank";
+      ytLink.rel = "noopener noreferrer";
+      linksRow.appendChild(ytLink);
+    }
 
     const sceneCount = Array.isArray(w.scenes) ? w.scenes.length : 0;
     const sbLabel = isAr ? `مشاهد الدستور (${sceneCount})` : `Storyboard (${sceneCount})`;
@@ -986,6 +1019,7 @@ function loadModalVideo() {
 
 function openCinemaModal(filmKey, format = "16:9") {
   if (!FILMS[filmKey]) return;
+  setComicOst(false);
   activeFilmKey = filmKey;
   activeFormat = format;
   cinemaModal.hidden = false;
@@ -1267,6 +1301,7 @@ function openComicModal(comicKey, startPageIndex = 0) {
 
 function closeComicModal() {
   if (!comicModal) return;
+  setComicOst(false);
   comicModal.hidden = true;
   document.body.style.overflow = "";
 }
@@ -1623,6 +1658,12 @@ if (comicCleanArtBtn) {
   comicCleanArtBtn.addEventListener("click", () => {
     comicCleanArt = !comicCleanArt;
     renderComicReader();
+  });
+}
+
+if (comicOstBtn) {
+  comicOstBtn.addEventListener("click", () => {
+    setComicOst(!comicOstEnabled);
   });
 }
 

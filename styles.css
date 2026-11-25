@@ -622,6 +622,14 @@ a {
   color: var(--paper-muted);
 }
 
+.yt-card-link {
+  color: #fca5a5;
+}
+
+.yt-card-link:hover {
+  color: #f87171;
+}
+
 /* Laws Section */
 .laws-section {
   background: var(--bg-surface);
