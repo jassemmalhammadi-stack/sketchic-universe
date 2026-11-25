@@ -146,6 +146,10 @@ const LORE_CODES = {
     ar: ["القصاصة السرية S3-01 — عهد نقطة الارتكاز", "تعاهدت «نبض المتجهات» مع «فارس الحبر» عند الجوهرة الماسية على حماية العوالم الستة داخل أبراج RGB."],
     en: ["Season 3 Vault #01 — Pact at the Bezier Anchor", "Vector Sprite and Ink Knight swore to guide all six paper realms up into the RGB towers."],
   },
+  "LAYER-02": {
+    ar: ["القصاصة السرية S3-02 — خيط الطبقة الصفرية", "خاط «حائك الخيوط» و«نبض المتجهات» طبقات RGB الزجاجية بغرز الذهب عبر عُرى ماسية لإنقاذ الرسمة الأولى للصانع."],
+    en: ["Season 3 Vault #02 — Stitches of Layer Zero", "Thread Weaver and Vector Sprite laced golden embroidery through diamond anchor eyelets to bind all three RGB glass layers."],
+  },
 };
 
 const HERO_ORDER = [

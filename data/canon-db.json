@@ -1,7 +1,7 @@
 {
   "meta": {
     "id": "sketchic-universe",
-    "dbVersion": "1.4.0",
+    "dbVersion": "1.5.0",
     "nameAr": "عالم سكتشيك",
     "nameEn": "Sketchic Universe",
     "websiteUrl": "https://Sketchic.net",
@@ -6949,6 +6949,516 @@
           ]
         }
       ]
+    },
+    {
+      "id": "world-s3-e02",
+      "worldNum": 18,
+      "slug": "layer-zero",
+      "folderName": "10_Season_3_The_Digital_Canvas/S3E02_Layer_Zero",
+      "season": 3,
+      "episode": 2,
+      "isPublic": true,
+      "isFinale": false,
+      "titleAr": "الطبقة الصفرية",
+      "titleEn": "Layer Zero",
+      "genreAr": "مغامرة تطريز رقمية",
+      "genreEn": "Hybrid Craft Adventure",
+      "tagStyle": "tag-finale",
+      "mediumTag": "Golden Embroidery × RGB Glass",
+      "visualStyleAr": "خيوط التطريز الذهبية الحقيقية المطرّزة على اللباد تتشابك مع عُرى المتجهات الماسية لربط شرائح RGB الزجاجية وحماية الرسمة الأولى.",
+      "visualStyleEn": "Tactile hand-stitched saffron-gold embroidery interlocking with glowing electric neon-cyan diamond eyelets to unify separated RGB glass layers.",
+      "loglineAr": "تختفي أرضية الزجاج الأوسط تحت قدمي حائك الخيوط بأمر مهندس الطبقات، فيتحد مع نبض المتجهات لخياطة الشرائح الثلاث بالذهب وإنقاذ الطبقة الصفرية.",
+      "loglineEn": "When The Layer Architect hides the middle glass floor beneath Thread Weaver, he teams with Vector Sprite to stitch all three RGB strata with golden thread and protect Layer Zero.",
+      "durationSec": 127,
+      "durationBadge": "2:07 • 1080p S3",
+      "flowProjectId": "690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowProjectUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowSceneUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3/collection/8e6fd4ed-3646-445e-ac66-f24cca3419a4",
+      "assembledSceneName": "S3E02 — Layer Zero",
+      "flowModel": "Omni 1.2 Flash • 1080p • Auto-Ducking",
+      "archiveBiblePath": "10_Season_3_The_Digital_Canvas/S3E02_Layer_Zero/01_World_Bible.md",
+      "archiveCharsPath": "10_Season_3_The_Digital_Canvas/S3E02_Layer_Zero/02_Characters_and_Ingredients.md",
+      "archiveStoryboardPath": "10_Season_3_The_Digital_Canvas/S3E02_Layer_Zero/03_Storyboard_and_Flow_Prompts.md",
+      "archiveFullVideoPath": "10_Season_3_The_Digital_Canvas/S3E02_Layer_Zero/final/S3E02_Layer_Zero_Full_Film.mp4",
+      "archiveShortsVideoPath": "10_Season_3_The_Digital_Canvas/S3E02_Layer_Zero/final/S3E02_Layer_Zero_Shorts_9x16.mp4",
+      "webFullVideoPath": "assets/videos/S3E02_Layer_Zero_Full_Film.mp4",
+      "webShortsVideoPath": "assets/videos/S3E02_Layer_Zero_Shorts_9x16.mp4",
+      "webPosterPath": "assets/images/posters/layer-zero.jpg",
+      "webFullSubArPath": "assets/subtitles/S3E02_Layer_Zero_Full_Film.ar.vtt",
+      "webFullSubEnPath": "assets/subtitles/S3E02_Layer_Zero_Full_Film.en.vtt",
+      "webShortsSubArPath": "assets/subtitles/S3E02_Layer_Zero_Shorts_9x16.ar.vtt",
+      "webShortsSubEnPath": "assets/subtitles/S3E02_Layer_Zero_Shorts_9x16.en.vtt",
+      "youtubeFullUrl": "https://youtu.be/rqTOHxUTZy0",
+      "youtubeShortsUrl": "https://youtube.com/shorts/F3S7qWE8iSI",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#F4C44E",
+          "labelEn": "Stitched Saffron Gold",
+          "labelAr": "ذهب خيوط التطريز",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#00E5FF",
+          "labelEn": "Diamond Eyelet Cyan",
+          "labelAr": "سماوي العُرى الماسية",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#C81D3B",
+          "labelEn": "Crimson Prism Stratum",
+          "labelAr": "قرمزي طبقة المنشور",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#7C3AED",
+          "labelEn": "Layer Toggle Violet",
+          "labelAr": "بنفسجي عزل الطبقات",
+          "showOnCard": true
+        }
+      ],
+      "visualRules": [
+        {
+          "ruleNum": 1,
+          "titleAr": "غرزة الذهب المادية داخل العُرى الماسية الرقمية",
+          "titleEn": "Physical Embroidery Thread Through Vector Eyelets",
+          "descriptionAr": "تمر إبرة حائك الخيوط وخيوطه الذهبية عبر عُرى ماسية مضيئة تفتحها نبض المتجهات لربط طبقات الزجاج دون كسرها.",
+          "descriptionEn": "Thread Weaver's physical saffron-gold stitches lace through glowing hollow neon-cyan Bezier anchor eyelets spun by Vector Sprite without shattering tempered glass."
+        },
+        {
+          "ruleNum": 2,
+          "titleAr": "صمود الخيط بعد إخفاء الطبقة",
+          "titleEn": "Craft Persists Under Layer Toggle",
+          "descriptionAr": "حتى عند إطفاء طبقة الزجاج الأوسط بأمر مهندس الطبقات، تبقى الغرز اليدوية المربوطة صلبة ومضيئة في الفراغ.",
+          "descriptionEn": "Even when The Layer Architect toggles the middle glass plane into faint dashed wireframe ghost outlines, real stitched embroidery remains completely solid."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "s3e02-s1",
+          "sceneNum": 1,
+          "titleAr": "اختفاء أرضية الطبقة الأوسط",
+          "titleEn": "The Vanishing Middle Pane",
+          "goalAr": "نبضة الإخفاء تطفئ أرضية الزجاج الوسطى فجأة تحت قدمي حائك الخيوط.",
+          "flowPrompt": "Cinematic macro tracking hook gliding cleanly along three parallel vertical beveled transparent RGB glass layer slabs hovering inside deep obsidian-slate canyon light, crimson curves glowing on the back slab, gleaming saffron-gold dotted embroidery streams etched across the middle slab, electric neon-cyan geometry on the front slab, tiny finger-sized scale, family-friendly tactile craft physics. Stepping briskly onto the gleaming middle golden slab holding his golden sewing needle, @Thread_Weaver — tiny 2D die-cut hand-embroidered ragdoll hero on dark navy frayed felt border (golden-amber yarn-stitched head with indigo yarn sideburns and embroidered dark bead eyes — strictly stitched plush ragdoll face with yarn texture, tilted tarnished dimpled brass thimble cap, bright deep royal-indigo button jacket and deep midnight-indigo deep midnight-indigo trousers piped with gleaming saffron-gold chain stitches, gleaming golden sewing needle staff; flat 2D embroidery texture casting real shadow) — freezes mid-stride as a sharp luminous royal-violet UI toggle pulse blinks across the middle pane, snapping the solid glass floor completely invisible beneath his stitched boots so he plunges into open obsidian chasm trailing taut golden thread behind him. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp glass toggle switch snap, taut linen thread zip unwinding fast, and rushing cold air foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s2",
+          "sceneNum": 2,
+          "titleAr": "خطاف الحرير على منحنى بيزييه",
+          "titleEn": "Silk Hook on a Bezier Rail",
+          "goalAr": "نبض المتجهات تنقذ حائك الخيوط في الهواء عبر منحنى بيزييه مضيء.",
+          "flowPrompt": "Kinetic sweeping macro rescue shot diving between illuminated crimson, golden, and glowing sky-cyan beveled glass slabs as a vertical ribbon of electric neon-cyan and vibrant magenta-pink flashes beneath falling @Thread_Weaver, tiny finger-sized scale, family-friendly tactile craft physics. Looping his golden sewing needle hook neatly around the raised Pen-Tool staff extended by alert @Vector_Sprite — tiny flat 2D luminous vector heroine in electric neon-cyan and magenta-pink Bezier strokes, diamond anchor-node earrings, sleek deep obsidian-slate tunic — airborne @Thread_Weaver (embroidery texture, dark navy felt outline, stitched golden-amber plush ragdoll yarn face, dimpled brass thimble hat, gold-trimmed royal-indigo deep royal-indigo jacket) lands lightly beside her on a solid cyan ledge and exhales in breathless relief. Voice Lock [Thread Weaver -> Puck]: Consistent upbeat, nimble middle-pitch male voice (Puck), agile and amused as he jokes that the floor just switched itself invisible; only Thread Weaver speaks in this shot while Vector Sprite smiles silently. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-puck",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-puck",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s3",
+          "sceneNum": 3,
+          "titleAr": "انكشاف مصير الطبقة الصفرية",
+          "titleEn": "Fate of Layer Zero Revealed",
+          "goalAr": "نبض المتجهات تحذّر من عزل الطبقات ومحو الرسمة الأولى للصانع.",
+          "flowPrompt": "Focused over-shoulder macro two-shot from the glowing electric neon-cyan glass ledge looking down across drifting dark separated RGB glass sheets suspended above a trembling golden-amber light pool far below, dramatic cobalt and magenta rim reflections, tiny finger-sized scale, family-friendly tactile craft physics. Pointing urgently with her floating diamond Pen-Tool staff toward shadowy frosted UI shutters sliding between planes, @Vector_Sprite — crisp flat 2D electric neon-cyan and magenta-pink vector heroine with diamond anchor earrings and deep obsidian-slate glass tunic — warns attentive @Thread_Weaver — tiny embroidered ragdoll hero (stitched plush yarn face, brass thimble cap, navy frayed felt outline, golden needle) — that erasing Layer Zero will sever every memory left by the Maker. Voice Lock [Vector Sprite -> Callirrhoe]: Consistent vibrant, agile luminous young female voice (Callirrhoe), urgent and crystal clear with crisp 2D lip-sync; only Vector Sprite speaks in this shot while Thread Weaver listens silently. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-callirrhoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-callirrhoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s4",
+          "sceneNum": 4,
+          "titleAr": "عزل الشرائح بصولجان التناظر",
+          "titleEn": "Isolating the RGB Strata",
+          "goalAr": "مهندس الطبقات يعزل شرائح الـ RGB الثلاث بصولجان التناظر.",
+          "flowPrompt": "Austere steady upward tilt macro shot looking past the trembling glass canyon rim toward towering dark frosted UI panels shifting cleanly into sterile separation under cool luminous royal-violet gridlight and icy electric neon-cyan lines, family-friendly tactile craft physics. Raising his illuminated Grid Stylus Scepter in one slow deliberate vertical arc above the upper crimson and golden slabs, @Layer_Architect — tall imposing architectural construct of floating overlapping beveled deep obsidian-slate glass UI panes and glowing royal-violet wireframe mesh grids, concentric layer-stack halo, smooth strictly eyeless dark smoked-glass visor crossed by one calm horizontal neon-cyan horizon light beam (strictly rigid visor with zero mouth distortion) — locks sleek translucent isolation shutters between the three glass strata, dimming the warm golden middle sheet toward silence. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp magnetic frosted-glass shutter slams, mechanical sterile UI click locks, and low distant glass room tone foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s5",
+          "sceneNum": 5,
+          "titleAr": "النزول البهلواني عبر شرائح الألوان",
+          "titleEn": "Golden Rappel Between Panes",
+          "goalAr": "هبوط بهلواني لحائك الخيوط على خيط تطريز ذهبي بين الألواح.",
+          "flowPrompt": "Exhilarating vertical downward macro tracking shot diving smoothly right alongside plummeting @Thread_Weaver as he slides down a gleaming taut golden embroidery line anchored between the front neon-cyan slab and the fading back crimson slab, dazzling glowing sky-cyan and saffron-gold gleaming saffron-gold edge reflections flashing past dark glass bevels, tiny finger-sized scale, family-friendly tactile craft physics. Tucking mid-air through shifting frosted dividers with brass thimble helmet glinting brightly, @Thread_Weaver (2D die-cut hand-embroidered stitched yarn ragdoll hero on dark navy frayed felt border, golden-amber yarn face, dark bead eyes, deep royal-indigo button jacket with gleaming saffron-gold stitches, polished golden needle held diagonally like an ice-axe) swings cleanly onto the faint golden floor beam at the canyon base. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — rapid singing golden embroidery thread zip, sliding metal brass thimble scrape on glass, and soft felt-boot thump on tempered crystal foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s6",
+          "sceneNum": 6,
+          "titleAr": "العثور على الرسمة الأولى تحت الزجاج",
+          "titleEn": "First Sketch Beneath Frost",
+          "goalAr": "اكتشاف الطبقة الصفرية ورسمة الشجرة الذهبية الأولى تحت الزجاج.",
+          "flowPrompt": "Reverent warm-lit close macro two-shot beside the hovering luminous multifaceted Bezier Anchor Relic gleaming over the base glass plate of Layer Zero where a delicate warm amber hand-sketched oak tree line flickers faintly underneath frosted glass fog, tender golden warmth contrasting clean obsidian edges, tiny finger-sized scale, family-friendly tactile craft physics. Kneeling gently on the warm glowing trace beside alert @Vector_Sprite — tiny luminous 2D neon-cyan and magenta-pink vector heroine — resolute @Thread_Weaver — 2D die-cut stitched yarn ragdoll hero (stitched golden-amber yarn face, indigo sideburns, brass thimble helmet, deep royal-indigo gold-piped jacket, golden sewing needle) — vows cheerfully that if separate layers hide the story, he will stitch all three panes together like a real bound book. Voice Lock [Thread Weaver -> Puck]: Consistent upbeat, nimble middle-pitch male voice (Puck), warm, tender, and boldly inventive with crisp 2D stitched-mouth sync; only Thread Weaver speaks in this shot while Vector Sprite listens silently. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-puck",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-puck",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s7",
+          "sceneNum": 7,
+          "titleAr": "ابتكار العروة الماسية للخياطة الرقمية",
+          "titleEn": "Spinning the Diamond Eyelets",
+          "goalAr": "ابتكار عُرى المتجهات الماسية لتمرّ منها إبرة الخياطة دون كسر الزجاج.",
+          "flowPrompt": "Bright creative macro close two-shot locked onto the radiant hovering diamond Bezier Anchor Relic between @Vector_Sprite and @Thread_Weaver inside glowing cyan-amber dust light, crisp neon specular highlights on smooth dark glass, tiny finger-sized scale, family-friendly tactile craft physics. Twirling her glowing Pen-Tool staff with nimble flair, @Vector_Sprite — luminous flat 2D electric neon-cyan and magenta-pink vibrant magenta-pink vector heroine (diamond anchor earrings, sleek deep obsidian-slate glass tunic) — taps the glass rim cleanly to spin open a bright hollow floating neon-cyan diamond anchor eyelet built precisely for @Thread_Weaver's gleaming golden sewing needle to pass right through without cracking glass. Voice Lock [Vector Sprite -> Callirrhoe]: Consistent vibrant, agile luminous young female voice (Callirrhoe), delighted and clever with crisp 2D lip-sync; only Vector Sprite speaks in this shot while Thread Weaver admires silently. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-callirrhoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-callirrhoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s8",
+          "sceneNum": 8,
+          "titleAr": "الغرزة الهجينة الأولى بين الورق والزجاج",
+          "titleEn": "The First Hybrid Stitch",
+          "goalAr": "تنفيذ الغرزة الهجينة الأولى لربط لوح السّيان باللوح الذهبي.",
+          "flowPrompt": "Dazzling rhythmic lateral macro action tracking shot flying along the narrow vertical gap separating the glowing middle golden sheet and front neon-cyan electric neon-cyan sheet inside RGB glass prism canyon, vibrant flashes of electric neon-cyan, crimson-ruby, and gleaming saffron-gold lighting textured embroidery yarn and slick beveled edges, tiny finger-sized scale, family-friendly tactile craft physics. Vaulting swiftly from bevel to bevel, @Vector_Sprite — flat 2D neon-cyan and magenta-pink vector heroine — punches crisp glowing diamond anchor eyelets directly along both glass margins in sync while agile @Thread_Weaver — 2D die-cut hand-embroidered stitched yarn hero (dimpled brass thimble hat, navy felt outline, gold-stitched royal-indigo deep royal-indigo jacket) — darts in fluid figure-eights right behind her, pulling gleaming golden thread neatly through every glowing eyelet to sew the drifting planes tightly together. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — rapid crisp laser-pinch anchor punches, tight singing golden needle-and-thread lacing zips, and crystalline glass locking snaps foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s9",
+          "sceneNum": 9,
+          "titleAr": "مواجهة حارس الفوضى المنظّمة",
+          "titleEn": "Keeper of Pure Symmetry",
+          "goalAr": "مهندس الطبقات يطرح حجته الفلسفية حول نقاء الطبقات المنعزلة.",
+          "flowPrompt": "Composed symmetrical low macro medium-shot inside crisp icy luminous royal-violet and cool glowing sky-cyan gridlight just above the freshly laced glowing golden-and-cyan seam binding the lower slabs, stark austere glass reflections versus warm golden thread glinting below, family-friendly tactile craft physics. Gliding silently down on floating translucent geometric steps, @Layer_Architect — tall imposing architectural construct sculpted from floating beveled deep obsidian-slate glass UI panes and glowing royal-violet wireframe mesh grids, concentric circular layer-stack halo, smooth strictly eyeless smoked-glass visor faceplate crossed by one calm horizontal electric neon-cyan light beam (strictly rigid visor, zero warped mouth motion) — gazes down at the sewn seam, explaining coolly that independent layers prevent accidents whereas physical stitches trap beauty in clumsy entanglement. Voice Lock [The Layer Architect -> Umbriel]: Consistent sleek, calm measured lower-middle male voice (Umbriel), quiet architectural conviction completely devoid of shouting while visor remains strictly rigid; only The Layer Architect speaks in this shot. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-umbriel",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-umbriel",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s10",
+          "sceneNum": 10,
+          "titleAr": "نبضة إخفاء الطبقة ضد السّيان والذهب",
+          "titleEn": "Hide-Layer Wave vs. Magenta Arc",
+          "goalAr": "مواجهة موجة إخفاء الطبقة بدرع المتجهات الوردي لحماية الغرز الذهبية.",
+          "flowPrompt": "Dramatic sweeping macro confrontation shot inside the RGB glass canyon as towering @Layer_Architect — deep obsidian-slate glass construct with strictly rigid eyeless horizontal neon-cyan visor and concentric violet halo — sweeps his Grid Stylus Scepter downward, unleashing a crisp horizontal luminous royal-violet Hide-Layer ripple that flashes the solid golden glass sheet behind him into hollow translucent ghost outlines, family-friendly tactile craft physics. Darting fearlessly between the glowing grid blast and the lower anchor seam, tiny luminous 2D @Vector_Sprite — electric neon-cyan and vibrant magenta-pink vector heroine gripping her illuminated Pen-Tool staff — unfurls a sharp curved magenta vector shield arc that deflects the violet ripple off the bound golden stitches below. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp crystalline phase-out whoosh, taut electric vector arc crackle, and clean glass deflection ping foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s11",
+          "sceneNum": 11,
+          "titleAr": "الخيط الحقيقي لا ينطفئ",
+          "titleEn": "Real Thread Never Switches Off",
+          "goalAr": "جسر الخيوط الذهبية المطرّزة يصمد في الفراغ بعد اختفاء الزجاج الأوسط.",
+          "flowPrompt": "Heroic triumphant low-angle close macro shot suspended in dark obsidian space where the entire middle glass slab has vanished into faint translucent dotted wireframe outline yet a sturdy glowing lattice of real physical saffron-gold gleaming saffron-gold embroidery threads holds completely solid in midair anchored cleanly to outer cyan diamond eyelets, warm amber specular sparkle on taut golden yarn fibers, tiny finger-sized scale, family-friendly tactile craft physics. Stepping confidently right across the glowing golden cross-stitch suspension bridge twirling his polished sewing needle cleanly, @Thread_Weaver — 2D die-cut hand-embroidered stitched yarn ragdoll hero on dark navy felt border (stitched plush golden-amber yarn face, indigo sideburns, dimpled brass thimble cap, deep royal-indigo gold-piped jacket) — beams proudly, declaring that you cannot switch off real thread made by caring hands. Voice Lock [Thread Weaver -> Puck]: Consistent upbeat, nimble middle-pitch male voice (Puck), jubilant and courageous with crisp 2D stitched-mouth lip-sync; only Thread Weaver speaks in this shot. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-puck",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-puck",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s12",
+          "sceneNum": 12,
+          "titleAr": "اللولب المزدوج لإعادة ربط الألوان الثلاثة",
+          "titleEn": "Double-Helix Color Binding",
+          "goalAr": "التفاف لولبي مزدوج يربط طبقات القرمزي والذهب والسّيان في تناغم واحد.",
+          "flowPrompt": "Breathtaking continuous upward spiral macro tracking shot swirling rapidly around all three giant transparent crimson-back, golden-middle, and neon-cyan-front glass panes inside deep obsidian-slate twilight, tiny finger-sized scale, family-friendly tactile craft physics. Orbiting in fast luminous double-helix harmony, @Vector_Sprite — crisp 2D electric neon-cyan and magenta-pink vibrant magenta-pink vector heroine casting unbroken luminous diamond spline rails — weaves right alongside spiraling @Thread_Weaver — tiny 2D stitched yarn ragdoll hero in dimpled brass thimble cap and saffron-gold-trimmed deep royal-indigo jacket — lacing thick radiant golden embroidery stitches clean around all three glass strata until every ghosted layer snaps back into full rich unified glowing solid color at once. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — brisk dual kinetic wind rush, rapid rhythmic interlocking golden stitch snaps, and resonant three-pane crystal alignment latch clink foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s13",
+          "sceneNum": 13,
+          "titleAr": "تراجع المهندس نحو ممر التراجع",
+          "titleEn": "Retreat Toward the Blue Echo",
+          "goalAr": "تراجع مهندس الطبقات نحو ممر التراجع معترفا بصمود الصنعة اليدوية.",
+          "flowPrompt": "Balanced atmospheric macro standoff two-shot as warm golden-amber reflection from the newly bound unified RGB layers illuminates the cold obsidian glass chest of hovering @Layer_Architect while tiny fearless @Thread_Weaver stands firmly atop the front golden-stitched rim below holding his needle staff, clear dramatic scale contrast, family-friendly tactile craft physics. Tilting his smooth strictly eyeless smoked-glass visor crossed by one calm horizontal electric neon-cyan horizon line slightly downward in quiet reluctant respect (strictly rigid visor, zero mouth warp), @Layer_Architect — towering deep obsidian-slate glass and glowing luminous royal-violet wireframe construct — acknowledges calmly that their stubborn craft holds Layer Zero for today before turning smoothly toward flickering blue doorway ripples behind him. Voice Lock [The Layer Architect -> Umbriel]: Consistent sleek, calm measured lower-middle male voice (Umbriel), reflective and dignified while visor remains strictly rigid; only The Layer Architect speaks in this shot while Thread Weaver stands silent. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-umbriel",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-umbriel",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s14",
+          "sceneNum": 14,
+          "titleAr": "نبض ممر التراجع في الأفق",
+          "titleEn": "Shadow of the Undo Labyrinth",
+          "goalAr": "نبض المتجهات ترصد أثر الممر الأزرق وتفتح بوابة الحلقة الثالثة.",
+          "flowPrompt": "Crisp evocative medium-wide macro two-shot from behind @Vector_Sprite and @Thread_Weaver atop the glowing diamond Bezier Anchor Relic above bright warmly restored golden sketch lines of Layer Zero, distant corridor arches pulsing faintly backward in electric sky-blue stepped motion echoes ahead, tiny finger-sized scale, family-friendly tactile craft physics. Lowering her glowing Pen-Tool staff while pointing steadily toward the rhythmic blue echo doorway far ahead, @Vector_Sprite — crisp flat 2D electric neon-cyan and magenta-pink vibrant magenta-pink vector heroine with diamond anchor earrings and dark obsidian tunic — turns to resolute @Thread_Weaver — tiny 2D embroidered yarn ragdoll hero with dimpled brass thimble cap and felt border — noting alertly that the Architect retreated straight into the Undo Labyrinth. Voice Lock [Vector Sprite -> Callirrhoe]: Consistent vibrant, agile luminous young female voice (Callirrhoe), determined and adventurous with crisp 2D lip-sync; only Vector Sprite speaks in this shot while Thread Weaver nods silently. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-callirrhoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-callirrhoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s15",
+          "sceneNum": 15,
+          "titleAr": "خياطة الضوء والخيوط الحية",
+          "titleEn": "Salute in Bound Prism Light",
+          "goalAr": "تحية الانتصار الهادئة فوق غرز الذهب المتشابكة مع العُرى الماسية.",
+          "flowPrompt": "Warm intimate gentle macro close two-shot right along the upper beveled edge where gleaming golden saffron embroidery stitches gleam harmoniously side by side through glowing electric neon-cyan diamond anchor eyelets locking crimson, warm amber-gold, and cyan glass planes into serene balance, soft pearl-silver warm pearl-silver dust motes drifting upward through open air, tiny finger-sized scale, family-friendly tactile craft physics. Tipping his tarnished dimpled brass thimble hat in cheerful salute toward smiling @Vector_Sprite — luminous 2D cyan-and-magenta vector heroine leaning gently beside her glowing diamond staff — proud @Thread_Weaver — 2D stitched golden-amber yarn ragdoll hero resting on his golden sewing needle — watches warm golden light bloom cleanly upward through the bound glass slabs. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — gentle tactile metal thimble tap, serene soft golden thread hum, and quiet sparkling glass dust rustle foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-thread-weaver",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e02-s16",
+          "sceneNum": 16,
+          "titleAr": "الطبقات المترابطة في قلب اللوح الرقمي",
+          "titleEn": "Layers United Inside the Tablet",
+          "goalAr": "انسحاب جوي يكشف اللوح الرقمي المستيقظ وطاولة المرسم في توازن كامل.",
+          "flowPrompt": "Majestic steady slow aerial pull-back receding smoothly from the gleaming golden-stitched RGB glass prism until the vast luminous layered glass towers inside the Awakened Drawing Tablet and the distant sunlit wooden desk horizon align in tranquil symmetry, family-friendly tactile craft physics. Streams of warm gleaming saffron-gold embroidery sparks and luminous glowing sky-cyan vector motes spiral gently upward together like constellations across a wide clean deep obsidian-slate center sky completely free of text, words, letters, numbers, or watermarks. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — calm open crystalline room air and faint twinkling spark shimmer foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "ingredient",
+              "refId": "ing-awakened-drawing-tablet",
+              "flowTab": "Images"
+            }
+          ]
+        }
+      ]
     }
   ],
   "characters": [
@@ -8459,6 +8969,42 @@
       "entityType": "ingredient",
       "entityId": "ing-bezier-anchor-relic",
       "appearanceRole": "alliance_relic"
+    },
+    {
+      "worldId": "world-s3-e02",
+      "entityType": "character",
+      "entityId": "char-thread-weaver",
+      "appearanceRole": "protagonist"
+    },
+    {
+      "worldId": "world-s3-e02",
+      "entityType": "character",
+      "entityId": "char-vector-sprite",
+      "appearanceRole": "co_heroine"
+    },
+    {
+      "worldId": "world-s3-e02",
+      "entityType": "character",
+      "entityId": "char-layer-architect",
+      "appearanceRole": "season3_antagonist"
+    },
+    {
+      "worldId": "world-s3-e02",
+      "entityType": "ingredient",
+      "entityId": "ing-rgb-layer-glass-prism",
+      "appearanceRole": "primary_prism_stage"
+    },
+    {
+      "worldId": "world-s3-e02",
+      "entityType": "ingredient",
+      "entityId": "ing-bezier-anchor-relic",
+      "appearanceRole": "layer_zero_vault"
+    },
+    {
+      "worldId": "world-s3-e02",
+      "entityType": "ingredient",
+      "entityId": "ing-awakened-drawing-tablet",
+      "appearanceRole": "tablet_horizon"
     }
   ],
   "comics": [
