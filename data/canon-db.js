@@ -2,7 +2,7 @@
 window.SKETCHIC_CANON_DB = {
   "meta": {
     "id": "sketchic-universe",
-    "dbVersion": "1.5.0",
+    "dbVersion": "1.6.0",
     "nameAr": "عالم سكتشيك",
     "nameEn": "Sketchic Universe",
     "websiteUrl": "https://Sketchic.net",
@@ -7460,6 +7460,531 @@ window.SKETCHIC_CANON_DB = {
           ]
         }
       ]
+    },
+    {
+      "id": "world-s3-e03",
+      "worldNum": 19,
+      "slug": "the-undo-labyrinth",
+      "folderName": "10_Season_3_The_Digital_Canvas/S3E03_The_Undo_Labyrinth",
+      "season": 3,
+      "episode": 3,
+      "isPublic": true,
+      "isFinale": false,
+      "titleAr": "متاهة التراجع",
+      "titleEn": "The Undo Labyrinth",
+      "genreAr": "غموض زمني رقمي",
+      "genreEn": "Hybrid Temporal Mystery",
+      "tagStyle": "tag-finale",
+      "mediumTag": "Lantern Light × Charcoal Echoes",
+      "visualStyleAr": "ضوء الفانوس الكهرماني الدافئ يقود ثعلب الفحم ثنائي الأبعاد داخل ممر الزجاج المصنفر لمواجهة موجات التراجع الباردة.",
+      "visualStyleEn": "Warm amber brass lantern firelight guiding flat 2D charcoal-and-chalk Ink Fox across frosted glass Undo corridors against electric sky-cyan rewind waves.",
+      "loglineAr": "يعبر رسّام الخرائط بفانوسه وثعلب الحبر وميض القلم ممرّ سجلّ التراجع لاستعادة أول سكتش خام خطّه الصانع رغم موجات Ctrl+Z.",
+      "loglineEn": "With his warm brass lantern, 2D charcoal Ink Fox, and Cursor Wisp, The Cartographer navigates frosted Ctrl+Z corridors to protect the Maker's very first raw digital draft.",
+      "durationSec": 127,
+      "durationBadge": "2:07 • 1080p S3",
+      "flowProjectId": "690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowProjectUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowSceneUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3/collection/1437a0be-52b7-4308-a9a4-2429d6c9447f",
+      "assembledSceneName": "S3E03 — The Undo Labyrinth",
+      "flowModel": "Omni 1.2 Flash • 1080p • Auto-Ducking",
+      "archiveBiblePath": "10_Season_3_The_Digital_Canvas/S3E03_The_Undo_Labyrinth/01_World_Bible.md",
+      "archiveCharsPath": "10_Season_3_The_Digital_Canvas/S3E03_The_Undo_Labyrinth/02_Characters_and_Ingredients.md",
+      "archiveStoryboardPath": "10_Season_3_The_Digital_Canvas/S3E03_The_Undo_Labyrinth/03_Storyboard_and_Flow_Prompts.md",
+      "archiveFullVideoPath": "10_Season_3_The_Digital_Canvas/S3E03_The_Undo_Labyrinth/final/S3E03_The_Undo_Labyrinth_Full_Film.mp4",
+      "archiveShortsVideoPath": "10_Season_3_The_Digital_Canvas/S3E03_The_Undo_Labyrinth/final/S3E03_The_Undo_Labyrinth_Shorts_9x16.mp4",
+      "webFullVideoPath": "assets/videos/S3E03_The_Undo_Labyrinth_Full_Film.mp4",
+      "webShortsVideoPath": "assets/videos/S3E03_The_Undo_Labyrinth_Shorts_9x16.mp4",
+      "webPosterPath": "assets/images/posters/the-undo-labyrinth.jpg",
+      "webFullSubArPath": "assets/subtitles/S3E03_The_Undo_Labyrinth_Full_Film.ar.vtt",
+      "webFullSubEnPath": "assets/subtitles/S3E03_The_Undo_Labyrinth_Full_Film.en.vtt",
+      "webShortsSubArPath": "assets/subtitles/S3E03_The_Undo_Labyrinth_Shorts_9x16.ar.vtt",
+      "webShortsSubEnPath": "assets/subtitles/S3E03_The_Undo_Labyrinth_Shorts_9x16.en.vtt",
+      "youtubeFullUrl": "https://youtu.be/dFMWRDb0zy4",
+      "youtubeShortsUrl": "https://youtube.com/shorts/nxD7qxnpXtc",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#F5B041",
+          "labelEn": "Warm Brass Lantern Amber",
+          "labelAr": "كهرمان الفانوس النحاسي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#38BDF8",
+          "labelEn": "Ctrl+Z Rewind Cyan",
+          "labelAr": "سماوي موجة التراجع",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#F7F9FC",
+          "labelEn": "Chalk Afterimage Aura",
+          "labelAr": "طباشير ظلال الثعلب",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#0F172A",
+          "labelEn": "Frosted Obsidian Void",
+          "labelAr": "أوبسيديان الممر المصنفر",
+          "showOnCard": true
+        }
+      ],
+      "visualRules": [
+        {
+          "ruleNum": 1,
+          "titleAr": "الفانوس يكشف المسار الحقيقي",
+          "titleEn": "Lantern Light Separates Memory from Echoes",
+          "descriptionAr": "الأصداء الرقمية تعكس الضوء الأزرق البارد بجمود، بينما يوقظ ضوء الفانوس الكهرماني خطوط الفحم الحقيقية أسفل الزجاج.",
+          "descriptionEn": "Digital decoy halls reflect flat pale blue glare, while warm amber brass lantern firelight awakens living charcoal lines underneath frosted glass."
+        },
+        {
+          "ruleNum": 2,
+          "titleAr": "القفز فوق أصداء التراجع المجمّدة",
+          "titleEn": "Stepping Across Frozen Rewind Afterimages",
+          "descriptionAr": "تجمد نبضات الإرجاع الخلفي صوراً طباشيرية مؤقتة لثعلب الحبر في الهواء يستخدمها جسراً لعبور الهوّة نحو الملاذ.",
+          "descriptionEn": "Backward rewind flashes momentarily suspend glowing chalk-white afterimages of Ink Fox in mid-air as stepping stones across the abyss."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "s3e03-s01",
+          "sceneNum": 1,
+          "titleAr": "شظية الزمن العائدة ثلاث مرّات",
+          "titleEn": "Shard Rewinding Three Times",
+          "goalAr": "شظية زجاجية تعود ثلاث مرات نحو الأعلى عند مرور موجات التراجع.",
+          "flowPrompt": "Cinematic macro tracking hook along a seemingly endless corridor of repeating vertical translucent frosted-glass artboards inside deep obsidian-slate gloom swirling with dark charcoal smoke and electric sky-cyan time ripples, family-friendly tactile craft physics. Stepping cleanly past the first frosted glass frame, @The_Cartographer — 100% photorealistic live-action male cartographer in his mid-to-late 20s with neatly side-parted swept-back short dark-brown hair (clean visible forehead, strictly NO bangs), heavy dark charcoal-black wool greatcoat with upturned collar, full-fingered black leather gloves, brown leather crossbody map satchel, holding a warm amber-gold vintage curved-glass wire-caged brass oil lantern — watches a falling dark glass shard drop past his boot and snap sharply backward upward into mid-air three times in a row whenever a cold electric sky-cyan rewind ripple flashes down the hall before he lowers his warm lantern in calm wonder. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp triple glass-shard reverse whoosh snaps, soft cold electric sky-cyan time chime pulses, and quiet boot step on frosted crystal foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cartographer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s02",
+          "sceneNum": 2,
+          "titleAr": "أرشيف المحاولات المهجورة",
+          "titleEn": "Archive of Abandoned Drafts",
+          "goalAr": "كشف أرشيف الرسومات المهجورة المحفوظة خلف الألواح الزجاجية.",
+          "flowPrompt": "Composed medium two-shot inside the translucent frosted-glass corridor where smoky flat 2D charcoal drafts drift frozen inside stacked vertical glass panes lit jointly by electric sky-cyan corridor mist and warm amber-gold brass lantern light, clear mixed-media depth, family-friendly tactile craft physics. Holding his glowing brass lantern beside the frosted frames as agile 2D @Ink_Fox — hand-drawn charcoal-and-chalk sketch fox with directional silvery-grey fur hatching, glowing solid-white almond eyes (strictly NO dark pupils), chalk-white muzzle and white-tipped tail glowing with crisp glowing chalk-white rim aura — glides silently atop a lower glass ledge sniffing a frozen charcoal echo, @The_Cartographer (photorealistic male, swept-back short dark-brown hair with strictly NO bangs, charcoal wool greatcoat, black gloves, map satchel) remarks calmly that every frosted arch preserves an abandoned moment the Maker tried to undo. Voice Lock [The Cartographer -> Achird]: Consistent calm, contemplative middle-pitch male voice (Achird), thoughtful and steady with natural subtle live-action lip-sync; only The Cartographer speaks in this shot while Ink Fox listens silently with natural unwarped snout. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-achird",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cartographer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-fox",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-achird",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s03",
+          "sceneNum": 3,
+          "titleAr": "تحذير موجة الإرجاع الزرقاء",
+          "titleEn": "Warning of the Blue Rewind Surge",
+          "goalAr": "تحذير وميض القلم من جرف موجات التراجع نحو نقطة البداية.",
+          "flowPrompt": "Luminous close macro two-shot framed neatly by beveled frosted glass arches glowing softly under electric sky-cyan corridor waves and warm amber-gold lantern light, family-friendly tactile craft physics. Darting excitedly right near @The_Cartographer's gloved hand and warm brass lantern, @Cursor_Wisp — thumb-sized floating warm pearl-silver and glowing electric sky-cyan capacitive stylus-nib lantern spirit with sleek metallic pearl nib crown, twin faceted translucent diamond cursor wings, smooth translucent visor with two bright cyan optical eyes and strictly zero human mouth warping, shedding fine pixel-dust motes — chirps briskly at attentive photorealistic @The_Cartographer (swept-back dark-brown hair with clean forehead, charcoal greatcoat, lantern), warning that any cold blue rewind surge sweeps unsteady travelers straight back to the entrance. Voice Lock [Cursor Wisp -> Gacrux]: Consistent crisp, airy bell-bright companion voice (Gacrux), urgent and concise without erratic mouth distortion; only Cursor Wisp speaks in this shot while The Cartographer nods silently. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-gacrux",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cartographer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-gacrux",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s04",
+          "sceneNum": 4,
+          "titleAr": "الصمود أمام عاصفة التراجع الخلفية",
+          "titleEn": "Bracing Against the Reverse Gale",
+          "goalAr": "صمود رسام الخرائط بفانوسه وثعلب الحبر أمام عاصفة الإرجاع.",
+          "flowPrompt": "Intense dynamic macro action shot down the frosted-glass corridor as a roaring bright wall of translucent electric sky-cyan backward time ripples charges straight toward the lens carrying drifting charcoal flecks in reverse, warm amber-gold brass lantern flare pushing against cold blue glare, family-friendly tactile craft physics. Bracing one black-gloved shoulder firmly behind a thick vertical frosted glass rib while cradling his glowing brass lantern close against his dark wool greatcoat, photorealistic @The_Cartographer (swept-back short dark-brown hair, clean visible forehead, leather satchel) shields the flame steady as nimble flat 2D @Ink_Fox — silvery-grey charcoal sketch fox with glowing solid-white almond eyes and crisp glowing chalk-white rim aura — digs all four chalk paws firmly into the frosted sill to ride out the rushing reverse gale intact. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — sweeping electric sky-cyan reverse wind surge, glassy wall vibration hum, and charcoal-paw scratch against frosted glass foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cartographer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-fox",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s05",
+          "sceneNum": 5,
+          "titleAr": "مفترق الممرات الثلاثة المتشابهة",
+          "titleEn": "Crossroads of Three Identical Halls",
+          "goalAr": "بحث ثعلب الحبر ووميض القلم وسط مفترق الممرات الثلاثية المتطابقة.",
+          "flowPrompt": "Atmospheric wide-to-medium tracking glide across a symmetrical frosted-glass crossroads chamber where three nearly identical translucent hallways branch left, center, and right into pale electric sky-cyan fog holding faint echoed charcoal spirals, cool pearlescent mist rolling smoothly across dark obsidian glass flooring, family-friendly tactile craft physics. Probing swiftly in fluid 2D charcoal-and-chalk arcs before the three echoing doorways with bushy white-tipped tail whipping cleanly, nimble @Ink_Fox (hand-drawn directional silvery-grey hatching, glowing solid-white almond eyes, crisp glowing chalk-white aura) tracks swirling footprints across the center threshold while thumb-sized @Cursor_Wisp (warm pearl-silver capacitive stylus spirit with twin cyan diamond cursor wings and optical dot eyes) zips confusedly from arch to arch, blinking rapid cyan pulses as each corridor mirrors identical ghostly reflections. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — brisk soft chalk-paw glides over glass, triple hollow acoustic corridor echoes, and delicate quick metallic stylus chimes foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-fox",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s06",
+          "sceneNum": 6,
+          "titleAr": "الفانوس يكشف الفرق بين الصدى والذكرى",
+          "titleEn": "Lantern Light vs. Cold Blue Echoes",
+          "goalAr": "شرح الفرق بين الصدى الرقمي البارد وظلال الذكرى الدافئة.",
+          "flowPrompt": "Warm grounded macro two-shot right before the branching frosted glass arches as deep warm amber-gold radiance spills softly from @The_Cartographer's lifted vintage wire-caged brass oil lantern into icy electric sky-cyan corridor shadows, crisp tactile contrast, family-friendly tactile craft physics. Holding his glowing lantern calmly at shoulder height beside hovering @Cursor_Wisp — luminous warm pearl-silver stylus spirit with translucent cyan diamond cursor wings and quiet optical dot eyes — photorealistic @The_Cartographer (swept-back dark-brown hair with clean forehead, strictly NO bangs, charcoal wool greatcoat, black leather gloves, parchment-filled leather satchel) explains steadily that digital echoes can copy cold blue light, yet only a true memory carries living warm shadow. Voice Lock [The Cartographer -> Achird]: Consistent calm, contemplative middle-pitch male voice (Achird), thoughtful and steady with natural subtle lip-sync; only The Cartographer speaks in this shot while Cursor Wisp hovers silently beside the lantern. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-achird",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cartographer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-achird",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s07",
+          "sceneNum": 7,
+          "titleAr": "إشراق الخط اليدوي الخفي في الممر الأوسط",
+          "titleEn": "Hidden Charcoal Trail Awakens",
+          "goalAr": "ضوء الفانوس الكهرماني يكشف آثار الفحم المخفية في الممر الأوسط.",
+          "flowPrompt": "Radiant sweeping revelation shot from behind @The_Cartographer's blazing warm amber-gold brass oil lantern as warm golden firelight fans widely across all three frosted-glass tunnel entrances: immediately the left and right decoy halls wash flat into sterile pale ghost reflections, while underneath the center tunnel frosted panes bloom bright warm charcoal-and-amber hand-sketched tree roots and stepping pawprints glowing softly from within glass, family-friendly tactile craft physics. Stepping purposefully toward the revealed middle threshold holding his lantern steady with black-gloved fingers, photorealistic @The_Cartographer (swept-back short dark-brown hair, charcoal wool greatcoat, leather map satchel) watches eager flat 2D @Ink_Fox — silvery-grey charcoal sketch fox with glowing white almond eyes and crisp glowing chalk-white rim aura — bound lightly ahead along the newly awakened golden charcoal trail. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — warm resonant lantern flame bloom, faint crystalline decoy fade-out chime, and crisp energized charcoal sketch shimmer foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cartographer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-fox",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s08",
+          "sceneNum": 8,
+          "titleAr": "نداء المسودة الأولى خلف الهوّة",
+          "titleEn": "Call of the Maker's First Draft",
+          "goalAr": "التقاط نداء السكتش الرقمي الأول خلف الهوّة الزجاجية.",
+          "flowPrompt": "Poetic low-angle macro tracking shot gliding smoothly beside alert flat 2D @Ink_Fox as it trots gracefully over warm amber-lit frosted glass tiles toward an open abyss where a giant hovering frosted glass artboard shimmers across the gap bearing a delicate pulsing charcoal-and-cyan first raw sketch, luminous chalk dust drifting gently across dark glass reflections, family-friendly tactile craft physics. Pausing at the broken glass brink with ears perked cleanly and white-tipped tail swaying through warm gold and cool electric sky-cyan air, nimble 2D @Ink_Fox (hand-drawn directional charcoal-and-chalk fur hatching, glowing solid-white almond eyes, crisp glowing chalk-white spirit aura; snout stays completely natural with zero mouth distortion) sends a gentle telepathic spirit whisper that the Maker's very first digital draft is still breathing just beyond the broken bridge. Voice Lock [Ink Fox -> Aoede]: Consistent breezy, light ethereal telepathic female whisper (Aoede), swift and mysterious heard strictly as an ambient spirit echo with NO visible on-screen speaker figure and zero fox snout warping. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-aoede",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-fox",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-aoede",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s09",
+          "sceneNum": 9,
+          "titleAr": "جسر الألواح الزجاجية المتراجعة",
+          "titleEn": "Bridge of Rewinding Glass Slabs",
+          "goalAr": "اكتشاف اختفاء ألواح العبور الزجاجية وتحدي سرعة الإرجاع.",
+          "flowPrompt": "Tense macro cliff-edge two-shot peering down across an open deep obsidian-slate chasm where suspended frosted glass stepping slabs materialize briefly in warm lantern amber then dissolve smoothly backward into electric sky-cyan time ripples as rewind pulses rhythmically sweep past, family-friendly tactile craft physics. Hovering urgently right above the brink beside crouched 2D @Ink_Fox (hand-drawn charcoal-and-chalk fox, bright white almond eyes, glowing chalk-white rim aura), @Cursor_Wisp — floating thumb-sized warm pearl-silver capacitive stylus spirit with twin translucent cyan diamond cursor wings and bright optical eyes, zero warped human mouth — zips cleanly up and down chiming swiftly that the stepping slabs rewind too fast for heavy boots, unless someone agile leaps straight across her own frozen shadows. Voice Lock [Cursor Wisp -> Gacrux]: Consistent crisp, airy bell-bright companion voice (Gacrux), clever and urgent with crisp optical wing shimmer; only Cursor Wisp speaks in this shot while Ink Fox crouches ready in silence. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-gacrux",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-fox",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-gacrux",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s10",
+          "sceneNum": 10,
+          "titleAr": "القفز على ظلال التراجع المجمّدة",
+          "titleEn": "Leaping Across Frozen Chalk Shadows",
+          "goalAr": "قفز ثعلب الحبر بخفة فوق ظلاله الطباشيرية المجمّدة لعبور الهوّة.",
+          "flowPrompt": "Exhilarating sweeping lateral macro action shot across the dark frosted-glass chasm as rhythmic electric sky-cyan rewind flashes freeze two luminous translucent glowing chalk-white mid-air afterimage silhouettes of leaping @Ink_Fox suspended cleanly in open space like crisp glass-ink stepping stones, dazzling contrast against deep obsidian shadows, family-friendly tactile craft physics. Vaulting fearlessly off the solid glass edge in dynamic 2D hand-drawn charcoal arcs, nimble @Ink_Fox (directional silvery-grey fur hatching, glowing solid-white almond eyes, white-tipped tail, crisp glowing chalk-white spirit aura) kicks cleanly upward off the backs of her own two frozen chalk afterimages across the entire abyss while tiny glowing @Cursor_Wisp (pearl-silver capacitive stylus spirit with twin sky-cyan diamond wings) darts swiftly beside her, landing together gracefully atop the central glass sanctuary platform before the first raw sketch artboard. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp crystalline time-freeze shutter clicks, swift energetic air-vault whooshes, and light confident four-paw touch on glass crystal foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-fox",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s11",
+          "sceneNum": 11,
+          "titleAr": "لمسة الإقرار للخطّ الأوّل",
+          "titleEn": "Remembering the Hesitant First Line",
+          "goalAr": "لمسة إقرار رقيقة لأوّل خط متردّد خطّه الصانع على الشاشة.",
+          "flowPrompt": "Tender reverent close two-shot before the tall luminous frosted-glass sanctuary artboard glowing gently with the Maker's very first hesitant warm amber-and-cyan charcoal sketch of an oak lantern and curled fox, warm golden brass oil lantern light wrapping around cool electric sky-cyan glass bevels, family-friendly tactile craft physics. Raising one chalk-white paw softly against the warm glowing artboard glass beside quietly arriving photorealistic @The_Cartographer (swept-back dark-brown hair with strictly NO bangs, dark charcoal wool greatcoat, black gloved hand resting near his glowing brass lantern), flat 2D @Ink_Fox (hand-drawn charcoal-and-chalk fox, glowing solid-white almond eyes, unwarped natural snout, crisp glowing chalk-white rim aura) breathes a tender telepathic spirit whisper that even a hesitant first line deserves to stay remembered. Voice Lock [Ink Fox -> Aoede]: Consistent breezy, light ethereal telepathic female whisper (Aoede), warm and deeply tender heard as an ambient spirit echo with NO visible on-screen speaker figure and zero fox snout warping; only Ink Fox speaks while The Cartographer stands silently moved. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-aoede",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-fox",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cartographer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-aoede",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s12",
+          "sceneNum": 12,
+          "titleAr": "طوق الفانوس يبدّد موجة التراجع",
+          "titleEn": "Lantern Ring Disperses Ctrl+Z",
+          "goalAr": "اتحاد طوق وميض القلم وضوء الفانوس لتبديد موجة التراجع العظمى.",
+          "flowPrompt": "Climactic triumphant macro confrontation shot inside the illuminated glass sanctuary as a colossal luminous royal-violet and cold electric sky-cyan rewind surge sweeps forward down the corridor toward the precious first sketch artboard, family-friendly tactile craft physics. Planting his heavy wire-caged warm amber-gold brass oil lantern firmly onto the dark glass plinth while bracing beside the radiant board, photorealistic @The_Cartographer (swept-back short dark-brown hair with clean forehead, dark wool greatcoat, black gloves) unleashes a steady expanding golden lantern halo as swift @Cursor_Wisp (warm pearl-silver capacitive stylus spirit with twin cyan diamond wings) spirals tightly around the artboard drawing a continuous glowing warm pearl-silver and sky-cyan memory lock circle—fusing living amber firelight with bright digital light so the oncoming icy rewind surge shatters harmoniously into gentle slow upward-drifting golden-and-cyan starlight sparks. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — solid brass lantern slam on tempered crystal, rapid harmonious stylus light-ring trace hum, and crystalline rewind wave dissolving into soft sparkling chimes foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cartographer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s13",
+          "sceneNum": 13,
+          "titleAr": "تدوين الخطأ والارتجال في خريطة الصانع",
+          "titleEn": "Every Draft Belongs on the Map",
+          "goalAr": "تثبيت كل محاولة وتردّد صادق داخل خريطة رحلة الصانع.",
+          "flowPrompt": "Serene golden-and-cyan macro two-shot in tranquil luminous air filled with softly drifting warm amber embers and sky-cyan sparks beside the stabilized glass artboard, warm brass oil lantern resting peacefully nearby, family-friendly tactile craft physics. Drawing a weathered rolled antique parchment map cleanly from his open brown leather crossbody satchel and pressing its corner open in crisp black-gloved hands beside calm flat 2D @Ink_Fox (hand-drawn charcoal-and-chalk fox sitting attentively with glowing white almond eyes and glowing chalk-white outline, unwarped snout), photorealistic @The_Cartographer (neatly side-parted swept-back dark-brown hair, clean visible forehead, charcoal wool greatcoat with upturned collar) affirms quietly that every false draft and honest hesitation belongs forever on the true map of the Maker's journey. Voice Lock [The Cartographer -> Achird]: Consistent calm, contemplative middle-pitch male voice (Achird), warm, wise, and steady with natural subtle lip-sync; only The Cartographer speaks while Ink Fox watches silently. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-achird",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cartographer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-fox",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-achird",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s14",
+          "sceneNum": 14,
+          "titleAr": "شلال البكسل عند بوابة الممر التالي",
+          "titleEn": "Pixel Dust Spills Toward the Arches",
+          "goalAr": "رصد بداية تسرب غبار البكسل نحو أقواس الزجاج الملوّن وأبراج الواشي.",
+          "flowPrompt": "Striking mixed-media foreground-to-horizon two-shot at the bright threshold arch leading out of the frosted digital corridor into a sunlit amber stained-glass studio arch where thousands of tiny translucent square electric sky-cyan and warm pearl-silver pixel cubes pour cleanly downward like a glittering waterfall across carved stone, family-friendly tactile craft physics. Darting toward the shimmering cascade with twin cyan diamond wings humming fast and tiny metallic stylus nib pointing anxiously outward, @Cursor_Wisp (pearl-silver capacitive stylus spirit, bright cyan optical eyes, zero human mouth warping) turns quickly back toward steady photorealistic @The_Cartographer (charcoal wool greatcoat, swept-back short dark-brown hair, glowing amber brass oil lantern raised to illuminate the pixel fall), warning urgently that pixel dust is already spilling straight toward the stained-glass arches and origami towers. Voice Lock [Cursor Wisp -> Gacrux]: Consistent crisp, airy bell-bright companion voice (Gacrux), alert and urgent without mouth warping; only Cursor Wisp speaks while The Cartographer gazes gravely ahead. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-gacrux",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cursor-wisp",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-cartographer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-pixel-dust-cascade",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-gacrux",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s15",
+          "sceneNum": 15,
+          "titleAr": "مصباح الذاكرة الحيّة فوق المسار الموحّد",
+          "titleEn": "Lantern of Living Memory",
+          "goalAr": "مسيرة الوفاق بين الفانوس الدافئ وأصداء الذاكرة الزجاجية المضيئة.",
+          "flowPrompt": "Warm peaceful golden-hour macro closing two-shot right along the stabilized threshold of the Undo History Corridor where rich warm amber-gold brass lantern radiance weaves smoothly together with tranquil electric sky-cyan glass reflections and weightless chalk embers curving brightly around dark frosted glass frames, family-friendly tactile craft physics. Resting one black-gloved hand gently atop his parchment-filled leather map satchel while lifting his glowing curved-glass brass oil lantern softly toward the open sunlit arch ahead, photorealistic @The_Cartographer (swept-back dark-brown hair, clean visible forehead, dark charcoal wool greatcoat) watches loyal flat 2D @Ink_Fox (silvery-grey charcoal hatching, glowing solid-white almond eyes, white-tipped tail shedding delicate chalk embers) step lightly into stride beside his boots beneath swirling golden and cyan motes. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — gentle warm oil-lantern flame hum, soft leather map-satchel creak, and serene crystal memory shimmer foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-cartographer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-fox",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e03-s16",
+          "sceneNum": 16,
+          "titleAr": "متاهة الذاكرة في رحاب اللوح الرقمي",
+          "titleEn": "The Undo Labyrinth Within the Tablet",
+          "goalAr": "انسحاب جوي نصيّ النظافة يكشف اللوح الرقمي المستيقظ وطاولة المرسم.",
+          "flowPrompt": "Majestic steady slow aerial pull-back receding smoothly out from the warm glowing frosted glass arches of the Undo History Corridor until the wide luminous Awakened Drawing Tablet rests in tranquil twilight symmetry beside weathered oak sketchbooks and brass brush jars on the wooden studio desk, family-friendly tactile craft physics. Streams of warm amber-gold lantern sparks and gentle glowing electric sky-cyan memory ribbons spiral peacefully upward together across a wide clean deep obsidian-slate center sky completely free of text, words, letters, numbers, or watermarks. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — calm open crystalline room air and faint twinkling spark shimmer foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "ingredient",
+              "refId": "ing-awakened-drawing-tablet",
+              "flowTab": "Images"
+            }
+          ]
+        }
+      ]
     }
   ],
   "characters": [
@@ -9003,6 +9528,42 @@ window.SKETCHIC_CANON_DB = {
     },
     {
       "worldId": "world-s3-e02",
+      "entityType": "ingredient",
+      "entityId": "ing-awakened-drawing-tablet",
+      "appearanceRole": "tablet_horizon"
+    },
+    {
+      "worldId": "world-s3-e03",
+      "entityType": "character",
+      "entityId": "char-cartographer",
+      "appearanceRole": "protagonist"
+    },
+    {
+      "worldId": "world-s3-e03",
+      "entityType": "character",
+      "entityId": "char-ink-fox",
+      "appearanceRole": "companion"
+    },
+    {
+      "worldId": "world-s3-e03",
+      "entityType": "character",
+      "entityId": "char-cursor-wisp",
+      "appearanceRole": "guide"
+    },
+    {
+      "worldId": "world-s3-e03",
+      "entityType": "ingredient",
+      "entityId": "ing-undo-history-corridor",
+      "appearanceRole": "primary_corridor"
+    },
+    {
+      "worldId": "world-s3-e03",
+      "entityType": "ingredient",
+      "entityId": "ing-pixel-dust-cascade",
+      "appearanceRole": "s3e04_foreshadow"
+    },
+    {
+      "worldId": "world-s3-e03",
       "entityType": "ingredient",
       "entityId": "ing-awakened-drawing-tablet",
       "appearanceRole": "tablet_horizon"

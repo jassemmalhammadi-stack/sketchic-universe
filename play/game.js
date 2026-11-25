@@ -150,6 +150,10 @@ const LORE_CODES = {
     ar: ["القصاصة السرية S3-02 — خيط الطبقة الصفرية", "خاط «حائك الخيوط» و«نبض المتجهات» طبقات RGB الزجاجية بغرز الذهب عبر عُرى ماسية لإنقاذ الرسمة الأولى للصانع."],
     en: ["Season 3 Vault #02 — Stitches of Layer Zero", "Thread Weaver and Vector Sprite laced golden embroidery through diamond anchor eyelets to bind all three RGB glass layers."],
   },
+  "UNDO-03": {
+    ar: ["القصاصة السرية S3-03 — مصباح متاهة التراجع", "ثبّت «رسّام الخرائط» بفانوسه الكهرماني و«ثعلب الحبر» و«وميض القلم» أوّل سكتش خام للخالق داخل ممر سجل التراجع وصدّوا موجة Ctrl+Z."],
+    en: ["Season 3 Vault #03 — Lantern of the Undo Labyrinth", "With his amber brass lantern, The Cartographer, Ink Fox, and Cursor Wisp shielded the Maker's very first raw draft inside the Undo History Corridor."],
+  },
 };
 
 const HERO_ORDER = [
