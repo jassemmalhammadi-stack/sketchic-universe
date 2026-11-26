@@ -1,7 +1,7 @@
 {
   "meta": {
     "id": "sketchic-universe",
-    "dbVersion": "1.7.0",
+    "dbVersion": "1.8.0",
     "nameAr": "عالم سكتشيك",
     "nameEn": "Sketchic Universe",
     "websiteUrl": "https://Sketchic.net",
@@ -11,7 +11,7 @@
     "youtubeUrl": "https://www.youtube.com/channel/UCztH7trk7F9wglxWYWsZXNg",
     "showConvergence": true,
     "showSeason2": true,
-    "updatedAt": "2026-11-25",
+    "updatedAt": "2026-11-26",
     "showSeason3": true
   },
   "brandAssets": [
@@ -8504,6 +8504,506 @@
           ]
         }
       ]
+    },
+    {
+      "id": "world-s3-e05",
+      "worldNum": 21,
+      "slug": "the-sterile-gallery",
+      "folderName": "10_Season_3_The_Digital_Canvas/S3E05_The_Sterile_Gallery",
+      "season": 3,
+      "episode": 5,
+      "isPublic": true,
+      "isFinale": false,
+      "titleAr": "الرواق الخالي من الأثر",
+      "titleEn": "The Sterile Gallery",
+      "genreAr": "دراما فلسفية رقمية",
+      "genreEn": "Philosophical Mixed-Media Sci-Fi",
+      "tagStyle": "tag-finale",
+      "mediumTag": "Drafting Paper × Smoked Glass UI",
+      "visualStyleAr": "رواق زجاجي أبيض ونيلي معقّم تتقاطع فيه شرائح ورق المسوّدة الدافئة بالذهب مع دروع الزجاج الدخاني والشبكات البنفسجية وعروة بيزييه المضيئة.",
+      "visualStyleEn": "Sterile white-and-indigo digital gallery colliding with warm gold-trimmed drafting paper, smoked obsidian UI armor, royal-violet wireframe panes, and the glowing cyan-magenta Bezier Anchor Relic.",
+      "loglineAr": "يدخل المسودة المكتملة والمستكشفة رواقاً خالياً من كل ضربة ريشة؛ فيواجه المسودة مهندس الطبقات دفاعاً عن أثر اليد البشرية بينما تنقذ المستكشفة نواة عروة بيزييه.",
+      "loglineEn": "Inside a sterile gallery stripped of every brushstroke, The Completed Draft defends human imperfection against The Layer Architect while The Explorer rescues the living Bezier Anchor Relic.",
+      "durationSec": 127,
+      "durationBadge": "2:07 • 1080p S3",
+      "flowProjectId": "690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowProjectUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowSceneUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "assembledSceneName": "S3E05 — The Sterile Gallery",
+      "flowModel": "Omni 1.2 Flash • 1080p • Auto-Ducking",
+      "archiveBiblePath": "10_Season_3_The_Digital_Canvas/S3E05_The_Sterile_Gallery/01_World_Bible.md",
+      "archiveCharsPath": "10_Season_3_The_Digital_Canvas/S3E05_The_Sterile_Gallery/02_Characters_and_Ingredients.md",
+      "archiveStoryboardPath": "10_Season_3_The_Digital_Canvas/S3E05_The_Sterile_Gallery/03_Storyboard_and_Flow_Prompts.md",
+      "archiveFullVideoPath": "10_Season_3_The_Digital_Canvas/S3E05_The_Sterile_Gallery/final/S3E05_The_Sterile_Gallery_Full_Film.mp4",
+      "archiveShortsVideoPath": "10_Season_3_The_Digital_Canvas/S3E05_The_Sterile_Gallery/final/S3E05_The_Sterile_Gallery_Shorts_9x16.mp4",
+      "webFullVideoPath": "assets/videos/S3E05_The_Sterile_Gallery_Full_Film.mp4",
+      "webShortsVideoPath": "assets/videos/S3E05_The_Sterile_Gallery_Shorts_9x16.mp4",
+      "webPosterPath": "assets/images/posters/the-sterile-gallery.jpg",
+      "webFullSubArPath": "assets/subtitles/S3E05_The_Sterile_Gallery_Full_Film.ar.vtt",
+      "webFullSubEnPath": "assets/subtitles/S3E05_The_Sterile_Gallery_Full_Film.en.vtt",
+      "webShortsSubArPath": "assets/subtitles/S3E05_The_Sterile_Gallery_Shorts_9x16.ar.vtt",
+      "webShortsSubEnPath": "assets/subtitles/S3E05_The_Sterile_Gallery_Shorts_9x16.en.vtt",
+      "youtubeFullUrl": "https://youtu.be/ZE9RbWFjBVk",
+      "youtubeShortsUrl": "https://youtube.com/shorts/U2XwvuZ7-ec",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#E2E8F0",
+          "labelEn": "Sterile Gallery Porcelain",
+          "labelAr": "خزف الرواق المعقّم",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#F5B041",
+          "labelEn": "Completed Draft Gold",
+          "labelAr": "ذهب المسودة المكتملة",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#7C3AED",
+          "labelEn": "Architect Wireframe Violet",
+          "labelAr": "بنفسجي شبكة المهندس",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#FF4D8D",
+          "labelEn": "Bezier Anchor Magenta",
+          "labelAr": "أرجواني عُروة بيزييه",
+          "showOnCard": true
+        }
+      ],
+      "visualRules": [
+        {
+          "ruleNum": 1,
+          "titleAr": "ارتعاش اليد الحية أصل التوقيع الفني",
+          "titleEn": "Human Imperfection Preserves the Signature",
+          "descriptionAr": "التصحيح الآلي يمحو التردّد الدافئ الذي يميّز صنعة الفنان، بينما تحفظ خطوط الورق المذهّب قلب الأثر الحيّ.",
+          "descriptionEn": "Auto-correction deletes the subtle tremble of a real hand, whereas warm gold-accented drafting paper preserves the living signature of the Maker."
+        },
+        {
+          "ruleNum": 2,
+          "titleAr": "عُروة بيزييه المضيئة جسر الطبقات المخفي",
+          "titleEn": "Bezier Anchor Bridges Every Separated Layer",
+          "descriptionAr": "نواة العروة الماسية تربط مسارات المتجهات المرنة بدفاتر الورق دون تسطيحها في الزجاج الصامت.",
+          "descriptionEn": "The diamond Bezier Anchor Relic links supple vector curves to physical vellum pages without flattening depth into silent glass."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "s3e05-s01",
+          "sceneNum": 1,
+          "titleAr": "أبواب المعرض الصامت الخالي من الأثر",
+          "titleEn": "Doors of the Silent Sterile Gallery",
+          "goalAr": "افتتاحية الحلقة — انفتاح الأبواب الزجاجية الملساء نحو الرواق الأبيض المعقّم",
+          "flowPrompt": "Sweeping dramatic macro-to-wide opening shot inside the glowing digital screen realm as towering sleek silver-and-frosted-white glass gallery doors glide silently open onto a vast spotless cold white-and-indigo exhibition hall lined with rows of blank identical porcelain-white frames completely stripped of every brushstroke, pencil smudge, or hand-drawn line, family-friendly tactile craft physics. Stepping cautiously forward across reflective obsidian-slate flagstones, @The_Explorer — 100% photorealistic live-action young female explorer (strictly NO 3D cartoon style; messy dark-brown updo with loose windblown strands, brass aviator goggles resting on her forehead, weathered khaki-olive canvas field coat with frayed seams, chunky knitted dark olive-charcoal neck scarf, diagonal brown leather crossbody satchel strap, worn dark-brown fingerless leather gloves; strictly two hands, natural anatomy: her left hand cradles her warm amber glowing translucent teal-watercolor vellum sketchbook steadily against her hip while her right hand shields the brass lens glint against the cold white gallery glare) gazes down the empty sterilized colonnade in quiet awe. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — smooth hydraulic frosted-glass door slide, soft echoing footstep on cold obsidian tile, faint sterile fluorescent air hum, and warm parchment crinkle foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-explorer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s02",
+          "sceneNum": 2,
+          "titleAr": "غياب كلّ ضربة ريشة عن اللوحات",
+          "titleEn": "Spotless Canvases Stripped of Ink",
+          "goalAr": "قطع مونتاجي — أمام صف اللوحات البيضاء المعقّمة",
+          "flowPrompt": "Steady medium two-shot in the pristine white-and-indigo gallery corridor beneath crisp overhead cool chalk-white light tubes and glowing royal-violet framing trims as long rows of spotless blank glass display slabs stand silently beside tall obsidian columns, family-friendly tactile craft physics. Turning slightly toward towering @Pale_Draughtsman — tall gaunt architectural paper-sculpture figure crafted from overlapping bleached drafting paper strips softly accented along hem edges with warm amber-gold watercolor luster from his restoration, silver metallic drafting-ruler collar spines, wing-like trailing paper sleeves, faint pale ash-grey graphite construction gridlines, strictly rigid eyeless and mouthless faceted white geometric mask with zero mouth opening, strictly two hands, natural anatomy: his left hand and right hand rest calmly folded downward along his paper robe sleeves in silent stillness — 100% photorealistic live-action @The_Explorer (messy dark-brown updo, brass forehead goggles, khaki-olive canvas field coat, knitted scarf, brown leather satchel, fingerless leather gloves; strictly two hands, natural anatomy: her left hand holds her glowing vellum sketchbook open waist-high while her right hand gestures gently toward a blank white gallery slab) observes softly: \"Every canvas here is spotless, Draft. Not one brushstroke or charcoal smudge survived.\" Voice Lock [The Explorer -> Autonoe]: Consistent bright, curious middle-pitch female voice (Autonoe), warm and expressive with natural photorealistic lip-sync; only The Explorer speaks while Pale Draughtsman stands completely silent behind his rigid mask. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-autonoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-explorer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-pale-draughtsman",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-autonoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s03",
+          "sceneNum": 3,
+          "titleAr": "اعتراف المخطوطة المكتملة بقيمة الدفء",
+          "titleEn": "Draft's Confession on the Heart of the Maker",
+          "goalAr": "قطع مونتاجي — لقطة متقاربة دافئة بين الأعمدة البيضاء (Save frame bridge to S04)",
+          "flowPrompt": "Poignant medium close-up beneath cool chalk-white gallery panels where a subtle golden shimmer along @Pale_Draughtsman's paper cloak contrasts warmly against spotless pale ivory-white display pedestals, ending on a clean held frame bridging forward, family-friendly tactile craft physics. Standing angled in calm three-quarter profile beside silent 100% photorealistic live-action @The_Explorer (messy dark-brown updo, brass forehead goggles, khaki-olive field coat, knitted scarf, fingerless gloves; strictly two hands, natural anatomy: her left hand supports her glowing sketchbook cleanly while her right hand holds her satchel strap still), reformed @Pale_Draughtsman (bleached drafting-paper figure with delicate golden watercolor trim accents along hem folds, silver drafting-ruler collar spines, faint pale ash-grey construction gridlines; wearing a strictly rigid eyeless and mouthless faceted white geometric mask completely smooth and sealed from brow to chin with ZERO mouth opening, ZERO black jaw cavity, and ZERO chin movement; strictly two hands, natural anatomy: his left hand holds an unpainted parchment fold gracefully over his chest while his right hand rests lowered beside his sleeve) projects his voice telepathically like dry stone echo without moving any jaw plate: \"I once believed empty white meant perfection. Now I know silence erases the heart of the Maker.\" Voice Lock [Pale Draughtsman -> Enceladus]: Consistent soft, cold-edged breathy lower male voice (Enceladus), resonating without any mouth opening or mask cracking on his solid chin; only Pale Draughtsman speaks while The Explorer listens silently. Dry parchment rustle & spoken dialogue ONLY — strictly NO background music, NO synth pad, NO musical drone.",
+          "voiceId": "voice-enceladus",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-pale-draughtsman",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-explorer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-enceladus",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s04",
+          "sceneNum": 4,
+          "titleAr": "لمسة الأمل فوق الزجاج البارد",
+          "titleEn": "A Fleeting Gold Spark Over Cold Glass",
+          "goalAr": "Last-Frame Bridge من المشهد 3 (Anti-Cutaway Macro Lock)",
+          "flowPrompt": "Smooth contemplative slow dolly lateral pan continuing directly from the previous gallery frame as tall architectural @Pale_Draughtsman drifts smoothly past an unbroken line of spotless glowing cold-white digital exhibition panes floating over dark obsidian glass flooring, subtle golden dust motes warming a small circle of floor light beneath his steps, family-friendly tactile craft physics. Keeping his head level behind his strictly rigid eyeless and mouthless faceted white geometric mask with zero mouth opening (bleached drafting-paper strips accented subtly with golden hem gleam, silver metallic drafting-ruler collar spines, wing-like trailing paper sleeves, pale ash-grey graphite gridlines; strictly two hands, natural anatomy: his left hand stays folded neatly behind his back while his gloved paper right hand slowly traces a gentle arc one millimeter above a cold blank display glass panel, leaving a momentary golden-amber sparkle ripple before cool auto-clean grid light fades it out). Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp dry drafting-paper rustle, faint silvery metallic ruler chime, quiet glass hum, and soft chalky step whisper foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-pale-draughtsman",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s05",
+          "sceneNum": 5,
+          "titleAr": "ظهور مهندس الطبقات في ممرّ المنظور الزجاجي",
+          "titleEn": "Arrival of The Layer Architect",
+          "goalAr": "قطع مونتاجي — تقاطع الألواح الزجاجية السماوية والبنفسجية",
+          "flowPrompt": "Monumental slow low-angle vertical reveal inside the deep twilight sanctuary where parallel beveled dark obsidian-slate glass UI panes framed in electric neon-cyan and luminous royal-violet wireframe gridlines float majestically overhead in absolute mathematical symmetry, family-friendly tactile craft physics. Stepping forward onto an elevated translucent glass dais with imposing precision, tall construct @Layer_Architect — crafted from floating overlapping beveled translucent deep obsidian-slate glass UI armor plates and crisp luminous royal-violet wireframe mesh grids, concentric geometric wireframe layer-halo framing behind his shoulders, sleek strictly eyeless and mouthless smooth dark smoked-glass visor faceplate crossed cleanly by one calm horizontal electric neon-cyan light line with zero mouth opening or eye distortion, strictly two hands, natural anatomy: his right hand grasps his glowing vertical Grid Stylus Scepter firmly upright while his left hand opens slightly in mid-air to snap four drifting wireframe grid planes cleanly into rigid alignment. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — resonant crystalline bevel chime, deep magnetic glass lock click, and crisp geometric laser alignment sweep foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s06",
+          "sceneNum": 6,
+          "titleAr": "استجواب الهندسة الصافية أمام الرواق",
+          "titleEn": "Interrogation Across the RGB Prism Hall",
+          "goalAr": "قطع مونتاجي — مواجهة بين الزجاج الملوّن بالبنفسجي والورق المطوي (Save frame bridge to S07)",
+          "flowPrompt": "Tense balanced medium two-shot across the gleaming dark obsidian-slate glass corridor between floating parallel luminous royal-violet wireframe display sheets as crisp electric neon-cyan horizon light frames both towering silhouettes clearly, ending in a steady poised confrontation pose bridging smoothly forward, family-friendly tactile craft physics. Standing on the LEFT side facing right, @Pale_Draughtsman (bleached architectural drafting-paper strips with subtle warm golden hem luster, silver collar ruler spines, faint pale ash-grey gridlines, strictly rigid eyeless and mouthless white geometric mask sealed from brow to chin with zero mouth opening; strictly two hands, natural anatomy: both his left hand and right hand rest steadily against his waist sleeves in composed defense) faces towering @Layer_Architect standing on the RIGHT side facing left (obsidian-slate beveled UI armor, royal-violet wireframe layer halo, wearing a strictly full-head sealed monolithic dark smoked-glass helmet completely enclosing his entire head, eyes, nose, mouth, lips, and chin from crown to collar with ZERO exposed human skin, ZERO exposed human jaw or nose or lips (strictly NOT an open-face half-helmet or half-visor), crossed solely by one calm horizontal electric neon-cyan visor light line; strictly two hands, natural anatomy: his right hand anchors his glowing Grid Stylus Scepter vertically on the obsidian floor while his left hand gestures calmly with two fingers toward Draft's warm golden paper trim). Speaking telepathically from inside his sealed helmet with zero face or jaw movement, @Layer_Architect asks slowly and with razor-crisp diction on every syllable: \"You were once pure geometry, Draft. Why carry messy stains into a spotless hall free of error?\" Voice Lock [Layer Architect -> Umbriel]: Consistent deep, resonant calm lower-middle authoritative male voice (Umbriel), measured and crystal clear inside his strictly full-head sealed dark smoked-glass helmet with zero mouth or jaw movement; only Layer Architect speaks while Pale Draughtsman remains silent. Dry glass hum & crisp spoken dialogue ONLY — strictly NO background music, NO synth pad, NO underscore.",
+          "voiceId": "voice-umbriel",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-pale-draughtsman",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-umbriel",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s07",
+          "sceneNum": 7,
+          "titleAr": "شبكة التصحيح الآلي تزحف نحو الورق",
+          "titleEn": "Calibration Grid vs. Paper Sleeves",
+          "goalAr": "Last-Frame Bridge من المشهد 6 (Anti-Cutaway Macro Lock)",
+          "flowPrompt": "Controlled tense medium tracking shot continuing smoothly from the gallery standoff as cold electric neon-cyan calibration laser bars glide out from translucent glass panels across the obsidian-slate floor in rigid geometric squares, trying to scan and straighten @Pale_Draughtsman's soft paper contours, family-friendly tactile craft physics. Sweeping his Grid Stylus Scepter cleanly in a measured horizontal arc, @Layer_Architect (obsidian-slate beveled UI panes, luminous royal-violet wireframe grid, strictly rigid eyeless and mouthless smoked-glass visor with zero mouth opening; strictly two hands, natural anatomy: his right hand holds the glowing Grid Stylus Scepter horizontally while his left hand balances open behind his floating cloak plates) casts a bright pale ash-grey wireframe snap-grid wave toward @Pale_Draughtsman (bleached drafting-paper sculpture with subtle warm gold trim, silver collar spines, strictly rigid eyeless and mouthless white geometric mask with zero mouth opening; strictly two hands, natural anatomy: he braces his left hand against a beveled glass pillar for footing while raising his right hand open defensively palm-out, holding his glowing golden paper sleeve edge intact against the scanning grid wave). Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp digital calibration grid pulse, glass pane resonance, sharp paper sleeve stiffen snap, and cool magnetic sweep foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-pale-draughtsman",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s08",
+          "sceneNum": 8,
+          "titleAr": "دفاع المسودة المكتملة عن ارتعاش اليد الحية",
+          "titleEn": "Without the Flaw, No Signature Remains",
+          "goalAr": "قطع مونتاجي — لقطة قريبة متقابلة في ضوء الشبكة والذهب",
+          "flowPrompt": "Heroic low-angle two-shot beneath the glowing royal-violet layered glass arches as @Pale_Draughtsman's warm amber-gold paper reflections illuminate the cold smoked-obsidian facets of @Layer_Architect's armor, family-friendly tactile craft physics. Standing unbowed opposite silent @Layer_Architect (obsidian-slate UI armor, royal-violet grid halo, strictly rigid eyeless and mouthless smoked-glass visor with zero mouth opening; strictly two hands, natural anatomy: his right hand lowers his Grid Stylus Scepter beside his hip and his left hand rests curled by his side), resolute @Pale_Draughtsman (bleached architectural drafting-paper strips accented with warm golden watercolor hems, silver ruler collar spines, faint pale ash-grey graphite gridlines, strictly rigid eyeless and mouthless faceted white geometric mask with zero mouth opening; strictly two hands, natural anatomy: his right hand rests calmly over his heart fold while his left hand extends open beside a glowing layer sheet to guard its subtle warm light) answers firmly from behind his unmoving white mask: \"Auto-correction deletes every tremble of a real hand. Without the flaw, there is no signature left.\" Voice Lock [Pale Draughtsman -> Enceladus]: Consistent quiet, hauntingly clear breathy lower male voice (Enceladus), steady and resolute from behind his strictly rigid eyeless and mouthless white geometric mask with zero mouth opening; only Pale Draughtsman speaks while Layer Architect listens motionless. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-enceladus",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-pale-draughtsman",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-enceladus",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s09",
+          "sceneNum": 9,
+          "titleAr": "أمر إقفال الشبكة وحبس الفوضى",
+          "titleEn": "Locking Down the Archive Seals",
+          "goalAr": "قطع مونتاجي — لقطة مهيبة لمهندس الطبقات يرفع صولجان الشبكة (Save frame bridge to S10)",
+          "flowPrompt": "Dramatic high-contrast shot echoing down the bright white-and-indigo frosted gallery corridor as tall glass partitions slide into tighter formation around @Pale_Draughtsman while @Layer_Architect turns slightly toward an inner locked archway, ending on a crisp frame showing the illuminated archway gap for the next scene transition, family-friendly tactile craft physics. Stepping higher onto the crystal step ahead of quiet @Pale_Draughtsman (drafting-paper robe with warm gold edge accents, silver ruler collar spines, strictly rigid eyeless and mouthless white geometric mask with zero mouth opening; strictly two hands, natural anatomy: his left hand and right hand pull his long wing-like paper sleeves inward defensively), commanding @Layer_Architect (obsidian-slate beveled UI glass panes, royal-violet wireframe grid wings, strictly rigid eyeless and mouthless smoked-glass visor with zero mouth opening; strictly two hands, natural anatomy: his right hand lifts his glowing Grid Stylus Scepter diagonally across the arch while his left hand sweeps closed behind his cloak to lock the corridor seals) proclaims coldly: \"Untamed ink leaks and destroys every canvas. Only a locked grid keeps the archive clean.\" Voice Lock [Layer Architect -> Umbriel]: Consistent deep, composed authoritative male voice (Umbriel), resonant and unyielding behind his strictly rigid eyeless and mouthless smoked-glass visor with zero mouth movement; only Layer Architect speaks while Pale Draughtsman stands silent. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-umbriel",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-pale-draughtsman",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-umbriel",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s10",
+          "sceneNum": 10,
+          "titleAr": "تسلّل المستكشفة نحو خزانة الأثر السري",
+          "titleEn": "Explorer's Stealth Run to the Hidden Vault",
+          "goalAr": "Last-Frame Bridge من المشهد 9 (Anti-Cutaway Macro Lock)",
+          "flowPrompt": "Quiet suspenseful steady macro-to-medium tracking shot gliding softly along the side alcove of the frosted white-and-indigo gallery corridor past cold spotless pedestals toward a shadowed frosted glass vault niche glowing faintly from within with warm electric neon-cyan and vibrant magenta-pink curve reflections, family-friendly tactile craft physics. Moving swiftly and silently between tall glass plinths, 100% photorealistic live-action @The_Explorer (strictly NO 3D cartoon style; messy dark-brown updo, brass aviator goggles on her forehead, weathered khaki-olive canvas field coat, chunky knitted neck scarf, diagonal brown leather satchel, fingerless leather gloves; strictly two hands, natural anatomy: her left hand clutches her warm glowing translucent teal-watercolor vellum sketchbook tucked closely to her coat while her right hand presses gently along the smooth glass partition edge to steer quietly around the corner) spots the hidden glowing niche and pauses just before its seal. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — soft padded glove brush along smooth frosted glass, gentle cloth coat rustle, quiet footstep pause, and faint humming diamond resonance foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-explorer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-undo-history-corridor",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s11",
+          "sceneNum": 11,
+          "titleAr": "اكتشاف نواة عروة بيزييه المضيئة",
+          "titleEn": "Discovering the Living Bezier Anchor",
+          "goalAr": "قطع مونتاجي — لقطة متقاربة أمام عروة الماسة المضيئة في الخزانة الزجاجية",
+          "flowPrompt": "Luminous awe-filled close-up at the inner frosted obsidian vault alcove where the radiant diamond-cut Bezier_Anchor_Relic hovers gracefully above dark obsidian glass, radiating supple curved electric neon-cyan and vibrant magenta-pink vector light handles pulsing gently in mid-air like living threads connecting hidden layer seams, family-friendly tactile craft physics. Leaning forward with bright eyes illuminated by glowing magenta and cyan reflections, 100% photorealistic live-action @The_Explorer (strictly NO 3D cartoon style; messy dark-brown updo, brass forehead goggles, khaki-olive field coat, knitted neck scarf, brown leather satchel, fingerless leather gloves; strictly two hands, natural anatomy: her left hand anchors her open glowing teal-watercolor vellum sketchbook steady while her right hand hovers respectfully two inches from the spinning diamond anchor without touching yet) whispers excitedly: \"Draft, look! The Maker's Bezier anchor is still alive inside the vault—it connects every layer!\" Voice Lock [The Explorer -> Autonoe]: Consistent bright, urgent middle-pitch female voice (Autonoe), hopeful and clear with natural photorealistic lip-sync; only The Explorer appears and speaks in frame. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-autonoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-explorer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-autonoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s12",
+          "sceneNum": 12,
+          "titleAr": "استخراج النواة ومواكبة الحارس الورقي",
+          "titleEn": "Lifting the Diamond Core Onto Vellum",
+          "goalAr": "قطع مونتاجي — التقاط النواة الماسية وتغطية الممر (Save frame bridge to S13)",
+          "flowPrompt": "Dynamic focused two-shot beside the opened obsidian vault pedestal as radiant electric neon-cyan and vibrant magenta-pink Bezier handles shimmer around the glowing crystal diamond core while distant gallery light gleams softly down the corridor, ending on a clean balanced two-shot for smooth dialogue continuity, family-friendly tactile craft physics. Standing clearly separated on the left side facing the pedestal, @Pale_Draughtsman (bleached drafting-paper sculpture with warm gold hem trim, silver collar spines, slim neat silhouette without flared wing sleeves, strictly rigid eyeless and mouthless white geometric mask with zero mouth opening; strictly two hands, natural anatomy: BOTH his left hand and his right hand hang calmly straight downward beside his paper hips in clear view, strictly NO extra arm, NO third hand, NO outstretched sleeve) watches quietly while on the right 100% photorealistic live-action @The_Explorer (messy dark-brown updo, brass forehead goggles, khaki-olive canvas coat, knitted scarf, fingerless gloves; strictly two hands, natural anatomy: her left hand cradles her open glowing vellum sketchbook flat waist-high while her right hand smoothly lifts the glowing diamond Bezier_Anchor_Relic off the glass pedestal onto the bright parchment page). Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — single delicate crystal chime as the anchor lifts, quiet parchment rustle, and distant hallway air ONLY, strictly NO background music, NO orchestra, NO choir, NO strings.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-explorer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-pale-draughtsman",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s13",
+          "sceneNum": 13,
+          "titleAr": "صمود المسودة لحماية طريق الهرب",
+          "titleEn": "Draft Holds the Gallery Archway",
+          "goalAr": "Last-Frame Bridge من المشهد 12 (Anti-Cutaway Macro Lock)",
+          "flowPrompt": "Emotional high-stakes two-shot continuing smoothly from the previous frame as glowing magenta-pink and electric neon-cyan sparkles rise softly out of the cradled Bezier core resting upon @The_Explorer's sketchbook while stark cold white beams gleam across the distant floor behind them, family-friendly tactile craft physics. Stepping toward the arched stone-and-glass doorway facing silent 100% photorealistic live-action @The_Explorer (messy dark-brown updo, brass goggles on forehead, khaki-olive coat, knitted scarf, fingerless leather gloves; strictly two hands, natural anatomy: both her left hand and right hand hold the bottom corners of her open vellum sketchbook carrying the glowing Bezier relic steadily as she backs smoothly toward the open sunlit threshold), heroic @Pale_Draughtsman (bleached drafting-paper strips glowing subtly warmer along golden hems, silver ruler collar spines; wearing a strictly rigid eyeless and mouthless sculpted solid porcelain-white geometric mask completely smooth and unbroken across lower face and chin with ZERO mouth opening, ZERO jaw split, ZERO dark cavity during telepathic speech; strictly two hands, natural anatomy: his left hand holds the lapel of his paper robe cleanly at chest height while his right hand points smoothly toward the sunlit exit behind her, zero extra hands) declares telepathically without moving any mask plate: \"Run with the Bezier core to Ink Knight and Vector Sprite! I will hold this gallery archway!\" Voice Lock [Pale Draughtsman -> Enceladus]: Consistent urgent, resonant breathy lower male voice (Enceladus), noble and steady behind his strictly rigid eyeless and mouthless white geometric mask with zero mouth opening; only Pale Draughtsman speaks while The Explorer nods silently. Dry paper rustle & crisp dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-enceladus",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-pale-draughtsman",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-explorer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-enceladus",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s14",
+          "sceneNum": 14,
+          "titleAr": "قرار التسطيح الشامل للزجاج الصامت",
+          "titleEn": "Decree to Flatten Every Layer",
+          "goalAr": "قطع مونتاجي — لقطة جليّة لمهندس الطبقات وسط القاعة البيضاء",
+          "flowPrompt": "Climactic foreboding medium hero shot inside the luminous deep twilight glass gallery chamber as hanging royal-violet and electric neon-cyan wireframe panes align tightly together like heavy transparent glass presses lowering evenly from above, filling the air with cold sterile brilliance, family-friendly tactile craft physics. Standing centered atop the crystal dais in absolute stillness before raising his Grid Stylus Scepter straight overhead, imposing @Layer_Architect (floating beveled deep obsidian-slate glass UI armor, luminous royal-violet wireframe mesh wings and layer halo, sleek strictly eyeless and mouthless smooth smoked-glass visor crossed by one bright electric neon-cyan horizon line with zero mouth opening or distortion; strictly two hands, natural anatomy: his right hand grips the upper shaft of the glowing Grid Stylus Scepter cleanly while his left hand clasps the lower scepter base firmly with both hands together in front of his chest) decrees with chilling finality: \"If warmth refuses order, then I shall flatten every layer into silent glass.\" Voice Lock [Layer Architect -> Umbriel]: Consistent deep, echoing resonant lower-middle male voice (Umbriel), cold and majestic from behind his strictly rigid eyeless and mouthless smoked-glass visor with zero mouth opening; only Layer Architect appears and speaks in frame. Signature Foley & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-umbriel",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-umbriel",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s15",
+          "sceneNum": 15,
+          "titleAr": "الخروج بالنواة وإغلاق البوابة البيضاء",
+          "titleEn": "Escape Through the Closing White Gate",
+          "goalAr": "قطع مونتاجي — اندفاع المستكشفة خارج الرواق الزجاجي قبل التسطيح (Save frame bridge to S16)",
+          "flowPrompt": "Swift atmospheric closing chase-exit shot gliding smoothly alongside 100% photorealistic live-action @The_Explorer (strictly NO 3D cartoon style; messy dark-brown updo with loose strands fluttering in wind, brass aviator goggles on forehead, weathered khaki-olive canvas field coat, knitted neck scarf, brown leather crossbody satchel, fingerless leather gloves; strictly two hands, natural anatomy: her right hand presses the glowing teal-watercolor vellum sketchbook cradling the pulsing magenta-and-cyan Bezier anchor safely against her coat while her left hand pushes gently past the shimmering cyan portal rim onto dark twilight oak tabletop air) as behind her a wide brilliant sheet of spotless pale chalk-white flattening glass slides silently shut across the sterile gallery archway, ending on a clean twilight view transitioning smoothly onto the studio tablet, family-friendly tactile craft physics. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp coat fabric whoosh, warm vellum page flutter, crystalline diamond pulse, and heavy silent glass seal thud foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-explorer",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e05-s16",
+          "sceneNum": 16,
+          "titleAr": "وميض النواة فوق اللوح الرقمي المستيقظ",
+          "titleEn": "Bezier Embers Above the Awakened Tablet",
+          "goalAr": "Last-Frame Bridge من المشهد 15",
+          "flowPrompt": "Majestic steady slow aerial pull-back receding smoothly from the sealed frosted-white digital doorway until the wide sleek Awakened Drawing Tablet rests cleanly beside weathered antique oak sketchbooks and vintage wooden brush jars on the twilight wooden artist desk, family-friendly tactile craft physics. Delicate warm golden watercolor embers and twin fluid ribbons of electric neon-cyan and vibrant magenta-pink Bezier curve light spiral peacefully upward out of the tablet glass into a wide clean deep obsidian-slate sky center completely free of text, words, letters, numbers, or watermarks. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — quiet twilight studio room air, soft crystalline diamond resonance, and warm parchment settle whisper foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "ingredient",
+              "refId": "ing-awakened-drawing-tablet",
+              "flowTab": "Images"
+            }
+          ]
+        }
+      ]
     }
   ],
   "characters": [
@@ -10119,6 +10619,48 @@
     },
     {
       "worldId": "world-s3-e04",
+      "entityType": "ingredient",
+      "entityId": "ing-awakened-drawing-tablet",
+      "appearanceRole": "tablet_horizon"
+    },
+    {
+      "worldId": "world-s3-e05",
+      "entityType": "character",
+      "entityId": "char-pale-draughtsman",
+      "appearanceRole": "co_protagonist"
+    },
+    {
+      "worldId": "world-s3-e05",
+      "entityType": "character",
+      "entityId": "char-explorer",
+      "appearanceRole": "co_protagonist"
+    },
+    {
+      "worldId": "world-s3-e05",
+      "entityType": "character",
+      "entityId": "char-layer-architect",
+      "appearanceRole": "antagonist"
+    },
+    {
+      "worldId": "world-s3-e05",
+      "entityType": "ingredient",
+      "entityId": "ing-undo-history-corridor",
+      "appearanceRole": "sterile_gallery_hall"
+    },
+    {
+      "worldId": "world-s3-e05",
+      "entityType": "ingredient",
+      "entityId": "ing-rgb-layer-glass-prism",
+      "appearanceRole": "confrontation_chamber"
+    },
+    {
+      "worldId": "world-s3-e05",
+      "entityType": "ingredient",
+      "entityId": "ing-bezier-anchor-relic",
+      "appearanceRole": "rescued_relic"
+    },
+    {
+      "worldId": "world-s3-e05",
       "entityType": "ingredient",
       "entityId": "ing-awakened-drawing-tablet",
       "appearanceRole": "tablet_horizon"

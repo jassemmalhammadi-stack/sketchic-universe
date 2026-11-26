@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0",
   "universe": "Sketchic Universe",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-26",
   "cosmicLaws": [
     {
       "id": "law-01",
@@ -810,6 +810,264 @@
           "hexCode": "#1D5DC8",
           "labelEn": "Digital Awakening Pulse",
           "labelAr": "نبض اللوح الرقمي",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s3-trailer",
+      "worldNum": 16,
+      "season": 3,
+      "episode": 0,
+      "slug": "season-3-trailer",
+      "titleAr": "بوابة اللوح الرقمي — إعلان الموسم الثالث",
+      "titleEn": "The Digital Canvas Awakens — Season 3 Trailer",
+      "mediumTag": "Analog Ink × Neon Vectors",
+      "durationSec": 63,
+      "posterPath": "assets/images/posters/season-3-trailer.jpg",
+      "youtubeFullUrl": "https://youtu.be/i6ollj1LVlo",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#00E5FF",
+          "labelEn": "Electric Vector Cyan",
+          "labelAr": "سماوي المتجهات الكهربائي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#FF4D8D",
+          "labelEn": "Magenta Anchor Spark",
+          "labelAr": "وردي نقاط الارتكاز",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#7C3AED",
+          "labelEn": "Royal Wireframe Violet",
+          "labelAr": "بنفسجي الشبكة الهندسية",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#0F172A",
+          "labelEn": "Obsidian Tablet Glass",
+          "labelAr": "زجاج اللوح الداكن",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s3-e01",
+      "worldNum": 17,
+      "season": 3,
+      "episode": 1,
+      "slug": "the-glass-horizon",
+      "titleAr": "أفق الزجاج المضيء",
+      "titleEn": "The Glass Horizon",
+      "mediumTag": "Analog Ink × Neon Vectors",
+      "durationSec": 127,
+      "posterPath": "assets/images/posters/the-glass-horizon.jpg",
+      "youtubeFullUrl": "https://youtu.be/OlLG77YJ1YU",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#00E5FF",
+          "labelEn": "Electric Vector Cyan",
+          "labelAr": "سماوي المتجهات الكهربائي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#FF4D8D",
+          "labelEn": "Magenta Anchor Spark",
+          "labelAr": "وردي نقاط الارتكاز",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#7C3AED",
+          "labelEn": "Royal Wireframe Violet",
+          "labelAr": "بنفسجي الشبكة الهندسية",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#0F172A",
+          "labelEn": "Obsidian Tablet Glass",
+          "labelAr": "زجاج اللوح الداكن",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s3-e02",
+      "worldNum": 18,
+      "season": 3,
+      "episode": 2,
+      "slug": "layer-zero",
+      "titleAr": "الطبقة الصفرية",
+      "titleEn": "Layer Zero",
+      "mediumTag": "Golden Embroidery × RGB Glass",
+      "durationSec": 127,
+      "posterPath": "assets/images/posters/layer-zero.jpg",
+      "youtubeFullUrl": "https://youtu.be/rqTOHxUTZy0",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#F4C44E",
+          "labelEn": "Stitched Saffron Gold",
+          "labelAr": "ذهب خيوط التطريز",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#00E5FF",
+          "labelEn": "Diamond Eyelet Cyan",
+          "labelAr": "سماوي العُرى الماسية",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#C81D3B",
+          "labelEn": "Crimson Prism Stratum",
+          "labelAr": "قرمزي طبقة المنشور",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#7C3AED",
+          "labelEn": "Layer Toggle Violet",
+          "labelAr": "بنفسجي عزل الطبقات",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s3-e03",
+      "worldNum": 19,
+      "season": 3,
+      "episode": 3,
+      "slug": "the-undo-labyrinth",
+      "titleAr": "متاهة التراجع",
+      "titleEn": "The Undo Labyrinth",
+      "mediumTag": "Lantern Light × Charcoal Echoes",
+      "durationSec": 127,
+      "posterPath": "assets/images/posters/the-undo-labyrinth.jpg",
+      "youtubeFullUrl": "https://youtu.be/dFMWRDb0zy4",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#F5B041",
+          "labelEn": "Warm Brass Lantern Amber",
+          "labelAr": "كهرمان الفانوس النحاسي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#38BDF8",
+          "labelEn": "Ctrl+Z Rewind Cyan",
+          "labelAr": "سماوي موجة التراجع",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#F7F9FC",
+          "labelEn": "Chalk Afterimage Aura",
+          "labelAr": "طباشير ظلال الثعلب",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#0F172A",
+          "labelEn": "Frosted Obsidian Void",
+          "labelAr": "أوبسيديان الممر المصنفر",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s3-e04",
+      "worldNum": 20,
+      "season": 3,
+      "episode": 4,
+      "slug": "pixel-storm-over-paper",
+      "titleAr": "عاصفة البكسل فوق الورق",
+      "titleEn": "Pixel Storm Over Paper",
+      "mediumTag": "Stained Glass × Gold Origami",
+      "durationSec": 127,
+      "posterPath": "assets/images/posters/pixel-storm-over-paper.jpg",
+      "youtubeFullUrl": "https://youtu.be/IcPdJxuGW0Y",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#199A64",
+          "labelEn": "Stained-Glass Spectrum Green",
+          "labelAr": "زمردي منشور الزجاج",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#F4C44E",
+          "labelEn": "Gold-Leaf Washi Crease",
+          "labelAr": "ذهب طيّات الواشي",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#38BDF8",
+          "labelEn": "Cascading Pixel Dust",
+          "labelAr": "سماوي غبار البكسل",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#C81D3B",
+          "labelEn": "Crimson Lead-Came Glass",
+          "labelAr": "قرمزي الزجاج المعشّق",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s3-e05",
+      "worldNum": 21,
+      "season": 3,
+      "episode": 5,
+      "slug": "the-sterile-gallery",
+      "titleAr": "الرواق الخالي من الأثر",
+      "titleEn": "The Sterile Gallery",
+      "mediumTag": "Drafting Paper × Smoked Glass UI",
+      "durationSec": 127,
+      "posterPath": "assets/images/posters/the-sterile-gallery.jpg",
+      "youtubeFullUrl": "https://youtu.be/ZE9RbWFjBVk",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#E2E8F0",
+          "labelEn": "Sterile Gallery Porcelain",
+          "labelAr": "خزف الرواق المعقّم",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#F5B041",
+          "labelEn": "Completed Draft Gold",
+          "labelAr": "ذهب المسودة المكتملة",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#7C3AED",
+          "labelEn": "Architect Wireframe Violet",
+          "labelAr": "بنفسجي شبكة المهندس",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#FF4D8D",
+          "labelEn": "Bezier Anchor Magenta",
+          "labelAr": "أرجواني عُروة بيزييه",
           "showOnCard": true
         }
       ]

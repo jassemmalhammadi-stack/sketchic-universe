@@ -158,6 +158,10 @@ const LORE_CODES = {
     ar: ["القصاصة السرية S3-04 — قوس الطيف ضد البكسل", "رفعت «حارسة الأوريغامي» مصدّات الواشي الذهبية وأطلقت «حارسة الزجاج» شعاع قوس المنشور لصهر طوفان المربعات الرقمية إلى ضوء حيّ."],
     en: ["Season 3 Vault #04 — Prism Against the Pixel Storm", "Origami Warden raised gold-leaf pleated shields while Glass Guardian fired a seven-color prism beam to melt rigid pixel dust into flowing sunlight."],
   },
+  "GRID-05": {
+    ar: ["القصاصة السرية S3-05 — أثر اليد في الرواق المعقّم", "دافع «المسودة المكتملة» أمام مهندس الطبقات عن قيمة ارتعاش اليد البشرية بينما استخلصت «المستكشفة» نواة عُروة بيزييه المضيئة من الرواق الصامت."],
+    en: ["Season 3 Vault #05 — Signature in the Sterile Gallery", "The Completed Draft stood before The Layer Architect to defend the living tremble of a real hand while The Explorer rescued the glowing Bezier Anchor Relic from the silent gallery."],
+  },
 };
 
 const HERO_ORDER = [
