@@ -2,7 +2,7 @@
 window.SKETCHIC_CANON_DB = {
   "meta": {
     "id": "sketchic-universe",
-    "dbVersion": "1.8.0",
+    "dbVersion": "1.9.0",
     "nameAr": "عالم سكتشيك",
     "nameEn": "Sketchic Universe",
     "websiteUrl": "https://Sketchic.net",
@@ -12,7 +12,7 @@ window.SKETCHIC_CANON_DB = {
     "youtubeUrl": "https://www.youtube.com/channel/UCztH7trk7F9wglxWYWsZXNg",
     "showConvergence": true,
     "showSeason2": true,
-    "updatedAt": "2026-11-26",
+    "updatedAt": "2026-11-27",
     "showSeason3": true
   },
   "brandAssets": [
@@ -9005,6 +9005,505 @@ window.SKETCHIC_CANON_DB = {
           ]
         }
       ]
+    },
+    {
+      "id": "world-s3-e06",
+      "worldNum": 22,
+      "slug": "flattened-light",
+      "folderName": "10_Season_3_The_Digital_Canvas/S3E06_Flattened_Light",
+      "season": 3,
+      "episode": 6,
+      "isPublic": true,
+      "isFinale": false,
+      "titleAr": "الضوء المسطّح",
+      "titleEn": "Flattened Light",
+      "genreAr": "نقطة انعطاف درامية",
+      "genreEn": "Darkest-Hour Sci-Fi Drama",
+      "tagStyle": "tag-finale",
+      "mediumTag": "Smoked Glass × Living Bezier",
+      "visualStyleAr": "طاولة بلوط دافئة تتجمّد صفحاتها تحت زجاج طباشيري مسطّح وبنفسجي ملكي، تتصادم داخله خطوط الحبر الورقية ومنحنيات بيزييه المضيئة مع شبكة المهندس المقفلة.",
+      "visualStyleEn": "Warm oak studio desk sealed beneath chalk-white and royal-violet flattening glass, pitting 2D cross-hatched ink paper and neon cyan-magenta Bezier curves against locked wireframe glass.",
+      "loglineAr": "يطلق مهندس الطبقات أمر التسطيح الشامل، فتتصدّع قبة نبض المتجهات وهي تمنح بذرة الشيفرة لفارس الحبر وتدفعه عبر جسر القلم إلى طاولة البلوط ليصنع سلاحاً هجيناً.",
+      "loglineEn": "When The Layer Architect unleashes Flatten All, Vector Sprite sacrifices her escape to pass the Bezier seed and launch Ink Knight onto the oak desk to forge a hybrid stylus.",
+      "durationSec": 127,
+      "durationBadge": "2:07 • 1080p S3",
+      "flowProjectId": "690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowProjectUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "flowSceneUrl": "https://flow.google.com/project/690200b8-e8b1-4951-bfa5-bdd932b249f3",
+      "assembledSceneName": "S3E06 — Flattened Light",
+      "flowModel": "Omni 1.2 Flash • 1080p • Auto-Ducking",
+      "archiveBiblePath": "10_Season_3_The_Digital_Canvas/S3E06_Flattened_Light/01_World_Bible.md",
+      "archiveCharsPath": "10_Season_3_The_Digital_Canvas/S3E06_Flattened_Light/02_Characters_and_Ingredients.md",
+      "archiveStoryboardPath": "10_Season_3_The_Digital_Canvas/S3E06_Flattened_Light/03_Storyboard_and_Flow_Prompts.md",
+      "archiveFullVideoPath": "10_Season_3_The_Digital_Canvas/S3E06_Flattened_Light/final/S3E06_Flattened_Light_Full_Film.mp4",
+      "archiveShortsVideoPath": "10_Season_3_The_Digital_Canvas/S3E06_Flattened_Light/final/S3E06_Flattened_Light_Shorts_9x16.mp4",
+      "webFullVideoPath": "assets/videos/S3E06_Flattened_Light_Full_Film.mp4",
+      "webShortsVideoPath": "assets/videos/S3E06_Flattened_Light_Shorts_9x16.mp4",
+      "webPosterPath": "assets/images/posters/flattened-light.jpg",
+      "webFullSubArPath": "assets/subtitles/S3E06_Flattened_Light_Full_Film.ar.vtt",
+      "webFullSubEnPath": "assets/subtitles/S3E06_Flattened_Light_Full_Film.en.vtt",
+      "webShortsSubArPath": "assets/subtitles/S3E06_Flattened_Light_Shorts_9x16.ar.vtt",
+      "webShortsSubEnPath": "assets/subtitles/S3E06_Flattened_Light_Shorts_9x16.en.vtt",
+      "youtubeFullUrl": "https://youtu.be/jRX2dpDWtM8",
+      "youtubeShortsUrl": "https://youtube.com/shorts/Nk0JH5hSXwA",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#00F0FF",
+          "labelEn": "Bezier Horizon Cyan",
+          "labelAr": "سماوي أفق بيزييه",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#FF3EA5",
+          "labelEn": "Vector Seed Magenta",
+          "labelAr": "أرجواني بذرة المتجهات",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#6D28D9",
+          "labelEn": "Flatten All Violet",
+          "labelAr": "بنفسجي التسطيح الشامل",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#D8C39E",
+          "labelEn": "Paper Knight Parchment",
+          "labelAr": "رقّ فارس الحبر",
+          "showOnCard": true
+        }
+      ],
+      "visualRules": [
+        {
+          "ruleNum": 1,
+          "titleAr": "التسطيح الشامل يحبس الحركة لا البذرة الحيّة",
+          "titleEn": "Flattening Seals the Glass, Not the Seed",
+          "descriptionAr": "طبقة التسطيح تحوّل الدفاتر المفتوحة إلى لوحٍ زجاجيٍ جامد، لكن بذرة عروة بيزييه تبقى نابضةً في قبضة فارس الحبر خارج الشاشة.",
+          "descriptionEn": "The Flatten All glaze freezes open vellum into smooth glass, yet the living Bezier seed endures safely in Ink Knight's hand upon the oak desk."
+        },
+        {
+          "ruleNum": 2,
+          "titleAr": "الجسر الفضّي ممرّ الهجين المنتظر",
+          "titleEn": "Stylus Bridge Calls the Hybrid Weapon",
+          "descriptionAr": "تضحية نبض المتجهات عند إغلاق الفوهة توحّد شيفرة الرقميّ بحبر الورق وتفتح الطريق نحو صهر القلم الهجين.",
+          "descriptionEn": "Vector Sprite's stand at the closing aperture fuses digital curve logic with physical ink craft to summon the upcoming Hybrid Stylus."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "s3e06-s01",
+          "sceneNum": 1,
+          "titleAr": "انجماد المكتب تحت طبقة الضوء المسطّح",
+          "titleEn": "Desk Frozen Beneath Flattened Light",
+          "goalAr": "افتتاحية الحلقة (Hook 0:00-0:05) — هبوط لوح الضوء الزجاجي فوق الدفتر المفتوح",
+          "flowPrompt": "Dramatic macro-to-wide opening hook upon the weathered antique oak artist desk beside brass brush jars and the glowing Awakened_Drawing_Tablet (strictly borderless pure dark smoked-glass display radiating ONLY an abstract glowing electric neon-cyan and royal-violet wireframe grid wave, with strictly NO computer OS taskbar, NO desktop icons, NO software window frame, NO sunset wallpaper, and NO filename or text anywhere on the screen) as a cold glossy chalk-white and luminous royal-violet flattening glaze lowers rapidly from the screen sky onto open parchment sketchbook pages, pressing curled paper ridges abruptly flat beneath an unyielding smooth glass sheen like a frozen two-dimensional photograph, family-friendly tactile craft physics. Leaping nimbly backward onto an unglazed corner of oak wood, tiny finger-sized 2D black-ink cross-hatched @Ink_Knight — crisp die-cut cream-paper border, bare-headed with short spiky black-ink hair (strictly NO hood and NO helmet), glowing solid-white eyes, fluttering tattered paper-strip cape; strictly two hands, natural anatomy: his right hand grips his metallic fountain-pen-nib dagger-sword poised for balance while his left hand cradles the pulsing electric neon-cyan and vibrant magenta-pink Bezier core safely against his tunic — watches the glassy wave lock the desk pages motionless. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crisp high-pitched glass compression hum, sudden dry paper snap freezing silent, and faint metallic pen-nib clink foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-awakened-drawing-tablet",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s02",
+          "sceneNum": 2,
+          "titleAr": "إنذار تجميد الطاولة وإطلاق التسطيح الشامل",
+          "titleEn": "Alarm Over Flatten All",
+          "goalAr": "قطع مونتاجي — التقاء الأبطال عند قاعدة جسر القلم الرقمي",
+          "flowPrompt": "Urgent balanced macro two-shot at the foot of the slanted silver-and-obsidian Capacitive_Stylus_Bridge linking curled paper to the glowing glass tablet rim while cold pale ash-grey calibration mist creeps across the desk edge, tiny finger-sized scale, family-friendly tactile craft physics. Standing on the LEFT side facing right, bare-headed @Ink_Knight (2D black-ink cross-hatched warrior, crisp cream-paper die-cut edge, short spiky black-ink hair, strictly NO hood or helmet, glowing solid-white eyes; strictly two hands, natural anatomy: his right hand holds his pen-nib dagger-sword steady while his left hand holds the glowing Bezier diamond core close to his chest) faces hovering @Vector_Sprite on the RIGHT side facing left — strictly flat 2D luminous neon-cyan and vibrant magenta-pink vector-art heroine with floating diamond anchor-node earrings, sleek deep obsidian-slate tunic with neon-cyan light piping, translucent glowing vector ribbon skirt; strictly two hands, natural anatomy: her right hand grips her floating illuminated Bezier Pen-Tool staff upright while her left hand gestures urgently toward the descending white tablet screen — as she warns swiftly: \"He triggered Flatten All, Ink Knight! If that glass sheet locks, the entire desk freezes flat forever!\" Voice Lock [Vector Sprite -> Callirrhoe]: Consistent vibrant, agile luminous young female voice (Callirrhoe), urgent and crisp; only Vector Sprite speaks while Ink Knight listens silently. Pen-nib chime, Bezier snap & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-callirrhoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-callirrhoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s03",
+          "sceneNum": 3,
+          "titleAr": "قرار الصعود لكسر قفل الشبكة",
+          "titleEn": "Vow to Climb the Stylus Bridge",
+          "goalAr": "قطع مونتاجي — لقطة حاسمة قبل الانطلاق على جسر القلم (Save frame bridge to S04)",
+          "flowPrompt": "Heroic low-angle macro two-shot along the gleaming metallic rim of Capacitive_Stylus_Bridge lit by warm amber desk lamplight from the left clashing against electric neon-cyan digital glare from above, ending on a clean poised sprint stance bridging forward, tiny finger-sized scale, family-friendly tactile craft physics. Standing determined on the LEFT side facing right, bare-headed @Ink_Knight (2D black-ink cross-hatched warrior, crisp cream-paper die-cut border, short spiky black-ink hair, strictly NO hood or helmet, glowing solid-white eyes, fluttering tattered paper cape; strictly two hands, natural anatomy: his right hand raises his metallic fountain-pen-nib dagger-sword forward up the stylus slope while his left hand secures the pulsing diamond Bezier core at his belt) turns briefly toward silent flat 2D luminous @Vector_Sprite hovering on the RIGHT side (electric neon-cyan and vibrant magenta-pink Bezier strokes, diamond anchor earrings; strictly two hands, natural anatomy: her right hand holds her illuminated Bezier Pen-Tool staff diagonally ready for sprint while her left hand sparks a bright neon-cyan path arc upward) and vows passionately: \"Then we climb the stylus before the screen shuts! Your curves and my ink can still break his lock!\" Voice Lock [Ink Knight -> Fenrir]: Consistent passionate, brave lower-middle male voice (Fenrir), heroic and resolute; only Ink Knight speaks while Vector Sprite nods silently. Dry paper flutter & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-fenrir",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-fenrir",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s04",
+          "sceneNum": 4,
+          "titleAr": "سباق الصعود عبر جسر القلم المتصلّب",
+          "titleEn": "Ascending the Hardening Stylus Span",
+          "goalAr": "Last-Frame Bridge من المشهد 3 (Anti-Cutaway Macro Lock)",
+          "flowPrompt": "High-speed dynamic macro tracking shot continuing smoothly up the slanted silver Capacitive_Stylus_Bridge as tight concentric chalk-white and royal-violet flattening rings snap shut down the pen barrel inches behind the two heroes, tiny finger-sized scale, family-friendly tactile craft physics. Sprinting upward on the LEFT lane, bare-headed @Ink_Knight (2D black-ink cross-hatched warrior, crisp cream-paper die-cut edge, short spiky black-ink hair, strictly NO hood or helmet, glowing white eyes; strictly two hands, natural anatomy: his right hand drives his pen-nib dagger-sword ahead as a grappling anchor while his left hand hugs the glowing Bezier core steady against his chest) bounds forward beside flat 2D luminous @Vector_Sprite gliding upward on the RIGHT lane (electric neon-cyan and vibrant magenta-pink Bezier strokes, diamond anchor earrings; strictly two hands, natural anatomy: her right hand swings her illuminated Bezier Pen-Tool staff forward while her left hand lays bright glowing neon-cyan stepping ribbons directly ahead of Ink Knight's ink boots) until both burst into the dark prism chamber. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — rapid metallic pen-nib clatter on glass-coated barrel, snappy electronic Bezier ribbon chime, and closing magnetic seal thuds foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s05",
+          "sceneNum": 5,
+          "titleAr": "هبوط مكبس الطبقات داخل حجرة الزجاج",
+          "titleEn": "Layer Press Descent in the Glass Chamber",
+          "goalAr": "قطع مونتاجي — كشف حجرة التسطيح المركزية",
+          "flowPrompt": "Monumental slow low-angle reveal inside the dark deep obsidian-slate digital sanctuary where colossal parallel beveled RGB glass UI layers glow in electric neon-cyan and luminous royal-violet wireframe symmetry, steadily compressing downward together like gleaming transparent studio presses, family-friendly tactile craft physics. Standing centered on an elevated obsidian glass dais on the RIGHT half of the chamber, towering @Layer_Architect — obsidian-slate beveled UI armor plates, luminous royal-violet wireframe wings and circular layer-stack halo, wearing a strictly rigid eyeless and mouthless full-head sealed monolithic dark smoked-glass helmet completely enclosing his entire head, eyes, nose, mouth, lips, and chin from crown to collar with zero mouth opening, ZERO exposed human skin, ZERO exposed human jaw or nose or lips (strictly NOT an open-face half-helmet or half-visor), crossed solely by one calm horizontal electric neon-cyan visor light line; strictly two hands, natural anatomy: his right hand holds his tall illuminated Grid Stylus Scepter vertically in command while his left hand presses downward flat in mid-air to lock three descending glass planes into one razor-thin glowing plane. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — deep resonant glass plate convergence rumble, sharp magnetic UI lock clicks, and low synthetic horizon hum foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s06",
+          "sceneNum": 6,
+          "titleAr": "إعلان نظام التسطيح الكامل",
+          "titleEn": "Decree of Silent Eternal Harmony",
+          "goalAr": "قطع مونتاجي — لقطة متقاربة مهيبة لمهندس الطبقات (Save frame bridge to S07)",
+          "flowPrompt": "Imposing poised medium hero shot inside the gleaming deep obsidian-slate glass sanctuary lit by crisp electric neon-cyan horizon beams and parallel luminous royal-violet wireframe sheets, ending on a clean steady frame bridging forward, family-friendly tactile craft physics. Positioned on the RIGHT side facing left, towering @Layer_Architect (beveled deep obsidian-slate glass UI armor, luminous royal-violet wireframe layer halo, wearing a strictly rigid eyeless and mouthless full-head sealed monolithic dark smoked-glass helmet completely enclosing his entire head, eyes, nose, mouth, lips, and chin from crown to collar with zero mouth opening, ZERO exposed human skin, ZERO exposed human jaw or nose or lips (strictly NOT an open-face half-helmet or half-visor), crossed solely by one calm horizontal electric neon-cyan visor light line; strictly two hands, natural anatomy: his right hand grips the upper shaft of his glowing Grid Stylus Scepter cleanly upright while his left hand holds a translucent glowing cyan layer diamond steady at chest height) declares telepathically from inside his sealed helmet with zero face or jaw movement: \"Depth breeds chaos and crooked strokes. Flatten All brings silent, eternal harmony to every surface.\" Voice Lock [Layer Architect -> Umbriel]: Consistent deep, resonant calm authoritative lower-middle male voice (Umbriel), measured and crystal clear inside his strictly full-head sealed dark smoked-glass helmet with zero mouth or jaw movement; only Layer Architect appears and speaks in frame. Crystalline glass resonance & crisp spoken dialogue ONLY — strictly NO background music, NO synth pad, NO underscore.",
+          "voiceId": "voice-umbriel",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-umbriel",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s07",
+          "sceneNum": 7,
+          "titleAr": "اندفاع موجة التسطيح البيضاء",
+          "titleEn": "Tethered Shield Inside the Compression Zone",
+          "goalAr": "Last-Frame Bridge من المشهد 6 (Anti-Cutaway Macro Lock)",
+          "flowPrompt": "Sweeping dramatic medium-wide shot continuing smoothly from the previous frame inside the dark obsidian prism hall as @Layer_Architect on the RIGHT side (beveled deep obsidian-slate glass UI armor, luminous royal-violet wireframe layer halo, strictly rigid eyeless and mouthless full-head sealed monolithic dark smoked-glass helmet completely enclosing his entire head, eyes, nose, mouth, lips, and chin with zero mouth opening, ZERO exposed human skin or jaw and strictly NOT an open-face half-helmet, crossed by one horizontal electric neon-cyan visor line; strictly two hands, natural anatomy: his right hand sweeps his glowing Grid Stylus Scepter cleanly straight downward onto the obsidian glass tile while his left hand opens behind his wireframe cloak for balance) strikes the floor crystal, family-friendly tactile craft physics. A blinding horizontal sheet of crisp chalk-white and luminous royal-violet flattening light erupts outward across the reflective glass floor toward the left corridor like a sweeping glass tidal pane, flattening floating grid particles silently in its wake. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — sharp scepter-on-glass impact chime, rising resonant crystalline laser sweep, and heavy silent pressure wave whoosh foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s08",
+          "sceneNum": 8,
+          "titleAr": "دفاع نبض المتجهات عن مرونة المنحنى",
+          "titleEn": "Vector Sprite Defends the Living Curve",
+          "goalAr": "قطع مونتاجي — مواجهة بين نبض المتجهات ومهندس الطبقات",
+          "flowPrompt": "High-contrast balanced medium two-shot across the gleaming dark obsidian-slate prism chamber as bright electric neon-cyan and vibrant magenta-pink curve energy pushes back against advancing royal-violet and chalk-white wireframe glare, family-friendly tactile craft physics. Standing bravely on the LEFT side facing right, flat 2D luminous @Vector_Sprite (crisp electric neon-cyan and vibrant magenta-pink Bezier strokes, floating glowing diamond anchor-node earrings, sleek obsidian-slate tunic with neon-cyan light piping; strictly two hands, natural anatomy: her right hand braces her illuminated Bezier Pen-Tool staff diagonally forward while her left hand weaves a shielding glowing cyan Bezier arc in front of her) faces silent towering @Layer_Architect on the RIGHT side facing left (obsidian-slate UI armor, royal-violet wireframe halo, strictly rigid eyeless and mouthless full-head sealed monolithic dark smoked-glass helmet completely enclosing his entire head, eyes, nose, mouth, lips, and chin with zero mouth opening, ZERO exposed human skin or jaw and strictly NOT an open-face half-helmet; strictly two hands, natural anatomy: his right hand holds his glowing Grid Stylus Scepter poised forward while his left hand presses downward on a floating purple grid pane) and cries defiantly: \"Harmony is not a flat cage, Architect! Every curve needs room to breathe and bend!\" Voice Lock [Vector Sprite -> Callirrhoe]: Consistent vibrant, agile luminous young female voice (Callirrhoe), fierce and expressive; only Vector Sprite speaks while Layer Architect stands motionless behind his sealed helmet. Elastic Bezier chime, glass hum & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-callirrhoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-callirrhoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s09",
+          "sceneNum": 9,
+          "titleAr": "أمر الدمج القسري في مستوى واحد",
+          "titleEn": "Command to Merge Into One Clean Plane",
+          "goalAr": "قطع مونتاجي — لقطة متقاربة قبل هبوط المكبس الأخير (Save frame bridge to S10)",
+          "flowPrompt": "Tense dramatic medium two-shot inside the glowing obsidian-slate glass chamber as colossal upper frosted-white and royal-violet wireframe presses lower closer overhead, ending in a taut locked standoff frame bridging forward, family-friendly tactile craft physics. Standing resilient on the LEFT side facing right, flat 2D luminous @Vector_Sprite (electric neon-cyan and vibrant magenta-pink Bezier curve art, diamond anchor earrings; strictly two hands, natural anatomy: both her left hand and right hand clasp her illuminated Bezier Pen-Tool staff vertically as a glowing curved barrier shield) stares up toward towering @Layer_Architect on the RIGHT side facing left (obsidian-slate beveled UI armor, luminous royal-violet wireframe layer halo, strictly rigid faceless eyeless and mouthless full-head sealed monolithic dark smoked-glass visor-helmet completely enclosing the entire head with a solid smooth dark glass faceplate and strictly NOT an open-face half-helmet, crossed solely by one steady horizontal electric neon-cyan visor light line; strictly two hands, natural anatomy: his right hand presses his Grid Stylus Scepter forward against the barrier light while his left hand clenches overhead to bring the upper glass panes snapping downward). Speaking telepathically from inside his sealed helmet with a completely motionless solid glass visor, @Layer_Architect commands coldly: \"Even your luminous vectors will merge into one clean plane. Join the flat grid.\" Voice Lock [Layer Architect -> Umbriel]: Consistent deep, resonant cold authoritative male voice (Umbriel), unyielding inside his strictly full-head sealed dark smoked-glass helmet with a motionless solid visor; only Layer Architect speaks while Vector Sprite holds silently. Heavy glass pressure hum & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-umbriel",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-umbriel",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s10",
+          "sceneNum": 10,
+          "titleAr": "تصدّع نقطة الارتكاز تحت ضغط التسطيح",
+          "titleEn": "Shattering of the Diamond Anchor Earring",
+          "goalAr": "Last-Frame Bridge من المشهد 9 (Anti-Cutaway Macro Lock)",
+          "flowPrompt": "Intense climactic two-shot continuing seamlessly from the previous standoff frame as a heavy translucent chalk-white flattening glass sheet slams downward onto @Vector_Sprite's arched neon-cyan barrier, family-friendly tactile craft physics. Holding her ground on the LEFT side under crushing light pressure, flat 2D luminous @Vector_Sprite (electric neon-cyan and vibrant magenta-pink Bezier art; strictly two hands, natural anatomy: her left hand and right hand strain to brace her trembling illuminated Bezier Pen-Tool staff overhead) absorbs the shockwave emitted by @Layer_Architect on the RIGHT side (obsidian-slate UI armor, royal-violet wireframe halo, strictly rigid faceless eyeless and mouthless full-head sealed monolithic dark smoked-glass visor-helmet completely enclosing the entire head with a solid smooth dark glass faceplate and strictly NOT an open-face half-helmet; strictly two hands, natural anatomy: his right hand locks the Grid Stylus Scepter downward while his left hand holds the overhead grid seal steady). Under the flash, one of @Vector_Sprite's floating glowing diamond anchor-node earrings cracks cleanly in half and scatters harmless bright electric neon-cyan and vibrant magenta-pink pixel sparkles across the air as she drops to one knee behind a flickering shield dome. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — crystalline glass shield strain, crisp faceted diamond chime crack, and shimmering digital pixel sparkle scatter foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-layer-architect",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-rgb-layer-glass-prism",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s11",
+          "sceneNum": 11,
+          "titleAr": "احتضان بذرة الشيفرة وسط القبة المتشظّية",
+          "titleEn": "Cradling the Seed Beneath a Cracking Dome",
+          "goalAr": "قطع مونتاجي — داخل القبة الضوئية المتصدّعة",
+          "flowPrompt": "Poignant emotional medium close-up beneath a flickering dome of neon-cyan and magenta-pink Bezier curves holding back encroaching pale chalk-white glass walls around the dark pedestal, tiny finger-sized scale, family-friendly tactile craft physics. Kneeling beside her on the LEFT side facing right, bare-headed @Ink_Knight (2D black-ink cross-hatched warrior, crisp cream-paper die-cut border, short spiky black-ink hair, strictly NO hood or helmet, glowing solid-white eyes, tattered paper cape; strictly two hands, natural anatomy: his right hand plants his pen-nib dagger-sword into the floor to brace himself while his left hand reaches out gently toward Vector Sprite's shoulder) looks with fierce concern at silent flat 2D luminous @Vector_Sprite kneeling on the RIGHT side facing left (one diamond anchor earring intact and the cracked one sparkling softly with fading cyan pixel motes; strictly two hands, natural anatomy: both her left hand and right hand cup the miniature glowing diamond Bezier_Anchor_Relic code seed tightly against her tunic) as Ink Knight pleads urgently: \"Your anchor node is cracking, Vector! Hold my hand—we retreat to the oak desk together!\" Voice Lock [Ink Knight -> Fenrir]: Consistent passionate, brave lower-middle male voice (Fenrir), urgent and heartfelt; only Ink Knight speaks while Vector Sprite remains silent. Crackling dome shimmer, ink paper rustle & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-fenrir",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-fenrir",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s12",
+          "sceneNum": 12,
+          "titleAr": "تسليم بذرة المتجهات لفارس الحبر",
+          "titleEn": "Handing Over the Bezier Anchor Seed",
+          "goalAr": "قطع مونتاجي — لقطة قريبة على تسليم النواة المضيئة (Save frame bridge to S13)",
+          "flowPrompt": "Close heartfelt macro two-shot bathed in warm glowing vibrant magenta-pink and electric neon-cyan reflections radiating from the pulsing Bezier_Anchor_Relic seed as outer chalk-white glass panes close inward toward the flickering dome, ending on a clean held handoff pose bridging forward, tiny finger-sized scale, family-friendly tactile craft physics. Positioned on the LEFT side facing right, bare-headed @Ink_Knight (2D black-ink cross-hatched warrior, crisp cream-paper die-cut edge, short spiky black-ink hair, strictly NO hood or helmet, glowing white eyes; strictly two hands, natural anatomy: his right hand keeps his fountain-pen-nib dagger-sword ready at his side while his left hand opens upward in front of him) receives the glowing diamond code seed as flat 2D luminous @Vector_Sprite on the RIGHT side facing left (crisp cyan-magenta Bezier lines; strictly two hands, natural anatomy: her right hand braces her illuminated Bezier Pen-Tool staff firmly upright to sustain the barrier while her left hand presses the radiant pulsing diamond Bezier seed squarely into Ink Knight's open left palm). Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — warm rising harmonic diamond chime on handoff, faint paper-to-light static touch, and tightening frosted glass creak foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-bezier-anchor-relic",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s13",
+          "sceneNum": 13,
+          "titleAr": "التضحية بالعبور نحو طاولة البلوط",
+          "titleEn": "Sacrifice at the Closing Glass Seam",
+          "goalAr": "Last-Frame Bridge من المشهد 12 (Anti-Cutaway Macro Lock)",
+          "flowPrompt": "Dramatic emotional two-shot continuing smoothly from the previous handoff frame beside the narrow glowing exit opening onto the slanted silver Capacitive_Stylus_Bridge while solid frosted chalk-white glass closes rapidly behind @Vector_Sprite, tiny finger-sized scale, family-friendly tactile craft physics. Stepping backward onto the glowing stylus exit on the LEFT side, bare-headed @Ink_Knight (2D black-ink cross-hatched warrior, crisp cream-paper die-cut border, short spiky black-ink hair, strictly NO hood or helmet, glowing white eyes; strictly two hands, natural anatomy: his left hand clutches the radiant magenta-cyan Bezier seed tight against his chest while his right hand holds his pen-nib dagger-sword back defensively) reaches toward silent flat 2D luminous @Vector_Sprite standing resolutely on the RIGHT side inside the closing screen edge (crisp cyan-magenta Bezier curves; strictly two hands, natural anatomy: her right hand anchors her illuminated Bezier Pen-Tool staff into the glass seam to hold the aperture open while her left hand sweeps a bright neon-cyan tailwind wave that propels Ink Knight safely down the stylus bridge). As frosted white glass seals around her barrier, @Vector_Sprite cries bravely: \"Take my vector seed to the six heroes! Forge a hybrid stylus before the light goes flat!\" Voice Lock [Vector Sprite -> Callirrhoe]: Consistent vibrant, luminous young female voice (Callirrhoe), selfless and fiercely resolute; only Vector Sprite speaks while Ink Knight is swept backward silently. Sweeping cyan wind whoosh, glass seal thud & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-callirrhoe",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-vector-sprite",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-callirrhoe",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s14",
+          "sceneNum": 14,
+          "titleAr": "الهبوط على الخشب والعهد الحتمي",
+          "titleEn": "Touchdown on Oak Wood and Unbreakable Vow",
+          "goalAr": "قطع مونتاجي — هبوط فارس الحبر على طاولة البلوط أمام الشاشة المجمّدة",
+          "flowPrompt": "Gritty dramatic close-up on the weathered antique oak desk beside the base of the darkened Capacitive_Stylus_Bridge as bright frosted chalk-white flattening glaze snaps shut across the tablet glass behind it, casting stark cold reflections over real wood grain, tiny finger-sized scale, family-friendly tactile craft physics. Skidding to a steady crouch in the foreground, bare-headed @Ink_Knight — 2D black-ink cross-hatched warrior, crisp cream-paper die-cut border, short spiky black-ink hair (strictly NO hood and NO helmet), intense glowing solid-white eyes, fluttering tattered paper cape; strictly two hands, natural anatomy: his right hand drives his metallic fountain-pen-nib dagger-sword cleanly into an unglazed oak groove to halt his slide while his left hand raises the pulsing cyan-magenta Bezier diamond seed beside his determined face — vows fiercely toward the sealed screen: \"We will not leave you trapped in flat glass, Vector. Every medium on this desk is coming back for you!\" Voice Lock [Ink Knight -> Fenrir]: Consistent passionate, brave lower-middle male voice (Fenrir), fierce and unbreakable; only Ink Knight appears and speaks in frame. Pen-nib wood scrape, quiet diamond pulse & crisp spoken dialogue ONLY — strictly NO background music, NO underscore.",
+          "voiceId": "voice-fenrir",
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-capacitive-stylus-bridge",
+              "flowTab": "Images"
+            },
+            {
+              "type": "voice",
+              "refId": "voice-fenrir",
+              "flowTab": "Voices"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s15",
+          "sceneNum": 15,
+          "titleAr": "تقلّص أفق اللوح إلى خيط ضوئي رفيع",
+          "titleEn": "Horizon Thinning to One Cyan Thread",
+          "goalAr": "قطع مونتاجي — تراجع الضوء الرقمي عبر الطاولة في الغسق (Save frame bridge to S16)",
+          "flowPrompt": "Solemn atmospheric medium-wide twilight shot across the weathered antique oak studio desk beside vintage wooden brush jars and half-glazed antique sketchbooks, with the wide dark smoked-glass display of Awakened_Drawing_Tablet resting tilted in the mid-ground already dimmed down to a single razor-thin horizontal electric neon-cyan horizon ribbon glowing steadily across pure empty dark smoked glass (strictly borderless pure dark smoked-glass surface with strictly ZERO OS taskbar, ZERO software UI icons, ZERO @ handles, ZERO character names, ZERO captions, and ZERO text or watermarks anywhere on the tablet glass or desk), ending on a clean twilight desk composition bridging forward, family-friendly tactile craft physics. Present right from frame one standing in the foreground on the weathered oak desk surface in front of the tilted tablet facing the dimming cyan glass horizon, tiny finger-sized bare-headed Ink Knight (2D black-ink cross-hatched paper-cutout warrior with crisp cream-paper die-cut edge, short spiky black-ink hair, strictly NO hood and NO helmet, glowing white eyes; strictly two hands, natural anatomy: his right hand rests on the hilt of his metallic fountain-pen-nib dagger-sword planted in the oak wood while his left hand holds the pulsing vibrant magenta-pink and cyan diamond Bezier seed aloft like a tiny beacon) stands motionless on the wooden desk as quiet twilight settles over the studio. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — quiet dusk studio room air, fading low electronic glass hum settling into one steady faint tone, and soft diamond beacon pulse foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": [
+            {
+              "type": "character",
+              "refId": "char-ink-knight",
+              "flowTab": "Characters"
+            },
+            {
+              "type": "ingredient",
+              "refId": "ing-awakened-drawing-tablet",
+              "flowTab": "Images"
+            }
+          ]
+        },
+        {
+          "id": "s3e06-s16",
+          "sceneNum": 16,
+          "titleAr": "وميض البذرة أمام الأفق الزجاجي المغلق",
+          "titleEn": "Beacon Spark Before the Sealed Screen",
+          "goalAr": "Last-Frame Bridge من المشهد 15",
+          "flowPrompt": "Majestic solemn slow aerial pull-back receding smoothly upward and backward from the previous twilight antique oak artist desk frame, gradually leaving the tiny foreground oak desk edge receding softly downward as vintage brass brush jars and half-glazed leather sketchbooks frame the dark tilted drawing tablet in dusk light, family-friendly tactile craft physics. Across the sealed pure dark smoked glass surface of the tablet (strictly borderless pure dark smoked glass with strictly ZERO OS taskbar, ZERO software UI icons, ZERO @ handles, ZERO text, ZERO labels, and ZERO watermarks anywhere in frame), only one razor-thin horizontal electric neon-cyan horizon ribbon and a single soft pulsing vibrant magenta-pink and cyan Bezier spark shimmer peacefully beneath a wide clean deep obsidian-slate upper sky center completely free of text, words, letters, numbers, or watermarks. Audio Lock: Strictly NO spoken dialogue, NO human voices, NO gibberish speech — tranquil evening studio room air, single steady faint crystalline beacon chime, and soft wood settle whisper foley effects ONLY, strictly NO background music.",
+          "voiceId": null,
+          "attachments": []
+        }
+      ]
     }
   ],
   "characters": [
@@ -10665,6 +11164,48 @@ window.SKETCHIC_CANON_DB = {
       "entityType": "ingredient",
       "entityId": "ing-awakened-drawing-tablet",
       "appearanceRole": "tablet_horizon"
+    },
+    {
+      "worldId": "world-s3-e06",
+      "entityType": "character",
+      "entityId": "char-ink-knight",
+      "appearanceRole": "protagonist"
+    },
+    {
+      "worldId": "world-s3-e06",
+      "entityType": "character",
+      "entityId": "char-vector-sprite",
+      "appearanceRole": "co_protagonist"
+    },
+    {
+      "worldId": "world-s3-e06",
+      "entityType": "character",
+      "entityId": "char-layer-architect",
+      "appearanceRole": "antagonist"
+    },
+    {
+      "worldId": "world-s3-e06",
+      "entityType": "ingredient",
+      "entityId": "ing-awakened-drawing-tablet",
+      "appearanceRole": "flattened_tablet_horizon"
+    },
+    {
+      "worldId": "world-s3-e06",
+      "entityType": "ingredient",
+      "entityId": "ing-capacitive-stylus-bridge",
+      "appearanceRole": "escape_bridge"
+    },
+    {
+      "worldId": "world-s3-e06",
+      "entityType": "ingredient",
+      "entityId": "ing-rgb-layer-glass-prism",
+      "appearanceRole": "compression_chamber"
+    },
+    {
+      "worldId": "world-s3-e06",
+      "entityType": "ingredient",
+      "entityId": "ing-bezier-anchor-relic",
+      "appearanceRole": "transferred_code_seed"
     }
   ],
   "comics": [

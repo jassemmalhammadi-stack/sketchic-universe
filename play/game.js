@@ -162,6 +162,10 @@ const LORE_CODES = {
     ar: ["القصاصة السرية S3-05 — أثر اليد في الرواق المعقّم", "دافع «المسودة المكتملة» أمام مهندس الطبقات عن قيمة ارتعاش اليد البشرية بينما استخلصت «المستكشفة» نواة عُروة بيزييه المضيئة من الرواق الصامت."],
     en: ["Season 3 Vault #05 — Signature in the Sterile Gallery", "The Completed Draft stood before The Layer Architect to defend the living tremble of a real hand while The Explorer rescued the glowing Bezier Anchor Relic from the silent gallery."],
   },
+  "FLAT-06": {
+    ar: ["القصاصة السرية S3-06 — عهد القلم الهجين عند الأفق المغلق", "تصدّت «نبض المتجهات» لضغط التسطيح الشامل حتى انشطر قرطها الماسي ودفعت «فارس الحبر» خارج الشاشة ببذرة بيزييه ليصنع القلم الهجين."],
+    en: ["Season 3 Vault #06 — Pact of the Hybrid Stylus", "Vector Sprite braced against Flatten All until her diamond anchor cracked, propelling Ink Knight onto the oak desk with her Bezier seed to forge a hybrid stylus."],
+  },
 };
 
 const HERO_ORDER = [

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0",
   "universe": "Sketchic Universe",
-  "updatedAt": "2026-11-26",
+  "updatedAt": "2026-11-27",
   "cosmicLaws": [
     {
       "id": "law-01",
@@ -1068,6 +1068,49 @@
           "hexCode": "#FF4D8D",
           "labelEn": "Bezier Anchor Magenta",
           "labelAr": "أرجواني عُروة بيزييه",
+          "showOnCard": true
+        }
+      ]
+    },
+    {
+      "id": "world-s3-e06",
+      "worldNum": 22,
+      "season": 3,
+      "episode": 6,
+      "slug": "flattened-light",
+      "titleAr": "الضوء المسطّح",
+      "titleEn": "Flattened Light",
+      "mediumTag": "Smoked Glass × Living Bezier",
+      "durationSec": 127,
+      "posterPath": "assets/images/posters/flattened-light.jpg",
+      "youtubeFullUrl": "https://youtu.be/jRX2dpDWtM8",
+      "palettes": [
+        {
+          "sortOrder": 1,
+          "hexCode": "#00F0FF",
+          "labelEn": "Bezier Horizon Cyan",
+          "labelAr": "سماوي أفق بيزييه",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 2,
+          "hexCode": "#FF3EA5",
+          "labelEn": "Vector Seed Magenta",
+          "labelAr": "أرجواني بذرة المتجهات",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 3,
+          "hexCode": "#6D28D9",
+          "labelEn": "Flatten All Violet",
+          "labelAr": "بنفسجي التسطيح الشامل",
+          "showOnCard": true
+        },
+        {
+          "sortOrder": 4,
+          "hexCode": "#D8C39E",
+          "labelEn": "Paper Knight Parchment",
+          "labelAr": "رقّ فارس الحبر",
           "showOnCard": true
         }
       ]
